@@ -28,8 +28,12 @@ const Login = (props) => {
   const [loading, setLoading] = React.useState(true);
   const [formErr, setFormError] = React.useState("");
   const navigation = useNavigation();
-  const onChangeEmail = useCallback((text) => setEmail(text), []);
-  const onChangePassword = useCallback((text) => setPassword(text), []);
+  const onChangeEmail = (text) => {
+    setEmail(text);
+  };
+  const onChangePassword = (text) => {
+    setPassword(text);
+  };
 
   const handleBackButtonClick = () => {
     moveBack();
@@ -59,7 +63,7 @@ const Login = (props) => {
     return unsubscribe;
   }, [error]);
 
-  function Validate({ email, password }) {
+  function Validate(email, password) {
     let emailErr = "";
     let passwordErr = "";
 
@@ -98,8 +102,10 @@ const Login = (props) => {
   };
 
   const googleSignin = () => {
-    const validate = Validate(userTemp);
 
+    const validate = Validate(email, password);
+
+    console.log(" validate is ---", validate);
     setError(
       validate !== "ok"
         ? validate
@@ -109,8 +115,10 @@ const Login = (props) => {
           }
     );
 
-    props.requestToGetAccessTokenAction({ email, password });
-    navigation.navigate("Start");
+    if (validate == "ok") {
+      props.requestToGetAccessTokenAction({ email: email, password :password });
+      navigation.navigate("Start");
+    }
   };
 
   const goToForgotPassword = () => {
@@ -201,8 +209,6 @@ const Login = (props) => {
     </>
   );
 };
-
-
 
 const mapDispatchToProps = (dispatch) => {
   return {
