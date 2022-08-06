@@ -10,23 +10,23 @@ import { AppText } from "./AppText";
 
 export const CommonHeader = (props) => {
   const {
-    leftTitle,
-    rightTitle,
+    textCenter,
     leftOnPress,
     rightOnPress,
-    iconLeft,
-    iconRight,
+    viewLeft,
+    viewRight,
   } = props;
   return (
     <View style={styles.viewOuter}>
       <View style={styles.view1}>
       <View style={styles.viewLeft}>
-        {/* <IconMaterial name={"wine-bar"} /> */}
-        <AppText text={leftTitle} style={styles.txtLeft} />
+        {viewLeft}
       </View>
 
+      <AppText text={textCenter} style={styles.txtCenter} />
+
       <View style={styles.viewRight}>
-        <AppText text={rightTitle} style={styles.txtRight} />
+        {viewRight}
       </View>
       </View>
     </View>
@@ -35,24 +35,33 @@ export const CommonHeader = (props) => {
 
 export const styles = {
   viewOuter: {
-    backgroundColor: appColor.RED,
-    height:hp('9%'), 
+   // width:wp('100%'),
+    backgroundColor: appColor.BLACK,
+   // height:hp('9%'), 
     //justifyContent:''
   },
   view1:{
-   //backgroundColor:'pink', 
-   paddingTop:hp('5%'), 
+
+  backgroundColor:appColor.RED, 
+    // paddingTop:hp('5%'), 
    flexDirection:'row', 
    justifyContent:'space-between', 
-   flexWrap:'wrap', 
-   paddingHorizontal:wp('3.4%')
+   alignItems:'center',
+   height:hp('6%')
+   //flexWrap:'wrap', 
+  //  paddingHorizontal:wp('3.4%')
   },
   viewLeft: {
    // paddingLeft:wp('5%'),
-    flexDirection: "row",
-    alignItems: "center",
+    // flexDirection: "row",
+    // alignItems: "center",
   },
   viewRight: {},
+  txtCenter: {
+    color: appColor.WHITE,
+    fontWeight: fontConstant.WEIGHT_SEMI_BOLD,
+    fontSize: fontConstant.TEXT_20_SIZE_REGULAR
+},
   txtLeft: {
       color: appColor.WHITE,
       fontWeight: fontConstant.WEIGHT_SEMI_BOLD

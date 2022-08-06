@@ -68,7 +68,7 @@ const ForgotPassword = (props) => {
   );
   if (validate == "ok") {
     props.requestToForgotPasswordAction({email: email, navigation: props.navigation})
-    props.navigation.navigate(appConstant.RESER_PWD);
+    // props.navigation.navigate(appConstant.RESER_PWD, {email: email});
   }
   };
 

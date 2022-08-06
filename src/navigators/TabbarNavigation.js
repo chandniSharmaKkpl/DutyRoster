@@ -104,7 +104,11 @@ export default function HomeNavigation(props) {
       <Tab.Screen
         name={"Roster"}
         component={RosterScreen}
+        tabBarOptions= {{ 
+          activeTintColor:'red'
+        }}
         options={{
+          headerShown: false,
           tabBarIcon: ({ focused }) => (
             <View style={styles.tab}>
               <View style={styles.viewImage}>

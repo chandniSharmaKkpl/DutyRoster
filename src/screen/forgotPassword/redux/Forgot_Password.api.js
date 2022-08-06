@@ -1,4 +1,3 @@
-import { Platform } from "react-native";
 import * as API from "@/api/auth";
 
 export const forgotPasswordCall = async (params) => {

@@ -36,7 +36,6 @@ const ResetPassword = (props) => {
     confirmPasswordErr: "",
   });
   const [refCode, setRefCode] = useState("");
-  const [email, setEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const responseData = useSelector((state) => state.Reset_PasswordReducer);
@@ -83,6 +82,7 @@ const ResetPassword = (props) => {
           }
     );
     if (validate == "ok") {
+      let email = props.route.params.email;
       props.requestToResetPasswordAction({
         refCode,
         email,

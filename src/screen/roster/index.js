@@ -7,6 +7,7 @@ import { useNavigation } from "@react-navigation/core";
 import { CustomButton } from "@/components/CustomButton";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { appConstant } from "@/constant";
+import { CommonHeader } from "@/components/CommonHeader";
 
 const RosterScreen = (props) => {
   const navigation = useNavigation();
@@ -42,9 +43,10 @@ const RosterScreen = (props) => {
 
   return (
     <>
+            <CommonHeader textCenter={appConstant.ROASTER}/>
+
       <View style={[stylesCommon.container, styles.container]}>
         {/* <ImageBackground style={styles.container}> */}
-        <View style={styles.viewTop} />
 
         <View style={styles.viewBottom}>
           <AppText style={styles.txtBtnGetStart} text={"Coming Soon Roster"}></AppText>

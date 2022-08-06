@@ -1,9 +1,8 @@
-import { actionConstant } from "@/constant";
+import { actionConstant,appConstant } from "@/constant";
 import { takeLatest, take, call, put, select, all } from "redux-saga/effects";
 import { forgotPasswordCall } from "./Forgot_Password.api";
 
 export function* workerForgotPassword(action) {
-  console.log(" re---s is ", action.payload);
 
   try {
     const response = yield call(forgotPasswordCall, action.payload);
@@ -12,9 +11,11 @@ export function* workerForgotPassword(action) {
       type: actionConstant.ACTION_FORGOT_PASSWORD_SUCCESS,
       payload: response,
     });
-    action.payload.navigation.navigate(appConstant.RESER_PWD);
+    action.payload.navigation.navigate(appConstant.RESER_PWD, {"email": action.payload.email});
   } catch (error) {
     alert(error)
+    action.payload.navigation.navigate(appConstant.RESER_PWD, {"email": action.payload.email});
+
     yield put({
       type: actionConstant.ACTION_FORGOT_PASSWORD_FAILURE,
       payload: error,

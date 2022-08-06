@@ -44,9 +44,9 @@ const getUser = async () => {
   return user;
 };
 
-
-
 const setUser = async data => {
+  console.log(" response login--------->", data);
+  
   await AsyncStorage.setItem(appConstant.USER, JSON.stringify(data))
     .then(() => {
       return true;
@@ -55,12 +55,6 @@ const setUser = async data => {
       return false;
     });
 };
-
-
-
-
-
-
 
 export default {
   getAccessToken,

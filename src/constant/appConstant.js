@@ -9,6 +9,7 @@ export default {
   SIGNUP : 'Signup',
   FORGOT_PWD : 'ForgotPassword',
   PROFILE : "Profile",
-  RESER_PWD : 'ResetPassword'
+  RESER_PWD : 'ResetPassword', 
+  ROASTER:"Roaster",
   
 }

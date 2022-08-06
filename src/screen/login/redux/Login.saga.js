@@ -10,8 +10,8 @@ export function* workerGetAccessToken(action) {
       type: actionConstant.ACTION_GET_ACCESS_TOKEN_SUCCESS,
       payload: loginResponse,
     });
-    localDb.setUser(loginResponse); 
-     action.payload.navigation.navigate(appConstant.START); 
+   //localDb.setUser(loginResponse.data); 
+     action.payload.navigation.navigate(appConstant.START,{userData: loginResponse.data}); 
   } catch (error) {
     alert(error); 
     yield put({
