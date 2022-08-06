@@ -1,14 +1,14 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { View, BackHandler } from "react-native";
 import stylesCommon from "../../common/commonStyle";
-import styles from "./style";
+import styles from './style'
 import { AppText } from "@/components/AppText";
 import { useNavigation } from "@react-navigation/core";
 import { CustomButton } from "@/components/CustomButton";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { appConstant } from "@/constant";
 
-const Start = (props) => {
+const RosterScreen = (props) => {
   const navigation = useNavigation();
 
   const handleBackButtonClick = () => {
@@ -47,7 +47,7 @@ const Start = (props) => {
         <View style={styles.viewTop} />
 
         <View style={styles.viewBottom}>
-          <AppText style={styles.txtBtnGetStart} text={"Coming Soon"}></AppText>
+          <AppText style={styles.txtBtnGetStart} text={"Coming Soon Roster"}></AppText>
 
           <TouchableOpacity onPress={goToLogin} style={styles.btnTransparant}>
             <AppText style={styles.txtBtnTry} text={"Back To Login"} />
@@ -58,4 +58,4 @@ const Start = (props) => {
   );
 };
 
-export default Start;
+export default RosterScreen;

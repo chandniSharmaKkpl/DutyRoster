@@ -8,25 +8,24 @@ import { isEmailValid } from "../../helper/validations";
 import styles from "./style";
 import { CustomButton } from "@/components/CustomButton";
 import { AppText } from "@/components/AppText";
+import Loader from '@/components/Loader';
 import { TextInputCustom } from "@/components/TextInput";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { requestToGetAccessToken } from "./redux/Login.action";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const Login = (props) => {
-  const [userTemp, setUserTemp] = React.useState({
-    email: "",
-    password: "",
-  });
+  
   const [error, setError] = React.useState({
     emailErr: "",
     passwordErr: "",
   });
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("emp1@yopmail.com");
+  const [password, setPassword] = useState("password");
   const [isClickEye, setIsClickEye] = useState(false);
   const [loading, setLoading] = React.useState(true);
   const [formErr, setFormError] = React.useState("");
+ const loginResponse = useSelector(state => state.LoginReducer)
   const navigation = useNavigation();
   const onChangeEmail = (text) => {
     setEmail(text);
@@ -50,18 +49,18 @@ const Login = (props) => {
     };
   }, []);
 
-  React.useEffect(() => {
-    let isUserAvailable = false;
-    const unsubscribe = props.navigation.addListener("focus", () => {
-      setError({ emailErr: "", passwordErr: "" });
-      if (!isUserAvailable) {
-        setUserTemp({ email: "", password: "" });
-      }
-      setFormError("");
-    });
+  // React.useEffect(() => {
+  //   let isUserAvailable = false;
+  //   const unsubscribe = props.navigation.addListener("focus", () => {
+  //     setError({ emailErr: "", passwordErr: "" });
+  //     if (!isUserAvailable) {
+  //       setUserTemp({ email: "", password: "" });
+  //     }
+  //     setFormError("");
+  //   });
 
-    return unsubscribe;
-  }, [error]);
+  //   return unsubscribe;
+  // }, [error]);
 
   function Validate(email, password) {
     let emailErr = "";
@@ -80,8 +79,6 @@ const Login = (props) => {
     if (emailErr === "" && passwordErr === "") {
       return "ok";
     } else {
-      console.log("emailErr ==>", emailErr);
-      console.log("passwordErr ==>", passwordErr);
       return {
         emailErr,
         passwordErr,
@@ -90,7 +87,6 @@ const Login = (props) => {
   }
 
   useEffect(() => {
-    console.log("isClickEye =>", isClickEye);
   }, [isClickEye]);
 
   const onPressRight = () => {
@@ -101,11 +97,9 @@ const Login = (props) => {
     props.navigation.goBack();
   };
 
-  const googleSignin = () => {
+  const onClickSignIn = () => {
 
     const validate = Validate(email, password);
-
-    console.log(" validate is ---", validate);
     setError(
       validate !== "ok"
         ? validate
@@ -116,8 +110,7 @@ const Login = (props) => {
     );
 
     if (validate == "ok") {
-      props.requestToGetAccessTokenAction({ email: email, password :password });
-      navigation.navigate("Start");
+      props.requestToGetAccessTokenAction({ email: email, password :password, navigation: navigation });
     }
   };
 
@@ -199,13 +192,17 @@ const Login = (props) => {
           <View style={styles.viewSocialMediaBtn}>
             <CustomButton
               title="Sign In"
-              onPress={googleSignin}
+              onPress={onClickSignIn}
               styleBtn={stylesCommon.btnSocialMedia}
               styleTxt={stylesCommon.btnSocialMediaText}
             />
           </View>
         </View>
       </KeyboardAwareScrollView>
+      {loginResponse.isRequesting ? (
+        <Loader loading={loginResponse.isRequesting} />
+      ) : null}
+
     </>
   );
 };

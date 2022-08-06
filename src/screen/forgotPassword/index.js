@@ -9,28 +9,31 @@ import {
   Pressable,
 } from "react-native";
 import stylesCommon from "../../common/commonStyle";
-import { Avatar } from "react-native-elements";
-import { appColor, appConstant, imageConstant } from "../../constant";
+import { appColor, appConstant, imageConstant, alertMsgConstant } from "../../constant";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { isEmailValid } from "../../helper/validations";
 import { useNavigation } from "@react-navigation/core";
 import styles from "./style";
 import { CommonHeader } from "@/components/CommonHeader";
 import { CustomButton } from "@/components/CustomButton";
+import Loader from '@/components/Loader';
 import { AppText } from "@/components/AppText";
 import { TextInputCustom } from "@/components/TextInput";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { requestToForgotPassword } from "./redux/Forgot_Password.action";
+import { connect, useSelector } from "react-redux";
 
 const ForgotPassword = (props) => {
-  const initalErrorState = {
-    email: null,
-  };
-
-  const [error, setError] = useState(initalErrorState);
-  const [email, setEmail] = useState("");
-
+  
+  const [error, setError] = React.useState({
+    emailErr: ""
+  });  
+  
+  const [email, setEmail] = useState("emp1@yopmail.com");
+  const responseData = useSelector(state => state.Forgot_PasswordReducer)
   const navigation = useNavigation();
   const onChangeEmail = useCallback((text) => setEmail(text), []);
 
@@ -54,8 +57,37 @@ const ForgotPassword = (props) => {
   };
 
   const continueForgot = () => {
-    navigation.navigate("ResetPassword");
+
+   const validate = Validate(email);
+   setError(
+    validate !== "ok"
+      ? validate
+      : {
+          emailErr: ""
+                }
+  );
+  if (validate == "ok") {
+    props.requestToForgotPasswordAction({email: email, navigation: props.navigation})
+    props.navigation.navigate(appConstant.RESER_PWD);
+  }
   };
+
+  function Validate(email, password) {
+    let emailErr = "";
+
+    if (email.trim() === "") {
+      emailErr = alertMsgConstant.EMAIL_NOT_EMPTY;
+    } else if (!isEmailValid(email)) {
+      emailErr = alertMsgConstant.EMAIL_NOT_VALID;
+    }
+    if (emailErr === "") {
+      return "ok";
+    } else {
+      return {
+        emailErr
+            };
+    }
+  }
 
   const backToLogin = () => {
     navigation.navigate("Login");
@@ -88,6 +120,7 @@ const ForgotPassword = (props) => {
               icon={require("../../assets/images/LoginScreen/email-line.png")}
               iconStyle={styles.emailIconStyle}
               keyboardType="email-address"
+              error={error.emailErr}
             />
             <View style={{ height: hp("1%") }} />
           </View>
@@ -108,8 +141,17 @@ const ForgotPassword = (props) => {
           </TouchableOpacity>
         </View>
       </KeyboardAwareScrollView>
+      {responseData.isRequesting ? (
+        <Loader loading={responseData.isRequesting} />
+      ) : null}
     </>
   );
 };
 
-export default ForgotPassword;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    requestToForgotPasswordAction: (params) =>
+      dispatch(requestToForgotPassword(params)),
+  };
+};
+export default connect(null, mapDispatchToProps)(ForgotPassword);

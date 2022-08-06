@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
 } from "react-native";
 import stylesCommon from "../../common/commonStyle";
-import { Avatar } from "react-native-elements";
 import { appColor, appConstant, imageConstant } from "../../constant";
 import {
   widthPercentageToDP as wp,

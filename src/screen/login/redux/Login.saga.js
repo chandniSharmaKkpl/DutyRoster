@@ -1,15 +1,19 @@
-import { actionConstant } from "@/constant";
+import { actionConstant, appConstant } from "@/constant";
+import localDb from "@/database/localDb";
 import { takeLatest, take, call, put, select, all } from "redux-saga/effects";
 import { loginCall } from "./Login.api";
 
 export function* workerGetAccessToken(action) {
   try {
-    const accessToken = yield call(loginCall, action.payload);
+    const loginResponse = yield call(loginCall, action.payload);
     yield put({
       type: actionConstant.ACTION_GET_ACCESS_TOKEN_SUCCESS,
-      payload: accessToken,
+      payload: loginResponse,
     });
+    localDb.setUser(loginResponse); 
+     action.payload.navigation.navigate(appConstant.START); 
   } catch (error) {
+    alert(error); 
     yield put({
       type: actionConstant.ACTION_GET_ACCESS_TOKEN_FAILURE,
       payload: error,

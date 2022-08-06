@@ -10,7 +10,7 @@ import { appColor, appConstant } from "@/constant";
 
 const width = Dimensions.get("screen").width;
 
-const Intro = (props) => {
+const TimeSheetScreen = (props) => {
   const [pageCount, setPageCount] = useState(0);
   const [arrayView, setArrayView] = useState([
     "Get honest wine rating on any wine from our community of milions of wine drinkers",
@@ -115,49 +115,18 @@ const Intro = (props) => {
     <>
       <View style={[stylesCommon.container, styles.container]}>
         {/* <ImageBackground style={styles.container}> */}
-        <View style={styles.viewTop}>
-          <FlatList
-            ref={flatListRef}
-            style={{ marginBottom: 20 }}
-            data={arrayView}
-            horizontal
-            pagingEnabled
-            renderItem={renderItem}
-            onScroll={onScroll}
-            showsHorizontalScrollIndicator={false}
-            keyExtractor={(item) => item}
-          />
-        </View>
+        <View style={styles.viewTop} />
 
-        {/* <View style={styles.viewBottom}>
-          
-           */}
+        <View style={styles.viewBottom}>
+          <AppText style={styles.txtBtnGetStart} text={"Coming Soon Timesheet"}></AppText>
 
-        {/* </View> */}
-        {/* </ImageBackground> */}
-        <View style={styles.pageControlView}>
-          <View style={styles.viewRow}>
-            <TouchableOpacity onPress={goToApp} style={styles.btnTransparant}>
-              <AppText style={styles.txtBtnTry} text={"Try us out"} />
-            </TouchableOpacity>
-
-            {pageCount < 1 ? (
-              <PageControlAleppo
-                progress={pageCount}
-                numberOfPages={arrayView.length}
-                activeTintColor={appColor.RED}
-                inactiveTintColor={appColor.WHITE}
-              />
-            ) : null}
-
-            <TouchableOpacity onPress={goToLogin} style={styles.btnTransparant}>
-              <AppText style={styles.txtBtnTry} text={"Login"} />
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity onPress={goToLogin} style={styles.btnTransparant}>
+            <AppText style={styles.txtBtnTry} text={"Back To Login"} />
+          </TouchableOpacity>
         </View>
       </View>
     </>
   );
 };
 
-export default Intro;
+export default TimeSheetScreen;

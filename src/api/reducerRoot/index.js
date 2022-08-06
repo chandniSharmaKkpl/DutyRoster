@@ -8,6 +8,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Reducer
 import LoginReducer from "@/screen/login/redux/Login.reducer";
+import Forgot_PasswordReducer from "@/screen/forgotPassword/redux/Forgot_Password.reducer";
+import Reset_PasswordReducer from "@/screen/resetPassword/redux/Reset_Password.reducer";
 
 const encryptor = encryptTransform({
   secretKey: "dodee_app",
@@ -23,6 +25,8 @@ const persistConfig = {
 const ReducerRoot = combineReducers({
   GlobalReducer,
   LoginReducer,
+  Forgot_PasswordReducer,
+  Reset_PasswordReducer,
 });
 
 export default persistReducer(persistConfig, ReducerRoot);

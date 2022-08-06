@@ -8,8 +8,12 @@ import {
   TouchableOpacity,
 } from "react-native";
 import stylesCommon from "../../common/commonStyle";
-import { Avatar } from "react-native-elements";
-import { appColor, appConstant, imageConstant } from "../../constant";
+import {
+  appColor,
+  appConstant,
+  imageConstant,
+  alertMsgConstant,
+} from "../../constant";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -21,20 +25,26 @@ import { AppText } from "@/components/AppText";
 import { TextInputCustom } from "@/components/TextInput";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useNavigation } from "@react-navigation/core";
+import { connect, useSelector } from "react-redux";
+import { requestToResetPassword } from "./redux/Reset_Password.action";
+import Loader from "@/components/Loader";
 
 const ResetPassword = (props) => {
-  const initalErrorState = {
-    email: null,
-    password: null,
-  };
-  const [error, setError] = useState(initalErrorState);
+  const [error, setError] = React.useState({
+    refCodeErr: "",
+    newPasswordErr: "",
+    confirmPasswordErr: "",
+  });
+  const [refCode, setRefCode] = useState("");
   const [email, setEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const responseData = useSelector((state) => state.Reset_PasswordReducer);
+
   const [isClickEyeNewPassword, setIsClickEyeNewPassword] = useState(false);
   const [isClickEyeForConfirmPassword, setIsClickEyeForConfirmPassword] =
     useState(false);
-  const onChangeEmail = useCallback((text) => setEmail(text), []);
+  const onChangeRefCode = useCallback((text) => setRefCode(text), []);
   const onChangeNewPassword = useCallback((text) => setNewPassword(text), []);
   const onChangeConfirmPassword = useCallback(
     (text) => setConfirmPassword(text),
@@ -59,14 +69,60 @@ const ResetPassword = (props) => {
     props.navigation.goBack();
   };
 
-  const googleSignin = () => {};
-
-  const fbSignin = () => {};
-
   const resendCode = () => {};
 
-  const goToSignup = () => {};
+  const onReset = () => {
+    const validate = Validate(refCode, newPassword, confirmPassword);
+    setError(
+      validate !== "ok"
+        ? validate
+        : {
+            refCodeErr: "",
+            newPasswordErr: "",
+            confirmPasswordErr: "",
+          }
+    );
+    if (validate == "ok") {
+      props.requestToResetPasswordAction({
+        refCode,
+        email,
+        newPassword,
+        confirmPassword,
+        navigation
+      });
 
+      props.navigation.navigate(appConstant.RESER_PWD);
+    }
+  };
+  function Validate(refCode, newPassword, confirmPassword) {
+    let refCodeErr = "";
+    let newPasswordErr = "";
+    let confirmPasswordErr = "";
+
+    if (refCode.trim() === "") {
+      refCodeErr = alertMsgConstant.REF_CODE_NOT_EMPTY;
+    }
+    if (newPassword.trim() === "") {
+      newPasswordErr = alertMsgConstant.PASSWORD_NOT_EMPTY;
+    }
+    if (confirmPassword.trim() === "") {
+      confirmPasswordErr = alertMsgConstant.CONFIRM_PASSWORD_NOT_EMPTY;
+    }
+
+    if (refCodeErr == "" && newPasswordErr == "" && confirmPasswordErr == "") {
+      if (newPassword != confirmPassword) {
+        alert(alertMsgConstant.PASSWORD_NOT_EQUAL)
+        return "no";
+      }
+      return "ok";
+    } else {
+      return {
+        refCodeErr,
+        newPasswordErr, 
+        confirmPasswordErr
+      };
+    }
+  }
   const onPressRight = () => {
     setIsClickEyeNewPassword(!isClickEyeNewPassword);
   };
@@ -100,12 +156,14 @@ const ResetPassword = (props) => {
 
           <View style={styles.viewTxtInput}>
             <TextInputCustom
-              label={"Email"}
-              value={email}
-              onChangeText={onChangeEmail}
+              label={"2FA Code"}
+              value={refCode}
+              onChangeText={onChangeRefCode}
               placeholder={"Enter 2FA Code"}
               icon={require("../../assets/images/ResetPasswordScreen/pincode.png")}
               iconStyle={styles.pinCodeIconStyle}
+              error={error.refCodeErr}
+              // keyboardType="numeric"
             />
 
             <View style={styles.viewForgotPass}>
@@ -114,66 +172,48 @@ const ResetPassword = (props) => {
               </TouchableOpacity>
             </View>
 
-            {isClickEyeNewPassword ? (
-              <TextInputCustom
-                secureTextEntry={false}
-                label={"newPassword"}
-                value={newPassword}
-                onChangeText={onChangeNewPassword}
-                placeholder={"New Password"}
-                icon={require("../../assets/images/LoginScreen/password.png")}
-                eyeIcon={require("../../assets/images/LoginScreen/privacyEye.png")}
-                onPressRight={onPressRight}
-                iconStyle={styles.passwordStyle}
-              />
-            ) : (
-              <TextInputCustom
-                secureTextEntry={true}
-                label={"newPassword"}
-                value={newPassword}
-                onChangeText={onChangeNewPassword}
-                placeholder={"New Password"}
-                icon={require("../../assets/images/LoginScreen/password.png")}
-                eyeIcon={require("../../assets/images/ResetPasswordScreen/eyeSlash.png")}
-                onPressRight={onPressRight}
-                iconStyle={styles.passwordStyle}
-              />
-            )}
+            {/* {isClickEyeNewPassword ? ( */}
+            <TextInputCustom
+              secureTextEntry={isClickEyeNewPassword ? false : true}
+              label={"newPassword"}
+              value={newPassword}
+              onChangeText={onChangeNewPassword}
+              placeholder={"New Password"}
+              icon={require("../../assets/images/LoginScreen/password.png")}
+              eyeIcon={
+                isClickEyeNewPassword
+                  ? require("../../assets/images/LoginScreen/privacyEye.png")
+                  : require("../../assets/images/ResetPasswordScreen/eyeSlash.png")
+              }
+              onPressRight={onPressRight}
+              iconStyle={styles.passwordStyle}
+              error={error.newPasswordErr}
+            />
 
             <View style={{ height: hp("2.5%") }} />
-
-            {isClickEyeForConfirmPassword ? (
-              <TextInputCustom
-                secureTextEntry={false}
-                label={"confirmPassword"}
-                value={confirmPassword}
-                onChangeText={onChangeConfirmPassword}
-                placeholder={"Confirm Password"}
-                icon={require("../../assets/images/LoginScreen/password.png")}
-                eyeIcon={require("../../assets/images/LoginScreen/privacyEye.png")}
-                onPressRight={onPressRightConfirm}
-                iconStyle={styles.passwordStyle}
-              />
-            ) : (
-              <TextInputCustom
-                secureTextEntry={true}
-                label={"confirmPassword"}
-                value={confirmPassword}
-                onChangeText={onChangeConfirmPassword}
-                placeholder={"Confirm Password"}
-                icon={require("../../assets/images/LoginScreen/password.png")}
-                eyeIcon={require("../../assets/images/ResetPasswordScreen/eyeSlash.png")}
-                onPressRight={onPressRightConfirm}
-                iconStyle={styles.passwordStyle}
-              />
-            )}
+            <TextInputCustom
+              secureTextEntry={isClickEyeForConfirmPassword ? false : true}
+              label={"confirmPassword"}
+              value={confirmPassword}
+              onChangeText={onChangeConfirmPassword}
+              placeholder={"Confirm Password"}
+              icon={require("../../assets/images/LoginScreen/password.png")}
+              eyeIcon={
+                isClickEyeForConfirmPassword
+                  ? require("../../assets/images/LoginScreen/privacyEye.png")
+                  : require("../../assets/images/ResetPasswordScreen/eyeSlash.png")
+              }
+              onPressRight={onPressRightConfirm}
+              iconStyle={styles.passwordStyle}
+              error={error.confirmPasswordErr}
+            />
           </View>
           <View style={{ height: hp("3%") }} />
 
           <View style={styles.viewSocialMediaBtn}>
             <CustomButton
               title="Reset"
-              onPress={googleSignin}
+              onPress={onReset}
               styleBtn={stylesCommon.btnSocialMedia}
               styleTxt={stylesCommon.btnSocialMediaText}
             />
@@ -187,8 +227,18 @@ const ResetPassword = (props) => {
           </TouchableOpacity>
         </View>
       </KeyboardAwareScrollView>
+      {responseData.isRequesting ? (
+        <Loader loading={responseData.isRequesting} />
+      ) : null}
     </>
   );
 };
 
-export default ResetPassword;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    requestToResetPasswordAction: (params) =>
+      dispatch(requestToResetPassword(params)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(ResetPassword);

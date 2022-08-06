@@ -22,7 +22,7 @@ export default StyleSheet.create({
  
   txtBtnGetStart: {
     color: appColor.RED,
-    fontSize: fontConstant.TEXT_45_SIZE_BOLD,
+    fontSize: fontConstant.TEXT_H2_SIZE_BOLD,
   },
   txtBtnHowWork: {
     color: appColor.RED,

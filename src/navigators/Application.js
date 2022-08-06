@@ -12,11 +12,11 @@ import { navigationRef } from './utils'
 import { appColor, appConstant } from '../constant'
 // import CustomDrawer from './CustomDrawer'
 import Login from '../screen/login';
-import Start from '../screen/start';
-import Intro from '../screen/intro';
+import Roster from '../screen/roster';
 import Signup from '../screen/signup'; 
 import ForgotPassword from '../screen/forgotPassword'
 import ResetPassword from '@/screen/resetPassword'
+import HomeNavigation from './TabbarNavigation'
 
 const Stack = createStackNavigator()
 const Drawer = createDrawerNavigator()
@@ -33,8 +33,7 @@ const ApplicationNavigator = () => {
           screenOptions={{ headerShown: false }}
           initialRouteName={appConstant.LOGIN}
         >
-          <Stack.Screen name={appConstant.START} component={Start} />
-          <Stack.Screen name={appConstant.INTRO} component ={Intro} />
+          <Stack.Screen name={appConstant.START} component={HomeNavigation} />
           <Stack.Screen name={appConstant.LOGIN} component={Login} />
           <Stack.Screen name={appConstant.SIGNUP} component={Signup} />
           <Stack.Screen name={appConstant.FORGOT_PWD} component={ForgotPassword} />

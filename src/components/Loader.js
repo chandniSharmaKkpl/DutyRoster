@@ -50,7 +50,7 @@ const Loader = props => {
     <>
       {loading ? (
         <View style={props.viewName ? styles.viewWeb : styles.viewTransparant}>
-          <ActivityIndicator size="large" color={appColor.NAVY_BLUE} />
+          <ActivityIndicator size="large" color={appColor.RED} />
         </View>
       ) : null}
     </>

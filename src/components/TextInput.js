@@ -82,6 +82,7 @@ export const styles = {
   },
   txtError: {
     color: appColor.RED,
+    paddingBottom: hp('1%')
   },
   somePlaceholderStyle: {
     fontSize: fontConstant.TEXT_16_SIZE_REGULAR,
@@ -108,7 +109,7 @@ export const styles = {
     
   },
   txtError: {
-    paddingLeft: wp('56%'),
+    //paddingLeft: wp('56%'),
     textAlign: "left",
     position: "absolute",
     color  : appColor.RED,

@@ -7,7 +7,6 @@ export const loginCall = async (params) => {
     console.log(res);
     return res.data;
   } catch (error) {
-    console.log(error);
     throw error;
   }
 };

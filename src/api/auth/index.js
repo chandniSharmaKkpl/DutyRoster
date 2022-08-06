@@ -1,7 +1,10 @@
 import client from "@/api/client";
+import { apiConstant } from "@/constant";
+
 
 const config = {
   headers: {},
 };
-export const login = (params) => client.post(`/login`, params, config);
-export const forgotPassword = (params) => client.post(`/forgot-password`,params,config);
+export const login = (params) => client.post(apiConstant.LOGIN, params, config);
+export const forgotPassword = (params) => client.post(apiConstant.FORGOT_PWD, params, config);
+export const resetPassword = (params) => client.post(apiConstant.RESET_PWD, params, config);
