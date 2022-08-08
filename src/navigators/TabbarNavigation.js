@@ -104,7 +104,7 @@ export default function HomeNavigation(props) {
       <Tab.Screen
         name={"Roster"}
         component={RosterScreen}
-        tabBarOptions= {{ 
+        screenOptions= {{ 
           activeTintColor:'red'
         }}
         options={{
