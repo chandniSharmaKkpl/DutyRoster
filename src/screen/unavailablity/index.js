@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { View, BackHandler } from "react-native";
 import stylesCommon from "../../common/commonStyle";
-import styles from "./style";
+import styles from './style'
 import { AppText } from "@/components/AppText";
 import { useRoute, useNavigation } from "@react-navigation/core";
 import { CustomButton } from "@/components/CustomButton";
@@ -9,7 +9,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { appConstant } from "@/constant";
 import { CommonHeader } from "@/components";
 
-const RosterScreen = (props) => {
+const Unavailablity = (props) => {
   const navigation = useNavigation();
   const route = useRoute();
   console.log("'route ==>", route.name);
@@ -36,22 +36,22 @@ const RosterScreen = (props) => {
     props.navigation.navigate(appConstant.LOGIN);
   };
 
-  const goToIntro = () => {
-    props.navigation.navigate(appConstant.INTRO);
+  const onGoBack = () => {
+    navigation.navigate(appConstant.ROASTER);
   };
 
   const goToRegistration = () => {};
 
   return (
     <>
-      <CommonHeader screenName={route?.name} />
-      <View style={[styles.container]}>
+      <CommonHeader screenName={route?.name} onGoBack={onGoBack} />
+      <View style={[stylesCommon.container, styles.container]}>
         <View style={styles.viewTop} />
 
         <View style={styles.viewBottom}>
           <AppText
             style={styles.txtBtnGetStart}
-            text={"Coming Soon Roster"}
+            text={"Coming Soon UNAVAILABILITY"}
           ></AppText>
 
           <TouchableOpacity onPress={goToLogin} style={styles.btnTransparant}>
@@ -63,4 +63,4 @@ const RosterScreen = (props) => {
   );
 };
 
-export default RosterScreen;
+export default Unavailablity;

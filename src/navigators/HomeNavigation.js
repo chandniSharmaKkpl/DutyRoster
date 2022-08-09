@@ -9,10 +9,11 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { appColor, appConstant, fontConstant, imageConstant } from "@/constant";
 import { useRef } from "react";
-// import { Images } from "@/constant/svgImgConst";
+import { Images } from "@/constant/svgImgConst";
 import RosterScreen from "@/screen/roster";
 import TimeSheetScreen from "@/screen/timeSheet";
 import {
@@ -20,13 +21,35 @@ import {
   widthPercentageToDP as wp,
 } from "../responsiveScreen";
 import QRCodeScreen from "@/screen/qrCode";
+import EditProfile from "@/screen/editProfile";
 
+const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+
+// Tab.navigationOptions = ({ navigation }) => {
+//   let tabBarVisible = true;
+
+//   let routeName = navigation.state.routes[navigation.state.index].routeName;
+
+//   if (routeName == appConstant.EDIT_PROFILE) {
+//     tabBarVisible = false;
+//   }
+
+//   return {
+//     tabBarVisible,
+//   };
+// };
 
 export default function HomeNavigation(props) {
   const tabOffsetValue = useRef(new Animated.Value(0)).current;
 
   const styles = StyleSheet.create({
+    tabBar: {
+      height: Platform.OS === "android" ? 80 : 60,
+      // backgroundColor: "pink",
+      // padding: 20,
+      shadowColor: appColor.BOX_SHADOW,
+    },
     tab: {
       flex: 1,
       justifyContent: "center",
@@ -50,7 +73,7 @@ export default function HomeNavigation(props) {
     viewImage: {
       width: wp("6%"),
       height: hp("4.5%"),
-      paddingTop: hp('1%')
+      paddingTop: hp("1%"),
     },
     redCircle: {
       width: 72,
@@ -58,9 +81,8 @@ export default function HomeNavigation(props) {
       opacity: 0.8,
       backgroundColor: appColor.RED,
       alignItems: "center",
-      paddingBottom: hp("5%"),
       position: "absolute",
-      bottom: hp("1%"),
+      bottom: Platform.OS === "android" ? hp("4.5%") : hp("3%"),
       borderWidth: 1,
       borderRadius: 50,
       borderColor: appColor.RED,
@@ -75,48 +97,41 @@ export default function HomeNavigation(props) {
     },
   });
 
+  // const ProfileNavigation = () => {
+  //   return (
+  //     <Stack.Navigator
+  //       screenOptions={{ headerShown: false }}
+  //       initialRouteName={appConstant.LOGIN}
+  //     >
+  //       <Stack.Screen name={appConstant.EDIT_PROFILE} component={EditProfile} />
+  //     </Stack.Navigator>
+  //   );
+  // };
+
   return (
     <Tab.Navigator
-      initialRouteName={RosterScreen}
+      screenOptions={{ headerShown: false, tabBarStyle: styles.tabBar }}
+      initialRouteName={appConstant.ROASTER}
       tabBarOptions={{
         showLabel: false,
-        // Floating Tab Bar...
-        padding: hp("5%"),
-        style: {
-          backgroundColor: appColor.BLACK,
-          position: "absolute",
-          //   bottom: 40,
-          marginHorizontal: wp("10%"),
-          // Max Height...
-          height: hp("10%"),
-          borderRadius: 10,
-          // Shadow...
-          shadowColor: "#000",
-          shadowOpacity: 0.06,
-          shadowOffset: {
-            width: 10,
-            height: 10,
-          },
-          paddingHorizontal: 20,
-        },
       }}
     >
+      {/* <Stack.Screen
+        screenOptions={{ tabBarVisible: false }}
+        options={{ tabBarVisible: false, title: "My home" }}
+        name={appConstant.EDIT_PROFILE}
+        component={EditProfile}
+      /> */}
+
       <Tab.Screen
-        name={"Roster"}
+        name={appConstant.ROASTER}
         component={RosterScreen}
-        screenOptions= {{ 
-          activeTintColor:'red'
-        }}
         options={{
-          headerShown: false,
           tabBarIcon: ({ focused }) => (
             <View style={styles.tab}>
               <View style={styles.viewImage}>
-                <Image
-                  source={imageConstant.IMAGE_HOME_ICON}
-                  resizeMode={"contain"}
-                  style={styles.image}
-                  tintColor={focused ? appColor.RED : appColor.GRAY}
+                <Images.IMAGE_HOME_SVG
+                  fill={focused ? appColor.RED : appColor.ICON_COLOR}
                 />
               </View>
               <Text
@@ -139,8 +154,9 @@ export default function HomeNavigation(props) {
       />
 
       <Tab.Screen
-        name={"QR Code"}
+        name={appConstant.QR_CODE}
         component={QRCodeScreen}
+        headerShown={false}
         options={{
           tabBarIcon: ({ focused }) => (
             <View style={styles.tab}>
@@ -168,19 +184,15 @@ export default function HomeNavigation(props) {
       />
 
       <Tab.Screen
-        name={"Timesheet"}
+        name={appConstant.TIMESHEETS}
         component={TimeSheetScreen}
         options={{
           tabBarIcon: ({ focused }) => (
             <View style={styles.tab}>
               <View style={styles.viewImage}>
-                {/* <Image
-                  source={imageConstant.IMAGE_CALENDAE_ICON}
-                  resizeMode={"contain"}
-                  style={styles.image}
-                  tintColor={focused ? appColor.RED : appColor.GRAY}
-                /> */}
-                {/* <Images.IMAGE_CALENDAE_SVG fill = {focused ? appColor.RED : appColor.ICON_COLOR }/> */}
+                <Images.IMAGE_CALENDAE_SVG
+                  fill={focused ? appColor.RED : appColor.ICON_COLOR}
+                />
               </View>
               <Text
                 style={focused ? styles.focuseTabLabel : styles.tabBarLabel}

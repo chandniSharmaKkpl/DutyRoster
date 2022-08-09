@@ -7,7 +7,7 @@ import {
   listenOrientationChange as lor,
   removeOrientationListener as rol,
 } from '../responsiveScreen';
-import {BackgroundImage} from 'react-native-elements/dist/config';
+
 
 const Loader = props => {
   const styles = StyleSheet.create({

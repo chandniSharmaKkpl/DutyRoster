@@ -13,6 +13,10 @@ export default StyleSheet.create({
     backgroundColor: appColor.WHITE,
     paddingHorizontal: 20,
   },
+  scrollViewStyle : {
+    // flex: 1,
+    // backgroundColor: appColor.WHITE,
+  },
   textNormal: {
     fontSize: fontConstant.TEXT_16_SIZE_REGULAR,
     color: appColor.WHITE,

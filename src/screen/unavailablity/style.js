@@ -9,7 +9,7 @@ export default StyleSheet.create({
   container: {
     width: "100%",
     height: "100%",
-    backgroundColor: appColor.GRAY_DARK,
+    // backgroundColor: appColor.BROWN_CUSTOM,
     paddingTop: hp("5%"),
   },
   viewTop: {

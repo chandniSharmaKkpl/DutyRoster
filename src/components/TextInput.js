@@ -16,16 +16,17 @@ export const TextInputCustom = (props) => {
     onChangeText,
     rightIcon,
     style,
+    inputViewStyle,
     placeholder,
     icon,
     eyeIcon,
     onPressRight,
     iconStyle,
     secureTextEntry,
-    keyboardType
+    keyboardType,
   } = props;
   return (
-    <View style={styles.view}>
+    <View style={[styles.view, inputViewStyle]}>
       <View style={styles.view1}>
         <Image
           source={icon} //Change your icon image here
@@ -42,7 +43,7 @@ export const TextInputCustom = (props) => {
           keyboardType={keyboardType}
         />
       </View>
-      <TouchableOpacity onPress={onPressRight}> 
+      <TouchableOpacity onPress={onPressRight}>
         <Image
           source={eyeIcon} //Change your icon image here
           style={styles.eyeIconStyle}
@@ -61,7 +62,7 @@ export const styles = {
     alignItems: "center",
     padding: "2%",
     width: wp("90%"),
-    height: hp("5.5%"),
+    height: hp("6%"),
     borderRadius: 6,
     borderColor: appColor.BORDER_BLACK,
     borderWidth: 1,
@@ -73,49 +74,40 @@ export const styles = {
     },
     shadowOpacity: 0.8,
     shadowRadius: 2.22,
-    // justifyContent: "center",
+    // backgroundColor: "pink",
   },
   view1: {
     flexDirection: "row",
-    // justifyContent: "space-between",
     alignItems: "center",
   },
   txtError: {
     color: appColor.RED,
-    paddingBottom: hp('1%')
+    paddingBottom: hp("1%"),
   },
   somePlaceholderStyle: {
     fontSize: fontConstant.TEXT_16_SIZE_REGULAR,
     color: "red",
   },
   eyeIconStyle: {
-    // marginLeft: ("50%"),
     height: 12,
     width: 17.55,
     resizeMode: "center",
-    // flex : 1,
     justifyContent: "flex-end",
     alignItems: "flex-end",
-    // backgroundColor: "red",
   },
   txtInput: {
-    // backgroundColor: "red",
     includeFontPadding: false,
-   marginLeft:10,
-    width : '80%',
+    marginLeft: 10,
+    width: "80%",
     fontSize: fontConstant.TEXT_17_SIZE_REGULAR,
-    // fontFamily: fontConstant.FONT_REGULAR,
-    fontWeight: fontConstant.WEIGHT_LEIGHT
-    
+    fontWeight: fontConstant.WEIGHT_LEIGHT,
   },
   txtError: {
-    //paddingLeft: wp('56%'),
     textAlign: "left",
     position: "absolute",
-    color  : appColor.RED,
+    color: appColor.RED,
     bottom: -20,
     fontSize: fontConstant.TEXT_H3_SIZE_REGULAR,
-    fontFamily : fontConstant.FONT_REGULAR
-
+    fontFamily: fontConstant.FONT_REGULAR,
   },
 };

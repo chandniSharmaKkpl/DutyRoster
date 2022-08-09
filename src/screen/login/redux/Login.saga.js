@@ -11,7 +11,7 @@ export function* workerGetAccessToken(action) {
       payload: loginResponse,
     });
    //localDb.setUser(loginResponse.data); 
-     action.payload.navigation.navigate(appConstant.START,{userData: loginResponse.data}); 
+     action.payload.navigation.navigate(appConstant.HOME,{userData: loginResponse.data}); 
   } catch (error) {
     alert(error); 
     yield put({

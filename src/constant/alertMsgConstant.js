@@ -7,6 +7,8 @@ export default {
   CONFIRM_PASSWORD_NOT_EMPTY:"Confirm password cannot be empty", 
   REF_CODE_NOT_EMPTY:'2FA code cannot be empty',
   EMAIL_NOT_VALID: 'Email is not correct',
+  FIRST_NAME_EMPTY : 'First Name cannot be empty',
+  LAST_NAME_EMPTY : 'Last Name cannot be empty',
   ITINARY_CANCEL_TITLE: 'Itinary Cancel',
   CLIENT_CODE_NOT_EMPTY: 'Client code cannot be empty',
   SPECIAL_CHAR_NOT_ALLOW:'Special character not allowed',
@@ -30,7 +32,9 @@ export default {
   BIOMETRIC_FAILED:'',
   EMPTY_LIST:'There is no approvals in this section',
   COMING_SOON:'Coming Soon',
-
+  CHOOSE_FILE_TO_UPLOAD: "Select File to Upload",
+  CAPTURE_IMAGE: "Take Photo",
+  SELECT_PHOTO_FROM_LIBRARY: "Select Photo from Library",
   //** Toast types **/
   TOAST_SUCCESS:"success",
   TOAST_NORMAL:"normal",

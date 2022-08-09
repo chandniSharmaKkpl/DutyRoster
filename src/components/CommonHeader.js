@@ -1,77 +1,139 @@
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
-import { fontConstant, appColor } from "../constant";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  Pressable,
+} from "react-native";
+import {
+  fontConstant,
+  appColor,
+  imageConstant,
+  appConstant,
+} from "../constant";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 // import IconMaterial from "react-native-vector-icons/MaterialIcons";
 import { AppText } from "./AppText";
+import { navigationRef } from "@/navigators/utils";
 
-export const CommonHeader = (props) => {
+const CommonHeader = (props) => {
   const {
-    textCenter,
+    leftTitle,
+    rightTitle,
     leftOnPress,
     rightOnPress,
-    viewLeft,
-    viewRight,
+    iconLeft,
+    iconRight,
+    screenName,
+    onGoBack,
   } = props;
+
+  const styles = StyleSheet.create({
+    viewOuter: {
+      backgroundColor: appColor.RED,
+      height: hp("7.5%"),
+      justifyContent: "center",
+    },
+    view1: {
+      flexDirection: "row",
+      display: "flex",
+      justifyContent: "space-between",
+      paddingHorizontal: 20,
+      alignItems: "center",
+    },
+    viewLeft: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "flex-start",
+      flex: 1,
+    },
+    buttonStyle: {
+      height: hp("4%"),
+      width: wp("20%"),
+      backgroundColor: "#242424",
+      borderWidth: 1,
+      borderRadius: 6,
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    txtLeft: {
+      color: appColor.WHITE,
+      fontWeight: fontConstant.WEIGHT_SEMI_BOLD,
+      fontSize: fontConstant.TEXT_H3_SIZE_REGULAR,
+    },
+    pageName: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+      flex: 2,
+      width: "100%",
+    },
+    pageNameText: {
+      fontFamily: fontConstant.FONT_SEMI_BOLD,
+      fontSize: fontConstant.TEXT_16_SIZE_REGULAR,
+      color: appColor.WHITE,
+      textTransform: "uppercase",
+    },
+    viewRightProfile: {
+      flex: 1,
+
+      height: hp("10%"),
+      width: wp("10%"),
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "flex-end",
+    },
+  });
+
+  const onEditProfile = () => {
+    navigationRef.navigate(appConstant.PROFILE_SETTINGS);
+  };
+
+  const onUnavailablity = () => {
+    navigationRef.navigate(appConstant.UNAVAILABILITY);
+  };
+
   return (
     <View style={styles.viewOuter}>
       <View style={styles.view1}>
-      <View style={styles.viewLeft}>
-        {viewLeft}
-      </View>
-
-      <AppText text={textCenter} style={styles.txtCenter} />
-
-      <View style={styles.viewRight}>
-        {viewRight}
-      </View>
+        <View style={styles.viewLeft}>
+          {screenName === appConstant.ROASTER ? (
+            <Pressable style={styles.buttonStyle} onPress={onUnavailablity}>
+              <AppText
+                text={appConstant.UNAVAILABILITY}
+                style={styles.txtLeft}
+              />
+            </Pressable>
+          ) : (
+            <View />
+          )}
+          {screenName === appConstant.UNAVAILABILITY ||
+          screenName === appConstant.EDIT_PROFILE ||
+          screenName === appConstant.QR_CODE ? (
+            <Pressable onPress={onGoBack}>
+              <Image source={imageConstant.IMAGE_BACK_ARROW_ICON} />
+            </Pressable>
+          ) : null}
+        </View>
+        <View style={styles.pageName}>
+          <AppText text={screenName} style={styles.pageNameText} />
+        </View>
+        {screenName === appConstant.ROASTER ||
+        screenName === appConstant.TIMESHEETS ? (
+          <Pressable style={styles.viewRightProfile} onPress={onEditProfile}>
+            <Image source={imageConstant.IMAGE_USER_PROFILE_ICON} />
+          </Pressable>
+        ) : (
+          <View style={styles.viewRightProfile} />
+        )}
       </View>
     </View>
   );
 };
 
-export const styles = {
-  viewOuter: {
-   // width:wp('100%'),
-    backgroundColor: appColor.BLACK,
-   // height:hp('9%'), 
-    //justifyContent:''
-  },
-  view1:{
-
-  backgroundColor:appColor.RED, 
-    // paddingTop:hp('5%'), 
-   flexDirection:'row', 
-   justifyContent:'space-between', 
-   alignItems:'center',
-   height:hp('6%')
-   //flexWrap:'wrap', 
-  //  paddingHorizontal:wp('3.4%')
-  },
-  viewLeft: {
-   // paddingLeft:wp('5%'),
-    // flexDirection: "row",
-    // alignItems: "center",
-  },
-  viewRight: {},
-  txtCenter: {
-    color: appColor.WHITE,
-    fontWeight: fontConstant.WEIGHT_SEMI_BOLD,
-    fontSize: fontConstant.TEXT_20_SIZE_REGULAR
-},
-  txtLeft: {
-      color: appColor.WHITE,
-      fontWeight: fontConstant.WEIGHT_SEMI_BOLD
-  },
-  txtRight:{
-    color: appColor.WHITE,
-    fontWeight: fontConstant.WEIGHT_REGULAR
-  },
-  iconLeft: {
-    fontSize: 20,
-  },
-  iconRight: {},
-};
+export default CommonHeader;

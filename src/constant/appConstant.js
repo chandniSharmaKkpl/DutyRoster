@@ -1,7 +1,4 @@
 export default {
-  START_STACK:'start_stack',
-  START:"Start",
-  INTRO: "Intro",
   DRAWER_NAVIGATOR: 'DrawerNavigator',
   TAB: 'Tab',
   HOME: 'Home',
@@ -11,5 +8,9 @@ export default {
   PROFILE : "Profile",
   RESER_PWD : 'ResetPassword', 
   ROASTER:"Roaster",
-  
+  TIMESHEETS : 'Timesheets',
+  QR_CODE : 'QRCode',
+  EDIT_PROFILE : 'Edit Profile',
+  PROFILE_SETTINGS : 'Profile Settings',
+  UNAVAILABILITY : 'Unavailablity'
 }
