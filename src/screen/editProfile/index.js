@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import { View, BackHandler, Pressable, Image, Text, Keyboard, TouchableOpacity, Dimensions, FlatList, TouchableWithoutFeedback } from "react-native";
 import stylesCommon from "../../common/commonStyle";
 import styles from "./style";
-import ImagePicker from "react-native-image-crop-picker";
+import ImagePicker from 'react-native-image-crop-picker';
 import { AppText } from "@/components/AppText";
 import { useRoute, useNavigation } from "@react-navigation/core";
 import { CustomButton } from "@/components/CustomButton";
@@ -151,17 +151,17 @@ const EditProfile = (props) => {
   }
 
   const chooseMedia = () => {
-    ImagePicker.openPicker({
-      cropping: true,
-      mediaType: "photo",
-      width: 500,
-      height: 500,
-      forceJpg: true,
-      cropperCircleOverlay: true,
-      compressImageMaxWidth: 640,
-      compressImageMaxHeight: 480,
-      freeStyleCropEnabled: true,
-    })
+  //   ImagePicker.openPicker({
+  //     cropping: true,
+  //     mediaType: "photo",
+  //     width: 500,
+  //     height: 500,
+  //     forceJpg: true,
+  //     cropperCircleOverlay: true,
+  //     compressImageMaxWidth: 640,
+  //     compressImageMaxHeight: 480,
+  //     freeStyleCropEnabled: true,
+  //   })
   }
 
   const onselectOptions = (item) => {
@@ -275,7 +275,7 @@ const EditProfile = (props) => {
         keyboardShouldPersistTaps="always"
       >
         <Pressable onPress={() => Keyboard.dismiss()}>
-        {ONopenmediaPicker()}
+        {/* {ONopenmediaPicker()} */}
 
           <View style={[styles.container]}>
             <View style={styles.viewTopTitle}>
@@ -297,7 +297,7 @@ const EditProfile = (props) => {
               style={styles.cameraIcon}
               />
             </View>
-            <TouchableOpacity
+            {/* <TouchableOpacity
                     style={{
                       height: width * 0.075,
                       width: width * 0.075,
@@ -311,7 +311,7 @@ const EditProfile = (props) => {
                     onPress={() => openmediaPicker()}
                   >
                    
-                  </TouchableOpacity>
+                  </TouchableOpacity> */}
             </Pressable>
             <View style={styles.textInputContainer}>
               <Text style={styles.inputTextTitle}>First Name</Text>
