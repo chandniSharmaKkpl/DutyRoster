@@ -310,12 +310,7 @@ const EditProfile = (props) => {
                     }}
                     onPress={() => openmediaPicker()}
                   >
-                    {/* <Entypo
-                      name="edit"
-                      size={width * 0.04}
-                      color={"red"}
-                      style={{ alignSelf: "center" }}
-                    /> */}
+                   
                   </TouchableOpacity>
             </Pressable>
             <View style={styles.textInputContainer}>
