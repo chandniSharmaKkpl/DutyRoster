@@ -1,8 +1,14 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { View, BackHandler, Pressable, Image, Text, Keyboard, TouchableOpacity, Dimensions, FlatList, TouchableWithoutFeedback } from "react-native";
-import stylesCommon from "../../common/commonStyle";
+import {
+  View,
+  BackHandler,
+  Pressable,
+  Image,
+  Text,
+  Keyboard,
+  TouchableOpacity,
+} from "react-native";
 import styles from "./style";
-import ImagePicker from 'react-native-image-crop-picker';
 import { AppText } from "@/components/AppText";
 import { useRoute, useNavigation } from "@react-navigation/core";
 import { CustomButton } from "@/components/CustomButton";
@@ -14,9 +20,7 @@ import { TextInputCustom } from "@/components/TextInput";
 import { isEmailValid } from "@/helper/validations";
 import { navigationRef } from "@/navigators/utils";
 import UploadImage from "@/components/uploadImage";
-import Modal from "react-native-modal";
 
-const { height, width } = Dimensions.get("screen");
 const EditProfile = (props) => {
   const navigation = useNavigation();
   const route = useRoute();
@@ -33,20 +37,7 @@ const EditProfile = (props) => {
   const [email, setEmail] = useState("email@gmail.com");
   const [password, setPassword] = useState("12345678");
   const [confirmPassword, setConfirmPassword] = useState("12345678");
-  const [onopenmediaPicker, setonopenmediaPicker] = useState(false);
-  const [options, setoptions] = React.useState([
-    {
-    //   image: require("../../assets/Swipe.png"),
-      title: alertMsgConstant.CAPTURE_IMAGE,
-      id: 0,
-    },
-    {
-    //   image: require("../../assets/Swipe.png"),
-      title: alertMsgConstant.SELECT_PHOTO_FROM_LIBRARY,
-      id: 1,
-    },
-  ]);
-
+  const [onOpenMediaPicker, setOnOpenMediaPicker] = useState(false);
   const onChangeFirstName = useCallback((text) => setFirstName(text), []);
   const onChangeLastName = useCallback((text) => setLasttName(text), []);
   const onChangeEmail = useCallback((text) => setEmail(text), []);
@@ -55,10 +46,6 @@ const EditProfile = (props) => {
     (text) => setConfirmPassword(text),
     []
   );
-
-  const closemediaPicker = () => {
-    setonopenmediaPicker(false);
-  };
 
   const handleBackButtonClick = () => {
     moveBack();
@@ -74,108 +61,6 @@ const EditProfile = (props) => {
       );
     };
   }, []);
-
-
-
-  const ONopenmediaPicker = () => { 
-    return onopenmediaPicker == true ? (
-      <Modal
-        backdropColor="rgba(52, 52, 52, 0.8)"
-        backdropOpacity={1}
-        animationType="slide"
-        transparent={true}
-        isVisible={onopenmediaPicker}
-        onRequestClose={() => {
-          closemediaPicker(false);
-        }}
-        onBackdropPress={() => {
-          closemediaPicker(false);
-        }}
-      >
-        <View style={styles.modalmediaopen}>
-          <View style={styles.titleviewstyle}>
-            <Text style={[styles.choosefilestyle, { fontWeight: "bold" }]}>
-              {alertMsgConstant.CHOOSE_FILE_TO_UPLOAD}
-            </Text>
-            <View style={styles.lineStyle}></View>
-            <View
-              style={{
-                height: width * 0.25,
-              }}
-            >
-              <FlatList
-                style={[styles.renderMimetypeImagemainView]}
-                data={options}
-                renderItem={({ item, index }) => renderOptionsview(item, index)}
-                bounces={false}
-                showsVerticalScrollIndicator={false}
-                listKey={(item, index) => "D" + index.toString()}
-                keyExtractor={(item, index) => "D" + index.toString()}
-              />
-            </View>
-          </View>
-        </View>
-      </Modal>
-    ) : null;
-  }
-
-  const renderOptionsview = (item, index) => {
-    return (
-      <View style={{ marginTop: height * 0.002 }}>
-        <TouchableWithoutFeedback onPress={() => onselectOptions(item)}>
-          <View style={styles.viewPopupStyle}>
-            {item.title == 'Take Photo' ? (
-              <Image
-                resizeMethod="resize"
-                style={styles.imagePopupStyle}
-                // source={require("../../assets/camera.png")}
-              ></Image>
-            ) : (
-              <Image
-                resizeMethod="resize"
-                style={styles.imagePopupStyle}
-                // source={require("../../assets/gallery.png")}
-              ></Image>
-            )}
-
-            <Text style={styles.textStylePopup}>{item.title}</Text>
-          </View>
-        </TouchableWithoutFeedback>
-        {index < 1 ? <View style={styles.lineStyle1}></View> : null}
-      </View>
-    );
-  };
-
-  const captureImage = () => {
-
-  }
-
-  const chooseMedia = () => {
-  //   ImagePicker.openPicker({
-  //     cropping: true,
-  //     mediaType: "photo",
-  //     width: 500,
-  //     height: 500,
-  //     forceJpg: true,
-  //     cropperCircleOverlay: true,
-  //     compressImageMaxWidth: 640,
-  //     compressImageMaxHeight: 480,
-  //     freeStyleCropEnabled: true,
-  //   })
-  }
-
-  const onselectOptions = (item) => {
-    closemediaPicker(false);
-    setTimeout(() => {
-      if (item.title == 'Take Photo') {
-        captureImage();
-      } else if (
-        item.title == alertMsgConstant.SELECT_PHOTO_FROM_LIBRARY
-      ) {
-        chooseMedia();
-      }
-    }, 1000);
-  };
 
   function Validate(firstName, lasttName, email, password, confirmPassword) {
     let firstNameErr = "";
@@ -237,8 +122,8 @@ const EditProfile = (props) => {
     navigation.navigate(appConstant.ROASTER);
   };
 
-  const openmediaPicker = () => {
-    setonopenmediaPicker(true);
+  const openMediaPicker = () => {
+    setOnOpenMediaPicker(true);
   };
 
   const onSubmit = () => {
@@ -261,8 +146,7 @@ const EditProfile = (props) => {
           }
     );
     if (validate == "ok") {
-      // props.navigation.navigate(appConstant.TIMESHEETS);
-      navigationRef.navigate(appConstant.ROASTER)
+      navigationRef.navigate(appConstant.ROASTER);
     }
   };
 
@@ -275,8 +159,12 @@ const EditProfile = (props) => {
         keyboardShouldPersistTaps="always"
       >
         <Pressable onPress={() => Keyboard.dismiss()}>
-        {/* {ONopenmediaPicker()} */}
-
+          {onOpenMediaPicker ? (
+            <UploadImage
+              onOpenMediaPicker={onOpenMediaPicker}
+              setOnOpenMediaPicker={setOnOpenMediaPicker}
+            />
+          ) : null}
           <View style={[styles.container]}>
             <View style={styles.viewTopTitle}>
               <AppText
@@ -290,28 +178,16 @@ const EditProfile = (props) => {
                 source={imageConstant.IMAGE_EDIT_PROFILE_ICON}
                 style={styles.editImage}
               />
-
-            <View style={styles.cameraIconContainer}>
-              <Image resizeMode={'contain'}
-              source={imageConstant.IMAGE_CAMERA_ICON} 
-              style={styles.cameraIcon}
-              />
-            </View>
-            {/* <TouchableOpacity
-                    style={{
-                      height: width * 0.075,
-                      width: width * 0.075,
-                      alignItems: "center",
-                      justifyContent: "center",
-                      borderRadius: (width * 0.1) / 2,
-                      left: 33,
-                      marginTop: -height * 0.038,
-                      backgroundColor: "white",
-                    }}
-                    onPress={() => openmediaPicker()}
-                  >
-                   
-                  </TouchableOpacity> */}
+              <TouchableOpacity
+                style={styles.cameraIconContainer}
+                onPress={() => openMediaPicker()}
+              >
+                <Image
+                  resizeMode={"contain"}
+                  source={imageConstant.IMAGE_CAMERA_ICON}
+                  style={styles.cameraIcon}
+                />
+              </TouchableOpacity>
             </Pressable>
             <View style={styles.textInputContainer}>
               <Text style={styles.inputTextTitle}>First Name</Text>
@@ -342,7 +218,7 @@ const EditProfile = (props) => {
                 <View>
                   <Text style={styles.inputTextTitle}>Password</Text>
                   <TextInputCustom
-                  secureTextEntry={true}
+                    secureTextEntry={true}
                     label={"Password"}
                     value={password}
                     onChangeText={onChangePassword}
@@ -354,7 +230,7 @@ const EditProfile = (props) => {
                 <View>
                   <Text style={styles.inputTextTitle}>Confirm Password</Text>
                   <TextInputCustom
-                  secureTextEntry={true}
+                    secureTextEntry={true}
                     label={"Confirm Password"}
                     value={confirmPassword}
                     onChangeText={onChangeConfirmPassword}

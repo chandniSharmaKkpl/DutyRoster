@@ -1,34 +1,195 @@
-import { alertMsgConstant } from "@/constant";
 import React from "react";
-import { Alert, StyleSheet, Text, Pressable, View, FlatList } from "react-native";
+import {
+  View,
+  BackHandler,
+  Pressable,
+  Image,
+  Text,
+  Keyboard,
+  TouchableOpacity,
+  Dimensions,
+  FlatList,
+  Platform,
+  TouchableWithoutFeedback,
+  Linking,
+  Alert,
+} from "react-native";
+import { alertMsgConstant } from "@/constant";
 import Modal from "react-native-modal";
+import ImagePicker from "react-native-image-crop-picker";
+import AuthContext from "@/context/AuthContext";
+import styles from "./style";
 
-const UploadImage = () => {
+const { height, width } = Dimensions.get("screen");
+
+const UploadImage = (props) => {
+  const { onOpenMediaPicker, setOnOpenMediaPicker } = props;
+  const { user } = React.useContext(AuthContext);
+  const [meadiaUploadList, setMeadiaUploadList] = React.useState({
+    filePath: "",
+    fileDisplay: "",
+    fileName: "",
+    type: "",
+    mediaType: "",
+  });
   const [options, setoptions] = React.useState([
     {
-    //   image: require("../../assets/Swipe.png"),
+      image: require("../../assets/images/EditProfile/swipe.png"),
       title: alertMsgConstant.CAPTURE_IMAGE,
       id: 0,
     },
     {
-    //   image: require("../../assets/Swipe.png"),
+      image: require("../../assets/images/EditProfile/swipe.png"),
+
       title: alertMsgConstant.SELECT_PHOTO_FROM_LIBRARY,
       id: 1,
     },
   ]);
-  const [onopenmediaPicker, setonopenmediaPicker] = React.useState(false);
+
+  const [profile_imagePath, setProfile_imagePath] = React.useState(
+    user && user.user_detail && user.user_detail.profile_image
+      ? user.user_detail.profile_image
+      : ""
+  );
 
   const closemediaPicker = () => {
-    setonopenmediaPicker(false);
+    setOnOpenMediaPicker(false);
   };
 
-  return onopenmediaPicker == true ? (
-    <ReactModal
+  const renderOptionsview = (item, index) => {
+    return (
+      <View style={{ marginTop: height * 0.002 }}>
+        <TouchableWithoutFeedback onPress={() => onselectOptions(item)}>
+          <View style={styles.viewPopupStyle}>
+            {item.title == "Take Photo" ? (
+              <Image
+                resizeMethod="resize"
+                style={styles.imagePopupStyle}
+                source={require("../../assets/images/EditProfile/cameraImage.png")}
+              ></Image>
+            ) : (
+              <Image
+                resizeMethod="resize"
+                style={styles.imagePopupStyle}
+                source={require("../../assets/images/EditProfile/gallery.png")}
+              ></Image>
+            )}
+
+            <Text style={styles.textStylePopup}>{item.title}</Text>
+          </View>
+        </TouchableWithoutFeedback>
+        {index < 1 ? <View style={styles.lineStyle1}></View> : null}
+      </View>
+    );
+  };
+
+  const captureImage = () => {
+    ImagePicker.openCamera({
+      cropping: true,
+      mediaType: "photo",
+      width: 500,
+      height: 500,
+      forceJpg: true,
+      cropperCircleOverlay: true,
+      compressImageMaxWidth: 640,
+      compressImageMaxHeight: 480,
+      freeStyleCropEnabled: true,
+    })
+      .then((response) => {
+        setMeadiaUploadList({
+          ...meadiaUploadList,
+          filePath:
+            Platform.OS == "ios"
+              ? response.path.replace("file://", "")
+              : response.path,
+          fileDisplay:
+            Platform.OS == "ios"
+              ? response.path.replace("file://", "")
+              : response.path,
+          fileName: Math.floor(new Date().getTime() / 1000) + ".png",
+          type: response.mime,
+          mediaType: "image",
+        });
+        setProfile_imagePath(
+          Platform.OS == "ios"
+            ? response.path.replace("file://", "")
+            : response.path
+        );
+        closemediaPicker(false);
+      })
+      .catch((e) => {
+        if (e.message !== "User cancelled image selection") {
+          if (Platform.OS === "ios") {
+            Alert.alert("Dodee App", e.message, [
+              { text: "OK", onPress: () => Linking.openSettings() },
+              { text: "Cancel", onPress: () => console.log("Cancel Pressed") },
+            ]);
+          } else {
+            console.log(e.message ? "ERROR" + e.message : "ERROR" + e);
+          }
+        } else {
+          console.log(e.message);
+        }
+      });
+  };
+
+  const chooseMedia = () => {
+    ImagePicker.openPicker({
+      cropping: true,
+      mediaType: "photo",
+      width: 500,
+      height: 500,
+      forceJpg: true,
+      cropperCircleOverlay: true,
+      compressImageMaxWidth: 640,
+      compressImageMaxHeight: 480,
+      freeStyleCropEnabled: true,
+    })
+      .then((response) => {
+        console.log("Response ====>", response);
+        setMeadiaUploadList({
+          ...meadiaUploadList,
+          filePath:
+            Platform.OS == "ios"
+              ? response.path.replace("file://", "")
+              : response.path,
+          fileDisplay:
+            Platform.OS == "ios"
+              ? response.path.replace("file://", "")
+              : response.path,
+          fileName: Math.floor(new Date().getTime() / 1000) + ".png",
+          type: response.mime,
+          mediaType: "image",
+        });
+        setProfile_imagePath(
+          Platform.OS == "ios"
+            ? response.path.replace("file://", "")
+            : response.path
+        );
+      })
+      .catch((e) => {
+        console.log(e.message);
+      });
+  };
+
+  const onselectOptions = (item) => {
+    closemediaPicker(false);
+    setTimeout(() => {
+      if (item.title == "Take Photo") {
+        captureImage();
+      } else if (item.title == alertMsgConstant.SELECT_PHOTO_FROM_LIBRARY) {
+        chooseMedia();
+      }
+    }, 1000);
+  };
+
+  return onOpenMediaPicker == true ? (
+    <Modal
       backdropColor="rgba(52, 52, 52, 0.8)"
       backdropOpacity={1}
       animationType="slide"
       transparent={true}
-      isVisible={onopenmediaPicker}
+      isVisible={onOpenMediaPicker}
       onRequestClose={() => {
         closemediaPicker(false);
       }}
@@ -39,7 +200,7 @@ const UploadImage = () => {
       <View style={styles.modalmediaopen}>
         <View style={styles.titleviewstyle}>
           <Text style={[styles.choosefilestyle, { fontWeight: "bold" }]}>
-            {AppConstants.constant.CHOOSE_FILE_TO_UPLOAD}
+            {alertMsgConstant.CHOOSE_FILE_TO_UPLOAD}
           </Text>
           <View style={styles.lineStyle}></View>
           <View
@@ -59,7 +220,7 @@ const UploadImage = () => {
           </View>
         </View>
       </View>
-    </ReactModal>
+    </Modal>
   ) : null;
 };
 
