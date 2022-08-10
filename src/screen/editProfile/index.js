@@ -32,6 +32,7 @@ const EditProfile = (props) => {
     password: "",
     confirmPassword: "",
   });
+  const [profilePath, setProfiilePath] = useState(null)
   const [firstName, setFirstName] = useState("Kevin");
   const [lasttName, setLasttName] = useState("Devid");
   const [email, setEmail] = useState("email@gmail.com");
@@ -163,6 +164,7 @@ const EditProfile = (props) => {
             <UploadImage
               onOpenMediaPicker={onOpenMediaPicker}
               setOnOpenMediaPicker={setOnOpenMediaPicker}
+              setProfiilePath={setProfiilePath}
             />
           ) : null}
           <View style={[styles.container]}>

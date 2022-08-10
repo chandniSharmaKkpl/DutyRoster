@@ -10,32 +10,23 @@ export default StyleSheet.create({
     width: "100%",
     height: "100%",
     // backgroundColor: appColor.BROWN_CUSTOM,
-    paddingTop: hp("5%"),
+    paddingHorizontal : 20
   },
-  viewTop: {
-    flex: 0.36,
+  viewTopTitle: {
+    paddingTop: hp("1.5%"),
   },
-  viewBottom: {
-    flex: 0.35,
-    alignItems: "center",
-  },
- 
-  txtBtnGetStart: {
-    color: appColor.RED,
-    fontSize: fontConstant.TEXT_H1_SIZE_BOLD,
-  },
-  txtBtnHowWork: {
-    color: appColor.RED,
-    fontSize: fontConstant.TEXT_14_SIZE_REGULAR,
+  txtUnavailablity : {
     fontFamily: fontConstant.FONT_SEMI_BOLD,
+    fontSize: fontConstant.TEXT_H1_SIZE_REGULAR,
+    color: appColor.BLACK,
+    paddingBottom: hp("1%"),
+    paddingTop: hp("2%"),
   },
-
-  btnTransparant: {
-    paddingTop: 50,
-    backgroundColor: appColor.TRANSPARANT,
+  rightIconStyle : {
+      height: hp('6%'),
+      width : wp('6%')
   },
-
-  txtBtnTry: {
+    txtBtnTry: {
     color: appColor.RED,
     fontSize: fontConstant.TEXT_14_SIZE_BOLD,
     fontWeight: "600",

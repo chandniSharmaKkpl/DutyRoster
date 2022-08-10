@@ -8,5 +8,6 @@ export default{
     IMAGE_USER_PROFILE_ICON : require('../assets/images/TabbarIcon/profile.png'),
     IMAGE_BACK_ARROW_ICON : require('../assets/images/TabbarIcon/arrow-back-outline.png'),
     IMAGE_EDIT_PROFILE_ICON : require('../assets/images/EditProfile/editUserImg.png'),
-    IMAGE_CAMERA_ICON : require('../assets/images/EditProfile/camera.png')
+    IMAGE_CAMERA_ICON : require('../assets/images/EditProfile/camera.png'),
+    IMAGE_DATE_PICKER_IMAGE : require('../assets/images/Unavailablity/calendar.png')
 }

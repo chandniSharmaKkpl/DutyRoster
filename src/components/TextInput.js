@@ -19,11 +19,11 @@ export const TextInputCustom = (props) => {
     inputViewStyle,
     placeholder,
     icon,
-    eyeIcon,
     onPressRight,
     iconStyle,
     secureTextEntry,
     keyboardType,
+    rightIconStyle
   } = props;
   return (
     <View style={[styles.view, inputViewStyle]}>
@@ -45,8 +45,8 @@ export const TextInputCustom = (props) => {
       </View>
       <TouchableOpacity onPress={onPressRight}>
         <Image
-          source={eyeIcon} //Change your icon image here
-          style={styles.eyeIconStyle}
+          source={rightIcon} //Change your icon image here
+          style={[styles.iconStyle, rightIconStyle]}
         />
       </TouchableOpacity>
 
@@ -60,7 +60,7 @@ export const styles = {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: "2%",
+    paddingHorizontal : wp('3%'),
     width: wp("90%"),
     height: hp("6%"),
     borderRadius: 6,
@@ -88,7 +88,7 @@ export const styles = {
     fontSize: fontConstant.TEXT_16_SIZE_REGULAR,
     color: "red",
   },
-  eyeIconStyle: {
+  iconStyle: {
     height: 12,
     width: 17.55,
     resizeMode: "center",

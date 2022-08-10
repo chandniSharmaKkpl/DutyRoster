@@ -12,5 +12,18 @@ export default {
   QR_CODE : 'QRCode',
   EDIT_PROFILE : 'Edit Profile',
   PROFILE_SETTINGS : 'Profile Settings',
-  UNAVAILABILITY : 'Unavailablity'
+  UNAVAILABILITY : 'Unavailablity',
+
+
+  // Input Title name 
+
+  UNAVAILABLE_DATE : 'Unavailable Date',
+  LOCATION : 'Location',
+  SHIFT : 'Shift',
+
+
+  // Placeholder text
+
+    CHOOSE_DATE : 'Choose Unavailable Date',
+     
 }

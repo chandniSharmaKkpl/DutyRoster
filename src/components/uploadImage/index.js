@@ -23,7 +23,7 @@ import styles from "./style";
 const { height, width } = Dimensions.get("screen");
 
 const UploadImage = (props) => {
-  const { onOpenMediaPicker, setOnOpenMediaPicker } = props;
+  const { onOpenMediaPicker, setOnOpenMediaPicker, setProfiilePath } = props;
   const { user } = React.useContext(AuthContext);
   const [meadiaUploadList, setMeadiaUploadList] = React.useState({
     filePath: "",
@@ -32,6 +32,7 @@ const UploadImage = (props) => {
     type: "",
     mediaType: "",
   });
+
   const [options, setoptions] = React.useState([
     {
       image: require("../../assets/images/EditProfile/swipe.png"),
@@ -51,6 +52,8 @@ const UploadImage = (props) => {
       ? user.user_detail.profile_image
       : ""
   );
+  console.log("profile_imagePath ===>", profile_imagePath);
+
 
   const closemediaPicker = () => {
     setOnOpenMediaPicker(false);
@@ -96,6 +99,8 @@ const UploadImage = (props) => {
       freeStyleCropEnabled: true,
     })
       .then((response) => {
+        console.log("captureImage ::::", response);
+        setProfiilePath(response)
         setMeadiaUploadList({
           ...meadiaUploadList,
           filePath:
@@ -146,7 +151,8 @@ const UploadImage = (props) => {
       freeStyleCropEnabled: true,
     })
       .then((response) => {
-        console.log("Response ====>", response);
+        console.log("chooseMedia ====>", response);
+        setProfiilePath(response)
         setMeadiaUploadList({
           ...meadiaUploadList,
           filePath:

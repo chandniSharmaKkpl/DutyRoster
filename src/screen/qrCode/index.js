@@ -1,20 +1,33 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { View, BackHandler } from "react-native";
+import { View, BackHandler, Text, Linking, Dimensions } from "react-native";
 import stylesCommon from "../../common/commonStyle";
-import styles from './style'
-import { AppText } from "@/components/AppText";
-import { useNavigation } from "@react-navigation/core";
+import styles from "./style";
+import { useNavigation, useRoute } from "@react-navigation/core";
 import { CustomButton } from "@/components/CustomButton";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { appConstant } from "@/constant";
+import { CommonHeader } from "@/components";
+import * as Animatable from "react-native-animatable";
+import QRCodeScanner from "react-native-qrcode-scanner";
+import { appColor } from "@/constant";
+
+const SCREEN_HEIGHT = Dimensions.get("window").height;
+const SCREEN_WIDTH = Dimensions.get("window").width;
+const iconScanColor = "blue";
 
 const QRCodeScreen = (props) => {
   const navigation = useNavigation();
-
+  const route = useRoute();
   const handleBackButtonClick = () => {
     moveBack();
     return true;
   };
+
+  const onSuccess = (e) => {
+    Linking.openURL(e.data).catch((err) =>
+      console.error("An error occured", err)
+    );
+    console.log("success ==>", e);
+  };
+
   useEffect(() => {
     BackHandler.addEventListener("hardwareBackPress", handleBackButtonClick);
 
@@ -30,29 +43,73 @@ const QRCodeScreen = (props) => {
     props.navigation.goBack();
   };
 
-  const goToLogin = () => {
-    props.navigation.navigate(appConstant.LOGIN);
+  const makeSlideOutTranslation = (translationType, fromValue) => {
+    return {
+      from: {
+        [translationType]: SCREEN_WIDTH * -0.18,
+      },
+      to: {
+        [translationType]: fromValue,
+      },
+    };
   };
 
-  const goToIntro = () => {
-    props.navigation.navigate(appConstant.INTRO);
-  };
-
-  const goToRegistration = () => {};
+  const onGoBack = () => {
+    props.navigation.goBack();
+  }
 
   return (
     <>
-      <View style={[stylesCommon.container, styles.container]}>
-        {/* <ImageBackground style={styles.container}> */}
-        <View style={styles.viewTop} />
+      <CommonHeader screenName={route?.name} onGoBack={onGoBack}/>
+      <View style={[styles.container]}>
+        <QRCodeScanner
+          onRead={onSuccess}
+          cameraStyle={{ height: SCREEN_HEIGHT, width : SCREEN_WIDTH }}
+          showMarker
+          markerStyle={{
+            borderColor: appColor.WHITE,
+            borderRadius: 1,
+            height: SCREEN_HEIGHT,
+            width: SCREEN_WIDTH,
+          }}
+          customMarker={
+            <View style={styles.rectangleContainer}>
+              <View style={styles.topOverlay}>
+                <Text>{""}</Text>
+              </View>
+              <View style={{ flexDirection: "row" }}>
+                <View style={styles.leftAndRightOverlay} />
+                <View style={styles.circleContainer}>
+                  <View style={styles.rectangle}></View>
+                  <Animatable.View
+                    style={styles.scanBar}
+                    direction="alternate-reverse"
+                    iterationCount="infinite"
+                    duration={1800}
+                    easing="linear"
+                    animation={makeSlideOutTranslation(
+                      "translateY",
+                      SCREEN_WIDTH * -0.30
+                    )}
+                  />
+                </View>
 
-        <View style={styles.viewBottom}>
-          <AppText style={styles.txtBtnGetStart} text={"Coming Soon QR CODE"}></AppText>
+                <View style={styles.leftAndRightOverlay} />
+              </View>
 
-          <TouchableOpacity onPress={goToLogin} style={styles.btnTransparant}>
-            <AppText style={styles.txtBtnTry} text={"Back To Login"} />
-          </TouchableOpacity>
-        </View>
+              <View style={styles.topOverlay}>
+                <Text style={styles.scanText}>
+                Scan QR Code
+                </Text>
+                {/* <View style={{ marginTop: 40 }}>
+                  <CustomButton />
+                </View> */}
+              </View>
+
+              <View style={styles.bottomOverlay} />
+            </View>
+          }
+        />
       </View>
     </>
   );

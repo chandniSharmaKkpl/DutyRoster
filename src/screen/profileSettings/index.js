@@ -3,7 +3,7 @@ import { View, BackHandler, FlatList, Text, Pressable } from "react-native";
 import stylesCommon from "../../common/commonStyle";
 import styles from "./style";
 import { AppText } from "@/components/AppText";
-import { useNavigation } from "@react-navigation/core";
+import { useNavigation, useRoute } from "@react-navigation/core";
 import { CustomButton } from "@/components/CustomButton";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { alertMsgConstant, appColor, appConstant } from "@/constant";
@@ -15,6 +15,8 @@ import { color } from "react-native-reanimated";
 
 const ProfileSetting = (props) => {
   const navigation = useNavigation();
+  const route = useRoute();
+
   const [isAlertShow, setIsAlertShow] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   console.log("isAlertShow ==>", selectedItem);
@@ -106,7 +108,7 @@ const ProfileSetting = (props) => {
 
   return (
     <>
-      <CommonHeader screenName={"Profile Settings"} />
+      <CommonHeader screenName={route?.name} />
       <View style={[stylesCommon.container, styles.container]}>
         <View style={styles.viewTopTitle}>
           <AppText

@@ -1,13 +1,14 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { View, BackHandler } from "react-native";
 import stylesCommon from "../../common/commonStyle";
-import styles from './style'
+import styles from "./style";
 import { AppText } from "@/components/AppText";
 import { useRoute, useNavigation } from "@react-navigation/core";
 import { CustomButton } from "@/components/CustomButton";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { appConstant } from "@/constant";
+import { appConstant, imageConstant } from "@/constant";
 import { CommonHeader } from "@/components";
+import { TextInputCustom } from "@/components/TextInput";
 
 const Unavailablity = (props) => {
   const navigation = useNavigation();
@@ -45,19 +46,21 @@ const Unavailablity = (props) => {
   return (
     <>
       <CommonHeader screenName={route?.name} onGoBack={onGoBack} />
-      <View style={[stylesCommon.container, styles.container]}>
-        <View style={styles.viewTop} />
-
-        <View style={styles.viewBottom}>
+      <View style={[styles.container]}>
+        <View style={styles.viewTopTitle}>
           <AppText
-            style={styles.txtBtnGetStart}
-            text={"Coming Soon UNAVAILABILITY"}
-          ></AppText>
-
-          <TouchableOpacity onPress={goToLogin} style={styles.btnTransparant}>
-            <AppText style={styles.txtBtnTry} text={"Back To Login"} />
-          </TouchableOpacity>
+            style={styles.txtUnavailablity}
+            text={appConstant.UNAVAILABLE_DATE}
+          />
+          <TextInputCustom
+            placeholder={appConstant.CHOOSE_DATE}
+            rightIcon={imageConstant.IMAGE_DATE_PICKER_IMAGE}
+            rightIconStyle={styles.rightIconStyle}
+          />
         </View>
+        <TouchableOpacity onPress={goToLogin} style={styles.btnTransparant}>
+          <AppText style={styles.txtBtnTry} text={"Back To Login"} />
+        </TouchableOpacity>
       </View>
     </>
   );
