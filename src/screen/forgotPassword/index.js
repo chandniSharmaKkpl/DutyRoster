@@ -32,7 +32,7 @@ const ForgotPassword = (props) => {
     emailErr: ""
   });  
   
-  const [email, setEmail] = useState("emp1@yopmail.com");
+  const [email, setEmail] = useState("");
   const responseData = useSelector(state => state.Forgot_PasswordReducer)
   const navigation = useNavigation();
   const onChangeEmail = useCallback((text) => setEmail(text), []);
@@ -67,7 +67,7 @@ const ForgotPassword = (props) => {
                 }
   );
   if (validate == "ok") {
-    props.requestToForgotPasswordAction({email: email, navigation: props.navigation})
+    props.requestToForgotPasswordAction({email: email, navigation: props.navigation, comeFrom: appConstant.FORGOT_PWD})
     // props.navigation.navigate(appConstant.RESER_PWD, {email: email});
   }
   };

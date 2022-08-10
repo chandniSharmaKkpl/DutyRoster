@@ -27,6 +27,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { useNavigation } from "@react-navigation/core";
 import { connect, useSelector } from "react-redux";
 import { requestToResetPassword } from "./redux/Reset_Password.action";
+import { requestToForgotPassword } from "../forgotPassword/redux/Forgot_Password.action";
 import Loader from "@/components/Loader";
 
 const ResetPassword = (props) => {
@@ -39,6 +40,7 @@ const ResetPassword = (props) => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const responseData = useSelector((state) => state.Reset_PasswordReducer);
+  const responseDataResendCode = useSelector(state => state.Forgot_PasswordReducer)
 
   const [isClickEyeNewPassword, setIsClickEyeNewPassword] = useState(false);
   const [isClickEyeForConfirmPassword, setIsClickEyeForConfirmPassword] =
@@ -68,7 +70,10 @@ const ResetPassword = (props) => {
     props.navigation.goBack();
   };
 
-  const resendCode = () => {};
+  const resendCode = () => {
+    props.requestToForgotPasswordAction({email: props.route.params.email, navigation: props.navigation, comeFrom: appConstant.RESER_PWD})
+
+  };
 
   const onReset = () => {
     const validate = Validate(refCode, newPassword, confirmPassword);
@@ -91,7 +96,7 @@ const ResetPassword = (props) => {
         navigation
       });
 
-      props.navigation.navigate(appConstant.RESER_PWD);
+     // props.navigation.navigate(appConstant.RESER_PWD);
     }
   };
   function Validate(refCode, newPassword, confirmPassword) {
@@ -132,7 +137,7 @@ const ResetPassword = (props) => {
   };
 
   const backToLogin = () => {
-    navigation.navigate("Login");
+    navigation.navigate(appConstant.LOGIN);
   };
 
   return (
@@ -227,8 +232,8 @@ const ResetPassword = (props) => {
           </TouchableOpacity>
         </View>
       </KeyboardAwareScrollView>
-      {responseData.isRequesting ? (
-        <Loader loading={responseData.isRequesting} />
+      {responseData.isRequesting || responseDataResendCode.isRequesting ? (
+        <Loader loading={responseData.isRequesting || responseDataResendCode.isRequesting} />
       ) : null}
     </>
   );
@@ -236,6 +241,10 @@ const ResetPassword = (props) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+
+    requestToForgotPasswordAction: (params) =>
+    dispatch(requestToForgotPassword(params)),
+
     requestToResetPasswordAction: (params) =>
       dispatch(requestToResetPassword(params)),
   };

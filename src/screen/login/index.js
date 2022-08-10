@@ -20,8 +20,8 @@ const Login = (props) => {
     emailErr: "",
     passwordErr: "",
   });
-  const [email, setEmail] = useState("emp1@yopmail.com");
-  const [password, setPassword] = useState("password");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [isClickEye, setIsClickEye] = useState(false);
   const [loading, setLoading] = React.useState(true);
   const [formErr, setFormError] = React.useState("");

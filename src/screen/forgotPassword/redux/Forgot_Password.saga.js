@@ -6,15 +6,21 @@ export function* workerForgotPassword(action) {
 
   try {
     const response = yield call(forgotPasswordCall, action.payload);
-
+   console.log(" response msg ---", response); 
     yield put({
       type: actionConstant.ACTION_FORGOT_PASSWORD_SUCCESS,
       payload: response,
     });
-    action.payload.navigation.navigate(appConstant.RESER_PWD, {"email": action.payload.email});
+    if (action.payload.comeFrom == appConstant.FORGOT_PWD ) {
+      action.payload.navigation.navigate(appConstant.RESER_PWD, {"email": action.payload.email});
+    }
+    alert(response.message)
   } catch (error) {
     alert(error)
-    action.payload.navigation.navigate(appConstant.RESER_PWD, {"email": action.payload.email});
+    if (action.payload.comeFrom == appConstant.FORGOT_PWD ) {
+      action.payload.navigation.navigate(appConstant.RESER_PWD, {"email": action.payload.email});
+    }
+    alert(response.message)
 
     yield put({
       type: actionConstant.ACTION_FORGOT_PASSWORD_FAILURE,
