@@ -12,7 +12,7 @@ export default StyleSheet.create({
     // backgroundColor: appColor.BROWN_CUSTOM,
     paddingHorizontal : 20
   },
-  viewTopTitle: {
+  viewTopTitle: { 
     paddingTop: hp("1.5%"),
   },
   txtUnavailablity : {
