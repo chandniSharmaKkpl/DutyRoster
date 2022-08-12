@@ -6,7 +6,7 @@ const SCREEN_WIDTH = Dimensions.get("window").width;
 
 const overlayColor = "rgba(0,0,0,0.5)"; // this gives us a black color with a 50% transparency
 
-const rectDimensions = SCREEN_WIDTH * 0.43; // this is equivalent to 255 from a 393 device width
+const rectDimensions = SCREEN_WIDTH * 0.45; // this is equivalent to 255 from a 393 device width
 const rectBorderWidth = SCREEN_WIDTH * 0.005; // this is equivalent to 2 from a 393 device width
 const rectBorderColor = "white";
 

@@ -20,8 +20,8 @@ const Login = (props) => {
     emailErr: "",
     passwordErr: "",
   });
-  const [email, setEmail] = useState("emp1@yopmail.com");
-  const [password, setPassword] = useState("password");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [isClickEye, setIsClickEye] = useState(false);
   const [loading, setLoading] = React.useState(true);
   const [formErr, setFormError] = React.useState("");
@@ -99,7 +99,6 @@ const Login = (props) => {
 
   const onClickSignIn = () => {
 
-
     const validate = Validate(email, password);
     setError(
       validate !== "ok"
@@ -160,7 +159,7 @@ const Login = (props) => {
                 onChangeText={onChangePassword}
                 placeholder={"Enter Password"}
                 icon={require("../../assets/images/LoginScreen/password.png")}
-                rightIcon={require("../../assets/images/LoginScreen/privacyEye.png")}
+                eyeIcon={require("../../assets/images/LoginScreen/privacyEye.png")}
                 onPressRight={onPressRight}
                 iconStyle={styles.passwordStyle}
                 error={error.passwordErr}
@@ -173,7 +172,7 @@ const Login = (props) => {
                 onChangeText={onChangePassword}
                 placeholder={"Enter Password"}
                 icon={require("../../assets/images/LoginScreen/password.png")}
-                rightIcon={require("../../assets/images/ResetPasswordScreen/eyeSlash.png")}
+                eyeIcon={require("../../assets/images/ResetPasswordScreen/eyeSlash.png")}
                 onPressRight={onPressRight}
                 iconStyle={styles.passwordStyle}
                 error={error.passwordErr}
