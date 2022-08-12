@@ -53,7 +53,17 @@ export default StyleSheet.create({
     paddingTop: hp("4%"),
     paddingBottom: hp("3%"),
   },
+  viewSignUp: {
+    alignSelf: "center",
+    paddingTop: hp("3%"),
+    paddingBottom: hp("3%"),
+  },
   txtForgotPass: {
+    color: appColor.BLACK,
+    fontFamily: fontConstant.FONT_REGULAR,
+    fontSize: fontConstant.TEXT_H2_SIZE_REGULAR,
+  },
+  txtSignup: {
     color: appColor.BLACK,
     fontFamily: fontConstant.FONT_REGULAR,
     fontSize: fontConstant.TEXT_H2_SIZE_REGULAR,

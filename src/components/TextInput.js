@@ -24,6 +24,7 @@ export const TextInputCustom = (props) => {
     iconStyle,
     secureTextEntry,
     keyboardType,
+    multiline,
   } = props;
   return (
     <View style={[styles.view, inputViewStyle]}>
@@ -89,7 +90,7 @@ export const styles = {
     color: "red",
   },
   eyeIconStyle: {
-    height: 12,
+    height: 20,
     width: 17.55,
     resizeMode: "center",
     justifyContent: "flex-end",
@@ -99,6 +100,7 @@ export const styles = {
     includeFontPadding: false,
     marginLeft: 10,
     width: "80%",
+    padding:0,
     fontSize: fontConstant.TEXT_17_SIZE_REGULAR,
     fontWeight: fontConstant.WEIGHT_LEIGHT,
   },

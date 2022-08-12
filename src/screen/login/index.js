@@ -118,6 +118,11 @@ const Login = (props) => {
     navigation.navigate("ForgotPassword");
   };
 
+
+  const goToSignup = () => {
+    navigation.navigate("Signup");
+  };
+
   return (
     <>
       <KeyboardAwareScrollView
@@ -197,6 +202,21 @@ const Login = (props) => {
               styleTxt={stylesCommon.btnSocialMediaText}
             />
           </View>
+
+          <View style={{...styles.viewSignUp , flexDirection:'row' }}>
+            
+              <AppText
+                text={"Don't have an Account?"}
+                style={styles.txtSignup}
+              />
+            <TouchableOpacity onPress={goToSignup} >
+              <AppText
+                text={" Signup"}
+                style={{...styles.txtSignup , color:"#BD2529"}}
+              />
+            </TouchableOpacity>
+          </View>
+
         </View>
       </KeyboardAwareScrollView>
       {loginResponse.isRequesting ? (

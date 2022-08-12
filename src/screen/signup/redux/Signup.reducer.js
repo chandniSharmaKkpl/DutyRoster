@@ -1,38 +1,38 @@
-import {actionConstant} from '../../constant';
+import { actionConstant } from "@/constant";
 
 const initialState = {
   isRequesting: false,
-  error: {},
-  apiBaseData: '',
-  clientToken: '',
-  responseAccountUrl: '',
-};
+    data: {},
+    error:{}
+   }
+   
 
 export default (state = initialState, { type, payload }) => {
     switch (type) {
-
-        case actionConstant.ACTION_GET_API_BASE_REQUEST: {
+        case actionConstant.ACTION_GET_SIGN_UP_REQUEST: {
             return {
               ...state,
-              apiBaseData: {},
+              data:{},
               isRequesting: true,
               error: {},
             };
           }
-          case actionConstant.ACTION_GET_API_BASE_SUCCESS: {
+          case actionConstant.ACTION_GET_SIGN_UP_SUCCESS: {
+            console.log(payload , 'payload');
             return {
               ...state,
-              apiBaseData: payload,
+              data: payload.data,
               isRequesting: false,
               error: {},
             };
           }
-          case actionConstant.ACTION_GET_API_BASE_FAILURE: {
+          case actionConstant.ACTION_GET_SIGN_UP_FAILURE: {
+            console.log(JSON.stringify(payload) , 'payload data')
             return {
               ...state,
-              apiBaseData: {},
+              data: payload,
               isRequesting: false,
-              error: payload,
+              error: {},
             };
           }
     default:
