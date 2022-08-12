@@ -20,6 +20,7 @@ import HomeNavigation from "./HomeNavigation";
 import EditProfile from "@/screen/editProfile";
 import Unavailablity from "@/screen/unavailablity";
 import ProfileSetting from "@/screen/profileSettings";
+import Calendars from "@/components/Calendars";
 
 export const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -54,6 +55,10 @@ const ApplicationNavigator = () => {
           <Stack.Screen
             name={appConstant.UNAVAILABILITY}
             component={Unavailablity}
+          />
+          <Stack.Screen
+            name={appConstant.CALENDAR}
+            component={Calendars}
           />
           <Stack.Screen name={appConstant.PROFILE_SETTINGS} component={ProfileSetting} />
         </Stack.Navigator>

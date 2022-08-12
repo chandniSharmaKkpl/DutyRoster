@@ -13,6 +13,7 @@ export default {
   EDIT_PROFILE : 'Edit Profile',
   PROFILE_SETTINGS : 'Profile Settings',
   UNAVAILABILITY : 'Unavailablity',
+  CALENDAR : 'Calendar',
 
 
   // Input Title name 

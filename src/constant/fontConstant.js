@@ -13,7 +13,7 @@ export default {
   TEXT_45_SIZE_BOLD: hp('5%'), // 35
   TEXT_H1_SIZE_BOLD: hp('4%'), // 35
   TEXT_H2_SIZE_BOLD: hp('3.5%'), //22
-  TEXT_H2_5_SIZE_BOLD: hp('2.5%'), //17+
+  TEXT_H2_5_SIZE_BOLD: hp('3%'), //17+
 
   TEXT_H3_SIZE_BOLD: hp('2.25%'), //17
   TEXT_15_SIZE_BOLD: hp('2.1%'), //15
@@ -25,7 +25,7 @@ export default {
 
   TEXT_H1_SIZE_REGULAR: hp('2%'), // 14
   TEXT_H2_SIZE_REGULAR: hp('1.5%'), //12
-  TEXT_H3_SIZE_REGULAR: hp('1.2%'), //9
+  TEXT_H3_SIZE_REGULAR: hp('1.4%'), //10
   TEXT_17_SIZE_REGULAR: hp('2.0%'), //17
   TEXT_18_SIZE_REGULAR: hp('2.2%'), //18
   TEXT_16_SIZE_REGULAR: hp('1.9%'), //16
