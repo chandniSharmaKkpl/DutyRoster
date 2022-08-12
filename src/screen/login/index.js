@@ -1,5 +1,14 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { View, Text, Image, BackHandler, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  BackHandler,
+  TouchableOpacity,
+  Pressable,
+  Linking,
+  Keyboard,
+} from "react-native";
 import stylesCommon from "../../common/commonStyle";
 import { imageConstant, alertMsgConstant } from "../../constant";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
@@ -8,14 +17,13 @@ import { isEmailValid } from "../../helper/validations";
 import styles from "./style";
 import { CustomButton } from "@/components/CustomButton";
 import { AppText } from "@/components/AppText";
-import Loader from '@/components/Loader';
+import Loader from "@/components/Loader";
 import { TextInputCustom } from "@/components/TextInput";
 import { connect, useSelector } from "react-redux";
 import { requestToGetAccessToken } from "./redux/Login.action";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const Login = (props) => {
-  
   const [error, setError] = React.useState({
     emailErr: "",
     passwordErr: "",
@@ -25,7 +33,7 @@ const Login = (props) => {
   const [isClickEye, setIsClickEye] = useState(false);
   const [loading, setLoading] = React.useState(true);
   const [formErr, setFormError] = React.useState("");
- const loginResponse = useSelector(state => state.LoginReducer)
+  const loginResponse = useSelector((state) => state.LoginReducer);
   const navigation = useNavigation();
   const onChangeEmail = (text) => {
     setEmail(text);
@@ -86,8 +94,7 @@ const Login = (props) => {
     }
   }
 
-  useEffect(() => {
-  }, [isClickEye]);
+  useEffect(() => {}, [isClickEye]);
 
   const onPressRight = () => {
     setIsClickEye(!isClickEye);
@@ -98,7 +105,6 @@ const Login = (props) => {
   };
 
   const onClickSignIn = () => {
-
     const validate = Validate(email, password);
     setError(
       validate !== "ok"
@@ -110,7 +116,11 @@ const Login = (props) => {
     );
 
     if (validate == "ok") {
-      props.requestToGetAccessTokenAction({ email: email, password :password, navigation: navigation });
+      props.requestToGetAccessTokenAction({
+        email: email,
+        password: password,
+        navigation: navigation,
+      });
     }
   };
 
@@ -125,84 +135,85 @@ const Login = (props) => {
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="always"
       >
-        <View style={stylesCommon.container}>
-          <View style={stylesCommon.imageContainer}>
-            <Image
-              resizeMode={"contain"}
-              source={imageConstant.IMAGE_LOGIN_TOP}
-              // style={styles.image}
-            />
-          </View>
+        <Pressable onPress={() => Keyboard.dismiss()}>
+          <View style={stylesCommon.container}>
+            <View style={stylesCommon.imageContainer}>
+              <Image
+                resizeMode={"contain"}
+                source={imageConstant.IMAGE_LOGIN_TOP}
+                // style={styles.image}
+              />
+            </View>
 
-          <View style={styles.loginTextContainer}>
-            <Text style={stylesCommon.titleText}>Login!</Text>
-          </View>
+            <View style={styles.loginTextContainer}>
+              <Text style={stylesCommon.titleText}>Login!</Text>
+            </View>
 
-          <View style={styles.viewTxtInput}>
-            <TextInputCustom
-              label={"Email"}
-              value={email}
-              onChangeText={onChangeEmail}
-              placeholder={"Enter Email Address"}
-              icon={require("../../assets/images/LoginScreen/email-line.png")}
-              iconStyle={styles.emailIconStyle}
-              error={error.emailErr}
-              keyboardType="email-address"
-            />
-            <View style={{ height: hp("2.5%") }} />
-
-            {isClickEye ? (
+            <View style={styles.viewTxtInput}>
               <TextInputCustom
-                secureTextEntry={false}
-                label={"Password"}
-                value={password}
-                onChangeText={onChangePassword}
-                placeholder={"Enter Password"}
-                icon={require("../../assets/images/LoginScreen/password.png")}
-                eyeIcon={require("../../assets/images/LoginScreen/privacyEye.png")}
-                onPressRight={onPressRight}
-                iconStyle={styles.passwordStyle}
-                error={error.passwordErr}
+                label={"Email"}
+                value={email}
+                onChangeText={onChangeEmail}
+                placeholder={"Enter Email Address"}
+                icon={require("../../assets/images/LoginScreen/email-line.png")}
+                iconStyle={styles.emailIconStyle}
+                error={error.emailErr}
+                keyboardType="email-address"
               />
-            ) : (
-              <TextInputCustom
-                secureTextEntry={true}
-                label={"Password"}
-                value={password}
-                onChangeText={onChangePassword}
-                placeholder={"Enter Password"}
-                icon={require("../../assets/images/LoginScreen/password.png")}
-                eyeIcon={require("../../assets/images/ResetPasswordScreen/eyeSlash.png")}
-                onPressRight={onPressRight}
-                iconStyle={styles.passwordStyle}
-                error={error.passwordErr}
-              />
-            )}
-          </View>
+              <View style={{ height: hp("2.5%") }} />
 
-          <View style={styles.viewForgotPass}>
-            <TouchableOpacity onPress={goToForgotPassword}>
-              <AppText
-                text={"Forgot my password?"}
-                style={styles.txtForgotPass}
-              />
-            </TouchableOpacity>
-          </View>
+              {isClickEye ? (
+                <TextInputCustom
+                  secureTextEntry={false}
+                  label={"Password"}
+                  value={password}
+                  onChangeText={onChangePassword}
+                  placeholder={"Enter Password"}
+                  icon={require("../../assets/images/LoginScreen/password.png")}
+                  eyeIcon={require("../../assets/images/LoginScreen/privacyEye.png")}
+                  onPressRight={onPressRight}
+                  iconStyle={styles.passwordStyle}
+                  error={error.passwordErr}
+                />
+              ) : (
+                <TextInputCustom
+                  secureTextEntry={true}
+                  label={"Password"}
+                  value={password}
+                  onChangeText={onChangePassword}
+                  placeholder={"Enter Password"}
+                  icon={require("../../assets/images/LoginScreen/password.png")}
+                  eyeIcon={require("../../assets/images/ResetPasswordScreen/eyeSlash.png")}
+                  onPressRight={onPressRight}
+                  iconStyle={styles.passwordStyle}
+                  error={error.passwordErr}
+                />
+              )}
+            </View>
 
-          <View style={styles.viewSocialMediaBtn}>
-            <CustomButton
-              title="Sign In"
-              onPress={onClickSignIn}
-              styleBtn={stylesCommon.btnSocialMedia}
-              styleTxt={stylesCommon.btnSocialMediaText}
-            />
+            <View style={styles.viewForgotPass}>
+              <TouchableOpacity onPress={goToForgotPassword}>
+                <AppText
+                  text={"Forgot my password?"}
+                  style={styles.txtForgotPass}
+                />
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.viewSocialMediaBtn}>
+              <CustomButton
+                title="Sign In"
+                onPress={onClickSignIn}
+                styleBtn={stylesCommon.btnSocialMedia}
+                styleTxt={stylesCommon.btnSocialMediaText}
+              />
+            </View>
           </View>
-        </View>
+        </Pressable>
       </KeyboardAwareScrollView>
       {loginResponse.isRequesting ? (
         <Loader loading={loginResponse.isRequesting} />
       ) : null}
-
     </>
   );
 };

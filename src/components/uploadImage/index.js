@@ -52,6 +52,8 @@ const UploadImage = (props) => {
       : ""
   );
 
+    console.log("profile_imagePath ==>", profile_imagePath);
+
   const closemediaPicker = () => {
     setOnOpenMediaPicker(false);
   };
