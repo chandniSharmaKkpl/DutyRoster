@@ -23,26 +23,28 @@ export default StyleSheet.create({
     fontSize: fontConstant.TEXT_18_SIZE_REGULAR,
     fontFamily: fontConstant.FONT_BOLD,
   },
-
-  imageContainer: {
-    marginVertical: hp("3%"),
-    alignItems: "center",
+  img: {
+    padding: hp("8%"),
+    height: 98,
+    width: 98,
+    borderRadius: hp("10%"),
   },
-  cameraIconContainer: {
+  touch: {
     position: "absolute",
-    bottom : 1,
-    right : wp('35%'),
-    height: hp('3%'),
-    width: wp('6%'),
-    backgroundColor: appColor.RED,
-    borderWidth: 1,
-    borderRadius: 50,
-    justifyContent: "center",
-    alignItems: "center",
+    right: 10,
+    bottom: 0,
+    height: 30,
+    width: 30,
+    borderRadius: hp(40),
+    backgroundColor: "#BD2529",
+    padding: hp("1%"),
   },
-  cameraIcon: {
-    height: hp('3%'),
-    width: wp('3%'),
+  editImg: {
+    alignContent: "center",
+    alignSelf: "center",
+    alignItems: "center",
+    height: 15,
+    width: 15,
   },
   inputTextTitle: {
     fontFamily: fontConstant.FONT_SEMI_BOLD,

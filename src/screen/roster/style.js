@@ -47,7 +47,8 @@ export default StyleSheet.create({
     alignItems: "center",
     marginRight: 10,
     paddingVertical: 10,
-    marginBottom: hp('2%')
+    marginBottom: hp('2%'),
+    backgroundColor : appColor.DARK_SKY
 
   },
   dateTextBoxSelect: {
@@ -99,4 +100,8 @@ export default StyleSheet.create({
     fontSize: fontConstant.TEXT_14_SIZE_BOLD,
     fontWeight: "600",
   },
+  empTimeCardDetails : {
+    marginTop : hp('2%'),
+    paddingHorizontal : 20
+  }
 });

@@ -16,6 +16,8 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { appConstant, imageConstant } from "@/constant";
 import { CommonHeader } from "@/components";
 import { Images } from "@/constant/svgImgConst";
+import EmpTimeCard from "@/components/roasterEmpTimeCard";
+import style from "./style";
 
 const RosterScreen = (props) => {
   const navigation = useNavigation();
@@ -149,7 +151,9 @@ const RosterScreen = (props) => {
             />
           </View>
         </View>
-
+        <View style={styles.empTimeCardDetails}>
+          <EmpTimeCard />
+        </View>
         <View style={styles.viewBottom}>
           <TouchableOpacity onPress={goToLogin} style={styles.btnTransparant}>
             <AppText style={styles.txtBtnTry} text={"Go To Calander"} />

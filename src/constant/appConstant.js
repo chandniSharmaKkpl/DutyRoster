@@ -15,7 +15,6 @@ export default {
   UNAVAILABILITY : 'Unavailablity',
   CALENDAR : 'Calendar',
 
-
   // Input Title name 
 
   UNAVAILABLE_DATE : 'Unavailable Date',

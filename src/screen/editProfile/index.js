@@ -8,6 +8,10 @@ import {
   Keyboard,
   TouchableOpacity,
 } from "react-native";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 import styles from "./style";
 import { AppText } from "@/components/AppText";
 import { useRoute, useNavigation } from "@react-navigation/core";
@@ -32,7 +36,7 @@ const EditProfile = (props) => {
     password: "",
     confirmPassword: "",
   });
-  const [profilePath, setProfiilePath] = useState(null)
+  const [profilePath, setProfiilePath] = useState(null);
   const [firstName, setFirstName] = useState("Kevin");
   const [lasttName, setLasttName] = useState("Devid");
   const [email, setEmail] = useState("email@gmail.com");
@@ -47,6 +51,7 @@ const EditProfile = (props) => {
     (text) => setConfirmPassword(text),
     []
   );
+  const [ImageSource, setImageSource] = useState();
 
   const handleBackButtonClick = () => {
     moveBack();
@@ -160,13 +165,13 @@ const EditProfile = (props) => {
         keyboardShouldPersistTaps="always"
       >
         <Pressable onPress={() => Keyboard.dismiss()}>
-          {onOpenMediaPicker ? (
-            <UploadImage
-              onOpenMediaPicker={onOpenMediaPicker}
-              setOnOpenMediaPicker={setOnOpenMediaPicker}
-              setProfiilePath={setProfiilePath}
-            />
-          ) : null}
+          <UploadImage
+            onOpenMediaPicker={onOpenMediaPicker}
+            setOnOpenMediaPicker={setOnOpenMediaPicker}
+            setProfiilePath={setProfiilePath}
+            setImageSource={setImageSource}
+          />
+
           <View style={[styles.container]}>
             <View style={styles.viewTopTitle}>
               <AppText
@@ -174,23 +179,32 @@ const EditProfile = (props) => {
                 text={appConstant.EDIT_PROFILE}
               ></AppText>
             </View>
-            <Pressable style={styles.imageContainer}>
+            <View style={{ height: hp("2.5%") }} />
+            <View
+              style={{
+                alignSelf: "center",
+                flexDirection: "row",
+              }}
+            >
               <Image
-                resizeMode={"contain"}
-                source={imageConstant.IMAGE_EDIT_PROFILE_ICON}
-                style={styles.editImage}
+                source={
+                  ImageSource && ImageSource?.length === ""
+                    ? imageConstant.IMAGE_AVTAR_ICON
+                    : { uri: ImageSource }
+                }
+                style={styles.img}
               />
               <TouchableOpacity
-                style={styles.cameraIconContainer}
                 onPress={() => openMediaPicker()}
+                style={styles.touch}
               >
                 <Image
-                  resizeMode={"contain"}
                   source={imageConstant.IMAGE_CAMERA_ICON}
-                  style={styles.cameraIcon}
+                  style={styles.editImg}
                 />
               </TouchableOpacity>
-            </Pressable>
+            </View>
+
             <View style={styles.textInputContainer}>
               <Text style={styles.inputTextTitle}>First Name</Text>
               <TextInputCustom

@@ -20,5 +20,7 @@ export default {
   ICON_COLOR:"#919191",
   GRAY_DARK : '#F1F1F1',
   BOX_SHADOW : '#1111114D',
-  LIGHT_ORANGE : '#FFDAD4'
+  LIGHT_ORANGE : '#FFDAD4',
+  DARK_SKY : '#F6F8FC'
+
 };

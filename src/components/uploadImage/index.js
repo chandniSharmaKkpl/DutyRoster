@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect, useState} from "react";
 import {
   View,
   BackHandler,
@@ -23,17 +23,7 @@ import styles from "./style";
 const { height, width } = Dimensions.get("screen");
 
 const UploadImage = (props) => {
-  const { onOpenMediaPicker, setOnOpenMediaPicker, setProfiilePath } = props;
-  const { user } = React.useContext(AuthContext);
-  const [meadiaUploadList, setMeadiaUploadList] = React.useState({
-    filePath: "",
-    fileDisplay: "",
-    fileName: "",
-    type: "",
-    mediaType: "",
-  });
-
-  const [options, setoptions] = React.useState([
+  const [options, setoptions] = useState([
     {
       image: require("../../assets/images/EditProfile/swipe.png"),
       title: alertMsgConstant.CAPTURE_IMAGE,
@@ -47,16 +37,20 @@ const UploadImage = (props) => {
     },
   ]);
 
-  const [profile_imagePath, setProfile_imagePath] = React.useState(
-    user && user.user_detail && user.user_detail.profile_image
-      ? user.user_detail.profile_image
-      : ""
-  );
+  const [profile_imagePath, setProfile_imagePath] = useState(null);
+  const { onOpenMediaPicker, setOnOpenMediaPicker, setProfiilePath, setImageSource } = props;
+  const { user } = React.useContext(AuthContext);
+  const [meadiaUploadList, setMeadiaUploadList] = useState({
+    filePath: "",
+    fileDisplay: "",
+    fileName: "",
+    type: "",
+    mediaType: "",
+  });
+
   console.log("profile_imagePath ===>", profile_imagePath);
 
-
-    console.log("profile_imagePath ==>", profile_imagePath);
-
+  React.useEffect(() => {}, [meadiaUploadList]);
   const closemediaPicker = () => {
     setOnOpenMediaPicker(false);
   };
@@ -102,7 +96,7 @@ const UploadImage = (props) => {
     })
       .then((response) => {
         console.log("captureImage ::::", response);
-        setProfiilePath(response)
+        setProfiilePath(response);
         setMeadiaUploadList({
           ...meadiaUploadList,
           filePath:
@@ -153,8 +147,13 @@ const UploadImage = (props) => {
       freeStyleCropEnabled: true,
     })
       .then((response) => {
-        console.log("chooseMedia ====>", response);
-        setProfiilePath(response)
+        console.log("chooseMedia ====>", JSON.stringify(response, null, 4));
+        setProfiilePath(response);
+        setProfile_imagePath(
+          Platform.OS == "ios"
+            ? response.path.replace("file://", "")
+            : response.path
+        );
         setMeadiaUploadList({
           ...meadiaUploadList,
           filePath:
@@ -169,16 +168,15 @@ const UploadImage = (props) => {
           type: response.mime,
           mediaType: "image",
         });
-        setProfile_imagePath(
-          Platform.OS == "ios"
-            ? response.path.replace("file://", "")
-            : response.path
-        );
       })
       .catch((e) => {
         console.log(e.message);
       });
   };
+
+  useEffect(() => {
+    setImageSource(profile_imagePath)
+  },[profile_imagePath])
 
   const onselectOptions = (item) => {
     closemediaPicker(false);
