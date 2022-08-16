@@ -12,7 +12,7 @@ import styles from "./style";
 import { AppText } from "@/components/AppText";
 import { useRoute, useNavigation } from "@react-navigation/core";
 import { CustomButton } from "@/components/CustomButton";
-import { alertMsgConstant, appConstant, imageConstant } from "@/constant";
+import { actionConstant, alertMsgConstant, appConstant, imageConstant } from "@/constant";
 import { CommonHeader } from "@/components";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import commonStyle from "../../common/commonStyle";
@@ -25,9 +25,9 @@ import moment from "moment";
 import AuthContext from "@/context/AuthContext";
 import localDb from "@/database/localDb";
 import { DrawerContentScrollView } from "@react-navigation/drawer";
-import { requestToUpdateProfile, requestToViewProfile } from "./redux/profile.action";
+import * as profileAction from "./redux/profile.action";
 import { connect, useSelector } from "react-redux";
-
+import Loader from '@/components/Loader';
 
 const EditProfile = (props) => {
   const navigation = useNavigation();
@@ -46,14 +46,12 @@ const EditProfile = (props) => {
     cnfpasswordErr:""
   });
   const profileResponse = useSelector(state => {
-    console.log(state.ProfileReducer.ViewProfileReducer.data, 'states')
-    return state.ProfileReducer.ViewProfileReducer.data;
+    console.log(state.ProfileReducer, 'states')
+    return state.ProfileReducer;
   })
 
-  const updateProfileResponse = useSelector(state => {
-    console.log(state.ProfileReducer.UpdateProfileReducer.data, 'statess')
-    return state.ProfileReducer.UpdateProfileReducer.data;
-  })
+
+  
   
   const [title, setTitle] = useState("");
   const [payment, setPayment] = useState("");
@@ -88,23 +86,31 @@ const EditProfile = (props) => {
     return true;
   };
   useEffect(() => {
-    (async () => {
-     await props.requestToViewProfile({"employee_id": 1 , navigation: navigation})
-     console.log(await profileResponse , 'profileView')
-     let profileInformation = await profileResponse
-     setTitle(profileInformation.title);
-     setName(profileInformation.name);
-     setEmail(profileInformation.email);
-     setPhone(profileInformation.phone);
-     setTFN(profileInformation.tfn_number);
-     setAddress(profileInformation.address);
-     setDob(profileInformation.dob)
-    //  setTimeout(() => {
-    //   console.log(profileView, profileResponse , 'dddd')
-    //   console.log(props.profileData , 'profoile')
-    //  }, 2000);
+    props.requestToGetProfile({"employee_id": 1 , navigation: navigation});
+      let profileInformation = profileResponse.ViewProfileReducer.data
+      setTitle(profileInformation.title);
+      setName(profileInformation.name);
+      setEmail(profileInformation.email);
+      setPhone(profileInformation.phone);
+      setTFN(profileInformation.tfn_number);
+      setAddress(profileInformation.address);
+      setDob(profileInformation.dob);
+   
+    
+    // (async () => {
+    //  await props.requestToViewProfile({"employee_id": 1 , navigation: navigation})
+    //  console.log(await profileResponse , 'profileView')
+    //  let profileInformation = await profileResponse
+    //  setTitle(profileInformation.title);
+    //  setName(profileInformation.name);
+    //  setEmail(profileInformation.email);
+    //  setPhone(profileInformation.phone);
+    //  setTFN(profileInformation.tfn_number);
+    //  setAddress(profileInformation.address);
+    //  setDob(profileInformation.dob)
+   
   
-    })();
+    // })();
     
     BackHandler.addEventListener("hardwareBackPress", handleBackButtonClick);
    
@@ -280,11 +286,21 @@ const EditProfile = (props) => {
       tfn_number:tfn,
       password,
       employee_id:1,
-      navigation: navigation
+      navigation: navigation,
       }
-      await props.requestToUpdateProfile( {title,name,email,phone,dob,address,tfn_number:tfn,password,employee_id:1,navigation: navigation
-      })
-      // console.log(await updateProfileResponse , 'profileView')
+
+      console.log("I am here " , data);
+      await props.requestToUpdateProfile({ title,
+        name,
+      email,
+      phone,
+      dob,
+      address,
+      tfn_number:tfn,
+      password,
+      employee_id:1,
+      navigation: navigation})
+      // console.log(await profileResponse.updateProfileResponse , 'profileView')
       // navigationRef.navigate(appConstant.ROASTER);
     }
   };
@@ -448,6 +464,9 @@ const EditProfile = (props) => {
         onConfirm={handleConfirm}
         onCancel={hideDatePicker}
       />
+       {profileResponse.updateProfileResponse.isRequesting ? (
+        <Loader loading={profileResponse.updateProfileResponse.isRequesting} />
+      ) : null}
     </>
   );
 };
@@ -455,10 +474,28 @@ const EditProfile = (props) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    requestToViewProfile: (params) =>
-      dispatch(requestToViewProfile(params)),
+    requestToGetProfile: (params) =>
+       
+    {
+      console.log(params , 'statedispacth');
+      return dispatch(profileAction.requestToViewProfile(params));
+    },
+
     requestToUpdateProfile: (params) =>
-      dispatch(requestToUpdateProfile(params)),
+       
+      {
+        console.log(params , 'statedispacth');
+        return dispatch(requestToUpdateProfile(params));
+      },
   };
 };
 export default connect(null, mapDispatchToProps)(EditProfile);
+
+
+
+export const requestToUpdateProfile = (params) => {
+  return ({
+    type: actionConstant.ACTION_UPDATE_PROFILE_REQUEST,
+    payload: params
+  });
+};

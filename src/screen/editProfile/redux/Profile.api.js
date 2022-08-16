@@ -18,7 +18,7 @@ export const UpdateProfile = async (params) => {
     console.log(res , 'response in API');
     return res.data;
   } catch (error) {
-    console.log(error , 'error')
+    console.log(error , 'errossr')
     throw error;
   }
 };

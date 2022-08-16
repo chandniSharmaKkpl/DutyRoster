@@ -220,6 +220,7 @@ const Signup = (props) => {
   }
 
   const onClickSignup = async() => {
+    console.log(imageArray , 'image')
     const validate = Validate(
       title,
       payment,
@@ -249,6 +250,7 @@ const Signup = (props) => {
     );
 
     if (validate == "ok") {
+
       let infor= await props.requestToRegister({ title,
         payment,
         name,
@@ -258,11 +260,13 @@ const Signup = (props) => {
         address,
         tfn_number:tfn,
         password,
-        device_token:3243, //need to do in dynamic
-        uuid:24324,  //need to do in dynamic
-        device_type:2432,   //need to do in dynamic
+        device_token:3143, //need to do in dynamic
+        uuid:24314,  //need to do in dynamic
+        device_type:2132,   //need to do in dynamic
         device_name:DeviceName,
-        navigation: navigation });
+        navigation: navigation,
+        image:imageArray
+      });
     }
   };
 

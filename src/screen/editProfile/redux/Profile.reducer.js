@@ -66,7 +66,6 @@ const  UpdateProfileReducer = (state = secondInitialState, { type, payload }) =>
           };
         }
         case actionConstant.ACTION_UPDATE_PROFILE_FAILURE: {
-          console.log(JSON.stringify(payload) , 'payload data')
           return {
             ...state,
             updatedData: payload,
