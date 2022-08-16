@@ -45,9 +45,9 @@ export default StyleSheet.create({
     width: wp('10.5%'),
     justifyContent: "center",
     alignItems: "center",
-    marginRight: 10,
+    marginRight: wp('2.5%'),
     paddingVertical: 10,
-    marginBottom: hp('2%'),
+  
     backgroundColor : appColor.DARK_SKY
 
   },
@@ -61,7 +61,7 @@ export default StyleSheet.create({
     borderRadius: 6,
     borderColor: appColor.RED,
     marginRight: wp('2.5%'),
-    marginBottom: hp('2%')
+    
 
   },
   dayTextStyle: {
@@ -99,6 +99,13 @@ export default StyleSheet.create({
     color: appColor.RED,
     fontSize: fontConstant.TEXT_14_SIZE_BOLD,
     fontWeight: "600",
+  },
+  dateLabelContainer:{
+    backgroundColor:"grey",
+    alignItems:"center",
+    justifyContent:"center",
+    alignContent:"center",
+    paddingVertical:hp('1%')
   },
   empTimeCardDetails : {
     marginTop : hp('2%'),

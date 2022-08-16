@@ -6,6 +6,7 @@ import {
   Image,
   FlatList,
   Text,
+  Dimensions,
 } from "react-native";
 import stylesCommon from "../../common/commonStyle";
 import styles from "./style";
@@ -25,6 +26,11 @@ const RosterScreen = (props) => {
   const [selectedItem, setSelectedItem] = useState(null);
 
   const dateData = [
+    {
+      id: 0,
+      day: "Mon",
+      date: "09",
+    },
     {
       id: 1,
       day: "Mon",
@@ -145,9 +151,16 @@ const RosterScreen = (props) => {
           <View style={styles.dateLabelContainer}>
             <FlatList
               horizontal={true}
+              removeClippedSubviews
               data={dateData}
               renderItem={renderItem}
               keyExtractor={(item) => item.id}
+              contentContainerStyle={{ flex: 1,
+                overflow: 'hidden',
+                backgroundColor: 'white',
+                alignItems: 'center',
+                width: Dimensions.get('window').width,
+                borderWidth: 0, }}
             />
           </View>
         </View>

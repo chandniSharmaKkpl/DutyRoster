@@ -164,7 +164,7 @@ const Login = (props) => {
                 onChangeText={onChangePassword}
                 placeholder={"Enter Password"}
                 icon={require("../../assets/images/LoginScreen/password.png")}
-                eyeIcon={require("../../assets/images/LoginScreen/privacyEye.png")}
+                rightIcon={require("../../assets/images/LoginScreen/privacyEye.png")}
                 onPressRight={onPressRight}
                 iconStyle={styles.passwordStyle}
                 error={error.passwordErr}
@@ -177,7 +177,7 @@ const Login = (props) => {
                 onChangeText={onChangePassword}
                 placeholder={"Enter Password"}
                 icon={require("../../assets/images/LoginScreen/password.png")}
-                eyeIcon={require("../../assets/images/ResetPasswordScreen/eyeSlash.png")}
+                rightIcon={require("../../assets/images/ResetPasswordScreen/eyeSlash.png")}
                 onPressRight={onPressRight}
                 iconStyle={styles.passwordStyle}
                 error={error.passwordErr}

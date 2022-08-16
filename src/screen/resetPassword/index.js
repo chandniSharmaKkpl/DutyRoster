@@ -185,7 +185,7 @@ const ResetPassword = (props) => {
               onChangeText={onChangeNewPassword}
               placeholder={"New Password"}
               icon={require("../../assets/images/LoginScreen/password.png")}
-              eyeIcon={
+              rightIcon={
                 isClickEyeNewPassword
                   ? require("../../assets/images/LoginScreen/privacyEye.png")
                   : require("../../assets/images/ResetPasswordScreen/eyeSlash.png")
@@ -203,7 +203,7 @@ const ResetPassword = (props) => {
               onChangeText={onChangeConfirmPassword}
               placeholder={"Confirm Password"}
               icon={require("../../assets/images/LoginScreen/password.png")}
-              eyeIcon={
+              rightIcon={
                 isClickEyeForConfirmPassword
                   ? require("../../assets/images/LoginScreen/privacyEye.png")
                   : require("../../assets/images/ResetPasswordScreen/eyeSlash.png")

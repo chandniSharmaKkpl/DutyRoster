@@ -482,7 +482,7 @@ const Signup = (props) => {
               onChangeText={onChangeDOB}
               placeholder={"Enter Date of Birth"}
               icon={require("../../assets/images/SignupScreen/dob.png")}
-              eyeIcon={require("../../assets/images/SignupScreen/calendar.png")}
+              rightIcon={require("../../assets/images/SignupScreen/calendar.png")}
               onPressRight={showDatePicker}
               iconStyle={styles.IconStyle}
               error={error.dobErr}
@@ -524,7 +524,7 @@ const Signup = (props) => {
                 onChangeText={onChangePassword}
                 placeholder={"Enter Password"}
                 icon={require("../../assets/images/SignupScreen/password.png")}
-                eyeIcon={require("../../assets/images/LoginScreen/privacyEye.png")}
+                rightIcon={require("../../assets/images/LoginScreen/privacyEye.png")}
                 onPressRight={onPressRight}
                 iconStyle={styles.IconStyle}
                 error={error.passwordErr}
@@ -537,7 +537,7 @@ const Signup = (props) => {
                 onChangeText={onChangePassword}
                 placeholder={"Enter Password"}
                 icon={require("../../assets/images/SignupScreen/password.png")}
-                eyeIcon={require("../../assets/images/ResetPasswordScreen/eyeSlash.png")}
+                rightIcon={require("../../assets/images/ResetPasswordScreen/eyeSlash.png")}
                 onPressRight={onPressRight}
                 iconStyle={styles.IconStyle}
                 error={error.passwordErr}
@@ -553,7 +553,7 @@ const Signup = (props) => {
                 onChangeText={onChangeConfirmPassword}
                 placeholder={"Enter Confirm Password"}
                 icon={require("../../assets/images/LoginScreen/password.png")}
-                eyeIcon={require("../../assets/images/LoginScreen/privacyEye.png")}
+                rightIcon={require("../../assets/images/LoginScreen/privacyEye.png")}
                 onPressRight={onPressRightConfirm}
                 iconStyle={styles.IconStyle}
                 error={error.cnfpasswordErr}
@@ -566,7 +566,7 @@ const Signup = (props) => {
                 onChangeText={onChangeConfirmPassword}
                 placeholder={"Enter Confirm Password"}
                 icon={require("../../assets/images/LoginScreen/password.png")}
-                eyeIcon={require("../../assets/images/ResetPasswordScreen/eyeSlash.png")}
+                rightIcon={require("../../assets/images/ResetPasswordScreen/eyeSlash.png")}
                 onPressRight={onPressRightConfirm}
                 iconStyle={styles.IconStyle}
                 error={error.cnfpasswordErr}
