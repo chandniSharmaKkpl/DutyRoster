@@ -23,7 +23,8 @@ export const TextInputCustom = (props) => {
     iconStyle,
     secureTextEntry,
     keyboardType,
-    rightIconStyle
+    rightIconStyle,
+    multiline,
   } = props;
   return (
     <View style={[styles.view, inputViewStyle]}>
@@ -60,7 +61,7 @@ export const styles = {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal : wp('3%'),
+    paddingHorizontal: wp("3%"),
     width: wp("90%"),
     height: hp("6%"),
     borderRadius: 6,
@@ -88,8 +89,13 @@ export const styles = {
     fontSize: fontConstant.TEXT_16_SIZE_REGULAR,
     color: "red",
   },
+
   iconStyle: {
     height: 12,
+  },
+  eyeIconStyle: {
+    height: 20,
+
     width: 17.55,
     resizeMode: "center",
     justifyContent: "flex-end",
@@ -99,6 +105,7 @@ export const styles = {
     includeFontPadding: false,
     marginLeft: 10,
     width: "80%",
+    padding: 0,
     fontSize: fontConstant.TEXT_17_SIZE_REGULAR,
     fontWeight: fontConstant.WEIGHT_LEIGHT,
   },

@@ -9,8 +9,8 @@ const isEmailValid = (email) => {
 };
 
 const isMobileNumberValid = (string) => {
-  var format =
-    /^(?:\+?(61))? ?(?:\((?=.*\)))?(0?[2-57-8])\)? ?(\d\d(?:[- ](?=\d{3})|(?!\d\d[- ]?\d[- ]))\d\d[- ]?\d[- ]?\d{3})$/;
+  var format = /^[0]?[789]\d{9}$/;
+    // /^(?:\+?(61))? ?(?:\((?=.*\)))?(0?[2-57-8])\)? ?(\d\d(?:[- ](?=\d{3})|(?!\d\d[- ]?\d[- ]))\d\d[- ]?\d[- ]?\d{3})$/;
 
   if (format.test(string)) {
     return true;

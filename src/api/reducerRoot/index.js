@@ -8,6 +8,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Reducer
 import LoginReducer from "@/screen/login/redux/Login.reducer";
+import SignupReducer from "@/screen/signup/redux/Signup.reducer";
 import Forgot_PasswordReducer from "@/screen/forgotPassword/redux/Forgot_Password.reducer";
 import Reset_PasswordReducer from "@/screen/resetPassword/redux/Reset_Password.reducer";
 
@@ -25,6 +26,7 @@ const persistConfig = {
 const ReducerRoot = combineReducers({
   GlobalReducer,
   LoginReducer,
+  SignupReducer,
   Forgot_PasswordReducer,
   Reset_PasswordReducer,
 });
