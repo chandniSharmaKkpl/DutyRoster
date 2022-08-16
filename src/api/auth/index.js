@@ -1,7 +1,6 @@
 import client from "@/api/client";
 import { apiConstant } from "@/constant";
 
-
 const config = {
   headers: {},
 };

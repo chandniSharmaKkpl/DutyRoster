@@ -4,6 +4,7 @@ import { watchGetAccessToken } from "@/screen/login/redux/Login.saga";
 import { watchSignup } from "@/screen/signup/redux/Signup.saga";
 import { watchForgotPassword } from "@/screen/forgotPassword/redux/Forgot_Password.saga";
 import { watchResetPassword } from "@/screen/resetPassword/redux/Reset_Password.saga";
+import { watchProfile } from "@/screen/editProfile/redux/Profile.saga";
 
 export default function* sagaRoot() {
   yield all([
@@ -11,6 +12,7 @@ export default function* sagaRoot() {
     fork(watchSignup),
     fork(watchGetAccessToken),
     fork(watchForgotPassword),
-    fork(watchResetPassword)
+    fork(watchResetPassword),
+    fork(watchProfile)
   ]);
 }

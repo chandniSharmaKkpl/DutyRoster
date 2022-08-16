@@ -7,6 +7,7 @@ export default {
   CONFIRM_PASSWORD_NOT_EMPTY:"Confirm password cannot be empty", 
   REF_CODE_NOT_EMPTY:'2FA code cannot be empty',
   EMAIL_NOT_VALID: 'Email is not correct',
+  NAME_EMPTY : 'Name cannot be empty',
   FIRST_NAME_EMPTY : 'First Name cannot be empty',
   LAST_NAME_EMPTY : 'Last Name cannot be empty',
   ITINARY_CANCEL_TITLE: 'Itinary Cancel',
