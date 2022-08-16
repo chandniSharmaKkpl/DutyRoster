@@ -8,7 +8,7 @@ const initialState = {
    }
    const secondInitialState = {
     isRequesting: false,
-      updatedData: {},
+    data: {},
       error:{},
      } 
 
@@ -23,6 +23,7 @@ const   ViewProfileReducer = (state = initialState, { type, payload }) => {
             };
           }
           case actionConstant.ACTION_GET_PROFILE_SUCCESS: {
+            console.log(payload , 'payoad')
             return {
               ...state,
               data: payload.data,
@@ -51,7 +52,7 @@ const  UpdateProfileReducer = (state = secondInitialState, { type, payload }) =>
         case actionConstant.ACTION_UPDATE_PROFILE_REQUEST: {
           return {
             ...state,
-            updatedData:{},
+            data:{},
             isRequesting: true,
             error: {},
           };
@@ -60,7 +61,7 @@ const  UpdateProfileReducer = (state = secondInitialState, { type, payload }) =>
           console.log(payload , 'payload');
           return {
             ...state,
-            updatedData: payload.data,
+            data: payload.data,
             isRequesting: false,
             error: {},
           };
@@ -68,7 +69,7 @@ const  UpdateProfileReducer = (state = secondInitialState, { type, payload }) =>
         case actionConstant.ACTION_UPDATE_PROFILE_FAILURE: {
           return {
             ...state,
-            updatedData: payload,
+            data: payload,
             isRequesting: false,
             error: {},
           };

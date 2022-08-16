@@ -36,7 +36,7 @@ export function* workersUpdateProfile(action) {
       payload: viewUpdateProfileResponse,
     });
    //localDb.setUser(loginResponse.data); 
-   action.payload.navigation.navigate(appConstant.EDIT_PROFILE , {profileData:viewProfileResponse}); 
+   action.payload.navigation.navigate(appConstant.EDIT_PROFILE , {profileData:viewUpdateProfileResponse}); 
   } catch (error) {
     console.log(JSON.stringify(error) , 'error in API')
     // alert("Email already associate with other user."); 

@@ -25,7 +25,7 @@ import moment from "moment";
 import AuthContext from "@/context/AuthContext";
 import localDb from "@/database/localDb";
 import { DrawerContentScrollView } from "@react-navigation/drawer";
-import * as profileAction from "./redux/profile.action";
+import * as profileAction from "./redux/Profile.action";
 import { connect, useSelector } from "react-redux";
 import Loader from '@/components/Loader';
 
@@ -63,7 +63,7 @@ const EditProfile = (props) => {
   const [tfn, setTFN] = useState("");
   const [password, setPassword] = useState("12345678");
   const [cnfPassword, setCnfPassword] = useState("12345678");
-
+  const [isRequesting , setRequesting] = useState(true);
   const [onOpenMediaPicker, setOnOpenMediaPicker] = useState(false);
   const onChangeTitle = useCallback((text) => setTitle(text), []);
   const onChangePayment = useCallback((text) => setPayment(text), []);
@@ -86,31 +86,42 @@ const EditProfile = (props) => {
     return true;
   };
   useEffect(() => {
-    props.requestToGetProfile({"employee_id": 1 , navigation: navigation});
-      let profileInformation = profileResponse.ViewProfileReducer.data
-      setTitle(profileInformation.title);
-      setName(profileInformation.name);
-      setEmail(profileInformation.email);
-      setPhone(profileInformation.phone);
-      setTFN(profileInformation.tfn_number);
-      setAddress(profileInformation.address);
-      setDob(profileInformation.dob);
+    // props.requestToGetProfile({"employee_id": 1 , navigation: navigation});
+    // setTimeout(() => {
+    //   if (profileResponse.ViewProfileReducer.isRequesting === false) {
+    //     let profileInformation = profileResponse.ViewProfileReducer.data;
+    //     setTitle(profileInformation.title);
+    //     setName(profileInformation.name);
+    //     setEmail(profileInformation.email);
+    //     setPhone(profileInformation.phone);
+    //     setTFN(profileInformation.tfn_number);
+    //     setAddress(profileInformation.address);
+    //     setDob(profileInformation.dob);
+    //     setRequesting(false);
+    //   }
+    // }, 2000);
+     
+      
    
     
-    // (async () => {
-    //  await props.requestToViewProfile({"employee_id": 1 , navigation: navigation})
-    //  console.log(await profileResponse , 'profileView')
-    //  let profileInformation = await profileResponse
-    //  setTitle(profileInformation.title);
-    //  setName(profileInformation.name);
-    //  setEmail(profileInformation.email);
-    //  setPhone(profileInformation.phone);
-    //  setTFN(profileInformation.tfn_number);
-    //  setAddress(profileInformation.address);
-    //  setDob(profileInformation.dob)
-   
-  
-    // })();
+    (async () => {
+      let responsedata =  await localDb.getUser().then((response) => {
+        return response;
+      })
+      await props.requestToGetProfile({"employee_id": responsedata.user.id , navigation: navigation});
+      if (profileResponse.ViewProfileReducer.isRequesting === false) {
+        let profileInformation = profileResponse.ViewProfileReducer.data;
+        setTitle(profileInformation.title);
+        setName(profileInformation.name);
+        setEmail(profileInformation.email);
+        setPhone(profileInformation.phone);
+        setTFN(profileInformation.tfn_number);
+        setAddress(profileInformation.address);
+        setDob(profileInformation.dob);
+        setRequesting(false);
+      }
+    
+    })();
     
     BackHandler.addEventListener("hardwareBackPress", handleBackButtonClick);
    
@@ -290,7 +301,7 @@ const EditProfile = (props) => {
       }
 
       console.log("I am here " , data);
-      await props.requestToUpdateProfile({ title,
+      props.requestToUpdateProfile({ title,
         name,
       email,
       phone,
@@ -300,6 +311,8 @@ const EditProfile = (props) => {
       password,
       employee_id:1,
       navigation: navigation})
+      
+      
       // console.log(await profileResponse.updateProfileResponse , 'profileView')
       // navigationRef.navigate(appConstant.ROASTER);
     }
@@ -464,8 +477,12 @@ const EditProfile = (props) => {
         onConfirm={handleConfirm}
         onCancel={hideDatePicker}
       />
-       {profileResponse.updateProfileResponse.isRequesting ? (
-        <Loader loading={profileResponse.updateProfileResponse.isRequesting} />
+      
+       {isRequesting ? (
+        <Loader loading={isRequesting} />
+      ) : null}
+       {profileResponse.UpdateProfileReducer.isRequesting ? (
+        <Loader loading={profileResponse.UpdateProfileReducer.isRequesting} />
       ) : null}
     </>
   );
