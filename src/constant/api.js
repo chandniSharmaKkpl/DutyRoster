@@ -3,5 +3,6 @@ export default {
   LOGIN : "/login",
   SIGNUP:"/register",
   FORGOT_PWD : "/forgot-password",
-  RESET_PWD : "/reset-password"
+  RESET_PWD : "/reset-password",
+  ADD_TIMESHEET : '/add-timesheet'
 };

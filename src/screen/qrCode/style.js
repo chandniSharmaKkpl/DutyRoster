@@ -19,7 +19,6 @@ export default StyleSheet.create({
     width: "100%",
     height: "100%",
     position: "relative"
-    // backgroundColor: appColor.LIGH_BLUE,
   },
 
   rectangleContainer: {
@@ -36,15 +35,11 @@ export default StyleSheet.create({
     borderColor: rectBorderColor,
     alignItems: "center",
     justifyContent: "center",
-    // backgroundColor: "pink",
     borderRadius: 20,
   },
 
   topOverlay: {
     flex: 1,
-    // height: SCREEN_WIDTH,
-    // width: SCREEN_WIDTH,
-    // backgroundColor: 'white',
     justifyContent: "center",
     alignItems: "center",
   },
@@ -60,7 +55,6 @@ export default StyleSheet.create({
   leftAndRightOverlay: {
     height: SCREEN_WIDTH * 0.65,
     width: SCREEN_WIDTH,
-    // backgroundColor: 'white',
   },
 
   scanBar: {
@@ -72,7 +66,6 @@ export default StyleSheet.create({
     fontSize: fontConstant.TEXT_H1_SIZE_BOLD,
     fontFamily : fontConstant.FONT_BOLD,
     color: appColor.BLACK,
-    // marginTop: ,
   },
   circleContainer : {
     width : wp('70%'),

@@ -11,6 +11,8 @@ import LoginReducer from "@/screen/login/redux/Login.reducer";
 import SignupReducer from "@/screen/signup/redux/Signup.reducer";
 import Forgot_PasswordReducer from "@/screen/forgotPassword/redux/Forgot_Password.reducer";
 import Reset_PasswordReducer from "@/screen/resetPassword/redux/Reset_Password.reducer";
+import QRCode_ResponseReducer from "@/screen/qrCode/redux/QRCode.raducer.js";
+
 
 const encryptor = encryptTransform({
   secretKey: "dodee_app",
@@ -29,6 +31,7 @@ const ReducerRoot = combineReducers({
   SignupReducer,
   Forgot_PasswordReducer,
   Reset_PasswordReducer,
+  QRCode_ResponseReducer,
 });
 
 export default persistReducer(persistConfig, ReducerRoot);

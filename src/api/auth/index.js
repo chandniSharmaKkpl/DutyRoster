@@ -9,3 +9,4 @@ export const login = (params) => client.post(apiConstant.LOGIN, params, config);
 export const singup = (params) => client.post(apiConstant.SIGNUP, params, config);
 export const forgotPassword = (params) => client.post(apiConstant.FORGOT_PWD, params, config);
 export const resetPassword = (params) => client.post(apiConstant.RESET_PWD, params, config);
+export const addTimeSheet = (params) => client.post(apiConstant.ADD_TIMESHEET,params, config)

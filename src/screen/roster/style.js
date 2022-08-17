@@ -101,7 +101,7 @@ export default StyleSheet.create({
     fontWeight: "600",
   },
   dateLabelContainer:{
-    backgroundColor:"grey",
+    // backgroundColor:"grey",
     alignItems:"center",
     justifyContent:"center",
     alignContent:"center",

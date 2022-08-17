@@ -23,14 +23,9 @@ import style from "./style";
 const RosterScreen = (props) => {
   const navigation = useNavigation();
   const route = useRoute();
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedItem, setSelectedItem] = useState(3);
 
   const dateData = [
-    {
-      id: 0,
-      day: "Mon",
-      date: "09",
-    },
     {
       id: 1,
       day: "Mon",
