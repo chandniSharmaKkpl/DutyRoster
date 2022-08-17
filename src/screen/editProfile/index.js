@@ -59,7 +59,7 @@ const EditProfile = (props) => {
   const profileResponse = useSelector((state) => state.ProfileReducer);
 
   useEffect(() => {
-    console.log("profileResponse 1111 ====>", profileResponse.ViewProfileReducer);
+    console.log("profileResponse 1111 ====>", JSON.stringify(profileResponse.UpdateProfileReducer, null, 4));
   }, [profileResponse]);
 
   const [title, setTitle] = useState("");
@@ -127,6 +127,20 @@ const EditProfile = (props) => {
       setDob(profileInformation?.dob);
     }
   }, [profileResponse]);
+  React.useEffect(()=>{
+    if (profileResponse.UpdateProfileReducer) {
+      let profileInformation = profileResponse.UpdateProfileReducer.data;
+      // console.log("::::::: profileInformation ::::::: 3333 =====>", profileInformation);
+      setTitle(profileInformation?.title);
+      setName(profileInformation?.name);
+      setEmail(profileInformation?.email);
+      setPhone(profileInformation?.phone);
+      setTFN(profileInformation?.tfn_number);
+      setAddress(profileInformation?.address);
+      setDob(profileInformation?.dob);
+    }
+    
+  },[profileResponse.UpdateProfileReducer])
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -496,7 +510,7 @@ const mapDispatchToProps = (dispatch) => {
     },
 
     requestToUpdateProfile: (params) => {
-      // console.log(params, "statedispacth");
+      console.log('requestToUpdateProfile ===>',params);
       return dispatch(requestToUpdateProfile(params));
     },
   };
