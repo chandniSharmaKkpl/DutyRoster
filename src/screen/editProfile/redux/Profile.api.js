@@ -15,7 +15,7 @@ export const UpdateProfile = async (params) => {
   try {
     console.log(params , 'paramsDta')
     const res = await API.updateProfile(params);
-    console.log(res , 'response in API');
+    console.log("UpdateProfile ===>",res , 'response in API');
     return res.data;
   } catch (error) {
     console.log(error , 'errossr')

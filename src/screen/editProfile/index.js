@@ -12,12 +12,17 @@ import styles from "./style";
 import { AppText } from "@/components/AppText";
 import { useRoute, useNavigation } from "@react-navigation/core";
 import { CustomButton } from "@/components/CustomButton";
-import { actionConstant, alertMsgConstant, appConstant, imageConstant } from "@/constant";
+import {
+  actionConstant,
+  alertMsgConstant,
+  appConstant,
+  imageConstant,
+} from "@/constant";
 import { CommonHeader } from "@/components";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import commonStyle from "../../common/commonStyle";
 import { TextInputCustom } from "@/components/TextInput";
-import { isEmailValid , isMobileNumberValid } from "@/helper/validations";
+import { isEmailValid, isMobileNumberValid } from "@/helper/validations";
 import { navigationRef } from "@/navigators/utils";
 import UploadImage from "@/components/uploadImage";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -27,43 +32,47 @@ import localDb from "@/database/localDb";
 import { DrawerContentScrollView } from "@react-navigation/drawer";
 import * as profileAction from "./redux/Profile.action";
 import { connect, useSelector } from "react-redux";
-import Loader from '@/components/Loader';
+import Loader from "@/components/Loader";
 
 const EditProfile = (props) => {
   const navigation = useNavigation();
   const route = useRoute();
   const { user } = React.useContext(AuthContext);
   const [error, setError] = React.useState({
-    titleErr:"",
-    paymentErr:"",
-    nameErr:"",
-    emailErr:"",
-    phoneErr:"",
-    dobErr:"",
-    addressErr:"",
-    tfnErr:"",
-    passwordErr:"",
-    cnfpasswordErr:""
+    titleErr: "",
+    paymentErr: "",
+    nameErr: "",
+    emailErr: "",
+    phoneErr: "",
+    dobErr: "",
+    addressErr: "",
+    tfnErr: "",
+    passwordErr: "",
+    cnfpasswordErr: "",
   });
-  const profileResponse = useSelector(state => {
-    console.log(state.ProfileReducer, 'states')
-    return state.ProfileReducer;
-  })
 
+  // const profileResponse = useSelector((state) => {
+  //   console.log(JSON.stringify(state.ProfileReducer, null, 4), "states");
+  //   return state.ProfileReducer;
+  // });
 
-  
-  
+  const profileResponse = useSelector((state) => state.ProfileReducer);
+
+  useEffect(() => {
+    console.log("profileResponse 1111 ====>", profileResponse.ViewProfileReducer);
+  }, [profileResponse]);
+
   const [title, setTitle] = useState("");
   const [payment, setPayment] = useState("");
-  const [name, setName] = useState("Kevin Devid");
-  const [email, setEmail] = useState("email@gmail.com");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [dob, setDob] = useState("");
   const [address, setAddress] = useState("");
   const [tfn, setTFN] = useState("");
-  const [password, setPassword] = useState("12345678");
-  const [cnfPassword, setCnfPassword] = useState("12345678");
-  const [isRequesting , setRequesting] = useState(true);
+  const [password, setPassword] = useState("");
+  const [cnfPassword, setCnfPassword] = useState("");
+  const [isRequesting, setRequesting] = useState(true);
   const [onOpenMediaPicker, setOnOpenMediaPicker] = useState(false);
   const onChangeTitle = useCallback((text) => setTitle(text), []);
   const onChangePayment = useCallback((text) => setPayment(text), []);
@@ -79,61 +88,45 @@ const EditProfile = (props) => {
     []
   );
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
- 
- 
+
   const handleBackButtonClick = () => {
     moveBack();
     return true;
   };
   useEffect(() => {
-    // props.requestToGetProfile({"employee_id": 1 , navigation: navigation});
-    // setTimeout(() => {
-    //   if (profileResponse.ViewProfileReducer.isRequesting === false) {
-    //     let profileInformation = profileResponse.ViewProfileReducer.data;
-    //     setTitle(profileInformation.title);
-    //     setName(profileInformation.name);
-    //     setEmail(profileInformation.email);
-    //     setPhone(profileInformation.phone);
-    //     setTFN(profileInformation.tfn_number);
-    //     setAddress(profileInformation.address);
-    //     setDob(profileInformation.dob);
-    //     setRequesting(false);
-    //   }
-    // }, 2000);
-     
-      
-   
-    
     (async () => {
-      let responsedata =  await localDb.getUser().then((response) => {
+      let responsedata = await localDb.getUser().then((response) => {
         return response;
-      })
-      await props.requestToGetProfile({"employee_id": responsedata.user.id , navigation: navigation});
-      if (profileResponse.ViewProfileReducer.isRequesting === false) {
-        let profileInformation = profileResponse.ViewProfileReducer.data;
-        setTitle(profileInformation.title);
-        setName(profileInformation.name);
-        setEmail(profileInformation.email);
-        setPhone(profileInformation.phone);
-        setTFN(profileInformation.tfn_number);
-        setAddress(profileInformation.address);
-        setDob(profileInformation.dob);
-        setRequesting(false);
-      }
-    
+      });
+      await props.requestToGetProfile({
+        employee_id: responsedata.user.id,
+        navigation: navigation,
+      });
     })();
-    
+
     BackHandler.addEventListener("hardwareBackPress", handleBackButtonClick);
-   
+
     return () => {
       BackHandler.removeEventListener(
         "hardwareBackPress",
         handleBackButtonClick
       );
     };
-
-    
   }, []);
+
+  useEffect(() => {
+    if (profileResponse?.ViewProfileReducer) {
+      let profileInformation = profileResponse.ViewProfileReducer.data;
+      // console.log("::::::: profileInformation ::::::: 3333 =====>", profileInformation);
+      setTitle(profileInformation?.title);
+      setName(profileInformation?.name);
+      setEmail(profileInformation?.email);
+      setPhone(profileInformation?.phone);
+      setTFN(profileInformation?.tfn_number);
+      setAddress(profileInformation?.address);
+      setDob(profileInformation?.dob);
+    }
+  }, [profileResponse]);
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -145,11 +138,12 @@ const EditProfile = (props) => {
 
   const handleConfirm = (date) => {
     // console.warn("A date has been picked: ", date);
-    setDob(moment(date).format("YYYY-MM-DD"))
+    setDob(moment(date).format("YYYY-MM-DD"));
     hideDatePicker();
   };
 
-  function Validate(title,
+  function Validate(
+    title,
     // payment,
     name,
     email,
@@ -158,69 +152,75 @@ const EditProfile = (props) => {
     address,
     tfn,
     password,
-    cnfPassword) {
-      let  titleErr ="";
-      // let  paymentErr = "";
-      let  nameErr= "";
-      let  emailErr ="";
-      let  phoneErr = "";
-      let  dobErr = "";
-      let  addressErr ="";
-      let  tfnErr = "";
-      let  passwordErr ="";
-      let  cnfpasswordErr = "";
-  
-      if(title.trim() === "") {
-        titleErr = "Title cannot be empty"
-      }
-  
-      // if(payment.trim() === "") {
-      //   paymentErr = "Payment cannot be empty"
-      // }
-  
-      if(name.trim() === "") {
-        nameErr = "Name cannot be empty"
-      }
-  
-      
-      if (email.trim() === "") {
-        emailErr = alertMsgConstant.EMAIL_NOT_EMPTY;
-      } else if (!isEmailValid(email)) {
-        emailErr = alertMsgConstant.EMAIL_NOT_VALID;
-      }
-  
-  
-      if(phone === "") {
-        phoneErr = "Phone cannot be empty"
-      } else if(!isMobileNumberValid(phone)) {
-        phoneErr = "Phone number must be atleast 10 numbers "
-      }
-  
-      if(dob === "") {
-        dobErr = "Date of Birth cannot be empty"
-      }
-  
-      if(address.trim() === "") {
-        addressErr = "Address cannot be empty"
-      }
-  
-      if(tfn === "") {
-        tfnErr = "TFN cannot be empty"
-      }
-  
-      if (password.trim() === "") {
-        passwordErr = alertMsgConstant.PASSWORD_NOT_EMPTY;
-      }
+    cnfPassword
+  ) {
+    let titleErr = "";
+    // let  paymentErr = "";
+    let nameErr = "";
+    let emailErr = "";
+    let phoneErr = "";
+    let dobErr = "";
+    let addressErr = "";
+    let tfnErr = "";
+    let passwordErr = "";
+    let cnfpasswordErr = "";
 
-      if (cnfPassword.trim() ==="") {
-        cnfpasswordErr = alertMsgConstant.CONFIRM_PASSWORD_NOT_EMPTY;
-      } else if(password.trim() !== cnfPassword.trim()) {
-        cnfpasswordErr = alertMsgConstant.PASSWORD_NOT_EQUAL;
-      }
+    if (title.trim() === "") {
+      titleErr = "Title cannot be empty";
+    }
+
+    // if(payment.trim() === "") {
+    //   paymentErr = "Payment cannot be empty"
+    // }
+
+    if (name.trim() === "") {
+      nameErr = "Name cannot be empty";
+    }
+
+    if (email.trim() === "") {
+      emailErr = alertMsgConstant.EMAIL_NOT_EMPTY;
+    } else if (!isEmailValid(email)) {
+      emailErr = alertMsgConstant.EMAIL_NOT_VALID;
+    }
+
+    if (phone === "") {
+      phoneErr = "Phone cannot be empty";
+    } else if (!isMobileNumberValid(phone)) {
+      phoneErr = "Phone number must be atleast 10 numbers ";
+    }
+
+    if (dob === "") {
+      dobErr = "Date of Birth cannot be empty";
+    }
+
+    if (address.trim() === "") {
+      addressErr = "Address cannot be empty";
+    }
+
+    if (tfn === "") {
+      tfnErr = "TFN cannot be empty";
+    }
+
+    if (password.trim() === "") {
+      passwordErr = alertMsgConstant.PASSWORD_NOT_EMPTY;
+    }
+
+    if (cnfPassword.trim() === "") {
+      cnfpasswordErr = alertMsgConstant.CONFIRM_PASSWORD_NOT_EMPTY;
+    } else if (password.trim() !== cnfPassword.trim()) {
+      cnfpasswordErr = alertMsgConstant.PASSWORD_NOT_EQUAL;
+    }
 
     if (
-      titleErr === "" &&  nameErr === "" && emailErr === "" && phoneErr === "" && dobErr === ""
-      && addressErr === "" && tfnErr === "" && passwordErr === "" && cnfpasswordErr === ""
+      titleErr === "" &&
+      nameErr === "" &&
+      emailErr === "" &&
+      phoneErr === "" &&
+      dobErr === "" &&
+      addressErr === "" &&
+      tfnErr === "" &&
+      passwordErr === "" &&
+      cnfpasswordErr === ""
     ) {
       return "ok";
     } else {
@@ -234,7 +234,7 @@ const EditProfile = (props) => {
         addressErr,
         tfnErr,
         passwordErr,
-        cnfpasswordErr
+        cnfpasswordErr,
       };
     }
   }
@@ -255,7 +255,7 @@ const EditProfile = (props) => {
     setOnOpenMediaPicker(true);
   };
 
-  const onSubmit = async() => {
+  const onSubmit = async () => {
     const validate = Validate(
       title,
       // payment,
@@ -273,57 +273,57 @@ const EditProfile = (props) => {
       validate !== "ok"
         ? validate
         : {
-          titleErr:"",
-          // paymentErr:"",
-          nameErr:"",
-          emailErr:"",
-          phoneErr:"",
-          dobErr:"",
-          addressErr:"",
-          tfnErr:"",
-          passwordErr:"",
-          cnfpasswordErr:""
+            titleErr: "",
+            // paymentErr:"",
+            nameErr: "",
+            emailErr: "",
+            phoneErr: "",
+            dobErr: "",
+            addressErr: "",
+            tfnErr: "",
+            passwordErr: "",
+            cnfpasswordErr: "",
           }
     );
     if (validate == "ok") {
-      console.log(user , 'userInformation');
+      console.log(user, "userInformation");
       let data = {
         title,
         name,
-      email,
-      phone,
-      dob,
-      address,
-      tfn_number:tfn,
-      password,
-      employee_id:1,
-      navigation: navigation,
-      }
+        email,
+        phone,
+        dob,
+        address,
+        tfn_number: tfn,
+        password,
+        employee_id: 1,
+        navigation: navigation,
+      };
 
-      console.log("I am here " , data);
-      props.requestToUpdateProfile({ title,
+      // console.log("I am here ", data);
+      props.requestToUpdateProfile({
+        title,
         name,
-      email,
-      phone,
-      dob,
-      address,
-      tfn_number:tfn,
-      password,
-      employee_id:1,
-      navigation: navigation})
-      
-      
+        email,
+        phone,
+        dob,
+        address,
+        tfn_number: tfn,
+        password,
+        employee_id: 1,
+        navigation: navigation,
+      });
+
       // console.log(await profileResponse.updateProfileResponse , 'profileView')
       // navigationRef.navigate(appConstant.ROASTER);
     }
   };
-  
+
   // const userData = await localDb.getUser().then((response)=> {
-    
-  //   return response}); 
+
+  //   return response});
   // console.log(userData , 'userData')
- 
-  
+
   return (
     <>
       <CommonHeader onGoBack={onGoBack} screenName={route?.name} />
@@ -333,12 +333,12 @@ const EditProfile = (props) => {
         keyboardShouldPersistTaps="always"
       >
         <Pressable onPress={() => Keyboard.dismiss()}>
-          {onOpenMediaPicker ? (
-            <UploadImage
-              onOpenMediaPicker={onOpenMediaPicker}
-              setOnOpenMediaPicker={setOnOpenMediaPicker}
-            />
-          ) : null}
+
+          <UploadImage
+            onOpenMediaPicker={onOpenMediaPicker}
+            setOnOpenMediaPicker={setOnOpenMediaPicker}
+          />
+
           <View style={[styles.container]}>
             <View style={styles.viewTopTitle}>
               <AppText
@@ -364,7 +364,7 @@ const EditProfile = (props) => {
               </TouchableOpacity>
             </Pressable>
             <View style={styles.textInputContainer}>
-            <Text style={styles.inputTextTitle}>Title </Text>
+              <Text style={styles.inputTextTitle}>Title </Text>
               <TextInputCustom
                 label={"Title"}
                 value={title}
@@ -372,7 +372,7 @@ const EditProfile = (props) => {
                 onChangeText={onChangeTitle}
                 error={error.titleErr}
               />
-               {/* <Text style={styles.inputTextTitle}>Payment</Text>
+              {/* <Text style={styles.inputTextTitle}>Payment</Text>
                <TextInputCustom
                   label={"Payment"}
                   value={payment}
@@ -380,7 +380,7 @@ const EditProfile = (props) => {
                   placeholder={"Enter Payment Type"}
                   error={error.paymentErr}
                /> */}
-              
+
               <Text style={styles.inputTextTitle}>Name</Text>
               <TextInputCustom
                 label={"Name"}
@@ -399,12 +399,12 @@ const EditProfile = (props) => {
               />
               <Text style={styles.inputTextTitle}>Phone</Text>
               <TextInputCustom
-                  label={"Phone"}
-                  value={phone}
-                  onChangeText={onChangePhone}
-                  placeholder={"Enter Phone Number"}
-                  error={error.phoneErr}
-                  keyboardType="number-pad"
+                label={"Phone"}
+                value={phone}
+                onChangeText={onChangePhone}
+                placeholder={"Enter Phone Number"}
+                error={error.phoneErr}
+                keyboardType="number-pad"
               />
               <Text style={styles.inputTextTitle}>Date of Birth</Text>
               <TextInputCustom
@@ -434,30 +434,30 @@ const EditProfile = (props) => {
                 keyboardType="number-pad"
               />
               {/* <View style={styles.passwordContainer}> */}
-                <View>
-                  <Text style={styles.inputTextTitle}>Password</Text>
-                  <TextInputCustom
-                    secureTextEntry={true}
-                    label={"Password"}
-                    value={password}
-                    onChangeText={onChangePassword}
-                    // placeholder={"Password"}
-                    error={error.passwordErr}
-                    // inputViewStyle={styles.passwordInput}
-                  />
-                </View>
-                <View>
-                  <Text style={styles.inputTextTitle}>Confirm Password</Text>
-                  <TextInputCustom
-                    secureTextEntry={true}
-                    label={"Confirm Password"}
-                    value={cnfPassword}
-                    onChangeText={onChangeConfirmPassword}
-                    // placeholder={"Confirm Password"}
-                    error={error.cnfpasswordErr}
-                    // inputViewStyle={styles.passwordInput}
-                  />
-                </View>
+              <View>
+                <Text style={styles.inputTextTitle}>Password</Text>
+                <TextInputCustom
+                  secureTextEntry={true}
+                  label={"Password"}
+                  value={password}
+                  onChangeText={onChangePassword}
+                  // placeholder={"Password"}
+                  error={error.passwordErr}
+                  // inputViewStyle={styles.passwordInput}
+                />
+              </View>
+              <View>
+                <Text style={styles.inputTextTitle}>Confirm Password</Text>
+                <TextInputCustom
+                  secureTextEntry={true}
+                  label={"Confirm Password"}
+                  value={cnfPassword}
+                  onChangeText={onChangeConfirmPassword}
+                  // placeholder={"Confirm Password"}
+                  error={error.cnfpasswordErr}
+                  // inputViewStyle={styles.passwordInput}
+                />
+              </View>
               {/* </View> */}
               <View style={styles.btnContainer}>
                 <CustomButton
@@ -477,42 +477,35 @@ const EditProfile = (props) => {
         onConfirm={handleConfirm}
         onCancel={hideDatePicker}
       />
-      
-       {isRequesting ? (
-        <Loader loading={isRequesting} />
+
+      {profileResponse?.ViewProfileReducer?.isRequesting ? (
+        <Loader loading={profileResponse?.ViewProfileReducer?.isRequesting} />
       ) : null}
-       {profileResponse.UpdateProfileReducer.isRequesting ? (
+      {profileResponse.UpdateProfileReducer.isRequesting ? (
         <Loader loading={profileResponse.UpdateProfileReducer.isRequesting} />
       ) : null}
     </>
   );
 };
 
-
 const mapDispatchToProps = (dispatch) => {
   return {
-    requestToGetProfile: (params) =>
-       
-    {
-      console.log(params , 'statedispacth');
+    requestToGetProfile: (params) => {
+      // console.log(params, "statedispacth");
       return dispatch(profileAction.requestToViewProfile(params));
     },
 
-    requestToUpdateProfile: (params) =>
-       
-      {
-        console.log(params , 'statedispacth');
-        return dispatch(requestToUpdateProfile(params));
-      },
+    requestToUpdateProfile: (params) => {
+      // console.log(params, "statedispacth");
+      return dispatch(requestToUpdateProfile(params));
+    },
   };
 };
 export default connect(null, mapDispatchToProps)(EditProfile);
 
-
-
 export const requestToUpdateProfile = (params) => {
-  return ({
+  return {
     type: actionConstant.ACTION_UPDATE_PROFILE_REQUEST,
-    payload: params
-  });
+    payload: params,
+  };
 };
