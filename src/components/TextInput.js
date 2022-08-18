@@ -44,7 +44,7 @@ export const TextInputCustom = (props) => {
           keyboardType={keyboardType}
         />
       </View>
-      <TouchableOpacity onPress={onPressRight}>
+      <TouchableOpacity style={styles.eyeContainer} onPress={onPressRight}>
         <Image
           source={rightIcon} //Change your icon image here
           style={[styles.iconStyle, rightIconStyle]}
@@ -88,6 +88,14 @@ export const styles = {
   somePlaceholderStyle: {
     fontSize: fontConstant.TEXT_16_SIZE_REGULAR,
     color: "red",
+  },
+
+  eyeContainer : {
+    height: hp('5%'),
+    width: wp('8%'),
+    display : 'flex',
+    justifyContent: 'center',
+    alignItems : 'center'
   },
 
   iconStyle: {

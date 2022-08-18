@@ -72,7 +72,7 @@ export default StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: hp('10%')
+    marginTop: hp('8%')
   },
   appVersion: {
     // textAlign: 'center',
