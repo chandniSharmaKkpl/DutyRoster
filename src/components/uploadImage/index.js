@@ -48,7 +48,9 @@ const UploadImage = (props) => {
     mediaType: "",
   });
 
-  console.log("profile_imagePath ===>", profile_imagePath);
+
+
+  // console.log("profile_imagePath ===>", profile_imagePath);
 
   React.useEffect(() => {}, [meadiaUploadList]);
   const closemediaPicker = () => {
@@ -146,6 +148,7 @@ const UploadImage = (props) => {
       freeStyleCropEnabled: true,
     })
       .then((response) => {
+        console.log("choose Media ====>", response);
         setProfiilePath(response);
         setProfile_imagePath(
           Platform.OS == "ios"
