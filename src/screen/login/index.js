@@ -156,33 +156,23 @@ const Login = (props) => {
             />
             <View style={{ height: hp("2.5%") }} />
 
-            {isClickEye ? (
               <TextInputCustom
-                secureTextEntry={false}
+                secureTextEntry={isClickEye ? false : true}
                 label={"Password"}
                 value={password}
                 onChangeText={onChangePassword}
                 placeholder={"Enter Password"}
                 icon={require("../../assets/images/LoginScreen/password.png")}
-                rightIcon={require("../../assets/images/LoginScreen/privacyEye.png")}
+                rightIcon={
+                  isClickEye ?
+                  require("../../assets/images/LoginScreen/privacyEye.png")
+                : require("../../assets/images/ResetPasswordScreen/eyeSlash.png")
+                }
                 onPressRight={onPressRight}
                 iconStyle={styles.passwordStyle}
                 error={error.passwordErr}
               />
-            ) : (
-              <TextInputCustom
-                secureTextEntry={true}
-                label={"Password"}
-                value={password}
-                onChangeText={onChangePassword}
-                placeholder={"Enter Password"}
-                icon={require("../../assets/images/LoginScreen/password.png")}
-                rightIcon={require("../../assets/images/ResetPasswordScreen/eyeSlash.png")}
-                onPressRight={onPressRight}
-                iconStyle={styles.passwordStyle}
-                error={error.passwordErr}
-              />
-            )}
+
           </View>
 
           <View style={styles.viewForgotPass}>
