@@ -1,17 +1,19 @@
-import { actionConstant } from "@/constant";
+import { actionConstant, appConstant } from "@/constant";
 import { takeLatest, take, call, put, select, all } from "redux-saga/effects";
 import { resetPasswordCall } from "./Reset_Password.api";
 
 export function* workerResetPassword(action) {
-  console.log(" actin reset ", action.payload);
   try {
-    const accessToken = yield call(resetPasswordCall, action.payload);
+    const response = yield call(resetPasswordCall, action.payload);
     yield put({
       type: actionConstant.ACTION_RESET_PASSWORD_SUCCESS,
-      payload: accessToken,
+      payload: response,
     });
+    if (response.data.message) {
+      alert(response.data.message);
+      action.payload.navigation.navigate(appConstant.LOGIN);
+    }
   } catch (error) {
-
     yield put({
       type: actionConstant.ACTION_RESET_PASSWORD_FAILURE,
       payload: error,

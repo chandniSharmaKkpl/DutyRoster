@@ -31,6 +31,7 @@ import { requestToForgotPassword } from "../forgotPassword/redux/Forgot_Password
 import Loader from "@/components/Loader";
 
 const ResetPassword = (props) => {
+  // console.log("props ===>", props.route.params.email);
   const [error, setError] = React.useState({
     refCodeErr: "",
     newPasswordErr: "",
@@ -39,8 +40,11 @@ const ResetPassword = (props) => {
   const [refCode, setRefCode] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [email, setEmail] = useState(props?.route?.params?.email);
   const responseData = useSelector((state) => state.Reset_PasswordReducer);
-  const responseDataResendCode = useSelector(state => state.Forgot_PasswordReducer)
+  const responseDataResendCode = useSelector(
+    (state) => state.Forgot_PasswordReducer
+  );
 
   const [isClickEyeNewPassword, setIsClickEyeNewPassword] = useState(false);
   const [isClickEyeForConfirmPassword, setIsClickEyeForConfirmPassword] =
@@ -71,8 +75,11 @@ const ResetPassword = (props) => {
   };
 
   const resendCode = () => {
-    props.requestToForgotPasswordAction({email: props.route.params.email, navigation: props.navigation, comeFrom: appConstant.RESER_PWD})
-
+    props.requestToForgotPasswordAction({
+      email: props.route.params.email,
+      navigation: props.navigation,
+      comeFrom: appConstant.RESER_PWD,
+    });
   };
 
   const onReset = () => {
@@ -87,16 +94,14 @@ const ResetPassword = (props) => {
           }
     );
     if (validate == "ok") {
-      let email = props.route.params.email;
       props.requestToResetPasswordAction({
         refCode,
         email,
         newPassword,
         confirmPassword,
-        navigation
+        navigation,
       });
-
-     // props.navigation.navigate(appConstant.RESER_PWD);
+      // props.navigation.navigate(appConstant.LOGIN);
     }
   };
   function Validate(refCode, newPassword, confirmPassword) {
@@ -116,15 +121,15 @@ const ResetPassword = (props) => {
 
     if (refCodeErr == "" && newPasswordErr == "" && confirmPasswordErr == "") {
       if (newPassword != confirmPassword) {
-        alert(alertMsgConstant.PASSWORD_NOT_EQUAL)
+        alert(alertMsgConstant.PASSWORD_NOT_EQUAL);
         return "no";
       }
       return "ok";
     } else {
       return {
         refCodeErr,
-        newPasswordErr, 
-        confirmPasswordErr
+        newPasswordErr,
+        confirmPasswordErr,
       };
     }
   }
@@ -233,7 +238,11 @@ const ResetPassword = (props) => {
         </View>
       </KeyboardAwareScrollView>
       {responseData.isRequesting || responseDataResendCode.isRequesting ? (
-        <Loader loading={responseData.isRequesting || responseDataResendCode.isRequesting} />
+        <Loader
+          loading={
+            responseData.isRequesting || responseDataResendCode.isRequesting
+          }
+        />
       ) : null}
     </>
   );
@@ -241,9 +250,8 @@ const ResetPassword = (props) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-
     requestToForgotPasswordAction: (params) =>
-    dispatch(requestToForgotPassword(params)),
+      dispatch(requestToForgotPassword(params)),
 
     requestToResetPasswordAction: (params) =>
       dispatch(requestToResetPassword(params)),

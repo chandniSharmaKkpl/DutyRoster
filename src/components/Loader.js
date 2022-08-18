@@ -29,22 +29,15 @@ const Loader = props => {
     },
   });
 
-  // console.log('style', styles);
-
   const [orientation, setOrientation] = React.useState('portrait');
 
   const {loading} = props;
   useEffect(() => {
-    console.log('setOrientation', orientation);
     lor(setOrientation);
     return () => {
       rol();
     };
   }, []);
-
-  console.log('wp', wp('100%'));
-
-  console.log('hp', hp('100%'));
 
   return (
     <>

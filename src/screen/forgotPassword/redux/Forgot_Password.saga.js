@@ -6,7 +6,6 @@ export function* workerForgotPassword(action) {
 
   try {
     const response = yield call(forgotPasswordCall, action.payload);
-   console.log(" response msg ---", response); 
     yield put({
       type: actionConstant.ACTION_FORGOT_PASSWORD_SUCCESS,
       payload: response,

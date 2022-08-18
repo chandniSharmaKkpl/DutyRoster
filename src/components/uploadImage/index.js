@@ -95,7 +95,6 @@ const UploadImage = (props) => {
       freeStyleCropEnabled: true,
     })
       .then((response) => {
-        console.log("captureImage ::::", response);
         setProfiilePath(response);
         setMeadiaUploadList({
           ...meadiaUploadList,
@@ -147,7 +146,6 @@ const UploadImage = (props) => {
       freeStyleCropEnabled: true,
     })
       .then((response) => {
-        console.log("chooseMedia ====>", JSON.stringify(response, null, 4));
         setProfiilePath(response);
         setProfile_imagePath(
           Platform.OS == "ios"

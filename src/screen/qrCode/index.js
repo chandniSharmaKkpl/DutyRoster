@@ -76,7 +76,6 @@ const QRCodeScreen = (props) => {
   React.useEffect(() => {
     if (textSVGRef) {
       // const result = textSVGRef.current.getBBox();
-      // console.log(result);
     }
   }, [textSVGRef]);
   const CircleMAsk = () => {

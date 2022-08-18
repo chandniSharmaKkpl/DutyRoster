@@ -26,7 +26,6 @@ export const TextInputCustom = (props) => {
     rightIconStyle,
     multiline,
   } = props;
-  console.log("rightIcon ==>", rightIcon);
   return (
     <View style={[styles.view, inputViewStyle]}>
       <View style={styles.view1}>

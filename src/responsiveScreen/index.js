@@ -58,7 +58,6 @@ const listenOrientationChange = setOrientation => {
     // Retrieve and save new dimensions
     screenWidth = newDimensions.window.width;
     screenHeight = newDimensions.window.height;
-    console.log(screenWidth, screenHeight);
     let orientation = screenWidth < screenHeight ? 'portrait' : 'landscape';
     setOrientation(orientation);
   });
@@ -66,12 +65,10 @@ const listenOrientationChange = setOrientation => {
 
 const getOrientation = () => {
   let orientation = screenWidth < screenHeight ? 'portrait' : 'landscape';
-  console.log('getOrientation', orientation);
   return orientation;
 };
 const testgetOrientation = data => {
   let orientation = screenWidth < screenHeight ? 'portrait' : 'landscape';
-  console.log('testgetOrientation', orientation, data);
   return orientation;
 };
 /**
@@ -81,7 +78,6 @@ const testgetOrientation = data => {
  * avoid adding new listeners every time the same component is re-mounted.
  */
 const removeOrientationListener = () => {
-  console.log('removeOrientationListener');
   Dimensions.removeEventListener('change', () => {});
 };
 

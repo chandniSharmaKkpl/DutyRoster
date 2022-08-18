@@ -13,7 +13,6 @@ import { TextInputCustom } from "@/components/TextInput";
 const Unavailablity = (props) => {
   const navigation = useNavigation();
   const route = useRoute();
-  console.log("'route ==>", route.name);
   const handleBackButtonClick = () => {
     moveBack();
     return true;

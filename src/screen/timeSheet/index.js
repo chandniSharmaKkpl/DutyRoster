@@ -15,7 +15,6 @@ const width = Dimensions.get("screen").width;
 const TimeSheetScreen = (props) => {
   const navigation = useNavigation();
   const route = useRoute();
-  console.log("'route ==>", route.name);
 
   const handleBackButtonClick = () => {
     moveBack();
