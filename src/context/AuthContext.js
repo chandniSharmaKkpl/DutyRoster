@@ -3,6 +3,7 @@ import * as React from 'react'
 export default React.createContext({
 	user: null,
 	setUserData: (val) => {
+		console.log(val ,'vval');
 		return val
 	}
 })

@@ -4,5 +4,8 @@ export default {
   SIGNUP:"/register",
   FORGOT_PWD : "/forgot-password",
   RESET_PWD : "/reset-password",
-  ADD_TIMESHEET : '/add-timesheet'
+  ADD_TIMESHEET : '/add-timesheet',
+  VIEW_PROFILE:'/view-profile',
+  EDIT_PROFILE:'/edit-profile'
+
 };
