@@ -8,14 +8,13 @@ import { isEmailValid } from "../../helper/validations";
 import styles from "./style";
 import { CustomButton } from "@/components/CustomButton";
 import { AppText } from "@/components/AppText";
-import Loader from '@/components/Loader';
+import Loader from "@/components/Loader";
 import { TextInputCustom } from "@/components/TextInput";
 import { connect, useSelector } from "react-redux";
 import { requestToGetAccessToken } from "./redux/Login.action";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const Login = (props) => {
-  
   const [error, setError] = React.useState({
     emailErr: "",
     passwordErr: "",
@@ -25,7 +24,7 @@ const Login = (props) => {
   const [isClickEye, setIsClickEye] = useState(false);
   const [loading, setLoading] = React.useState(true);
   const [formErr, setFormError] = React.useState("");
- const loginResponse = useSelector(state => state.LoginReducer)
+  const loginResponse = useSelector((state) => state.LoginReducer);
   const navigation = useNavigation();
   const onChangeEmail = (text) => {
     setEmail(text);
@@ -86,8 +85,7 @@ const Login = (props) => {
     }
   }
 
-  useEffect(() => {
-  }, [isClickEye]);
+  useEffect(() => {}, [isClickEye]);
 
   const onPressRight = () => {
     setIsClickEye(!isClickEye);
@@ -98,7 +96,6 @@ const Login = (props) => {
   };
 
   const onClickSignIn = () => {
-
     const validate = Validate(email, password);
     setError(
       validate !== "ok"
@@ -110,14 +107,17 @@ const Login = (props) => {
     );
 
     if (validate == "ok") {
-      props.requestToGetAccessTokenAction({ email: email, password :password, navigation: navigation });
+      props.requestToGetAccessTokenAction({
+        email: email,
+        password: password,
+        navigation: navigation,
+      });
     }
   };
 
   const goToForgotPassword = () => {
     navigation.navigate("ForgotPassword");
   };
-
 
   const goToSignup = () => {
     navigation.navigate("Signup");
@@ -156,23 +156,22 @@ const Login = (props) => {
             />
             <View style={{ height: hp("2.5%") }} />
 
-              <TextInputCustom
-                secureTextEntry={isClickEye ? false : true}
-                label={"Password"}
-                value={password}
-                onChangeText={onChangePassword}
-                placeholder={"Enter Password"}
-                icon={require("../../assets/images/LoginScreen/password.png")}
-                rightIcon={
-                  isClickEye ?
-                  require("../../assets/images/LoginScreen/privacyEye.png")
-                : require("../../assets/images/ResetPasswordScreen/eyeSlash.png")
-                }
-                onPressRight={onPressRight}
-                iconStyle={styles.passwordStyle}
-                error={error.passwordErr}
-              />
-
+            <TextInputCustom
+              secureTextEntry={isClickEye ? false : true}
+              label={"Password"}
+              value={password}
+              onChangeText={onChangePassword}
+              placeholder={"Enter Password"}
+              icon={require("../../assets/images/LoginScreen/password.png")}
+              rightIcon={
+                isClickEye
+                  ? require("../../assets/images/LoginScreen/privacyEye.png")
+                  : require("../../assets/images/ResetPasswordScreen/eyeSlash.png")
+              }
+              onPressRight={onPressRight}
+              iconStyle={styles.passwordStyle}
+              error={error.passwordErr}
+            />
           </View>
 
           <View style={styles.viewForgotPass}>
@@ -193,26 +192,26 @@ const Login = (props) => {
             />
           </View>
 
-          <View style={{...styles.viewSignUp , flexDirection:'row' }}>
-            
-              <AppText
-                text={"Don't have an Account?"}
-                style={styles.txtSignup}
-              />
-            <TouchableOpacity onPress={goToSignup} >
+          <View style={{ ...styles.viewSignUp, flexDirection: "row" }}>
+            <AppText text={"Don't have an Account?"} style={styles.txtSignup} />
+            <TouchableOpacity onPress={goToSignup}>
               <AppText
                 text={" Signup"}
-                style={{...styles.txtSignup , color:"#BD2529"}}
+                style={{ ...styles.txtSignup, color: "#BD2529" }}
               />
             </TouchableOpacity>
           </View>
-
+          <View style={styles.versionContainer}>
+            <AppText
+              text={" App Vesrion 1.1"}
+              style={{ ...styles.appVersion }}
+            />
+          </View>
         </View>
       </KeyboardAwareScrollView>
       {loginResponse.isRequesting ? (
         <Loader loading={loginResponse.isRequesting} />
       ) : null}
-
     </>
   );
 };

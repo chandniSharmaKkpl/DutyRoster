@@ -68,6 +68,20 @@ export default StyleSheet.create({
     fontFamily: fontConstant.FONT_REGULAR,
     fontSize: fontConstant.TEXT_H2_SIZE_REGULAR,
   },
+  versionContainer: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: hp('10%')
+  },
+  appVersion: {
+    // textAlign: 'center',
+    justifyContent: "center",
+    alignItems: "center",
+    color: appColor.BLACK,
+    fontFamily: fontConstant.FONT_REGULAR,
+    fontSize: fontConstant.TEXT_H2_SIZE_REGULAR,
+  },
   viewSocialMediaBtn: {
     alignItems: "center",
   },

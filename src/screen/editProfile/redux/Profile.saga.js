@@ -35,6 +35,7 @@ export function* workersUpdateProfile(action) {
       type: actionConstant.ACTION_UPDATE_PROFILE_SUCCESS,
       payload: viewUpdateProfileResponse,
     });
+    alert(viewUpdateProfileResponse.message)
    //localDb.setUser(loginResponse.data); 
    action.payload.navigation.navigate(appConstant.EDIT_PROFILE , {profileData:viewUpdateProfileResponse}); 
   } catch (error) {
