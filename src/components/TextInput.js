@@ -1,6 +1,14 @@
 import { appColor } from "@/constant";
 import React from "react";
-import { View, Text, TextInput, Image, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Image,
+  TouchableOpacity,
+  Platform,
+  Pressable,
+} from "react-native";
 import fontConstant from "../constant/fontConstant";
 import { AppText } from "./AppText";
 import {
@@ -33,6 +41,7 @@ export const TextInputCustom = (props) => {
           source={icon} //Change your icon image here
           // style={iconStyle}
         />
+
         <TextInput
           style={[styles.txtInput, style]}
           value={value}
@@ -42,6 +51,8 @@ export const TextInputCustom = (props) => {
           placeholderTextSize={50}
           secureTextEntry={secureTextEntry}
           keyboardType={keyboardType}
+          placeholderTextColor={appColor.GRAY}
+          onPressIn={onPressRight}
         />
       </View>
       <TouchableOpacity style={styles.eyeContainer} onPress={onPressRight}>
@@ -90,12 +101,12 @@ export const styles = {
     color: "red",
   },
 
-  eyeContainer : {
-    height: hp('5%'),
-    width: wp('8%'),
-    display : 'flex',
-    justifyContent: 'center',
-    alignItems : 'center'
+  eyeContainer: {
+    height: hp("5%"),
+    width: wp("8%"),
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   iconStyle: {
