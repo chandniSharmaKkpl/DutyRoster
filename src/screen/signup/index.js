@@ -90,7 +90,7 @@ const Signup = (props) => {
   );
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [DeviceName, setDeviceName] = useState(false);
-
+  let isCalander;
   DeviceInfo.getDeviceName().then((device_name) => {
     setDeviceName(device_name);
   });
@@ -184,8 +184,10 @@ const Signup = (props) => {
 
     if (phone === "") {
       phoneErr = "Phone cannot be empty";
-    } else if (!isMobileNumberValid(phone)) {
+    } else if (phone.length<10) {
       phoneErr = "Phone number must be atleast 10 numbers ";
+    } else if  (phone.length>10) {
+      phoneErr = "Phone number no not more than 10 char"
     }
 
     if (dob === "") {
@@ -416,7 +418,7 @@ const Signup = (props) => {
             <View style={styles.loginTextContainer}>
               <Text style={stylesCommon.titleText}>Signup</Text>
             </View>
-            <View style={{ height: hp("2.5%") }} />
+            <View style={{ height: hp("2.8%") }} />
             <View
               style={{
                 alignSelf: "center",
@@ -442,7 +444,7 @@ const Signup = (props) => {
               </TouchableOpacity>
             </View>
             <View style={styles.viewTxtInput}>
-              <View style={{ height: hp("2.5%") }} />
+              <View style={{ height: hp("2.8%") }} />
               <TextInputCustom
                 label={"Title"}
                 value={title}
@@ -453,8 +455,8 @@ const Signup = (props) => {
                 error={error.titleErr}
                 keyboardType="default"
               />
-              <View style={{ height: hp("2.5%") }} />
-              <TextInputCustom
+              <View style={{ height: hp("2.8%") }} />
+              {/* <TextInputCustom
                 label={"Payment"}
                 value={payment}
                 onChangeText={onChangePayment}
@@ -463,8 +465,8 @@ const Signup = (props) => {
                 iconStyle={styles.IconStyle}
                 error={error.paymentErr}
                 keyboardType="default"
-              />
-              <View style={{ height: hp("2.5%") }} />
+              /> */}
+              {/* <View style={{ height: hp("2.8%") }} /> */}
               <TextInputCustom
                 label={"Name"}
                 value={name}
@@ -475,7 +477,7 @@ const Signup = (props) => {
                 error={error.nameErr}
                 keyboardType="default"
               />
-              <View style={{ height: hp("2.5%") }} />
+              <View style={{ height: hp("2.8%") }} />
               <TextInputCustom
                 label={"Email"}
                 value={email}
@@ -486,7 +488,7 @@ const Signup = (props) => {
                 error={error.emailErr}
                 keyboardType="email-address"
               />
-              <View style={{ height: hp("2.5%") }} />
+              <View style={{ height: hp("2.8%") }} />
 
               <TextInputCustom
                 label={"Phone"}
@@ -498,7 +500,7 @@ const Signup = (props) => {
                 error={error.phoneErr}
                 keyboardType="number-pad"
               />
-              <View style={{ height: hp("2.5%") }} />
+              <View style={{ height: hp("2.8%") }} />
               {/* <Pressable onPress={showDatePicker} style={{width: '100%'}}> */}
               <TextInputCustom
                 label={"Dob"}
@@ -507,13 +509,14 @@ const Signup = (props) => {
                 placeholder={"Enter Date of Birth"}
                 icon={require("../../assets/images/SignupScreen/dob.png")}
                 rightIcon={require("../../assets/images/SignupScreen/calendar.png")}
-                onPressRight={showDatePicker}
+                // onPressRight={showDatePicker}
                 iconStyle={styles.IconStyle}
                 error={error.dobErr}
                 keyboardType="default"
+                onFocus={showDatePicker}
               />
               {/* </Pressable> */}
-              <View style={{ height: hp("2.5%") }} />
+              <View style={{ height: hp("2.8%") }} />
 
               <TextInputCustom
                 label={"Address"}
@@ -525,7 +528,7 @@ const Signup = (props) => {
                 error={error.addressErr}
                 keyboardType="default"
               />
-              <View style={{ height: hp("2.5%") }} />
+              <View style={{ height: hp("2.8%") }} />
 
               <TextInputCustom
                 label={"Tfn"}
@@ -537,65 +540,45 @@ const Signup = (props) => {
                 error={error.tfnErr}
                 keyboardType="number-pad"
               />
-              <View style={{ height: hp("2.5%") }} />
+              <View style={{ height: hp("2.8%") }} />
 
-              {isClickEye ? (
-                <TextInputCustom
-                  secureTextEntry={false}
-                  label={"Password"}
-                  value={password}
-                  onChangeText={onChangePassword}
-                  placeholder={"Enter Password"}
-                  icon={require("../../assets/images/SignupScreen/password.png")}
-                  rightIcon={require("../../assets/images/LoginScreen/privacyEye.png")}
-                  onPressRight={onPressRight}
-                  iconStyle={styles.IconStyle}
-                  error={error.passwordErr}
-                />
-              ) : (
-                <TextInputCustom
-                  secureTextEntry={true}
-                  label={"Password"}
-                  value={password}
-                  onChangeText={onChangePassword}
-                  placeholder={"Enter Password"}
-                  icon={require("../../assets/images/SignupScreen/password.png")}
-                  rightIcon={require("../../assets/images/ResetPasswordScreen/eyeSlash.png")}
-                  onPressRight={onPressRight}
-                  iconStyle={styles.IconStyle}
-                  error={error.passwordErr}
-                />
-              )}
-              <View style={{ height: hp("2.5%") }} />
+              <TextInputCustom
+                secureTextEntry={isClickEye ? false : true}
+                label={"Password"}
+                value={password}
+                onChangeText={onChangePassword}
+                placeholder={"Enter Password"}
+                icon={require("../../assets/images/SignupScreen/password.png")}
+                rightIcon={
+                  isClickEye
+                    ? require("../../assets/images/ResetPasswordScreen/eyeSlash.png")
+                    : require("../../assets/images/LoginScreen/privacyEye.png")
+                }
+                onPressRight={onPressRight}
+                iconStyle={styles.IconStyle}
+                error={error.passwordErr}
+              />
 
-              {isClickEyeConfirm ? (
-                <TextInputCustom
-                  secureTextEntry={false}
-                  label={"Confirm-Password"}
-                  value={cnfPassword}
-                  onChangeText={onChangeConfirmPassword}
-                  placeholder={"Enter Confirm Password"}
-                  icon={require("../../assets/images/LoginScreen/password.png")}
-                  rightIcon={require("../../assets/images/LoginScreen/privacyEye.png")}
-                  onPressRight={onPressRightConfirm}
-                  iconStyle={styles.IconStyle}
-                  error={error.cnfpasswordErr}
-                />
-              ) : (
-                <TextInputCustom
-                  secureTextEntry={true}
-                  label={"Confirm-Password"}
-                  value={cnfPassword}
-                  onChangeText={onChangeConfirmPassword}
-                  placeholder={"Enter Confirm Password"}
-                  icon={require("../../assets/images/LoginScreen/password.png")}
-                  rightIcon={require("../../assets/images/ResetPasswordScreen/eyeSlash.png")}
-                  onPressRight={onPressRightConfirm}
-                  iconStyle={styles.IconStyle}
-                  error={error.cnfpasswordErr}
-                />
-              )}
-              <View style={{ height: hp("2.5%") }} />
+              <View style={{ height: hp("2.8%") }} />
+
+              <TextInputCustom
+                secureTextEntry={isClickEyeConfirm ? false : true}
+                label={"Confirm-Password"}
+                value={cnfPassword}
+                onChangeText={onChangeConfirmPassword}
+                placeholder={"Enter Confirm Password"}
+                icon={require("../../assets/images/LoginScreen/password.png")}
+                rightIcon={
+                  isClickEyeConfirm
+                    ? require("../../assets/images/ResetPasswordScreen/eyeSlash.png")
+                    : require("../../assets/images/LoginScreen/privacyEye.png")
+                }
+                onPressRight={onPressRightConfirm}
+                iconStyle={styles.IconStyle}
+                error={error.cnfpasswordErr}
+              />
+
+              <View style={{ height: hp("2.8%") }} />
             </View>
 
             <View style={styles.viewSocialMediaBtn}>
@@ -663,12 +646,15 @@ const Signup = (props) => {
           </View>
         </View>
       </Modal>
-      <DateTimePickerModal
-        isVisible={isDatePickerVisible}
-        mode="date"
-        onConfirm={handleConfirm}
-        onCancel={hideDatePicker}
-      />
+      {isDatePickerVisible && (
+        <DateTimePickerModal
+          isVisible={isDatePickerVisible}
+          mode="date"
+          onConfirm={handleConfirm}
+          onCancel={hideDatePicker}
+        />
+      )}
+
       {signupResponse.isRequesting ? (
         <Loader loading={signupResponse.isRequesting} />
       ) : null}

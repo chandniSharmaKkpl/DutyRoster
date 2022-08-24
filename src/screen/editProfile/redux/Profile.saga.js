@@ -28,7 +28,7 @@ export function* workersViewProfile(action) {
 export function* workersUpdateProfile(action) {
   
   try {
-    console.log(action , 'action');
+    console.log('workersUpdateProfile',JSON.stringify(action.payload,null,4));
     const viewUpdateProfileResponse = yield call(UpdateProfile, action.payload);
     console.log(viewUpdateProfileResponse, 'viewUpdateProfileResponse')
     yield put({

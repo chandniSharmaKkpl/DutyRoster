@@ -41,28 +41,25 @@ export default StyleSheet.create({
     fill: appColor.WHITE,
   },
   dateTextunSelectBox: {
-    height: hp('7%'),
-    width: wp('10.5%'),
+    height: hp("7%"),
+    width: wp("10.5%"),
     justifyContent: "center",
     alignItems: "center",
-    marginRight: wp('2.5%'),
+    marginRight: wp("2.5%"),
     paddingVertical: 10,
-  
-    backgroundColor : appColor.DARK_SKY
 
+    backgroundColor: appColor.DARK_SKY,
   },
   dateTextBoxSelect: {
-    height: hp('7%'),
-    width: wp('10.5%'),
+    height: hp("7%"),
+    width: wp("10.5%"),
     backgroundColor: appColor.RED,
     borderWidth: 1,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 6,
     borderColor: appColor.RED,
-    marginRight: wp('2.5%'),
-    
-
+    marginRight: wp("2.5%"),
   },
   dayTextStyle: {
     fontSize: fontConstant.TEXT_H3_SIZE_REGULAR,
@@ -100,15 +97,21 @@ export default StyleSheet.create({
     fontSize: fontConstant.TEXT_14_SIZE_BOLD,
     fontWeight: "600",
   },
-  dateLabelContainer:{
+  dateLabelContainer: {
     // backgroundColor:"grey",
-    alignItems:"center",
-    justifyContent:"center",
-    alignContent:"center",
-    paddingVertical:hp('1%')
+    alignItems: "center",
+    justifyContent: "center",
+    alignContent: "center",
+    paddingVertical: hp("1%"),
+    position: "relative",
   },
-  empTimeCardDetails : {
-    marginTop : hp('2%'),
-    paddingHorizontal : 20
-  }
+  empTimeCardDetails: {
+    marginTop: hp("2%"),
+    paddingHorizontal: 20,
+  },
+  calendarStyle: {
+    position: "absolute",
+    left: wp("26%"),
+    top: hp("7.5%"),
+  },
 });

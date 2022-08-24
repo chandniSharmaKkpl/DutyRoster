@@ -7,13 +7,14 @@ export default {
   FORGOT_PWD: "ForgotPassword",
   PROFILE: "Profile",
   RESER_PWD: "ResetPassword",
-  ROASTER: "Roaster",
+  ROASTER: "Roster",
   TIMESHEETS: "Timesheets",
   QR_CODE: "QRCode",
   EDIT_PROFILE: "Edit Profile",
   PROFILE_SETTINGS: "Profile Settings",
   UNAVAILABILITY: "Unavailablity",
   CALENDAR: "Calendar",
+
 
   // Input Title name
 

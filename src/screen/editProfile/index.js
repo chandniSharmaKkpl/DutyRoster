@@ -39,12 +39,13 @@ import { connect, useSelector } from "react-redux";
 import Loader from "@/components/Loader";
 
 const EditProfile = (props) => {
+  const {requestToUpdateProfileAction} = props
   const navigation = useNavigation();
   const route = useRoute();
   const { user } = React.useContext(AuthContext);
   const [error, setError] = React.useState({
     titleErr: "",
-    paymentErr: "",
+    // paymentErr: "",
     nameErr: "",
     emailErr: "",
     phoneErr: "",
@@ -54,11 +55,6 @@ const EditProfile = (props) => {
     passwordErr: "",
     cnfpasswordErr: "",
   });
-
-  // const profileResponse = useSelector((state) => {
-  //   console.log(JSON.stringify(state.ProfileReducer, null, 4), "states");
-  //   return state.ProfileReducer;
-  // });
 
   const profileResponse = useSelector((state) => state.ProfileReducer);
 
@@ -72,7 +68,7 @@ const EditProfile = (props) => {
   const [profilePath, setProfiilePath] = useState(null);
   const [ImageSource, setImageSource] = useState();
   const [title, setTitle] = useState("");
-  const [payment, setPayment] = useState("");
+  // const [payment, setPayment] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -84,7 +80,7 @@ const EditProfile = (props) => {
   const [isRequesting, setRequesting] = useState(true);
   const [onOpenMediaPicker, setOnOpenMediaPicker] = useState(false);
   const onChangeTitle = useCallback((text) => setTitle(text), []);
-  const onChangePayment = useCallback((text) => setPayment(text), []);
+  // const onChangePayment = useCallback((text) => setPayment(text), []);
   const onChangeName = useCallback((text) => setName(text), []);
   const onChangeEmail = useCallback((text) => setEmail(text), []);
   const onChangePhone = useCallback((text) => setPhone(text), []);
@@ -127,7 +123,10 @@ const EditProfile = (props) => {
   useEffect(() => {
     if (profileResponse?.ViewProfileReducer) {
       let profileInformation = profileResponse.ViewProfileReducer.data;
-      // console.log("::::::: profileInformation ::::::: 3333 =====>", profileInformation);
+      console.log(
+        "::::::: profileInformation ::::::: 3333 =====>",
+        profileInformation
+      );
       setTitle(profileInformation?.title);
       setName(profileInformation?.name);
       setEmail(profileInformation?.email);
@@ -141,8 +140,11 @@ const EditProfile = (props) => {
   }, [profileResponse]);
   React.useEffect(() => {
     if (profileResponse.UpdateProfileReducer) {
-      let profileInformation = profileResponse.UpdateProfileReducer.data;
-      // console.log("::::::: profileInformation ::::::: 3333 =====>", profileInformation);
+      let profileInformation = profileResponse.UpdateProfileReducer;
+      console.log(
+        "::::::: profileInformation ::::::: 657 =====>",
+        profileInformation
+      );
       setTitle(profileInformation?.title);
       setName(profileInformation?.name);
       setEmail(profileInformation?.email);
@@ -185,7 +187,7 @@ const EditProfile = (props) => {
     cnfPassword
   ) {
     let titleErr = "";
-    // let  paymentErr = "";
+    // let paymentErr = "";
     let nameErr = "";
     let emailErr = "";
     let phoneErr = "";
@@ -199,8 +201,8 @@ const EditProfile = (props) => {
       titleErr = "Title cannot be empty";
     }
 
-    // if(payment.trim() === "") {
-    //   paymentErr = "Payment cannot be empty"
+    // if (payment.trim() === "") {
+    //   paymentErr = "Payment cannot be empty";
     // }
 
     if (name.trim() === "") {
@@ -215,8 +217,10 @@ const EditProfile = (props) => {
 
     if (phone === "") {
       phoneErr = "Phone cannot be empty";
-    } else if (!isMobileNumberValid(phone)) {
+    } else if (phone.length<10) {
       phoneErr = "Phone number must be atleast 10 numbers ";
+    } else if  (phone.length>10) {
+      phoneErr = "Phone number no not more than 10 char"
     }
 
     if (dob === "") {
@@ -304,7 +308,7 @@ const EditProfile = (props) => {
         ? validate
         : {
             titleErr: "",
-            // paymentErr:"",
+            // paymentErr: "",
             nameErr: "",
             emailErr: "",
             phoneErr: "",
@@ -317,67 +321,35 @@ const EditProfile = (props) => {
     );
     if (validate == "ok") {
       console.log(user, "userInformation");
-      let data = {
-        title,
-        name,
-        email,
-        phone,
-        dob,
-        address,
-        tfn_number: tfn,
-        password,
-        employee_id: 1,
-        navigation: navigation,
-      };
+      // console.log(userData , 'userData')
 
+      const params = new FormData();
+      params.append("title", title);
+      params.append("name", name);
+      params.append("dob", dob);
+      params.append("email", email);
+      params.append("phone", parseInt(phone));
+      params.append("address", address);
+      params.append("tfn_number", parseInt(tfn));
+      // params.append("image", {
+      //   name: Math.floor(new Date().getTime() / 1000) + ".png",
+      //   type: "image/jpeg",
+      //   uri: ImageSource ? ImageSource : "https://via.placeholder.com/150",
+      // });
+      params.append("employee_id", 1);
+      params.append("password", password);
+      console.log("params =====>", params);
       console.log("I am here ImageSource", ImageSource);
-      props.requestToUpdateProfile({
-        ImageSource,
-        title,
-        name,
-        email,
-        phone,
-        dob,
-        address,
-        tfn_number: tfn,
-        password,
-        employee_id: 1,
-        navigation: navigation,
+      requestToUpdateProfileAction({
+        params,
+        // navigation: navigation,
       });
-
-      // console.log(await profileResponse.updateProfileResponse , 'profileView')
-      // navigationRef.navigate(appConstant.PROFILE_SETTINGS);
+      console.log("123456789 =======>", params);
     }
   };
 
   // const userData = await localDb.getUser().then((response)=> {
-
   //   return response});
-  // console.log(userData , 'userData')
-
-  //    const params = new FormData();
-  //  params.append("title",title);
-  //  params.append("name",name);
-  //  params.append("dob",dob);
-  //  params.append("email",email);
-  //  params.append("phone",phone);
-  //  params.append("address",address);
-  //  params.append("tfn_number",tfn);
-  //  params.append("image", {
-  //   name: Math.floor(new Date().getTime() / 1000) + ".png",
-  //   type: "image/jpeg",
-  //   uri: ImageSource
-  //     ? ImageSource
-  //     : "https://via.placeholder.com/150",
-  // });
-  // params.append('employee_id',1);
-  // params.append("password", password)
-  //     console.log("params =====>", params);
-  //     console.log("I am here ImageSource", ImageSource);
-  //     props.requestToUpdateProfile({
-  //      params,
-  //       navigation: navigation,
-  //     });
 
   return (
     <>
@@ -402,7 +374,7 @@ const EditProfile = (props) => {
                 text={appConstant.EDIT_PROFILE}
               ></AppText>
             </View>
-            <View style={{ height: hp("2.5%") }} />
+            <View style={{ height: hp("2.8%") }} />
             <View
               style={{
                 alignSelf: "center",
@@ -438,13 +410,14 @@ const EditProfile = (props) => {
                 error={error.titleErr}
               />
               {/* <Text style={styles.inputTextTitle}>Payment</Text>
-               <TextInputCustom
-                  label={"Payment"}
-                  value={payment}
-                  onChangeText={onChangePayment}
-                  placeholder={"Enter Payment Type"}
-                  error={error.paymentErr}
-               /> */}
+              <TextInputCustom
+                label={"Payment"}
+                value={payment}
+                onChangeText={onChangePayment}
+                placeholder={"Enter Payment Type"}
+                error={error.paymentErr}
+                editable={false}
+              /> */}
 
               <Text style={styles.inputTextTitle}>Name</Text>
               <TextInputCustom
@@ -560,17 +533,19 @@ const mapDispatchToProps = (dispatch) => {
       return dispatch(profileAction.requestToViewProfile(params));
     },
 
-    requestToUpdateProfile: (params) => {
-      console.log("requestToUpdateProfile ===>", params);
-      return dispatch(requestToUpdateProfile(params));
+    requestToUpdateProfileAction: (params) => {
+      console.log("requestToUpdateProfile 123456789===>", params);
+      return dispatch(profileAction.requestToUpdateProfile(params));
     },
   };
 };
 export default connect(null, mapDispatchToProps)(EditProfile);
 
-export const requestToUpdateProfile = (params) => {
-  return {
-    type: actionConstant.ACTION_UPDATE_PROFILE_REQUEST,
-    payload: params,
-  };
-};
+// export const requestToUpdateProfile = (params) => {
+//   console.log("requestToUpdateProfile ======>", params);
+//   alert()
+//   return {
+//     type: actionConstant.ACTION_UPDATE_PROFILE_REQUEST,
+//     payload: params,
+//   };
+// };

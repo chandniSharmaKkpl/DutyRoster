@@ -4,7 +4,7 @@ import stylesCommon from "../../common/commonStyle";
 import { imageConstant, alertMsgConstant } from "../../constant";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import { useNavigation } from "@react-navigation/core";
-import { isEmailValid } from "../../helper/validations";
+import { isEmailValid, isValidPassword } from "../../helper/validations";
 import styles from "./style";
 import { CustomButton } from "@/components/CustomButton";
 import { AppText } from "@/components/AppText";
@@ -34,7 +34,8 @@ const Login = (props) => {
   };
 
   const handleBackButtonClick = () => {
-    moveBack();
+    // moveBack();
+    BackHandler.exitApp();
     return true;
   };
   useEffect(() => {
@@ -154,7 +155,7 @@ const Login = (props) => {
               error={error.emailErr}
               keyboardType="email-address"
             />
-            <View style={{ height: hp("2.5%") }} />
+            <View style={{ height: hp("2.8%") }} />
 
             <TextInputCustom
               secureTextEntry={isClickEye ? false : true}
@@ -165,8 +166,8 @@ const Login = (props) => {
               icon={require("../../assets/images/LoginScreen/password.png")}
               rightIcon={
                 isClickEye
-                  ? require("../../assets/images/LoginScreen/privacyEye.png")
-                  : require("../../assets/images/ResetPasswordScreen/eyeSlash.png")
+                  ? require("../../assets/images/ResetPasswordScreen/eyeSlash.png")
+                  : require("../../assets/images/LoginScreen/privacyEye.png")
               }
               onPressRight={onPressRight}
               iconStyle={styles.passwordStyle}
@@ -203,7 +204,7 @@ const Login = (props) => {
           </View>
           <View style={styles.versionContainer}>
             <AppText
-              text={" App Vesrion 1.1"}
+              text={" App Vesrion 1.2"}
               style={{ ...styles.appVersion }}
             />
           </View>

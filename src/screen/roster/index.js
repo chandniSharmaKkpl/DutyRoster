@@ -19,11 +19,16 @@ import { CommonHeader } from "@/components";
 import { Images } from "@/constant/svgImgConst";
 import EmpTimeCard from "@/components/roasterEmpTimeCard";
 import style from "./style";
+import Calendars from "@/components/Calendars";
+import moment from "moment";
 
 const RosterScreen = (props) => {
   const navigation = useNavigation();
   const route = useRoute();
   const [selectedItem, setSelectedItem] = useState(3);
+  const [isCalendarShow, setIsCalendarShow] = useState(false);
+  const [markedDates, setMarkeDates] = useState({});
+  const [selectedDate, setSelectedDate] = useState("");
 
   const dateData = [
     {
@@ -62,6 +67,16 @@ const RosterScreen = (props) => {
       date: "15",
     },
   ];
+
+  const getSelectedDayEvents = (date) =>{
+    let markedDates = {};
+    markedDates[date] = { selected: true, color: '#00B0BF', textColor: '#FFFFFF' };
+    let serviceDate = moment(date);
+    serviceDate = serviceDate.format("DD.MM.YYYY");
+    setSelectedDate(serviceDate);
+    setMarkeDates(markedDates) 
+  }
+
 
   const handleBackButtonClick = () => {
     moveBack();
@@ -118,11 +133,13 @@ const RosterScreen = (props) => {
   );
 
   const moveBack = () => {
-    props.navigation.goBack();
+   // alert(" Do you want to exit the app?")
+    //props.navigation.goBack();
   };
 
-  const onOpenCalendar = () => {
-    props.navigation.navigate(appConstant.CALENDAR);
+  const onClickCalendar = () => {
+    // props.navigation.navigate(appConstant.CALENDAR);
+    setIsCalendarShow(!isCalendarShow);
   };
 
   const goToLogin = () => {
@@ -139,9 +156,13 @@ const RosterScreen = (props) => {
               style={styles.weekDateTextStyle}
               text={"Mon, 09-05 - Sun, 15-05, 2022"}
             />
-            <Pressable style={styles.caledarContainer} onPress={onOpenCalendar}>
+            <Pressable
+              style={styles.caledarContainer}
+              onPress={onClickCalendar}
+            >
               <Images.IMAGE_CALENDAE_SVG style={styles.caledarStyles} />
             </Pressable>
+            
           </View>
           <View style={styles.dateLabelContainer}>
             <FlatList
@@ -150,23 +171,34 @@ const RosterScreen = (props) => {
               data={dateData}
               renderItem={renderItem}
               keyExtractor={(item) => item.id}
-              contentContainerStyle={{ flex: 1,
-                overflow: 'hidden',
-                backgroundColor: 'white',
-                alignItems: 'center',
-                width: Dimensions.get('window').width,
-                borderWidth: 0, }}
+              contentContainerStyle={{
+                flex: 1,
+                overflow: "hidden",
+                backgroundColor: "white",
+                alignItems: "center",
+                width: Dimensions.get("window").width,
+                borderWidth: 0,
+              }}
             />
           </View>
+          
         </View>
         <View style={styles.empTimeCardDetails}>
           <EmpTimeCard />
         </View>
-        <View style={styles.viewBottom}>
+        {isCalendarShow && (
+              <View style={styles.calendarStyle}>
+                <Calendars
+                markedDates={markedDates}
+                onDayPress={getSelectedDayEvents}
+                />
+              </View>
+            )}
+        {/* <View style={styles.viewBottom}>
           <TouchableOpacity onPress={goToLogin} style={styles.btnTransparant}>
             <AppText style={styles.txtBtnTry} text={"Go To Calander"} />
           </TouchableOpacity>
-        </View>
+        </View> */}
       </View>
     </>
   );

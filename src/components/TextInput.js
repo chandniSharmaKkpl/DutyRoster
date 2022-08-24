@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Platform,
   Pressable,
+  Keyboard,
 } from "react-native";
 import fontConstant from "../constant/fontConstant";
 import { AppText } from "./AppText";
@@ -33,7 +34,10 @@ export const TextInputCustom = (props) => {
     keyboardType,
     rightIconStyle,
     multiline,
+    editable,
+    onFocus,
   } = props;
+
   return (
     <View style={[styles.view, inputViewStyle]}>
       <View style={styles.view1}>
@@ -52,15 +56,24 @@ export const TextInputCustom = (props) => {
           secureTextEntry={secureTextEntry}
           keyboardType={keyboardType}
           placeholderTextColor={appColor.GRAY}
-          onPressIn={onPressRight}
+          // onPressIn={onPressRight}
+          // onSubmitEditing={onSubmitEditing}
+          editable={editable}
+          // onFocus={onFocus}
+          // onTouchStart={() => {
+          //   // Keyboard.dismiss();
+          //   onFocus();
+          // }}
+
+          // onKeyPress={keyPress => console.log('keyPress',keyPress)}
         />
       </View>
-      <TouchableOpacity style={styles.eyeContainer} onPress={onPressRight}>
+      <Pressable style={styles.eyeContainer} onPress={onPressRight}>
         <Image
           source={rightIcon} //Change your icon image here
           style={[styles.iconStyle, rightIconStyle]}
         />
-      </TouchableOpacity>
+      </Pressable>
 
       {error ? <AppText text={error} style={styles.txtError} /> : null}
     </View>
@@ -86,16 +99,15 @@ export const styles = {
     },
     shadowOpacity: 0.8,
     shadowRadius: 2.22,
-    // backgroundColor: "pink",
   },
   view1: {
     flexDirection: "row",
     alignItems: "center",
   },
-  txtError: {
-    color: appColor.RED,
-    paddingBottom: hp("1%"),
-  },
+  // txtError: {
+  //   color: appColor.RED,
+  //   paddingBottom: hp("2%"),
+  // },
   somePlaceholderStyle: {
     fontSize: fontConstant.TEXT_16_SIZE_REGULAR,
     color: "red",
@@ -132,7 +144,7 @@ export const styles = {
     textAlign: "left",
     position: "absolute",
     color: appColor.RED,
-    bottom: -20,
+    bottom: -18,
     fontSize: fontConstant.TEXT_H3_SIZE_REGULAR,
     fontFamily: fontConstant.FONT_REGULAR,
   },

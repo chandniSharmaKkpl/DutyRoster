@@ -82,7 +82,7 @@ export default function HomeNavigation(props) {
       backgroundColor: appColor.RED,
       alignItems: "center",
       position: "absolute",
-      bottom: Platform.OS === "android" ? hp("4.5%") : hp("3%"),
+      bottom: Platform.OS === "android" ? hp("5.8%") : hp("2.5%"),
       borderWidth: 1,
       borderRadius: 50,
       borderColor: appColor.RED,

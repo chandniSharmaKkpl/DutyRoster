@@ -29,6 +29,7 @@ import { connect, useSelector } from "react-redux";
 import { requestToResetPassword } from "./redux/Reset_Password.action";
 import { requestToForgotPassword } from "../forgotPassword/redux/Forgot_Password.action";
 import Loader from "@/components/Loader";
+import { isValidPassword } from "@/helper/validations";
 
 const ResetPassword = (props) => {
   // console.log("props ===>", props.route.params.email);
@@ -114,6 +115,8 @@ const ResetPassword = (props) => {
     }
     if (newPassword.trim() === "") {
       newPasswordErr = alertMsgConstant.PASSWORD_NOT_EMPTY;
+    } else if (!isValidPassword(newPassword)) {
+      newPasswordErr = "Please enter the strong password";
     }
     if (confirmPassword.trim() === "") {
       confirmPasswordErr = alertMsgConstant.CONFIRM_PASSWORD_NOT_EMPTY;
@@ -173,7 +176,6 @@ const ResetPassword = (props) => {
               icon={require("../../assets/images/ResetPasswordScreen/pincode.png")}
               iconStyle={styles.pinCodeIconStyle}
               error={error.refCodeErr}
-              // keyboardType="numeric"
             />
 
             <View style={styles.viewForgotPass}>
@@ -182,7 +184,6 @@ const ResetPassword = (props) => {
               </TouchableOpacity>
             </View>
 
-            {/* {isClickEyeNewPassword ? ( */}
             <TextInputCustom
               secureTextEntry={isClickEyeNewPassword ? false : true}
               label={"newPassword"}
@@ -200,7 +201,7 @@ const ResetPassword = (props) => {
               error={error.newPasswordErr}
             />
 
-            <View style={{ height: hp("2.5%") }} />
+            <View style={{ height: hp("2.8%") }} />
             <TextInputCustom
               secureTextEntry={isClickEyeForConfirmPassword ? false : true}
               label={"confirmPassword"}

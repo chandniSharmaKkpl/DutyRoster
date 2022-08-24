@@ -37,7 +37,7 @@ const QRCodeScreen = (props) => {
       console.error("An error occured", err)
     );
     console.log("success ==>", e);
-    requestToFetQRCodeResponseAction(e);
+   // // requestToFetQRCodeResponseAction(e);
   };
 
   React.useEffect(() => {
