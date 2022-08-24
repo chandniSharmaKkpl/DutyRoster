@@ -109,9 +109,14 @@ export default StyleSheet.create({
     marginTop: hp("2%"),
     paddingHorizontal: 20,
   },
-  calendarStyle: {
+  calendarStyleAndroid: {
     position: "absolute",
     left: wp("26%"),
     top: hp("7.5%"),
   },
+  calendarStyleIOS: {
+    position: "absolute",
+    left: wp("35%"),
+    top: hp("7.5%"),
+  }
 });

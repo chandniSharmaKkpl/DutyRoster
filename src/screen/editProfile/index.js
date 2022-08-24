@@ -59,10 +59,10 @@ const EditProfile = (props) => {
   const profileResponse = useSelector((state) => state.ProfileReducer);
 
   useEffect(() => {
-    console.log(
-      "profileResponse 1111 ====>",
-      JSON.stringify(profileResponse.UpdateProfileReducer, null, 4)
-    );
+    // console.log(
+    //   "profileResponse 1111  ====>",
+    //   JSON.stringify(profileResponse.UpdateProfileReducer, null, 4)
+    // );
   }, [profileResponse]);
 
   const [profilePath, setProfiilePath] = useState(null);
@@ -75,8 +75,8 @@ const EditProfile = (props) => {
   const [dob, setDob] = useState("");
   const [address, setAddress] = useState("");
   const [tfn, setTFN] = useState("");
-  const [password, setPassword] = useState("");
-  const [cnfPassword, setCnfPassword] = useState("");
+  const [password, setPassword] = useState("Password@1");
+  const [cnfPassword, setCnfPassword] = useState("Password@1");
   const [isRequesting, setRequesting] = useState(true);
   const [onOpenMediaPicker, setOnOpenMediaPicker] = useState(false);
   const onChangeTitle = useCallback((text) => setTitle(text), []);
@@ -123,10 +123,6 @@ const EditProfile = (props) => {
   useEffect(() => {
     if (profileResponse?.ViewProfileReducer) {
       let profileInformation = profileResponse.ViewProfileReducer.data;
-      console.log(
-        "::::::: profileInformation ::::::: 3333 =====>",
-        profileInformation
-      );
       setTitle(profileInformation?.title);
       setName(profileInformation?.name);
       setEmail(profileInformation?.email);
@@ -135,7 +131,6 @@ const EditProfile = (props) => {
       setAddress(profileInformation?.address);
       setDob(profileInformation?.dob);
       setImageSource(profileInformation?.image);
-      console.log("profileInformation?.image ::::", profileInformation?.image);
     }
   }, [profileResponse]);
   React.useEffect(() => {
@@ -153,10 +148,6 @@ const EditProfile = (props) => {
       setAddress(profileInformation?.address);
       setDob(profileInformation?.dob);
       setImageSource(profileInformation?.image);
-      console.log(
-        "profileInformation?.image :::: =====>",
-        profileInformation?.image
-      );
     }
   }, [profileResponse.UpdateProfileReducer]);
 
@@ -169,7 +160,6 @@ const EditProfile = (props) => {
   };
 
   const handleConfirm = (date) => {
-    // console.warn("A date has been picked: ", date);
     setDob(moment(date).format("YYYY-MM-DD"));
     hideDatePicker();
   };
@@ -320,26 +310,22 @@ const EditProfile = (props) => {
           }
     );
     if (validate == "ok") {
-      console.log(user, "userInformation");
-      // console.log(userData , 'userData')
 
       const params = new FormData();
-      params.append("title", title);
-      params.append("name", name);
-      params.append("dob", dob);
-      params.append("email", email);
-      params.append("phone", parseInt(phone));
-      params.append("address", address);
-      params.append("tfn_number", parseInt(tfn));
+      params.append("title", "chandni");
+      params.append("name", "sharma");
+      params.append("dob", "1995-09-18");
+      params.append("email", "emp1@yopmail.com");
+      params.append("phone", "9090909090");
+      params.append("address", 'address');
+      params.append("tfn_number", '123456');
       // params.append("image", {
       //   name: Math.floor(new Date().getTime() / 1000) + ".png",
       //   type: "image/jpeg",
       //   uri: ImageSource ? ImageSource : "https://via.placeholder.com/150",
       // });
-      params.append("employee_id", 1);
+      params.append("employee_id", "1");
       params.append("password", password);
-      console.log("params =====>", params);
-      console.log("I am here ImageSource", ImageSource);
       requestToUpdateProfileAction({
         params,
         // navigation: navigation,
@@ -529,23 +515,13 @@ const EditProfile = (props) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     requestToGetProfile: (params) => {
-      // console.log(params, "statedispacth");
       return dispatch(profileAction.requestToViewProfile(params));
     },
 
     requestToUpdateProfileAction: (params) => {
-      console.log("requestToUpdateProfile 123456789===>", params);
       return dispatch(profileAction.requestToUpdateProfile(params));
     },
   };
 };
 export default connect(null, mapDispatchToProps)(EditProfile);
 
-// export const requestToUpdateProfile = (params) => {
-//   console.log("requestToUpdateProfile ======>", params);
-//   alert()
-//   return {
-//     type: actionConstant.ACTION_UPDATE_PROFILE_REQUEST,
-//     payload: params,
-//   };
-// };

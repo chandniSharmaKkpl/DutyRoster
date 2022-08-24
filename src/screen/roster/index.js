@@ -7,6 +7,7 @@ import {
   FlatList,
   Text,
   Dimensions,
+  Platform,
 } from "react-native";
 import stylesCommon from "../../common/commonStyle";
 import styles from "./style";
@@ -187,7 +188,7 @@ const RosterScreen = (props) => {
           <EmpTimeCard />
         </View>
         {isCalendarShow && (
-              <View style={styles.calendarStyle}>
+              <View style={ Platform.OS === 'android' ?  styles.calendarStyleAndroid : styles.calendarStyleIOS}>
                 <Calendars
                 markedDates={markedDates}
                 onDayPress={getSelectedDayEvents}

@@ -16,7 +16,6 @@ export function* workersViewProfile(action) {
    //localDb.setUser(loginResponse.data); 
      action.payload.navigation.navigate(appConstant.EDIT_PROFILE , {profileData:viewProfileResponse}); 
   } catch (error) {
-    console.log(JSON.stringify(error))
     // alert("Email already associate with other user."); 
     yield put({
       type: actionConstant.ACTION_GET_PROFILE_FAILURE,
@@ -28,9 +27,7 @@ export function* workersViewProfile(action) {
 export function* workersUpdateProfile(action) {
   
   try {
-    console.log('workersUpdateProfile',JSON.stringify(action.payload,null,4));
     const viewUpdateProfileResponse = yield call(UpdateProfile, action.payload);
-    console.log(viewUpdateProfileResponse, 'viewUpdateProfileResponse')
     yield put({
       type: actionConstant.ACTION_UPDATE_PROFILE_SUCCESS,
       payload: viewUpdateProfileResponse,
@@ -39,7 +36,6 @@ export function* workersUpdateProfile(action) {
    //localDb.setUser(loginResponse.data); 
    action.payload.navigation.navigate(appConstant.EDIT_PROFILE , {profileData:viewUpdateProfileResponse}); 
   } catch (error) {
-    console.log(JSON.stringify(error) , 'error in API')
     // alert("Email already associate with other user."); 
     yield put({
       type: actionConstant.ACTION_UPDATE_PROFILE_FAILURE,
