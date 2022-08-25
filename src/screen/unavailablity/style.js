@@ -24,8 +24,7 @@ export default StyleSheet.create({
   },
   rightIconStyle : {
       height: hp('4%'),
-      width : wp('8%'),
-
+      width : wp('4%')
   },
     txtBtnTry: {
     color: appColor.RED,

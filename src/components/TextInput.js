@@ -36,7 +36,9 @@ export const TextInputCustom = (props) => {
     multiline,
     editable,
     onFocus,
-    caretHidden
+    caretHidden,
+    onPressFocus
+
   } = props;
 
   return (
@@ -57,10 +59,11 @@ export const TextInputCustom = (props) => {
           secureTextEntry={secureTextEntry}
           keyboardType={keyboardType}
           placeholderTextColor={appColor.GRAY}
-          // onPressIn={onPressRight}
+          onPressIn={onPressRight}
           // onSubmitEditing={onSubmitEditing}
           editable={editable}
           caretHidden={caretHidden}
+          onFocus = {onPressFocus} 
           // onFocus={onFocus}
           // onTouchStart={() => {
           //   // Keyboard.dismiss();
@@ -140,6 +143,7 @@ export const styles = {
     padding: 0,
     fontSize: fontConstant.TEXT_17_SIZE_REGULAR,
     fontWeight: fontConstant.WEIGHT_LEIGHT,
+    color:'#000'
   },
   txtError: {
     textAlign: "left",
