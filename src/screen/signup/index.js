@@ -43,7 +43,7 @@ import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 const Signup = (props) => {
   const [error, setError] = React.useState({
     titleErr: "",
-    paymentErr: "",
+    // paymentErr: "",
     nameErr: "",
     emailErr: "",
     phoneErr: "",
@@ -60,7 +60,7 @@ const Signup = (props) => {
   const [isClickEyeConfirm, setIsClickEyeConfirm] = useState(false);
 
   const [title, setTitle] = useState("");
-  const [payment, setPayment] = useState("");
+  // const [payment, setPayment] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -76,7 +76,7 @@ const Signup = (props) => {
   const signupResponse = useSelector((state) => state.SignupReducer);
 
   const onChangeTitle = useCallback((text) => setTitle(text), []);
-  const onChangePayment = useCallback((text) => setPayment(text), []);
+  // const onChangePayment = useCallback((text) => setPayment(text), []);
   const onChangeName = useCallback((text) => setName(text), []);
   const onChangeEmail = useCallback((text) => setEmail(text), []);
   const onChangePhone = useCallback((text) => setPhone(text), []);
@@ -143,7 +143,7 @@ const Signup = (props) => {
 
   function Validate(
     title,
-    payment,
+    // payment,
     name,
     email,
     phone,
@@ -154,7 +154,7 @@ const Signup = (props) => {
     cnfPassword
   ) {
     let titleErr = "";
-    let paymentErr = "";
+    // let paymentErr = "";
     let nameErr = "";
     let emailErr = "";
     let phoneErr = "";
@@ -168,9 +168,9 @@ const Signup = (props) => {
       titleErr = "Title cannot be empty";
     }
 
-    if (payment.trim() === "") {
-      paymentErr = "Payment cannot be empty";
-    }
+    // if (payment.trim() === "") {
+    //   paymentErr = "Payment cannot be empty";
+    // }
 
     if (name.trim() === "") {
       nameErr = "Name cannot be empty";
@@ -214,7 +214,7 @@ const Signup = (props) => {
 
     if (
       titleErr === "" &&
-      paymentErr === "" &&
+      // paymentErr === "" &&
       nameErr === "" &&
       emailErr === "" &&
       phoneErr === "" &&
@@ -228,7 +228,7 @@ const Signup = (props) => {
     } else {
       return {
         titleErr,
-        paymentErr,
+        // paymentErr,
         nameErr,
         emailErr,
         phoneErr,
@@ -245,7 +245,7 @@ const Signup = (props) => {
     console.log(imageArray, "image");
     const validate = Validate(
       title,
-      payment,
+      // payment,
       name,
       email,
       phone,
@@ -260,7 +260,7 @@ const Signup = (props) => {
         ? validate
         : {
             titleErr: "",
-            paymentErr: "",
+            // paymentErr: "",
             nameErr: "",
             emailErr: "",
             phoneErr: "",
@@ -275,7 +275,7 @@ const Signup = (props) => {
     if (validate == "ok") {
       let infor = await props.requestToRegister({
         title,
-        payment,
+        // payment,
         name,
         email,
         phone,
@@ -379,7 +379,7 @@ const Signup = (props) => {
       },
       (response) => {
         if (response.didCancel === true) {
-          let cancelImage = this.state.image;
+          // let cancelImage = this.state.image;
           setImageSource(cancelImage.uri);
           setShowCameraModal(false);
         } else {
@@ -454,6 +454,7 @@ const Signup = (props) => {
                 iconStyle={styles.IconStyle}
                 error={error.titleErr}
                 keyboardType="default"
+                onPressFocus={()=> Keyboard.addListener()}
               />
               <View style={{ height: hp("2.8%") }} />
               {/* <TextInputCustom
@@ -476,6 +477,7 @@ const Signup = (props) => {
                 iconStyle={styles.IconStyle}
                 error={error.nameErr}
                 keyboardType="default"
+                onPressFocus={()=> Keyboard.addListener()}
               />
               <View style={{ height: hp("2.8%") }} />
               <TextInputCustom
@@ -487,6 +489,7 @@ const Signup = (props) => {
                 iconStyle={styles.IconStyle}
                 error={error.emailErr}
                 keyboardType="email-address"
+                onPressFocus={()=> Keyboard.addListener()}
               />
               <View style={{ height: hp("2.8%") }} />
 
@@ -499,6 +502,7 @@ const Signup = (props) => {
                 iconStyle={styles.IconStyle}
                 error={error.phoneErr}
                 keyboardType="number-pad"
+                onPressFocus={()=> Keyboard.addListener()}
               />
               <View style={{ height: hp("2.8%") }} />
               {/* <Pressable onPress={showDatePicker} style={{width: '100%'}}> */}
@@ -509,11 +513,12 @@ const Signup = (props) => {
                 placeholder={"Enter Date of Birth"}
                 icon={require("../../assets/images/SignupScreen/dob.png")}
                 rightIcon={require("../../assets/images/SignupScreen/calendar.png")}
-                // onPressRight={showDatePicker}
+                onPressRight={showDatePicker}
+                rightIconStyle={{height:20}}
                 iconStyle={styles.IconStyle}
                 error={error.dobErr}
-                keyboardType="default"
-                onFocus={showDatePicker}
+                onPressIn={showDatePicker}
+                onPressFocus={()=> Keyboard.dismiss()}
               />
               {/* </Pressable> */}
               <View style={{ height: hp("2.8%") }} />
@@ -527,6 +532,7 @@ const Signup = (props) => {
                 iconStyle={styles.IconStyle}
                 error={error.addressErr}
                 keyboardType="default"
+                onPressFocus={()=> Keyboard.addListener()}
               />
               <View style={{ height: hp("2.8%") }} />
 
@@ -539,6 +545,7 @@ const Signup = (props) => {
                 iconStyle={styles.IconStyle}
                 error={error.tfnErr}
                 keyboardType="number-pad"
+                onPressFocus={()=> Keyboard.addListener()}
               />
               <View style={{ height: hp("2.8%") }} />
 
@@ -557,6 +564,7 @@ const Signup = (props) => {
                 onPressRight={onPressRight}
                 iconStyle={styles.IconStyle}
                 error={error.passwordErr}
+                onPressFocus={()=> Keyboard.addListener()}
               />
 
               <View style={{ height: hp("2.8%") }} />
@@ -576,6 +584,7 @@ const Signup = (props) => {
                 onPressRight={onPressRightConfirm}
                 iconStyle={styles.IconStyle}
                 error={error.cnfpasswordErr}
+                onPressFocus={()=> Keyboard.addListener()}
               />
 
               <View style={{ height: hp("2.8%") }} />

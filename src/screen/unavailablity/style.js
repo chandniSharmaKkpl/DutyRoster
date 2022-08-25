@@ -23,8 +23,8 @@ export default StyleSheet.create({
     paddingTop: hp("2%"),
   },
   rightIconStyle : {
-      height: hp('6%'),
-      width : wp('6%')
+      height: hp('4%'),
+      width : wp('4%')
   },
     txtBtnTry: {
     color: appColor.RED,

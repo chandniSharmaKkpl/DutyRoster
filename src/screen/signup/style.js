@@ -41,7 +41,7 @@ export default StyleSheet.create({
   IconStyle: {
     margin: 10,
     marginRight: 16,
-    height: 13,
+    height: 20,
     width: 18,
     resizeMode: "cover",
   },
