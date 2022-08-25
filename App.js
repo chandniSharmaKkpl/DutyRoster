@@ -8,7 +8,7 @@ import { Text } from "react-native";
 
 const App = () => (
   <Provider store={StoreRoot}>
-    <PersistGate loading={<Text>Loading</Text>} persistor={persistor}>
+    <PersistGate loading={<Text></Text>} persistor={persistor}>
       <ApplicationNavigator />
     </PersistGate>
   </Provider>

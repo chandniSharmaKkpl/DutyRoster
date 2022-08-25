@@ -29,6 +29,13 @@ export default StyleSheet.create({
     width: 98,
     borderRadius: hp("10%"),
   },
+  imgEmpty:{
+    padding: hp("8%"),
+    height: 98,
+    width: 98,
+    borderRadius: hp("10%"),
+    tintColor:appColor.WHITE
+  },
   touch: {
     position: "absolute",
     right: 10,

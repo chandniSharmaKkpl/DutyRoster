@@ -116,7 +116,7 @@ const ResetPassword = (props) => {
     if (newPassword.trim() === "") {
       newPasswordErr = alertMsgConstant.PASSWORD_NOT_EMPTY;
     } else if (!isValidPassword(newPassword)) {
-      newPasswordErr = "Please enter the strong password";
+      newPasswordErr = alertMsgConstant.MSG_STRONG_PWD;
     }
     if (confirmPassword.trim() === "") {
       confirmPasswordErr = alertMsgConstant.CONFIRM_PASSWORD_NOT_EMPTY;

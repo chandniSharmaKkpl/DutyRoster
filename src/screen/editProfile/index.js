@@ -136,10 +136,10 @@ const EditProfile = (props) => {
   React.useEffect(() => {
     if (profileResponse.UpdateProfileReducer) {
       let profileInformation = profileResponse.UpdateProfileReducer;
-      console.log(
-        "::::::: profileInformation ::::::: 657 =====>",
-        profileInformation
-      );
+      // console.log(
+      //   "::::::: profileInformation ::::::: 657 =====>",
+      //   profileInformation
+      // );
       setTitle(profileInformation?.title);
       setName(profileInformation?.name);
       setEmail(profileInformation?.email);
@@ -172,9 +172,7 @@ const EditProfile = (props) => {
     phone,
     dob,
     address,
-    tfn,
-    password,
-    cnfPassword
+    tfn
   ) {
     let titleErr = "";
     // let paymentErr = "";
@@ -184,8 +182,7 @@ const EditProfile = (props) => {
     let dobErr = "";
     let addressErr = "";
     let tfnErr = "";
-    let passwordErr = "";
-    let cnfpasswordErr = "";
+   
 
     if (title.trim() === "") {
       titleErr = "Title cannot be empty";
@@ -225,15 +222,15 @@ const EditProfile = (props) => {
       tfnErr = "TFN cannot be empty";
     }
 
-    if (password.trim() === "") {
-      passwordErr = alertMsgConstant.PASSWORD_NOT_EMPTY;
-    }
+    // if (password.trim() === "") {
+    //   passwordErr = alertMsgConstant.PASSWORD_NOT_EMPTY;
+    // }
 
-    if (cnfPassword.trim() === "") {
-      cnfpasswordErr = alertMsgConstant.CONFIRM_PASSWORD_NOT_EMPTY;
-    } else if (password.trim() !== cnfPassword.trim()) {
-      cnfpasswordErr = alertMsgConstant.PASSWORD_NOT_EQUAL;
-    }
+    // if (cnfPassword.trim() === "") {
+    //   cnfpasswordErr = alertMsgConstant.CONFIRM_PASSWORD_NOT_EMPTY;
+    // } else if (password.trim() !== cnfPassword.trim()) {
+    //   cnfpasswordErr = alertMsgConstant.PASSWORD_NOT_EQUAL;
+    // }
 
     if (
       titleErr === "" &&
@@ -242,9 +239,7 @@ const EditProfile = (props) => {
       phoneErr === "" &&
       dobErr === "" &&
       addressErr === "" &&
-      tfnErr === "" &&
-      passwordErr === "" &&
-      cnfpasswordErr === ""
+      tfnErr === "" 
     ) {
       return "ok";
     } else {
@@ -256,9 +251,7 @@ const EditProfile = (props) => {
         phoneErr,
         dobErr,
         addressErr,
-        tfnErr,
-        passwordErr,
-        cnfpasswordErr,
+        tfnErr
       };
     }
   }
@@ -289,8 +282,7 @@ const EditProfile = (props) => {
       dob,
       address,
       tfn,
-      password,
-      cnfPassword
+      
     );
 
     setError(
@@ -305,8 +297,7 @@ const EditProfile = (props) => {
             dobErr: "",
             addressErr: "",
             tfnErr: "",
-            passwordErr: "",
-            cnfpasswordErr: "",
+            
           }
     );
     if (validate == "ok") {
@@ -319,13 +310,13 @@ const EditProfile = (props) => {
       params.append("phone", "9090909090");
       params.append("address", 'address');
       params.append("tfn_number", '123456');
-      // params.append("image", {
-      //   name: Math.floor(new Date().getTime() / 1000) + ".png",
-      //   type: "image/jpeg",
-      //   uri: ImageSource ? ImageSource : "https://via.placeholder.com/150",
-      // });
+      params.append("image", {
+        name: Math.floor(new Date().getTime() / 1000) + ".png",
+        type: "image/jpeg",
+        uri: ImageSource ? ImageSource : "https://via.placeholder.com/150",
+      });
       params.append("employee_id", "1");
-      params.append("password", password);
+      params.append("password", "password");
       requestToUpdateProfileAction({
         params,
         // navigation: navigation,
@@ -373,7 +364,8 @@ const EditProfile = (props) => {
                     ? imageConstant.IMAGE_AVTAR_ICON
                     : { uri: ImageSource }
                 }
-                style={styles.img}
+                style={ImageSource && ImageSource?.length == ""
+                ?styles.imgEmpty: styles.img}
               />
               <TouchableOpacity
                 onPress={() => openMediaPicker()}

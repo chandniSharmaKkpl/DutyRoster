@@ -5,11 +5,23 @@ import {
 } from "react-native-responsive-screen";
 import fontConstant from "../../constant/fontConstant";
 import appColor from "../../constant/colorConstant";
+const { height, width } = Dimensions.get("screen");
+
 export default StyleSheet.create({
+  scrollViewStyle: {
+    flex: 1,
+    // paddingTop: 20,
+    backgroundColor : appColor.WHITE
+  },
   container: {
     width: "100%",
     height: "100%",
     backgroundColor: appColor.LIGH_BLUE,
+  },
+  imagePopupStyle: {
+    height: width * 0.05,
+    width: width * 0.05,
+    resizeMode: "contain",
   },
   textSignin: {
     fontFamily: fontConstant.FONT_REGULAR,
@@ -106,7 +118,7 @@ export default StyleSheet.create({
       top: hp(-2),
       backgroundColor: "red",
       height: 32,
-      width: 32,
+      width: 37,
       borderRadius: hp(35),
       justifyContent: 'center',
       alignItems: 'center'

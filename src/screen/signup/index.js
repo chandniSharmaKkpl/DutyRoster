@@ -29,16 +29,17 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { useNavigation } from "@react-navigation/core";
 import Modal from "react-native-modal";
 import * as ImagePicker from "react-native-image-picker";
-import Icon from "react-native-vector-icons/AntDesign";
+import IconAnt from "react-native-vector-icons/AntDesign";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import moment from "moment";
-import { isEmailValid, isMobileNumberValid } from "../../helper/validations";
+import { isEmailValid, isMobileNumberValid,isValidPassword } from "../../helper/validations";
 import Textarea from "react-native-textarea";
 import { requestToSignup } from "./redux/Signup.action";
 import { connect, useSelector } from "react-redux";
 import Loader from "@/components/Loader";
 import DeviceInfo from "react-native-device-info";
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
+
 
 const Signup = (props) => {
   const [error, setError] = React.useState({
@@ -204,6 +205,8 @@ const Signup = (props) => {
 
     if (password.trim() === "") {
       passwordErr = alertMsgConstant.PASSWORD_NOT_EMPTY;
+    }else if (!isValidPassword(password)) {
+      passwordErr = alertMsgConstant.MSG_STRONG_PWD;
     }
 
     if (cnfPassword.trim() === "") {
@@ -454,7 +457,7 @@ const Signup = (props) => {
                 iconStyle={styles.IconStyle}
                 error={error.titleErr}
                 keyboardType="default"
-                onPressFocus={()=> Keyboard.addListener()}
+                //onPressFocus={()=> Keyboard.addListener()}
               />
               <View style={{ height: hp("2.8%") }} />
               {/* <TextInputCustom
@@ -477,7 +480,7 @@ const Signup = (props) => {
                 iconStyle={styles.IconStyle}
                 error={error.nameErr}
                 keyboardType="default"
-                onPressFocus={()=> Keyboard.addListener()}
+                //onPressFocus={()=> Keyboard.addListener()}
               />
               <View style={{ height: hp("2.8%") }} />
               <TextInputCustom
@@ -489,7 +492,7 @@ const Signup = (props) => {
                 iconStyle={styles.IconStyle}
                 error={error.emailErr}
                 keyboardType="email-address"
-                onPressFocus={()=> Keyboard.addListener()}
+                //onPressFocus={()=> Keyboard.addListener()}
               />
               <View style={{ height: hp("2.8%") }} />
 
@@ -502,10 +505,10 @@ const Signup = (props) => {
                 iconStyle={styles.IconStyle}
                 error={error.phoneErr}
                 keyboardType="number-pad"
-                onPressFocus={()=> Keyboard.addListener()}
+                //onPressFocus={()=> Keyboard.addListener()}
               />
               <View style={{ height: hp("2.8%") }} />
-              {/* <Pressable onPress={showDatePicker} style={{width: '100%'}}> */}
+             
               <TextInputCustom
                 label={"Dob"}
                 value={dob}
@@ -514,13 +517,14 @@ const Signup = (props) => {
                 icon={require("../../assets/images/SignupScreen/dob.png")}
                 rightIcon={require("../../assets/images/SignupScreen/calendar.png")}
                 onPressRight={showDatePicker}
-                rightIconStyle={{height:20}}
+                rightIconStyle={{height:20, width: 20}}
                 iconStyle={styles.IconStyle}
                 error={error.dobErr}
                 onPressIn={showDatePicker}
-                onPressFocus={()=> Keyboard.dismiss()}
+                //onPressFocus={()=> Keyboard.dismiss()}
               />
-              {/* </Pressable> */}
+               <Pressable onPress={showDatePicker} style={{width: '100%', height: '7%', marginTop: '-14%'}}> 
+               </Pressable> 
               <View style={{ height: hp("2.8%") }} />
 
               <TextInputCustom
@@ -532,7 +536,7 @@ const Signup = (props) => {
                 iconStyle={styles.IconStyle}
                 error={error.addressErr}
                 keyboardType="default"
-                onPressFocus={()=> Keyboard.addListener()}
+                //onPressFocus={()=> Keyboard.addListener()}
               />
               <View style={{ height: hp("2.8%") }} />
 
@@ -545,7 +549,7 @@ const Signup = (props) => {
                 iconStyle={styles.IconStyle}
                 error={error.tfnErr}
                 keyboardType="number-pad"
-                onPressFocus={()=> Keyboard.addListener()}
+                //onPressFocus={()=> Keyboard.addListener()}
               />
               <View style={{ height: hp("2.8%") }} />
 
@@ -564,7 +568,7 @@ const Signup = (props) => {
                 onPressRight={onPressRight}
                 iconStyle={styles.IconStyle}
                 error={error.passwordErr}
-                onPressFocus={()=> Keyboard.addListener()}
+                ////onPressFocus={()=> Keyboard.addListener()}
               />
 
               <View style={{ height: hp("2.8%") }} />
@@ -584,7 +588,7 @@ const Signup = (props) => {
                 onPressRight={onPressRightConfirm}
                 iconStyle={styles.IconStyle}
                 error={error.cnfpasswordErr}
-                onPressFocus={()=> Keyboard.addListener()}
+                //onPressFocus={()=> Keyboard.addListener()}
               />
 
               <View style={{ height: hp("2.8%") }} />
@@ -626,7 +630,8 @@ const Signup = (props) => {
             onPress={() => setShowCameraModal(false)}
             style={styles.closeTouch}
           >
-            <Icon name={"close"} size={20} style={styles.closeIcon} />
+            <Text style={{color: appColor.WHITE, fontSize:15, fontWeight:'800'}}>X</Text>
+            {/* <IconAnt name={"close"} size={20} style={styles.closeIcon} /> */}
           </TouchableOpacity>
 
           <Text style={styles.cameraTitle}>Select or Capture Image</Text>
@@ -635,7 +640,12 @@ const Signup = (props) => {
               style={{ flexDirection: "row", alignItems: "center" }}
               onPress={launchCamera}
             >
-              <Icon name={"camerao"} size={20} style={styles.camera} />
+              {/* <IconAnt name={"camerao"} size={20} style={styles.camera} /> */}
+              {/* <Image
+                resizeMethod="resize"
+                style={styles.imagePopupStyle}
+                source={require("../../assets/images/EditProfile/cameraImage.png")}
+              ></Image> */}
               <Text style={[styles.txtCamera]}>
                 {"Capture Image from Camera"}
               </Text>
@@ -647,7 +657,7 @@ const Signup = (props) => {
               style={{ flexDirection: "row", alignItems: "center" }}
               onPress={selectFromGallery}
             >
-              <Icon name={"barcode"} size={20} style={styles.camera} />
+              {/* <IconAnt name={"barcode"} size={20} style={styles.camera} /> */}
               <Text style={[styles.txtCamera]}>
                 {"Choose Image from Gallery"}
               </Text>

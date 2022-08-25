@@ -12,7 +12,7 @@ export default {
   QR_CODE: "QRCode",
   EDIT_PROFILE: "Edit Profile",
   PROFILE_SETTINGS: "Profile Settings",
-  UNAVAILABILITY: "Unavailablity",
+  UNAVAILABILITY: "Availability",
   CALENDAR: "Calendar",
 
 

@@ -22,20 +22,7 @@ const Calendars = (props) => {
     <>
       <Calendar
         style={{
-          height: 330,
-          width: 250,
-          borderWidth: 1,
-          borderColor: '#D2D2D2',
           borderRadius: 8,
-          paddingHorizontal: 10,
-          shadowColor: "#0000001A",
-          shadowOffset: {
-            width: 0,
-            height: 0,
-          },
-          shadowOpacity: 22,
-          shadowRadius: 4.65,
-          elevation: 5,
         }}
         markingType={"period"}
         markedDates={{

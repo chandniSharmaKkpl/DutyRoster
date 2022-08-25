@@ -42,6 +42,7 @@ export default {
   TOAST_WARNING:"warning",
   TOAST_DANGER:"danger",
   TOAST_CUSTOM:"custom",
+MSG_STRONG_PWD: "Please enter the strong password",
 
   //** Bio metric authentication error messages  */
   //ios
