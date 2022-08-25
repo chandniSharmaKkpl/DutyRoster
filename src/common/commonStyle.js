@@ -12,6 +12,7 @@ export default StyleSheet.create({
     height: "100%",
     backgroundColor: appColor.WHITE,
     paddingHorizontal: 20,
+    paddingBottom:'20%'
   },
   scrollViewStyle : {
     // flex: 1,
