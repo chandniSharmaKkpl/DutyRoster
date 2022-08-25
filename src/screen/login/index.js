@@ -19,8 +19,8 @@ const Login = (props) => {
     emailErr: "",
     passwordErr: "",
   });
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("emp579@yopmail.com");
+  const [password, setPassword] = useState("test");
   const [isClickEye, setIsClickEye] = useState(false);
   const [loading, setLoading] = React.useState(true);
   const [formErr, setFormError] = React.useState("");
@@ -154,6 +154,7 @@ const Login = (props) => {
               iconStyle={styles.emailIconStyle}
               error={error.emailErr}
               keyboardType="email-address"
+              caretHidden = {false}
             />
             <View style={{ height: hp("2.8%") }} />
 
@@ -204,7 +205,7 @@ const Login = (props) => {
           </View>
           <View style={styles.versionContainer}>
             <AppText
-              text={" App Vesrion 1.2"}
+              text={" App Vesrion 1.3"}
               style={{ ...styles.appVersion }}
             />
           </View>

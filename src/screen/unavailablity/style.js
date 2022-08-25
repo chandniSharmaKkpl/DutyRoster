@@ -23,12 +23,34 @@ export default StyleSheet.create({
     paddingTop: hp("2%"),
   },
   rightIconStyle : {
-      height: hp('6%'),
-      width : wp('6%')
+      height: hp('4%'),
+      width : wp('8%'),
+
   },
     txtBtnTry: {
     color: appColor.RED,
     fontSize: fontConstant.TEXT_14_SIZE_BOLD,
     fontWeight: "600",
+  },
+  addTimeIconContainer : {
+    height: hp('6%'),
+    width: wp('13%'),
+    backgroundColor : appColor.WHITE,
+    borderWidth: 1,
+    borderColor: appColor.WHITE,
+    borderRadius: 10,
+    shadowColor: appColor.SHADOW,
+    shadowOffset: {
+      width: 1,
+      height: 1,
+    },
+    shadowOpacity: 0.8,
+    shadowRadius: 2.22,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  iconText : {
+    fontSize: 30
+    // fontFamily : fontConstant.FONT_REGULAR
   },
 });

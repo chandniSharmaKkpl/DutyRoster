@@ -193,8 +193,8 @@ const ResetPassword = (props) => {
               icon={require("../../assets/images/LoginScreen/password.png")}
               rightIcon={
                 isClickEyeNewPassword
-                  ? require("../../assets/images/LoginScreen/privacyEye.png")
-                  : require("../../assets/images/ResetPasswordScreen/eyeSlash.png")
+                ? require("../../assets/images/ResetPasswordScreen/eyeSlash.png")
+                : require("../../assets/images/LoginScreen/privacyEye.png")
               }
               onPressRight={onPressRight}
               iconStyle={styles.passwordStyle}
@@ -211,8 +211,8 @@ const ResetPassword = (props) => {
               icon={require("../../assets/images/LoginScreen/password.png")}
               rightIcon={
                 isClickEyeForConfirmPassword
-                  ? require("../../assets/images/LoginScreen/privacyEye.png")
-                  : require("../../assets/images/ResetPasswordScreen/eyeSlash.png")
+                ? require("../../assets/images/ResetPasswordScreen/eyeSlash.png")
+                : require("../../assets/images/LoginScreen/privacyEye.png")
               }
               onPressRight={onPressRightConfirm}
               iconStyle={styles.passwordStyle}

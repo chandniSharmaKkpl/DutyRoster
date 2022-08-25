@@ -21,10 +21,15 @@ export default {
   UNAVAILABLE_DATE: "Unavailable Date",
   LOCATION: "Location",
   SHIFT: "Shift",
+  AVAILABLE_DATE : 'Available Date',
+  DISCTRICTS : 'Disctricts',
+  TIME : 'Time',
 
   // Placeholder text
 
-  CHOOSE_DATE: "Choose Unavailable Date",
+  CHOOSE_DATE: "Choose Available Date",
+  IN_TIME : 'In Time',
+  OUT_TIME: 'Out Time',
 
   ACCESS_TOKEN: "access_token",
   USER: "user",

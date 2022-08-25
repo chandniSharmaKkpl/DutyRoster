@@ -130,6 +130,7 @@ const ForgotPassword = (props) => {
                 iconStyle={styles.emailIconStyle}
                 keyboardType="email-address"
                 error={error.emailErr}
+                caretHidden = {false}
               />
               <View style={{ height: hp("1%") }} />
             </View>

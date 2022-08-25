@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions, Platform } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -72,7 +72,7 @@ export default StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: hp('8%')
+    marginTop: Platform.OS === 'android' ?  hp('8%') : hp('5%')
   },
   appVersion: {
     // textAlign: 'center',

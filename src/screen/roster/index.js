@@ -8,6 +8,7 @@ import {
   Text,
   Dimensions,
   Platform,
+  Alert,
 } from "react-native";
 import stylesCommon from "../../common/commonStyle";
 import styles from "./style";
@@ -15,8 +16,8 @@ import { AppText } from "@/components/AppText";
 import { useRoute, useNavigation } from "@react-navigation/core";
 import { CustomButton } from "@/components/CustomButton";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { appConstant, imageConstant } from "@/constant";
-import { CommonHeader } from "@/components";
+import { alertMsgConstant, appConstant, imageConstant } from "@/constant";
+import { AlertView, CommonHeader } from "@/components";
 import { Images } from "@/constant/svgImgConst";
 import EmpTimeCard from "@/components/roasterEmpTimeCard";
 import style from "./style";
@@ -30,6 +31,10 @@ const RosterScreen = (props) => {
   const [isCalendarShow, setIsCalendarShow] = useState(false);
   const [markedDates, setMarkeDates] = useState({});
   const [selectedDate, setSelectedDate] = useState("");
+  const [isAlertShow, setIsAlertShow] = useState(false);
+  console.log("isAlertShow ==>", isAlertShow);
+
+  var countBack = 0;
 
   const dateData = [
     {
@@ -69,30 +74,20 @@ const RosterScreen = (props) => {
     },
   ];
 
-  const getSelectedDayEvents = (date) =>{
+  const getSelectedDayEvents = (date) => {
     let markedDates = {};
-    markedDates[date] = { selected: true, color: '#00B0BF', textColor: '#FFFFFF' };
+    markedDates[date] = {
+      selected: true,
+      color: "#00B0BF",
+      textColor: "#FFFFFF",
+    };
     let serviceDate = moment(date);
     serviceDate = serviceDate.format("DD.MM.YYYY");
     setSelectedDate(serviceDate);
-    setMarkeDates(markedDates) 
-  }
-
-
-  const handleBackButtonClick = () => {
-    moveBack();
-    return true;
+    setMarkeDates(markedDates);
   };
-  useEffect(() => {
-    BackHandler.addEventListener("hardwareBackPress", handleBackButtonClick);
 
-    return () => {
-      BackHandler.removeEventListener(
-        "hardwareBackPress",
-        handleBackButtonClick
-      );
-    };
-  }, []);
+  
 
   const Item = ({ day, date, id }) => (
     <Pressable
@@ -134,7 +129,7 @@ const RosterScreen = (props) => {
   );
 
   const moveBack = () => {
-   // alert(" Do you want to exit the app?")
+    // alert(" Do you want to exit the app?")
     //props.navigation.goBack();
   };
 
@@ -163,7 +158,6 @@ const RosterScreen = (props) => {
             >
               <Images.IMAGE_CALENDAE_SVG style={styles.caledarStyles} />
             </Pressable>
-            
           </View>
           <View style={styles.dateLabelContainer}>
             <FlatList
@@ -182,25 +176,53 @@ const RosterScreen = (props) => {
               }}
             />
           </View>
-          
         </View>
         <View style={styles.empTimeCardDetails}>
           <EmpTimeCard />
         </View>
         {isCalendarShow && (
-              <View style={ Platform.OS === 'android' ?  styles.calendarStyleAndroid : styles.calendarStyleIOS}>
-                <Calendars
-                markedDates={markedDates}
-                onDayPress={getSelectedDayEvents}
-                />
-              </View>
-            )}
+          <View
+            style={
+              Platform.OS === "android"
+                ? styles.calendarStyleAndroid
+                : styles.calendarStyleIOS
+            }
+          >
+            <Calendars
+              markedDates={markedDates}
+              onDayPress={getSelectedDayEvents}
+            />
+          </View>
+        )}
         {/* <View style={styles.viewBottom}>
           <TouchableOpacity onPress={goToLogin} style={styles.btnTransparant}>
             <AppText style={styles.txtBtnTry} text={"Go To Calander"} />
           </TouchableOpacity>
         </View> */}
       </View>
+      {isAlertShow
+        ? Alert.alert(
+            alertMsgConstant.PLEASE_CONFIRM,
+            alertMsgConstant.ARE_YOU_SURE_TO_LOGOUT,
+            [
+              {
+                text: alertMsgConstant.NO,
+                onPress: () => {
+                  countBack = 0;
+                  setIsAlertShow(false);
+                },
+                style: "cancel",
+              },
+              {
+                text: alertMsgConstant.YES,
+                onPress: () => {
+                  BackHandler.exitApp();
+                  setIsAlertShow(false);
+                },
+              },
+            ]
+          )
+        : null}
     </>
   );
 };

@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Animated,
+  BackHandler,
   Dimensions,
   Image,
   Platform,
@@ -22,6 +23,7 @@ import {
 } from "../responsiveScreen";
 import QRCodeScreen from "@/screen/qrCode";
 import EditProfile from "@/screen/editProfile";
+import { navigationRef } from "@/Navigation/RootNavigation";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -41,6 +43,8 @@ const Tab = createBottomTabNavigator();
 // };
 
 export default function HomeNavigation(props) {
+
+  
   const tabOffsetValue = useRef(new Animated.Value(0)).current;
 
   const styles = StyleSheet.create({

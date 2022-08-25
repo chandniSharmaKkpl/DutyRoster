@@ -68,15 +68,15 @@ const EditProfile = (props) => {
   const [profilePath, setProfiilePath] = useState(null);
   const [ImageSource, setImageSource] = useState();
   const [title, setTitle] = useState("");
-  // const [payment, setPayment] = useState("");
+  const [payment, setPayment] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [dob, setDob] = useState("");
   const [address, setAddress] = useState("");
   const [tfn, setTFN] = useState("");
-  const [password, setPassword] = useState("Password@1");
-  const [cnfPassword, setCnfPassword] = useState("Password@1");
+  const [password, setPassword] = useState("");
+  const [cnfPassword, setCnfPassword] = useState("");
   const [isRequesting, setRequesting] = useState(true);
   const [onOpenMediaPicker, setOnOpenMediaPicker] = useState(false);
   const onChangeTitle = useCallback((text) => setTitle(text), []);
@@ -273,7 +273,7 @@ const EditProfile = (props) => {
 
   const onGoBack = () => {
     navigation.navigate(appConstant.ROASTER);
-  };
+  }; 
 
   const openMediaPicker = () => {
     setOnOpenMediaPicker(true);
@@ -395,15 +395,15 @@ const EditProfile = (props) => {
                 onChangeText={onChangeTitle}
                 error={error.titleErr}
               />
-              {/* <Text style={styles.inputTextTitle}>Payment</Text>
+              <Text style={styles.inputTextTitle}>Payment</Text>
               <TextInputCustom
                 label={"Payment"}
                 value={payment}
-                onChangeText={onChangePayment}
+                // onChangeText={onChangePayment}
                 placeholder={"Enter Payment Type"}
-                error={error.paymentErr}
+                // error={error.paymentErr}
                 editable={false}
-              /> */}
+              />
 
               <Text style={styles.inputTextTitle}>Name</Text>
               <TextInputCustom
@@ -420,6 +420,7 @@ const EditProfile = (props) => {
                 onChangeText={onChangeEmail}
                 placeholder={"Enter Email Address"}
                 error={error.emailErr}
+                caretHidden = {false}
               />
               <Text style={styles.inputTextTitle}>Phone</Text>
               <TextInputCustom

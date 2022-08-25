@@ -36,6 +36,7 @@ export const TextInputCustom = (props) => {
     multiline,
     editable,
     onFocus,
+    caretHidden
   } = props;
 
   return (
@@ -59,6 +60,7 @@ export const TextInputCustom = (props) => {
           // onPressIn={onPressRight}
           // onSubmitEditing={onSubmitEditing}
           editable={editable}
+          caretHidden={caretHidden}
           // onFocus={onFocus}
           // onTouchStart={() => {
           //   // Keyboard.dismiss();
@@ -88,7 +90,6 @@ export const styles = {
     paddingHorizontal: wp("3%"),
     width: wp("90%"),
     height: hp("6%"),
-    borderRadius: 6,
     borderColor: appColor.BORDER_BLACK,
     borderWidth: 1,
     borderRadius: 10,

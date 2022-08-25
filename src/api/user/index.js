@@ -40,7 +40,7 @@ export const updateProfile = (params) => {
         Authorization: "Bearer " + token,
       },
       data : data
-    };``
+    };
   });
   return client(config);
 };
