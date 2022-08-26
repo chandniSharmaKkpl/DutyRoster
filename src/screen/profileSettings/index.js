@@ -4,22 +4,17 @@ import stylesCommon from "../../common/commonStyle";
 import styles from "./style";
 import { AppText } from "@/components/AppText";
 import { useNavigation, useRoute } from "@react-navigation/core";
-import { CustomButton } from "@/components/CustomButton";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { alertMsgConstant, appColor, appConstant } from "@/constant";
-import { AlertView, CommonHeader } from "@/components";
+import { appConstant } from "@/constant";
+import { CommonHeader } from "@/components";
 import { Images } from "@/constant/svgImgConst";
 import { navigationRef } from "@/navigators/utils";
-import style from "./style";
-import { color } from "react-native-reanimated";
 
 const ProfileSetting = (props) => {
   const navigation = useNavigation();
   const route = useRoute();
 
-  const [isAlertShow, setIsAlertShow] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
-  console.log("isAlertShow ==>", selectedItem);
+
   const handleBackButtonClick = () => {
     moveBack();
     return true;

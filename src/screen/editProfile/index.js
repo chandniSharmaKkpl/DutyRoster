@@ -39,7 +39,7 @@ import { connect, useSelector } from "react-redux";
 import Loader from "@/components/Loader";
 
 const EditProfile = (props) => {
-  const {requestToUpdateProfileAction} = props
+  const { requestToUpdateProfileAction } = props;
   const navigation = useNavigation();
   const route = useRoute();
   const { user } = React.useContext(AuthContext);
@@ -58,15 +58,8 @@ const EditProfile = (props) => {
 
   const profileResponse = useSelector((state) => state.ProfileReducer);
 
-  useEffect(() => {
-    // console.log(
-    //   "profileResponse 1111  ====>",
-    //   JSON.stringify(profileResponse.UpdateProfileReducer, null, 4)
-    // );
-  }, [profileResponse]);
-
   const [profilePath, setProfiilePath] = useState(null);
-  const [ImageSource, setImageSource] = useState();
+  const [ImageSource, setImageSource] = useState("");
   const [title, setTitle] = useState("");
   const [payment, setPayment] = useState("");
   const [name, setName] = useState("");
@@ -94,6 +87,10 @@ const EditProfile = (props) => {
   );
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+  useEffect(() => {
+    console.log("ImageSource?.length   ======>", ImageSource === "");
+  }, [ImageSource]);
 
   const handleBackButtonClick = () => {
     moveBack();
@@ -130,7 +127,9 @@ const EditProfile = (props) => {
       setTFN(profileInformation?.tfn_number);
       setAddress(profileInformation?.address);
       setDob(profileInformation?.dob);
-      setImageSource(profileInformation?.image);
+      if (profileInformation.hasOwnProperty("image")) {
+        setImageSource(profileInformation?.image);
+      }
     }
   }, [profileResponse]);
   React.useEffect(() => {
@@ -147,7 +146,9 @@ const EditProfile = (props) => {
       setTFN(profileInformation?.tfn_number);
       setAddress(profileInformation?.address);
       setDob(profileInformation?.dob);
-      setImageSource(profileInformation?.image);
+      if (profileInformation.hasOwnProperty("image")) {
+        setImageSource(profileInformation?.image);
+      }
     }
   }, [profileResponse.UpdateProfileReducer]);
 
@@ -182,7 +183,6 @@ const EditProfile = (props) => {
     let dobErr = "";
     let addressErr = "";
     let tfnErr = "";
-   
 
     if (title.trim() === "") {
       titleErr = "Title cannot be empty";
@@ -204,10 +204,10 @@ const EditProfile = (props) => {
 
     if (phone === "") {
       phoneErr = "Phone cannot be empty";
-    } else if (phone.length<10) {
+    } else if (phone.length < 10) {
       phoneErr = "Phone number must be atleast 10 numbers ";
-    } else if  (phone.length>10) {
-      phoneErr = "Phone number no not more than 10 char"
+    } else if (phone.length > 10) {
+      phoneErr = "Phone number no not more than 10 char";
     }
 
     if (dob === "") {
@@ -239,7 +239,7 @@ const EditProfile = (props) => {
       phoneErr === "" &&
       dobErr === "" &&
       addressErr === "" &&
-      tfnErr === "" 
+      tfnErr === ""
     ) {
       return "ok";
     } else {
@@ -251,7 +251,7 @@ const EditProfile = (props) => {
         phoneErr,
         dobErr,
         addressErr,
-        tfnErr
+        tfnErr,
       };
     }
   }
@@ -266,7 +266,7 @@ const EditProfile = (props) => {
 
   const onGoBack = () => {
     navigation.navigate(appConstant.ROASTER);
-  }; 
+  };
 
   const openMediaPicker = () => {
     setOnOpenMediaPicker(true);
@@ -281,8 +281,7 @@ const EditProfile = (props) => {
       phone,
       dob,
       address,
-      tfn,
-      
+      tfn
     );
 
     setError(
@@ -297,19 +296,17 @@ const EditProfile = (props) => {
             dobErr: "",
             addressErr: "",
             tfnErr: "",
-            
           }
     );
     if (validate == "ok") {
-
       const params = new FormData();
       params.append("title", "chandni");
       params.append("name", "sharma");
       params.append("dob", "1995-09-18");
       params.append("email", "emp1@yopmail.com");
       params.append("phone", "9090909090");
-      params.append("address", 'address');
-      params.append("tfn_number", '123456');
+      params.append("address", "address");
+      params.append("tfn_number", "123456");
       params.append("image", {
         name: Math.floor(new Date().getTime() / 1000) + ".png",
         type: "image/jpeg",
@@ -360,12 +357,11 @@ const EditProfile = (props) => {
             >
               <Image
                 source={
-                  ImageSource && ImageSource?.length == ""
+                  ImageSource === ""
                     ? imageConstant.IMAGE_AVTAR_ICON
                     : { uri: ImageSource }
                 }
-                style={ImageSource && ImageSource?.length == ""
-                ?styles.imgEmpty: styles.img}
+                style={styles.img}
               />
               <TouchableOpacity
                 onPress={() => openMediaPicker()}
@@ -386,6 +382,7 @@ const EditProfile = (props) => {
                 placeholder={"Enter Title"}
                 onChangeText={onChangeTitle}
                 error={error.titleErr}
+                inputViewStyle={styles.inputViewStyle}
               />
               <Text style={styles.inputTextTitle}>Payment</Text>
               <TextInputCustom
@@ -395,6 +392,7 @@ const EditProfile = (props) => {
                 placeholder={"Enter Payment Type"}
                 // error={error.paymentErr}
                 editable={false}
+                inputViewStyle={styles.inputViewStyle}
               />
 
               <Text style={styles.inputTextTitle}>Name</Text>
@@ -404,6 +402,7 @@ const EditProfile = (props) => {
                 onChangeText={onChangeName}
                 placeholder={"Enter Name"}
                 error={error.nameErr}
+                inputViewStyle={styles.inputViewStyle}
               />
               <Text style={styles.inputTextTitle}>Email Address</Text>
               <TextInputCustom
@@ -412,7 +411,8 @@ const EditProfile = (props) => {
                 onChangeText={onChangeEmail}
                 placeholder={"Enter Email Address"}
                 error={error.emailErr}
-                caretHidden = {false}
+                caretHidden={false}
+                inputViewStyle={styles.inputViewStyle}
               />
               <Text style={styles.inputTextTitle}>Phone</Text>
               <TextInputCustom
@@ -422,6 +422,7 @@ const EditProfile = (props) => {
                 placeholder={"Enter Phone Number"}
                 error={error.phoneErr}
                 keyboardType="number-pad"
+                inputViewStyle={styles.inputViewStyle}
               />
               <Text style={styles.inputTextTitle}>Date of Birth</Text>
               <TextInputCustom
@@ -432,6 +433,7 @@ const EditProfile = (props) => {
                 eyeIcon={require("../../assets/images/SignupScreen/calendar.png")}
                 onPressRight={showDatePicker}
                 error={error.dobErr}
+                inputViewStyle={styles.inputViewStyle}
               />
               <Text style={styles.inputTextTitle}>Address</Text>
               <TextInputCustom
@@ -440,6 +442,7 @@ const EditProfile = (props) => {
                 onChangeText={onChangeAddress}
                 placeholder={"Enter Address"}
                 error={error.addressErr}
+                inputViewStyle={styles.inputViewStyle}
               />
               <Text style={styles.inputTextTitle}>TFN Number</Text>
               <TextInputCustom
@@ -449,6 +452,7 @@ const EditProfile = (props) => {
                 placeholder={"Enter TFN Number"}
                 error={error.tfnErr}
                 keyboardType="number-pad"
+                inputViewStyle={styles.inputViewStyle}
               />
               {/* <View style={styles.passwordContainer}> */}
               <View>
@@ -460,7 +464,7 @@ const EditProfile = (props) => {
                   onChangeText={onChangePassword}
                   // placeholder={"Password"}
                   error={error.passwordErr}
-                  // inputViewStyle={styles.passwordInput}
+                  inputViewStyle={styles.inputViewStyle}
                 />
               </View>
               <View>
@@ -472,7 +476,7 @@ const EditProfile = (props) => {
                   onChangeText={onChangeConfirmPassword}
                   // placeholder={"Confirm Password"}
                   error={error.cnfpasswordErr}
-                  // inputViewStyle={styles.passwordInput}
+                  inputViewStyle={styles.inputViewStyle}
                 />
               </View>
               {/* </View> */}
@@ -517,4 +521,3 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 export default connect(null, mapDispatchToProps)(EditProfile);
-

@@ -16,12 +16,16 @@ import Svg, {
   Text as SvgText,
 } from "react-native-svg";
 import { connect } from "react-redux";
+import moment from "moment";
+import { convertDateTime } from "@/common/timeFormate";
 import { requestToGetQRCodeResponse } from "./redux/QRCode.action";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
+
 const QRCodeScreen = (props) => {
   const { requestToFetQRCodeResponseAction } = props;
+
   const svgRef = React.useRef();
   const textSVGRef = React.useRef();
 
@@ -34,10 +38,20 @@ const QRCodeScreen = (props) => {
 
   const onSuccess = (e) => {
     Linking.openURL(e.data).catch((err) =>
-      console.error("An error occured", err)
+      console.log("An error occured", err)
     );
-    console.log("success ==>", e);
-   // // requestToFetQRCodeResponseAction(e);
+
+    const res = JSON.parse(e.data);
+    const currentTime = new Date(); // get current date & time
+    const location_id = res.location_id; // get location id when user scan QR code response
+    const signIn = convertDateTime(currentTime, false, true); // convert time formate and get current time
+    const date = convertDateTime(currentTime, true, false); // covert date formate and get current date
+
+    requestToFetQRCodeResponseAction({
+      location_id: location_id,
+      signin: signIn,
+      date: date,
+    });
   };
 
   React.useEffect(() => {
@@ -198,11 +212,15 @@ const QRCodeScreen = (props) => {
   );
 };
 
-const mapDispatchToProps = (disptch) => {
+const mapStateToProps = (state) => ({
+  accessToken: state.LoginReducer.accessToken,
+});
+
+const mapDispatchToProps = (dispatch) => {
   return {
     requestToFetQRCodeResponseAction: (params) =>
-      disptch(requestToGetQRCodeResponse(params)),
+      dispatch(requestToGetQRCodeResponse(params)),
   };
 };
 
-export default QRCodeScreen;
+export default connect(mapStateToProps, mapDispatchToProps)(QRCodeScreen);

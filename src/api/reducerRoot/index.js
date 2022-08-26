@@ -24,7 +24,7 @@ const encryptor = encryptTransform({
 const persistConfig = {
   key: "root",
   storage: AsyncStorage,
-  whitelist: ["auth"],
+  whitelist: ["LoginReducer"],
 };
 const ReducerRoot = combineReducers({
   GlobalReducer,

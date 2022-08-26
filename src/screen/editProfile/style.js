@@ -53,6 +53,9 @@ export default StyleSheet.create({
     height: 15,
     width: 15,
   },
+  inputViewStyle : {
+    backgroundColor : appColor.WHITE
+  },
   inputTextTitle: {
     fontFamily: fontConstant.FONT_SEMI_BOLD,
     fontSize: fontConstant.TEXT_H1_SIZE_REGULAR,
