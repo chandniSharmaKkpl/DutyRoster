@@ -36,6 +36,7 @@ export default {
   CHOOSE_FILE_TO_UPLOAD: "Select File to Upload",
   CAPTURE_IMAGE: "Take Photo",
   SELECT_PHOTO_FROM_LIBRARY: "Select Photo from Library",
+  CANCELLED_IMAGE_SELECTION: 'User cancelled image selection',
   //** Toast types **/
   TOAST_SUCCESS:"success",
   TOAST_NORMAL:"normal",
