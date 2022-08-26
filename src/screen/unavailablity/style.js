@@ -3,7 +3,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { appColor, fontConstant } from "@/constant";
+import { appColor, appConstant, fontConstant } from "@/constant";
 
 export default StyleSheet.create({
   container: {
@@ -52,4 +52,29 @@ export default StyleSheet.create({
     fontSize: 30
     // fontFamily : fontConstant.FONT_REGULAR
   },
+  textInput: {
+    backgroundColor: '#fff',
+    borderWidth:0,
+  },
+  timeIconStyle: {
+    marginRight: 10,
+    height: 20,
+    width:20,
+    // paddingTop:'4%'
+  },
+  btnBlack: {
+    marginTop:'8%',
+    backgroundColor: appColor.BLACK,
+    borderRadius:hp('5%'),
+    // height:'10%'
+    padding:hp('2%'),
+    width: '40%',
+    alignItems: 'center',
+    alignSelf:'center'
+  },
+  saveButton: {
+    color: appColor.WHITE,
+    fontSize: fontConstant.TEXT_20_SIZE_BOLD,
+    fontWeight: "600",
+  }
 });

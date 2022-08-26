@@ -12,4 +12,5 @@ export default {
   IMAGE_CAMERA_ICON: require("../assets/images/EditProfile/camera.png"),
   IMAGE_AVTAR_ICON: require("../assets/images/SignupScreen/avatar-placeholder.png"),
   IMAGE_DATE_PICKER_IMAGE: require("../assets/images/Unavailablity/calendar.png"),
+  IMAGE_TIME_ICON: require("../assets/images/Unavailablity/time1.png")
 };

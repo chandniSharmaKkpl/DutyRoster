@@ -2,7 +2,11 @@ import client from "@/api/client";
 import { apiConstant } from "@/constant";
 
 const config = {
-  headers: {},
+  header: {
+    Accept: "application/json",
+    "Content-Type": "multipart/form-data",
+    mimeType: "multipart/form-data",
+  }
 };
 export const login = (params) => client.post(apiConstant.LOGIN, params, config);
 export const singup = (params) => client.post(apiConstant.SIGNUP, params, config);
