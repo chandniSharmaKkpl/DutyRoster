@@ -21,7 +21,7 @@ export default (state = initialState, { type, payload }) => {
     case actionConstant.ACTION_GET_ACCESS_TOKEN_SUCCESS: {
       return {
         ...state,
-        accessToken: payload,
+        accessToken: payload.data.token,
         isRequesting: false,
         isAuth: true,
         error: {},

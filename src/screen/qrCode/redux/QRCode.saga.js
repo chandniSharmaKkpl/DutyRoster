@@ -10,12 +10,13 @@ export function* workerGetQRCodeResponse(action) {
       type: actionConstant.ACTION_GET_QR_CODE_SUCCESS,
       payload: qrCodeResponse,
     });
+    alert(qrCodeResponse.data.message)
   } catch (error) {
     alert(error);
     yield put({
       type: actionConstant.ACTION_GET_QR_CODE_FAILURE,
       payload: error,
-    });
+    }); 
   }
 }
 

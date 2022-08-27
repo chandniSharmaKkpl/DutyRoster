@@ -2,6 +2,7 @@ import { actionConstant } from "@/constant";
 
 const initialState = {
   isRequesting: false,
+  date : {},
   error: {},
 };
 
@@ -11,13 +12,15 @@ export default (state = initialState, { type, payload }) => {
       return {
         ...state,
         isRequesting: true,
+        date : {},
         error: {},
       };
     }
     case actionConstant.ACTION_GET_QR_CODE_SUCCESS: {
-      return {
+      return { 
         ...state,
         isRequesting: false,
+        data: payload.data,
         error: {},
       };
     }
@@ -25,6 +28,7 @@ export default (state = initialState, { type, payload }) => {
       return {
         ...state,
         isRequesting: false,
+        data: payload,
         error: {},
       };
     }

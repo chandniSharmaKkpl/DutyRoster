@@ -1,12 +1,8 @@
 import React,{useEffect, useState} from "react";
 import {
   View,
-  BackHandler,
-  Pressable,
   Image,
   Text,
-  Keyboard,
-  TouchableOpacity,
   Dimensions,
   FlatList,
   Platform,
@@ -14,7 +10,7 @@ import {
   Linking,
   Alert,
 } from "react-native";
-import { alertMsgConstant } from "@/constant";
+import { alertMsgConstant, imageConstant } from "@/constant";
 import Modal from "react-native-modal";
 import ImagePicker from "react-native-image-crop-picker";
 import AuthContext from "@/context/AuthContext";
@@ -25,13 +21,12 @@ const { height, width } = Dimensions.get("screen");
 const UploadImage = (props) => {
   const [options, setoptions] = useState([
     {
-      image: require("../../assets/images/EditProfile/swipe.png"),
+      image: imageConstant.IMAGE_SWIPE_ICON,
       title: alertMsgConstant.CAPTURE_IMAGE,
       id: 0,
     },
     {
-      image: require("../../assets/images/EditProfile/swipe.png"),
-
+      image: imageConstant.IMAGE_SWIPE_ICON,
       title: alertMsgConstant.SELECT_PHOTO_FROM_LIBRARY,
       id: 1,
     },
@@ -48,10 +43,6 @@ const UploadImage = (props) => {
     mediaType: "",
   });
 
-
-
-  // console.log("profile_imagePath ===>", profile_imagePath);
-
   React.useEffect(() => {}, [meadiaUploadList]);
   const closemediaPicker = () => {
     setOnOpenMediaPicker(false);
@@ -62,17 +53,17 @@ const UploadImage = (props) => {
       <View style={{ marginTop: height * 0.002 }}>
         <TouchableWithoutFeedback onPress={() => onselectOptions(item)}>
           <View style={styles.viewPopupStyle}>
-            {item.title == "Take Photo" ? (
+            {item.title == alertMsgConstant.CAPTURE_IMAGE ? (
               <Image
                 resizeMethod="resize"
                 style={styles.imagePopupStyle}
-                source={require("../../assets/images/EditProfile/cameraImage.png")}
+                source={imageConstant.IMAGE_CAMERAIMAGE_ICON}
               ></Image>
             ) : (
               <Image
                 resizeMethod="resize"
                 style={styles.imagePopupStyle}
-                source={require("../../assets/images/EditProfile/gallery.png")}
+                source={imageConstant.IMAGE_GALLERY_ICON}
               ></Image>
             )}
 
@@ -120,11 +111,11 @@ const UploadImage = (props) => {
         closemediaPicker(false);
       })
       .catch((e) => {
-        if (e.message !== "User cancelled image selection") {
+        if (e.message !== alertMsgConstant.CANCELLED_IMAGE_SELECTION) {
           if (Platform.OS === "ios") {
             Alert.alert("Dodee App", e.message, [
-              { text: "OK", onPress: () => Linking.openSettings() },
-              { text: "Cancel", onPress: () => console.log("Cancel Pressed") },
+              { text: alertMsgConstant.OK , onPress: () => Linking.openSettings() },
+              { text: alertMsgConstant.CANCEL , onPress: () => console.log("Cancel Pressed") },
             ]);
           } else {
             console.log(e.message ? "ERROR" + e.message : "ERROR" + e);
@@ -176,13 +167,15 @@ const UploadImage = (props) => {
   };
 
   useEffect(() => {
-    setImageSource(profile_imagePath)
+    if(profile_imagePath){
+      setImageSource(profile_imagePath)
+    }
   },[profile_imagePath])
 
   const onselectOptions = (item) => {
     closemediaPicker(false);
     setTimeout(() => {
-      if (item.title == "Take Photo") {
+      if (item.title == alertMsgConstant.CAPTURE_IMAGE) {
         captureImage();
       } else if (item.title == alertMsgConstant.SELECT_PHOTO_FROM_LIBRARY) {
         chooseMedia();

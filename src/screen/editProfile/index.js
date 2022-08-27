@@ -62,15 +62,8 @@ const EditProfile = (props) => {
 
   const profileResponse = useSelector((state) => state.ProfileReducer);
 
-  useEffect(() => {
-    // console.log(
-    //   "profileResponse 1111  ====>",
-    //   JSON.stringify(profileResponse.UpdateProfileReducer, null, 4)
-    // );
-  }, [profileResponse]);
-
   const [profilePath, setProfiilePath] = useState(null);
-  const [ImageSource, setImageSource] = useState();
+  const [ImageSource, setImageSource] = useState("");
   const [title, setTitle] = useState("");
   const [payment, setPayment] = useState("");
   const [name, setName] = useState("");
@@ -99,6 +92,10 @@ const EditProfile = (props) => {
     []
   );
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+  useEffect(() => {
+    console.log("ImageSource?.length   ======>", ImageSource === "");
+  }, [ImageSource]);
 
   const handleBackButtonClick = () => {
     moveBack();
@@ -156,7 +153,9 @@ const EditProfile = (props) => {
       setTFN(profileInformation?.tfn_number);
       setAddress(profileInformation?.address);
       setDob(profileInformation?.dob);
-      setImageSource(profileInformation?.image);
+      if (profileInformation.hasOwnProperty("image")) {
+        setImageSource(profileInformation?.image);
+      }
     }
   }, [profileResponse.UpdateProfileReducer]);
 
@@ -385,7 +384,7 @@ const EditProfile = (props) => {
             >
               <Image
                 source={
-                  ImageSource && ImageSource?.length == ""
+                  ImageSource === ""
                     ? imageConstant.IMAGE_AVTAR_ICON
                     : { uri: ImageSource }
                 }
@@ -414,6 +413,7 @@ const EditProfile = (props) => {
                 placeholder={"Enter Title"}
                 onChangeText={onChangeTitle}
                 error={error.titleErr}
+                inputViewStyle={styles.inputViewStyle}
               />
               <Text style={styles.inputTextTitle}>Payment</Text>
               <TextInputCustom
@@ -423,6 +423,7 @@ const EditProfile = (props) => {
                 placeholder={"Enter Payment Type"}
                 // error={error.paymentErr}
                 editable={false}
+                inputViewStyle={styles.inputViewStyle}
               />
 
               <Text style={styles.inputTextTitle}>Name</Text>
@@ -432,6 +433,7 @@ const EditProfile = (props) => {
                 onChangeText={onChangeName}
                 placeholder={"Enter Name"}
                 error={error.nameErr}
+                inputViewStyle={styles.inputViewStyle}
               />
               <Text style={styles.inputTextTitle}>Email Address</Text>
               <TextInputCustom
@@ -450,6 +452,7 @@ const EditProfile = (props) => {
                 placeholder={"Enter Phone Number"}
                 error={error.phoneErr}
                 keyboardType="number-pad"
+                inputViewStyle={styles.inputViewStyle}
               />
               <Text style={styles.inputTextTitle}>Date of Birth</Text>
               <TextInputCustom
@@ -460,6 +463,7 @@ const EditProfile = (props) => {
                 eyeIcon={require("../../assets/images/SignupScreen/calendar.png")}
                 onPressRight={showDatePicker}
                 error={error.dobErr}
+                inputViewStyle={styles.inputViewStyle}
               />
               <Text style={styles.inputTextTitle}>Address</Text>
               <TextInputCustom
@@ -468,6 +472,7 @@ const EditProfile = (props) => {
                 onChangeText={onChangeAddress}
                 placeholder={"Enter Address"}
                 error={error.addressErr}
+                inputViewStyle={styles.inputViewStyle}
               />
               <Text style={styles.inputTextTitle}>TFN Number</Text>
               <TextInputCustom
@@ -477,6 +482,7 @@ const EditProfile = (props) => {
                 placeholder={"Enter TFN Number"}
                 error={error.tfnErr}
                 keyboardType="number-pad"
+                inputViewStyle={styles.inputViewStyle}
               />
               {/* <View style={styles.passwordContainer}> */}
               <View>
@@ -488,7 +494,7 @@ const EditProfile = (props) => {
                   onChangeText={onChangePassword}
                   // placeholder={"Password"}
                   error={error.passwordErr}
-                  // inputViewStyle={styles.passwordInput}
+                  inputViewStyle={styles.inputViewStyle}
                 />
               </View>
               <View>
@@ -500,7 +506,7 @@ const EditProfile = (props) => {
                   onChangeText={onChangeConfirmPassword}
                   // placeholder={"Confirm Password"}
                   error={error.cnfpasswordErr}
-                  // inputViewStyle={styles.passwordInput}
+                  inputViewStyle={styles.inputViewStyle}
                 />
               </View>
               {/* </View> */}
