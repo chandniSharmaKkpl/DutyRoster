@@ -60,8 +60,7 @@ const UpdateProfileReducer = (
       };
     }
     case actionConstant.ACTION_UPDATE_PROFILE_SUCCESS: {
-      alert()
-      console.log("ACTION_UPDATE_PROFILE_SUCCESS 9898 ====> ", payload);
+     
       return {
         ...state,
         data: payload.data,

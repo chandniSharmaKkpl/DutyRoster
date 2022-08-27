@@ -15,8 +15,9 @@ export default StyleSheet.create({
     paddingBottom:'20%'
   },
   scrollViewStyle : {
-    // flex: 1,
+   flex: 1,
     // backgroundColor: appColor.WHITE,
+    
   },
   textNormal: {
     fontSize: fontConstant.TEXT_16_SIZE_REGULAR,

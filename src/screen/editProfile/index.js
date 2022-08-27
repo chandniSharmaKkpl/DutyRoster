@@ -77,6 +77,8 @@ const EditProfile = (props) => {
   const [isRequesting, setRequesting] = useState(true);
   const [onOpenMediaPicker, setOnOpenMediaPicker] = useState(false);
   const [employee_id, setEmployee_id] = useState("");
+  const [isClickEye, setIsClickEye] = useState(false);
+  const [isClickEyeConfirm, setIsClickEyeConfirm] = useState(false);
 
   const onChangeTitle = useCallback((text) => setTitle(text), []);
   // const onChangePayment = useCallback((text) => setPayment(text), []);
@@ -126,7 +128,12 @@ const EditProfile = (props) => {
 
   useEffect(() => {
     if (profileResponse?.ViewProfileReducer) {
+     
       let profileInformation = profileResponse.ViewProfileReducer.data;
+      console.log(
+        "************ profileInformation ::::::: 130 =====>",
+        profileInformation
+      );
       setTitle(profileInformation?.title);
       setName(profileInformation?.name);
       setEmail(profileInformation?.email);
@@ -135,17 +142,17 @@ const EditProfile = (props) => {
       setAddress(profileInformation?.address);
       setDob(profileInformation?.dob);
       setPayment(profileInformation?.payment_type);
-      // setImageSource(profileInformation?.image);
+       setImageSource(profileInformation?.image);
     }
   }, [profileResponse]);
 
   React.useEffect(() => {
     if (profileResponse.UpdateProfileReducer) {
-      let profileInformation = profileResponse.UpdateProfileReducer;
-      // console.log(
-      //   "::::::: profileInformation ::::::: 657 =====>",
-      //   profileInformation
-      // );
+      let profileInformation = profileResponse.UpdateProfileReducer.data;
+      console.log(
+        "::::::: profileInformation ::::::: 657 =====>",
+        profileInformation
+      );
       setTitle(profileInformation?.title);
       setName(profileInformation?.name);
       setEmail(profileInformation?.email);
@@ -159,6 +166,13 @@ const EditProfile = (props) => {
     }
   }, [profileResponse.UpdateProfileReducer]);
 
+  const onPressRight = () => {
+    setIsClickEye(!isClickEye);
+  };
+
+  const onPressRightConfirm = () => {
+    setIsClickEyeConfirm(!isClickEyeConfirm);
+  };
   const showDatePicker = () => {
     setDatePickerVisibility(true);
   };
@@ -360,7 +374,8 @@ const EditProfile = (props) => {
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="always"
       >
-        <Pressable onPress={() => Keyboard.dismiss()}>
+        <Pressable style={styles.viewPressable} onPress={() => Keyboard.dismiss()}>
+
           <UploadImage
             onOpenMediaPicker={onOpenMediaPicker}
             setOnOpenMediaPicker={setOnOpenMediaPicker}
@@ -465,6 +480,8 @@ const EditProfile = (props) => {
                 error={error.dobErr}
                 inputViewStyle={styles.inputViewStyle}
               />
+              <Pressable onPress={showDatePicker} style={{width: '100%', height: '7%', marginTop: '-14%'}}> 
+               </Pressable> 
               <Text style={styles.inputTextTitle}>Address</Text>
               <TextInputCustom
                 label={"Address"}
@@ -488,25 +505,39 @@ const EditProfile = (props) => {
               <View>
                 <Text style={styles.inputTextTitle}>Password</Text>
                 <TextInputCustom
-                  secureTextEntry={true}
+                   secureTextEntry={isClickEye ? false : true}
+
                   label={"Password"}
                   value={password}
                   onChangeText={onChangePassword}
                   // placeholder={"Password"}
                   error={error.passwordErr}
                   inputViewStyle={styles.inputViewStyle}
+                  rightIcon={
+                    isClickEye
+                      ? require("../../assets/images/ResetPasswordScreen/eyeSlash.png")
+                      : require("../../assets/images/LoginScreen/privacyEye.png")
+                  }
+                  onPressRight={onPressRight}
                 />
               </View>
               <View>
                 <Text style={styles.inputTextTitle}>Confirm Password</Text>
                 <TextInputCustom
-                  secureTextEntry={true}
+                  secureTextEntry={isClickEyeConfirm ? false : true}
+
                   label={"Confirm Password"}
                   value={cnfPassword}
                   onChangeText={onChangeConfirmPassword}
                   // placeholder={"Confirm Password"}
                   error={error.cnfpasswordErr}
                   inputViewStyle={styles.inputViewStyle}
+                  rightIcon={
+                    isClickEyeConfirm
+                      ? require("../../assets/images/ResetPasswordScreen/eyeSlash.png")
+                      : require("../../assets/images/LoginScreen/privacyEye.png")
+                  }
+                  onPressRight={onPressRightConfirm}
                 />
               </View>
               {/* </View> */}

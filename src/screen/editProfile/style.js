@@ -14,6 +14,9 @@ export default StyleSheet.create({
     paddingHorizontal: 20,
   },
 
+  viewPressable:{
+paddingBottom:'20%'
+  },
   viewTopTitle: {
     paddingTop: hp("3%"),
   },

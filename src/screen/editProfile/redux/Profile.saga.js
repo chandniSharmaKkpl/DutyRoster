@@ -28,8 +28,6 @@ export function* workersUpdateProfile(action) {
   
   try {
     const viewUpdateProfileResponse = yield call(UpdateProfile, action.payload);
-          console.log("---------",viewUpdateProfileResponse, '----------- Updateprofile ')
-
          
     yield put({
       type: actionConstant.ACTION_UPDATE_PROFILE_SUCCESS,
