@@ -28,19 +28,23 @@ export function* workersUpdateProfile(action) {
   
   try {
     const viewUpdateProfileResponse = yield call(UpdateProfile, action.payload);
+          console.log("---------",viewUpdateProfileResponse, '----------- Updateprofile ')
+
+         
     yield put({
       type: actionConstant.ACTION_UPDATE_PROFILE_SUCCESS,
       payload: viewUpdateProfileResponse,
     });
-    alert(viewUpdateProfileResponse.message)
+    alert(viewUpdateProfileResponse.message); 
+    
    //localDb.setUser(loginResponse.data); 
-   action.payload.navigation.navigate(appConstant.EDIT_PROFILE , {profileData:viewUpdateProfileResponse}); 
+  //  action.payload.navigation.navigate(appConstant.EDIT_PROFILE , {profileData:viewUpdateProfileResponse}); 
   } catch (error) {
     // alert("Email already associate with other user."); 
-    yield put({
-      type: actionConstant.ACTION_UPDATE_PROFILE_FAILURE,
-      payload: error,
-    });
+    // yield put({
+    //   type: actionConstant.ACTION_UPDATE_PROFILE_FAILURE,
+    //   payload: error,
+    // });
   }
 }
 

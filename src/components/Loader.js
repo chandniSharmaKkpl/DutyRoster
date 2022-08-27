@@ -32,12 +32,12 @@ const Loader = props => {
   const [orientation, setOrientation] = React.useState('portrait');
 
   const {loading} = props;
-  useEffect(() => {
-    lor(setOrientation);
-    return () => {
-      rol();
-    };
-  }, []);
+  // useEffect(() => {
+  //   lor(setOrientation);
+  //   return () => {
+  //     rol();
+  //   };
+  // }, []);
 
   return (
     <>

@@ -26,7 +26,11 @@ import { CommonHeader } from "@/components";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import commonStyle from "../../common/commonStyle";
 import { TextInputCustom } from "@/components/TextInput";
-import { isEmailValid, isMobileNumberValid } from "@/helper/validations";
+import {
+  isEmailValid,
+  isMobileNumberValid,
+  isValidPassword,
+} from "@/helper/validations";
 import { navigationRef } from "@/navigators/utils";
 import UploadImage from "@/components/uploadImage";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -39,7 +43,7 @@ import { connect, useSelector } from "react-redux";
 import Loader from "@/components/Loader";
 
 const EditProfile = (props) => {
-  const {requestToUpdateProfileAction} = props
+  const { requestToUpdateProfileAction } = props;
   const navigation = useNavigation();
   const route = useRoute();
   const { user } = React.useContext(AuthContext);
@@ -79,6 +83,8 @@ const EditProfile = (props) => {
   const [cnfPassword, setCnfPassword] = useState("");
   const [isRequesting, setRequesting] = useState(true);
   const [onOpenMediaPicker, setOnOpenMediaPicker] = useState(false);
+  const [employee_id, setEmployee_id] = useState("");
+
   const onChangeTitle = useCallback((text) => setTitle(text), []);
   // const onChangePayment = useCallback((text) => setPayment(text), []);
   const onChangeName = useCallback((text) => setName(text), []);
@@ -92,7 +98,6 @@ const EditProfile = (props) => {
     (text) => setCnfPassword(text),
     []
   );
-
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
   const handleBackButtonClick = () => {
@@ -104,6 +109,8 @@ const EditProfile = (props) => {
       let responsedata = await localDb.getUser().then((response) => {
         return response;
       });
+      setEmployee_id(responsedata.user.id);
+      console.log(" emp id ----", employee_id);
       await props.requestToGetProfile({
         employee_id: responsedata.user.id,
         navigation: navigation,
@@ -130,9 +137,11 @@ const EditProfile = (props) => {
       setTFN(profileInformation?.tfn_number);
       setAddress(profileInformation?.address);
       setDob(profileInformation?.dob);
-      setImageSource(profileInformation?.image);
+      setPayment(profileInformation?.payment_type);
+      // setImageSource(profileInformation?.image);
     }
   }, [profileResponse]);
+
   React.useEffect(() => {
     if (profileResponse.UpdateProfileReducer) {
       let profileInformation = profileResponse.UpdateProfileReducer;
@@ -172,7 +181,9 @@ const EditProfile = (props) => {
     phone,
     dob,
     address,
-    tfn
+    tfn,
+    password,
+    cnfPassword
   ) {
     let titleErr = "";
     // let paymentErr = "";
@@ -182,7 +193,8 @@ const EditProfile = (props) => {
     let dobErr = "";
     let addressErr = "";
     let tfnErr = "";
-   
+    let passwordErr = "";
+    let cnfpasswordErr = "";
 
     if (title.trim() === "") {
       titleErr = "Title cannot be empty";
@@ -203,11 +215,11 @@ const EditProfile = (props) => {
     }
 
     if (phone === "") {
-      phoneErr = "Phone cannot be empty";
-    } else if (phone.length<10) {
-      phoneErr = "Phone number must be atleast 10 numbers ";
-    } else if  (phone.length>10) {
-      phoneErr = "Phone number no not more than 10 char"
+      phoneErr = alertMsgConstant.MSG_PHONE_NOT_EMPTY;
+    } else if (phone.length < 10) {
+      phoneErr = "Phone number should contain 10 digits";
+    } else if (phone.length > 10) {
+      phoneErr = "Phone number no not more than 10 digits";
     }
 
     if (dob === "") {
@@ -220,17 +232,22 @@ const EditProfile = (props) => {
 
     if (tfn === "") {
       tfnErr = "TFN cannot be empty";
+    } else if (tfn.length < 8) {
+      tfnErr = alertMsgConstant.TFN_CHAR_LIMIT;
     }
 
-    // if (password.trim() === "") {
-    //   passwordErr = alertMsgConstant.PASSWORD_NOT_EMPTY;
-    // }
+    // If password there then only confirm password validation will be checked
+    if (password && password.length > 0) {
+      if (!isValidPassword(password)) {
+        passwordErr = alertMsgConstant.MSG_STRONG_PWD;
+      }
 
-    // if (cnfPassword.trim() === "") {
-    //   cnfpasswordErr = alertMsgConstant.CONFIRM_PASSWORD_NOT_EMPTY;
-    // } else if (password.trim() !== cnfPassword.trim()) {
-    //   cnfpasswordErr = alertMsgConstant.PASSWORD_NOT_EQUAL;
-    // }
+      if (cnfPassword.trim() === "") {
+        cnfpasswordErr = alertMsgConstant.CONFIRM_PASSWORD_NOT_EMPTY;
+      } else if (password.trim() !== cnfPassword.trim()) {
+        cnfpasswordErr = alertMsgConstant.PASSWORD_NOT_EQUAL;
+      }
+    }
 
     if (
       titleErr === "" &&
@@ -239,7 +256,9 @@ const EditProfile = (props) => {
       phoneErr === "" &&
       dobErr === "" &&
       addressErr === "" &&
-      tfnErr === "" 
+      tfnErr === "" &&
+      passwordErr == "" &&
+      cnfpasswordErr == ""
     ) {
       return "ok";
     } else {
@@ -251,7 +270,9 @@ const EditProfile = (props) => {
         phoneErr,
         dobErr,
         addressErr,
-        tfnErr
+        tfnErr,
+        passwordErr,
+        cnfpasswordErr,
       };
     }
   }
@@ -266,7 +287,7 @@ const EditProfile = (props) => {
 
   const onGoBack = () => {
     navigation.navigate(appConstant.ROASTER);
-  }; 
+  };
 
   const openMediaPicker = () => {
     setOnOpenMediaPicker(true);
@@ -282,7 +303,8 @@ const EditProfile = (props) => {
       dob,
       address,
       tfn,
-      
+      password,
+      cnfPassword
     );
 
     setError(
@@ -297,26 +319,29 @@ const EditProfile = (props) => {
             dobErr: "",
             addressErr: "",
             tfnErr: "",
-            
+            passwordErr: "",
+            cnfpasswordErr: "",
           }
     );
     if (validate == "ok") {
+      console.log(" image *******", ImageSource);
 
       const params = new FormData();
-      params.append("title", "chandni");
-      params.append("name", "sharma");
-      params.append("dob", "1995-09-18");
-      params.append("email", "emp1@yopmail.com");
-      params.append("phone", "9090909090");
-      params.append("address", 'address');
-      params.append("tfn_number", '123456');
+      params.append("title", title);
+      params.append("name", name);
+      params.append("dob", dob);
+      params.append("email", email);
+      params.append("phone", phone);
+      params.append("address", address);
+      params.append("tfn_number", tfn);
       params.append("image", {
         name: Math.floor(new Date().getTime() / 1000) + ".png",
         type: "image/jpeg",
         uri: ImageSource ? ImageSource : "https://via.placeholder.com/150",
       });
-      params.append("employee_id", "1");
-      params.append("password", "password");
+      params.append("employee_id", employee_id);
+
+      password.length > 0 ? params.append("password", password) : null;
       requestToUpdateProfileAction({
         params,
         // navigation: navigation,
@@ -364,8 +389,11 @@ const EditProfile = (props) => {
                     ? imageConstant.IMAGE_AVTAR_ICON
                     : { uri: ImageSource }
                 }
-                style={ImageSource && ImageSource?.length == ""
-                ?styles.imgEmpty: styles.img}
+                style={
+                  ImageSource && ImageSource?.length == ""
+                    ? styles.imgEmpty
+                    : styles.img
+                }
               />
               <TouchableOpacity
                 onPress={() => openMediaPicker()}
@@ -412,7 +440,7 @@ const EditProfile = (props) => {
                 onChangeText={onChangeEmail}
                 placeholder={"Enter Email Address"}
                 error={error.emailErr}
-                caretHidden = {false}
+                caretHidden={false}
               />
               <Text style={styles.inputTextTitle}>Phone</Text>
               <TextInputCustom
@@ -517,4 +545,3 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 export default connect(null, mapDispatchToProps)(EditProfile);
-

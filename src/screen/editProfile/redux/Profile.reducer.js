@@ -52,7 +52,6 @@ const UpdateProfileReducer = (
 ) => {
   switch (type) {
     case actionConstant.ACTION_UPDATE_PROFILE_REQUEST: {
-      console.log("ACTION_UPDATE_PROFILE_REQUEST   =>>>>>>>");
       return {
         ...state,
         data: {},
