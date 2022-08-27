@@ -12,6 +12,7 @@ const client = axios.create({
 });
 
 client.interceptors.response.use(undefined, (error) => {
+  // console.log(error.response.data.data.error_email , 'requesterror');
   if (error.response?.status === 401) {
     // if (isLocalStorageAvailable()) {
     //   AsyncStorage.removeItem("persist:root");
@@ -20,7 +21,7 @@ client.interceptors.response.use(undefined, (error) => {
   }
 
   error.message = error.response
-    ? error.response.data.message
+    ? error.response.data
     : error.request
     ? error.message
     : "Something went wrong. Try again.";

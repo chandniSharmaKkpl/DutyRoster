@@ -16,8 +16,8 @@ export function* workerSingup(action) {
      alert(signupResponse.data.message); 
      action.payload.navigation.navigate(appConstant.LOGIN); 
   } catch (error) {
-    console.log(JSON.stringify(error))
-    alert("Email already associate with other user."); 
+    console.log(JSON.stringify(error.message.data.error_email) , 'eerrr')
+    alert(JSON.stringify(error.message.data.error_email)); 
     yield put({
       type: actionConstant.ACTION_GET_SIGN_UP_FAILURE,
       payload: error,

@@ -15,5 +15,5 @@ export default {
   IMAGE_SWIPE_ICON: require("../assets/images/EditProfile/swipe.png"),
   IMAGE_CAMERAIMAGE_ICON: require("../assets/images/EditProfile/cameraImage.png"),
   IMAGE_GALLERY_ICON: require("../assets/images/EditProfile/gallery.png"),
-
+  IMAGE_TIME_ICON: require("../assets/images/Unavailablity/time1.png")
 };

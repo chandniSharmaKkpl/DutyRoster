@@ -305,9 +305,9 @@ const Signup = (props) => {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.CAMERA,
         {
-          title: "Cool Photo App Camera Permission",
+          title: "App Camera Permission",
           message:
-            "Cool Photo App needs access to your camera " +
+            "App needs access to your camera " +
             "so you can take awesome pictures.",
           buttonNeutral: "Ask Me Later",
           buttonNegative: "Cancel",
@@ -355,9 +355,9 @@ const Signup = (props) => {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.CAMERA,
         {
-          title: "Cool Photo App Camera Permission",
+          title: "App Camera Permission",
           message:
-            "Cool Photo App needs access to your camera " +
+            "App needs access to your camera " +
             "so you can take awesome pictures.",
           buttonNeutral: "Ask Me Later",
           buttonNegative: "Cancel",
