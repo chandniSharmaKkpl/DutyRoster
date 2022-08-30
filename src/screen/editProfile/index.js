@@ -460,6 +460,7 @@ const EditProfile = (props) => {
                 placeholder={"Enter Email Address"}
                 error={error.emailErr}
                 caretHidden={false}
+                inputViewStyle={styles.inputViewStyle}
               />
               <Text style={styles.inputTextTitle}>Phone</Text>
               <TextInputCustom
