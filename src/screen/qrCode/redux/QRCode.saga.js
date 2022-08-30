@@ -1,4 +1,3 @@
-
 import { actionConstant } from "@/constant";
 import { takeLatest, take, call, put, select, all } from "redux-saga/effects";
 import { QRCodeCall } from "./QRCode.api";
@@ -10,9 +9,9 @@ export function* workerGetQRCodeResponse(action) {
       type: actionConstant.ACTION_GET_QR_CODE_SUCCESS,
       payload: qrCodeResponse,
     });
-    alert(qrCodeResponse.data.message)
+    alert(qrCodeResponse.message)
   } catch (error) {
-    alert(error);
+    alert(JSON.stringify(error.message.message));
     yield put({
       type: actionConstant.ACTION_GET_QR_CODE_FAILURE,
       payload: error,

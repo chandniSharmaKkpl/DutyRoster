@@ -88,9 +88,6 @@ const EditProfile = (props) => {
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
-  useEffect(() => {
-    console.log("ImageSource?.length   ======>", ImageSource === "");
-  }, [ImageSource]);
 
   const handleBackButtonClick = () => {
     moveBack();
@@ -101,11 +98,14 @@ const EditProfile = (props) => {
       let responsedata = await localDb.getUser().then((response) => {
         return response;
       });
-      await props.requestToGetProfile({
+      console.log("responsedata.user.id", responsedata.user.id);
+  
+      props.requestToGetProfile({
         employee_id: responsedata.user.id,
         navigation: navigation,
       });
     })();
+
 
     BackHandler.addEventListener("hardwareBackPress", handleBackButtonClick);
 
@@ -132,13 +132,11 @@ const EditProfile = (props) => {
       }
     }
   }, [profileResponse]);
+
+
   React.useEffect(() => {
     if (profileResponse.UpdateProfileReducer) {
       let profileInformation = profileResponse.UpdateProfileReducer;
-      // console.log(
-      //   "::::::: profileInformation ::::::: 657 =====>",
-      //   profileInformation
-      // );
       setTitle(profileInformation?.title);
       setName(profileInformation?.name);
       setEmail(profileInformation?.email);
@@ -304,8 +302,8 @@ const EditProfile = (props) => {
       params.append("name", "sharma");
       params.append("dob", "1995-09-18");
       params.append("email", "emp1@yopmail.com");
-      params.append("phone", "9090909090");
-      params.append("address", "address");
+      // params.append("phone", "9090909090");
+      // params.append("address", "address");
       params.append("tfn_number", "123456");
       params.append("image", {
         name: Math.floor(new Date().getTime() / 1000) + ".png",

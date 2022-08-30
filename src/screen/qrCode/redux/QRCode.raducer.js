@@ -2,7 +2,7 @@ import { actionConstant } from "@/constant";
 
 const initialState = {
   isRequesting: false,
-  date : {},
+  data : {},
   error: {},
 };
 
@@ -12,7 +12,7 @@ export default (state = initialState, { type, payload }) => {
       return {
         ...state,
         isRequesting: true,
-        date : {},
+        data : {},
         error: {},
       };
     }

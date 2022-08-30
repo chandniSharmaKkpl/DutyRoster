@@ -3,36 +3,41 @@ import {
   View,
   BackHandler,
   Pressable,
-  Image,
   FlatList,
   Text,
   Dimensions,
   Platform,
   Alert,
 } from "react-native";
-import stylesCommon from "../../common/commonStyle";
 import styles from "./style";
 import { AppText } from "@/components/AppText";
 import { useRoute, useNavigation } from "@react-navigation/core";
-import { CustomButton } from "@/components/CustomButton";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { alertMsgConstant, appConstant, imageConstant } from "@/constant";
-import { AlertView, CommonHeader } from "@/components";
+import { alertMsgConstant, appColor } from "@/constant";
+import { CommonHeader } from "@/components";
 import { Images } from "@/constant/svgImgConst";
 import EmpTimeCard from "@/components/roasterEmpTimeCard";
-import style from "./style";
 import Calendars from "@/components/Calendars";
 import moment from "moment";
+import { enumerateDaysBetweenDates } from "@/utils";
+import { connect } from "react-redux";
+import {
+  requestToGetRoasterDateRange,
+  setMarkeDates,
+} from "./redux/Roster.action";
 
 const RosterScreen = (props) => {
   const navigation = useNavigation();
   const route = useRoute();
+
+  const {
+    setMarkeDatesAction,
+    markedDates,
+    requestToGetRoasterDateRangeAction,
+  } = props;
   const [selectedItem, setSelectedItem] = useState(3);
   const [isCalendarShow, setIsCalendarShow] = useState(false);
-  const [markedDates, setMarkeDates] = useState({});
   const [selectedDate, setSelectedDate] = useState("");
   const [isAlertShow, setIsAlertShow] = useState(false);
-  console.log("isAlertShow ==>", isAlertShow);
 
   var countBack = 0;
 
@@ -74,20 +79,56 @@ const RosterScreen = (props) => {
     },
   ];
 
-  const getSelectedDayEvents = (date) => {
-    let markedDates = {};
-    markedDates[date] = {
-      selected: true,
-      color: "#00B0BF",
-      textColor: "#FFFFFF",
-    };
-    let serviceDate = moment(date);
-    serviceDate = serviceDate.format("DD.MM.YYYY");
-    setSelectedDate(serviceDate);
-    setMarkeDates(markedDates);
-  };
+  // markedDates obj function
 
-  
+  React.useEffect(() => {
+    var endDate = "";
+    var startDate = new Date();
+    endDate = moment(startDate).add(7, "d");
+    // console.log("endDate", endDate);
+    console.log(enumerateDaysBetweenDates(startDate, endDate));
+    const _dateList = {};
+    const _dateRange = enumerateDaysBetweenDates(startDate, endDate);
+    _dateRange.map((item, index) => {
+      _dateList[item] = {
+        startingDay: index === 0 ? true : false,
+        endingDay: index === _dateRange.length - 1 ? true : false,
+        selected: false,
+        color: !(index === 0 || index === _dateRange.length - 1)
+          ? appColor.LIGHT_ORANGE
+          : appColor.RED,
+        textColor: appColor.WHITE,
+      };
+    });
+    setMarkeDatesAction(_dateList);
+
+    // action to api call format date
+    const fromDate = moment(startDate).format("YYYY-MM-DD");
+    const toDate = moment(endDate).format("YYYY-MM-DD");
+
+    const params = new FormData();
+    params.append("from", fromDate);
+    params.append("to", toDate);
+    console.log("fromDate & toDate", params);
+    requestToGetRoasterDateRangeAction(
+      params,
+    );
+  }, []);
+
+  // console.log("markedDates", JSON.stringify(markedDates, null, 4));
+  const getSelectedDayEvents = (date) => {
+    // let markedDates = {};
+    // markedDates[date] = {
+    //   selected: true,
+    //   color: appColor.RED,
+    //   textColor: appColor.WHITE,
+    // };
+    // console.log("markedDates ----->", markedDates);
+    // let serviceDate = moment(date);
+    // serviceDate = serviceDate.format("DD.MM.YYYY");
+    // setSelectedDate(serviceDate);
+    // setMarkeDates(markedDates);
+  };
 
   const Item = ({ day, date, id }) => (
     <Pressable
@@ -128,18 +169,8 @@ const RosterScreen = (props) => {
     <Item id={item.id} day={item.day} date={item.date} />
   );
 
-  const moveBack = () => {
-    // alert(" Do you want to exit the app?")
-    //props.navigation.goBack();
-  };
-
   const onClickCalendar = () => {
-    // props.navigation.navigate(appConstant.CALENDAR);
     setIsCalendarShow(!isCalendarShow);
-  };
-
-  const goToLogin = () => {
-    // props.navigation.navigate(appConstant.LOGIN);
   };
 
   return (
@@ -226,5 +257,14 @@ const RosterScreen = (props) => {
     </>
   );
 };
-
-export default RosterScreen;
+const mapStateToProps = (state) => ({
+  markedDates: state.RosterReducer.markedDates,
+});
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setMarkeDatesAction: (params) => dispatch(setMarkeDates(params)),
+    requestToGetRoasterDateRangeAction: (params) =>
+      dispatch(requestToGetRoasterDateRange(params)),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(RosterScreen);

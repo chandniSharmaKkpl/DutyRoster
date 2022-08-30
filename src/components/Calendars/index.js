@@ -7,15 +7,12 @@ import { useNavigation } from "@react-navigation/native";
 
 const Calendars = (props) => {
   const navigation = useNavigation();
+  const {markedDates} = props;
   const [getDisabledDates, setGetDisabledDates] = useState();
-
-  const moveBack = () => {
-    // navigation.navigate(appConstant.ROASTER);
-    navigation.goBack();
-  };
 
   const onClickDate = (day) => {
     props.onDayPress(day);
+    console.log("onClickDate =>", day);
   };
 
   return (
@@ -25,40 +22,12 @@ const Calendars = (props) => {
           borderRadius: 8,
         }}
         markingType={"period"}
-        markedDates={{
-          "2022-08-22": {
-            startingDay: true,
-            color: appColor.RED,
-            textColor: appColor.WHITE,
-            // selected: true`
-          },
-          "2022-08-23": {
-            color: appColor.LIGHT_ORANGE,
-            textColor: appColor.BLACK ,
-            marked: true,
-            dotColor: appColor.BLACK,
-          },
-          "2022-08-24": { color: appColor.LIGHT_ORANGE, textColor: appColor.BLACK },
-          "2022-08-25": { color: appColor.LIGHT_ORANGE, textColor: appColor.BLACK },
-          "2022-08-26": { color: appColor.LIGHT_ORANGE, textColor: appColor.BLACK },
-          "2022-08-27": { color: appColor.LIGHT_ORANGE, textColor: appColor.BLACK },
-          "2022-08-28": {
-            endingDay: true,
-            color: appColor.RED,
-            textColor: appColor.WHITE,
-          },
-        }}
-        // minDate={Date()}
-        // maxDate={"2030-05-30"}
+        markedDates={markedDates}
         monthFormat={"MMMM yyyy "}
         onDayPress={(day) => onClickDate(day.dateString)}
         allowRangeSelection={true}
       />
-      {/* <Pressable onPress={moveBack}>
-        <Text>Back</Text>
-      </Pressable> */}
     </>
   );
 };
-
 export default Calendars;

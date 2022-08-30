@@ -9,10 +9,15 @@ export function* workerGetAccessToken(action) {
       type: actionConstant.ACTION_GET_ACCESS_TOKEN_SUCCESS,
       payload: loginResponse,
     });
-    action.payload.navigation.navigate(appConstant.HOME, {
-      userData: loginResponse.data,
-    });
+    console.log("loginResponse", loginResponse);
+    if (loginResponse.data) {
+      action.payload.navigation.navigate(appConstant.HOME, {
+        userData: loginResponse.data,
+      });
+    }
+    alert(loginResponse.message)
   } catch (error) {
+    console.log(error); 
     alert(error);
     yield put({
       type: actionConstant.ACTION_GET_ACCESS_TOKEN_FAILURE,

@@ -13,6 +13,7 @@ import Forgot_PasswordReducer from "@/screen/forgotPassword/redux/Forgot_Passwor
 import Reset_PasswordReducer from "@/screen/resetPassword/redux/Reset_Password.reducer";
 import QRCode_ResponseReducer from "@/screen/qrCode/redux/QRCode.raducer.js";
 import ProfileReducer from "@/screen/editProfile/redux/Profile.reducer";
+import RosterReducer from "@/screen/roster/redux/Roster.reducer";
 
 
 const encryptor = encryptTransform({
@@ -33,7 +34,8 @@ const ReducerRoot = combineReducers({
   Forgot_PasswordReducer,
   Reset_PasswordReducer,
   QRCode_ResponseReducer,
-  ProfileReducer
+  ProfileReducer,
+  RosterReducer
 });
 
 export default persistReducer(persistConfig, ReducerRoot);

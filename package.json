@@ -60,7 +60,7 @@
     "react-native-svg": "^12.4.3",
     "react-native-svg-transformer": "^1.0.0",
     "react-native-textarea": "^1.0.4",
-    "react-native-toast-notifications": "^3.2.3",
+    "react-native-toast-notifications": "^3.3.1",
     "react-native-vector-icons": "^9.1.0",
     "react-native-webview": "^11.18.1",
     "react-redux": "^7.2.6",

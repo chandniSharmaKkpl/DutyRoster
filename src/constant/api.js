@@ -6,6 +6,6 @@ export default {
   RESET_PWD : "/reset-password",
   ADD_TIMESHEET : '/add-timesheet',
   VIEW_PROFILE:'/view-profile',
-  EDIT_PROFILE:'/edit-profile'
-
+  EDIT_PROFILE:'/edit-profile',
+  ROASTER_DATE_RANGE : '/view-roaster-between-dates'
 };

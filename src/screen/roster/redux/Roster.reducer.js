@@ -1,41 +1,45 @@
-import {actionConstant} from '../../constant';
+import { actionConstant } from "@/constant";
 
 const initialState = {
   isRequesting: false,
+  data: {},
   error: {},
-  apiBaseData: '',
-  clientToken: '',
-  responseAccountUrl: '',
+  markedDates: {},
 };
 
 export default (state = initialState, { type, payload }) => {
-    switch (type) {
-
-        case actionConstant.ACTION_GET_API_BASE_REQUEST: {
-            return {
-              ...state,
-              apiBaseData: {},
-              isRequesting: true,
-              error: {},
-            };
-          }
-          case actionConstant.ACTION_GET_API_BASE_SUCCESS: {
-            return {
-              ...state,
-              apiBaseData: payload,
-              isRequesting: false,
-              error: {},
-            };
-          }
-          case actionConstant.ACTION_GET_API_BASE_FAILURE: {
-            return {
-              ...state,
-              apiBaseData: {},
-              isRequesting: false,
-              error: payload,
-            };
-          }
-    default:
-        return state
+  switch (type) {
+    case actionConstant.ACTION_GET_ROASTER_DATE_REQUEST: {
+      return {
+        ...state,
+        isRequesting: true,
+        data: {},
+        error: {},
+      };
     }
-}
+    case actionConstant.ACTION_GET_ROASTER_DATE_SUCCESS: {
+      return {
+        ...state,
+        isRequesting: false,
+        data: payload.data,
+        error: {},
+      };
+    }
+    case actionConstant.ACTION_GET_ROASTER_DATE_FAILURE: {
+      return {
+        ...state,
+        isRequesting: false,
+        data: payload,
+        error: {},
+      };
+    }
+    case actionConstant.ACTION_SET_MARKED_DATES: {
+      return {
+        ...state,
+        markedDates: payload,
+      };
+    }
+    default:
+      return state;
+  }
+};

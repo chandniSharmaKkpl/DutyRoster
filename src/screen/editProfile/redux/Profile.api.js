@@ -6,7 +6,7 @@ import { apiConstant } from "@/constant";
 export const ViewProfile = async (params) => {
   try {
     const res = await API.user(params);
-    // console.log(":::::::::: ViewProfile ::::::::::", res);
+    console.log(":::::::::: ViewProfile ::::::::::", res);
     return res.data;
   } catch (error) {
     console.log(error, "error");
