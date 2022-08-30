@@ -19,7 +19,7 @@ export const UpdateProfile = async (params) => {
     const res = await API.updateProfile(params);
     return res;
   } catch (error) {
-    // console.log("***************-",error, "error");
+   console.log("***************-",error, "error");
     throw error;
   }
 };

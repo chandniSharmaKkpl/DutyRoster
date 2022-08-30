@@ -336,15 +336,16 @@ const EditProfile = (props) => {
             cnfpasswordErr: "",
           }
     );
-    if (validate == "ok") {
+    if (validate == "ok")
+     {
       console.log(" image *******", ImageSource);
 
       const params = new FormData();
-      params.append("title", title);
-      params.append("name", name);
+     params.append("title", title);
+     params.append("name", name);
       params.append("dob", dob);
-      params.append("email", email);
-      params.append("phone", phone);
+     params.append("email", email);
+     params.append("phone", phone);
       params.append("address", address);
       params.append("tfn_number", tfn);
       params.append("image", {
