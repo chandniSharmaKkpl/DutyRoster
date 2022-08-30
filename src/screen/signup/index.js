@@ -20,6 +20,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import UploadImage from "@/components/uploadImage";
 import styles from "./style";
 import { CommonHeader } from "@/components/CommonHeader";
 import { CustomButton } from "@/components/CustomButton";
@@ -70,10 +71,9 @@ const Signup = (props) => {
   const [tfn, setTFN] = useState("");
   const [password, setPassword] = useState("");
   const [cnfPassword, setCnfPassword] = useState("");
+  const [onOpenMediaPicker, setOnOpenMediaPicker] = useState(false);
+  const [profilePath, setProfiilePath] = useState(null);
   const [ImageSource, setImageSource] = useState("");
-  const [imageArray, setImage] = useState([]);
-  const [type, setType] = useState("");
-  const [base64, setBase64] = useState("");
   const signupResponse = useSelector((state) => state.SignupReducer);
 
   const onChangeTitle = useCallback((text) => setTitle(text), []);
@@ -137,11 +137,9 @@ const Signup = (props) => {
   const moveBack = () => {
     props.navigation.goBack();
   };
-
-  const googleSignin = () => {};
-
-  const fbSignin = () => {};
-
+  const openMediaPicker = () => {
+    setOnOpenMediaPicker(true);
+  };
   function Validate(
     title,
     // payment,
@@ -201,6 +199,8 @@ const Signup = (props) => {
 
     if (tfn === "") {
       tfnErr = "TFN cannot be empty";
+    } else if (tfn.length < 8) {
+      tfnErr = alertMsgConstant.TFN_CHAR_LIMIT;
     }
 
     if (password.trim() === "") {
@@ -245,7 +245,6 @@ const Signup = (props) => {
   }
 
   const onClickSignup = async () => {
-    console.log(imageArray, "image");
     const validate = Validate(
       title,
       // payment,
@@ -276,23 +275,44 @@ const Signup = (props) => {
     );
 
     if (validate == "ok") {
-      let infor = await props.requestToRegister({
-        title,
-        // payment,
-        name,
-        email,
-        phone,
-        dob,
-        address,
-        tfn_number: tfn,
-        password,
-        device_token: 3143, //need to do in dynamic
-        uuid: 24314, //need to do in dynamic
-        device_type: 2132, //need to do in dynamic
-        device_name: DeviceName,
-        navigation: navigation,
-        image: imageArray,
-      });
+      const params = new FormData();
+      params.append("title", title);
+      params.append("name", name);
+       params.append("dob", dob);
+      params.append("email", email);
+      params.append("phone", phone);
+       params.append("address", address);
+       params.append("tfn_number", tfn);
+       params.append("image", {
+         name: Math.floor(new Date().getTime() / 1000) + ".png",
+         type: "image/jpeg",
+         uri: ImageSource ? ImageSource : "https://via.placeholder.com/150",
+       });
+ 
+       console.log(ImageSource, 'ImageSource')
+       password.length > 0 ? params.append("password", password) : null;
+       params.append("device_token", 3143);//need to do in dynamic
+       params.append("uuid", 24314);//need to do in dynamic
+       params.append("device_type", 2132);//need to do in dynamic
+       params.append("device_name", DeviceName);//need to do in dynamic
+       props.requestToRegister({params ,   navigation: navigation});
+      // let infor = await props.requestToRegister({
+      //   title,
+      //   // payment,
+      //   name,
+      //   email,
+      //   phone,
+      //   dob,
+      //   address,
+      //   tfn_number: tfn,
+      //   password,
+      //   device_token: 3143, //need to do in dynamic
+      //   uuid: 24314, //need to do in dynamic
+      //   device_type: 2132, //need to do in dynamic
+      //   device_name: DeviceName,
+      //   navigation: navigation,
+      //   image: imageArray,
+      // });
     }
   };
 
@@ -300,107 +320,7 @@ const Signup = (props) => {
     navigation.navigate("Login");
   };
 
-  const launchCamera = async () => {
-    try {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.CAMERA,
-        {
-          title: "App Camera Permission",
-          message:
-            "App needs access to your camera " +
-            "so you can take awesome pictures.",
-          buttonNeutral: "Ask Me Later",
-          buttonNegative: "Cancel",
-          buttonPositive: "OK",
-        }
-      );
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        console.log("You can use the camera");
-      } else {
-        console.log("Camera permission denied");
-      }
-    } catch (err) {
-      console.warn(err);
-    }
-
-    ImagePicker.launchCamera(
-      {
-        mediaType: "photo",
-        maxHeight: 200,
-        maxWidth: 200,
-      },
-      (response) => {
-        if (response.didCancel === true) {
-          let cancelImage = imageArray;
-          setImageSource(cancelImage.uri);
-          setShowCameraModal(false);
-        } else {
-          setBase64(response.assets[0].fileName);
-          setType(response.assets[0].type);
-          setImageSource(response.assets[0].uri);
-          setShowCameraModal(false);
-          var imageTofile = {
-            uri: response.assets[0].uri,
-            type: response.assets[0].type,
-            name: response.assets[0].fileName,
-          };
-          setImage(imageTofile);
-        }
-      }
-    );
-  };
-
-  const selectFromGallery = async () => {
-    try {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.CAMERA,
-        {
-          title: "App Camera Permission",
-          message:
-            "App needs access to your camera " +
-            "so you can take awesome pictures.",
-          buttonNeutral: "Ask Me Later",
-          buttonNegative: "Cancel",
-          buttonPositive: "OK",
-        }
-      );
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        console.log("You can use the camera");
-      } else {
-        console.log("Camera permission denied");
-      }
-    } catch (err) {
-      console.warn(err);
-    }
-
-    ImagePicker.launchImageLibrary(
-      {
-        mediaType: "photo",
-        includeBase64: true,
-        maxHeight: 200,
-        maxWidth: 200,
-      },
-      (response) => {
-        if (response.didCancel === true) {
-          // let cancelImage = this.state.image;
-          setImageSource(cancelImage.uri);
-          setShowCameraModal(false);
-        } else {
-          setBase64(response.assets[0].fileName);
-          setType(response.assets[0].type);
-          setImageSource(response.assets[0].uri);
-          setShowCameraModal(false);
-          var imageTofile = {
-            uri: response.assets[0].uri,
-            type: response.assets[0].type,
-            name: response.assets[0].fileName,
-          };
-          setImage(imageTofile);
-        }
-      }
-    );
-  };
-
+  
   return (
     <>
       <KeyboardAwareScrollView
@@ -410,6 +330,12 @@ const Signup = (props) => {
       >
         <View style={stylesCommon.container}>
           <Pressable onPress={() => Keyboard.dismiss()}>
+          <UploadImage
+            onOpenMediaPicker={onOpenMediaPicker}
+            setOnOpenMediaPicker={setOnOpenMediaPicker}
+            setProfiilePath={setProfiilePath}
+            setImageSource={setImageSource}
+          />
             <View style={stylesCommon.imageContainer}>
               <Image
                 resizeMode={"contain"}
@@ -437,7 +363,7 @@ const Signup = (props) => {
                 style={styles.img}
               />
               <TouchableOpacity
-                onPress={() => setShowCameraModal(true)}
+                onPress={() => openMediaPicker()}
                 style={styles.touch}
               >
                 <Image
@@ -624,14 +550,13 @@ const Signup = (props) => {
           </Pressable>
         </View>
       </KeyboardAwareScrollView>
-      <Modal isVisible={showCameraModal}>
+      {/* <Modal isVisible={showCameraModal}>
         <View style={styles.cameraModal}>
           <TouchableOpacity
             onPress={() => setShowCameraModal(false)}
             style={styles.closeTouch}
           >
             <Text style={{color: appColor.WHITE, fontSize:15, fontWeight:'800'}}>X</Text>
-            {/* <IconAnt name={"close"} size={20} style={styles.closeIcon} /> */}
           </TouchableOpacity>
 
           <Text style={styles.cameraTitle}>Select or Capture Image</Text>
@@ -640,12 +565,6 @@ const Signup = (props) => {
               style={{ flexDirection: "row", alignItems: "center" }}
               onPress={launchCamera}
             >
-              {/* <IconAnt name={"camerao"} size={20} style={styles.camera} /> */}
-              {/* <Image
-                resizeMethod="resize"
-                style={styles.imagePopupStyle}
-                source={require("../../assets/images/EditProfile/cameraImage.png")}
-              ></Image> */}
               <Text style={[styles.txtCamera]}>
                 {"Capture Image from Camera"}
               </Text>
@@ -657,14 +576,13 @@ const Signup = (props) => {
               style={{ flexDirection: "row", alignItems: "center" }}
               onPress={selectFromGallery}
             >
-              {/* <IconAnt name={"barcode"} size={20} style={styles.camera} /> */}
               <Text style={[styles.txtCamera]}>
                 {"Choose Image from Gallery"}
               </Text>
             </TouchableOpacity>
           </View>
         </View>
-      </Modal>
+      </Modal> */}
       {isDatePickerVisible && (
         <DateTimePickerModal
           isVisible={isDatePickerVisible}
