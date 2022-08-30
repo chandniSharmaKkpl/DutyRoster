@@ -1,7 +1,7 @@
 import { actionConstant } from "@/constant";
 
 const initialState = {
-  isRequesting: false,
+  isRequestingLoader: false,
   accessToken: null,
   isAuth: false,
   error: {},
@@ -13,7 +13,7 @@ export default (state = initialState, { type, payload }) => {
       return {
         ...state,
         accessToken: {},
-        isRequesting: true,
+        isRequestingLoader: true,
         isAuth: false,
         error: {},
       };
@@ -22,7 +22,7 @@ export default (state = initialState, { type, payload }) => {
       return {
         ...state,
         accessToken: payload.data.token,
-        isRequesting: false,
+        isRequestingLoader: false,
         isAuth: true,
         error: {},
       };
@@ -30,8 +30,8 @@ export default (state = initialState, { type, payload }) => {
     case actionConstant.ACTION_GET_ACCESS_TOKEN_FAILURE: {
       return {
         ...state,
-        accessToken: payload.error,
-        isRequesting: false,
+        accessToken: payload,
+        isRequestingLoader: false,
         isAuth: false,
         error: {},
       };

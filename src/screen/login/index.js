@@ -22,8 +22,6 @@ const Login = (props) => {
   const [email, setEmail] = useState("emp999@yopmail.com");
   const [password, setPassword] = useState("test1234");
   const [isClickEye, setIsClickEye] = useState(false);
-  const [loading, setLoading] = React.useState(true);
-  const [formErr, setFormError] = React.useState("");
   const loginResponse = useSelector((state) => state.LoginReducer);
   const navigation = useNavigation();
   const onChangeEmail = (text) => {
@@ -48,19 +46,6 @@ const Login = (props) => {
       );
     };
   }, []);
-
-  // React.useEffect(() => {
-  //   let isUserAvailable = false;
-  //   const unsubscribe = props.navigation.addListener("focus", () => {
-  //     setError({ emailErr: "", passwordErr: "" });
-  //     if (!isUserAvailable) {
-  //       setUserTemp({ email: "", password: "" });
-  //     }
-  //     setFormError("");
-  //   });
-
-  //   return unsubscribe;
-  // }, [error]);
 
   function Validate(email, password) {
     let emailErr = "";
@@ -126,6 +111,7 @@ const Login = (props) => {
 
   return (
     <>
+    {console.log(" login respinse ", loginResponse)}
       <KeyboardAwareScrollView
         style={styles.scrollViewStyle}
         showsVerticalScrollIndicator={false}
@@ -211,8 +197,9 @@ const Login = (props) => {
           </View>
         </View>
       </KeyboardAwareScrollView>
-      {loginResponse.isRequesting ? (
-        <Loader loading={loginResponse.isRequesting} />
+
+      {loginResponse.isRequestingLoader ? (
+        <Loader loading={loginResponse.isRequestingLoader} />
       ) : null}
     </>
   );

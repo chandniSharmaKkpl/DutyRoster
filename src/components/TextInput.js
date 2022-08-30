@@ -59,7 +59,7 @@ export const TextInputCustom = (props) => {
           secureTextEntry={secureTextEntry}
           keyboardType={keyboardType}
           placeholderTextColor={appColor.GRAY}
-          onPressIn={onPressRight}
+          // onPressIn={onPressRight}
           // onSubmitEditing={onSubmitEditing}
           editable={editable}
           caretHidden={caretHidden}

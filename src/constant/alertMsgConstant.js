@@ -3,7 +3,7 @@ export default {
   NO_INTERNET: 'Data fetching will take time in low internet connection!',
   EMAIL_NOT_EMPTY: 'Email cannot be empty',
   PASSWORD_NOT_EMPTY: 'Password cannot be empty',
-  PASSWORD_NOT_EQUAL:'Password and confirm password are not same',
+  PASSWORD_NOT_EQUAL:'The password confirmation and password must match.',
   CONFIRM_PASSWORD_NOT_EMPTY:"Confirm password cannot be empty", 
   REF_CODE_NOT_EMPTY:'2FA code cannot be empty',
   EMAIL_NOT_VALID: 'Email is not correct',
