@@ -24,6 +24,7 @@ import {
   requestToGetRoasterDateRange,
   setMarkeDates,
 } from "./redux/Roster.action";
+import { dayDateReturn } from "@/common/timeFormate";
 
 const RosterScreen = (props) => {
   const navigation = useNavigation();
@@ -38,6 +39,8 @@ const RosterScreen = (props) => {
   const [isCalendarShow, setIsCalendarShow] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
   const [isAlertShow, setIsAlertShow] = useState(false);
+  const [startDay, setStartDay] = useState();
+  const [endDay, setEndDay] = useState();
 
   var countBack = 0;
 
@@ -85,6 +88,8 @@ const RosterScreen = (props) => {
     var endDate = "";
     var startDate = new Date();
     endDate = moment(startDate).add(7, "d");
+    setStartDay(startDate);
+    setEndDay(endDate);
     // console.log("endDate", endDate);
     console.log(enumerateDaysBetweenDates(startDate, endDate));
     const _dateList = {};
@@ -99,6 +104,9 @@ const RosterScreen = (props) => {
           : appColor.RED,
         textColor: appColor.WHITE,
       };
+
+      // Set data of top dates
+      console.log(" date Range", item);
     });
     setMarkeDatesAction(_dateList);
 
@@ -110,12 +118,7 @@ const RosterScreen = (props) => {
     params.append("from", fromDate);
     params.append("to", toDate);
     console.log("fromDate & toDate", params);
-    requestToGetRoasterDateRangeAction(
-      params,
-
-
-      
-    );
+    requestToGetRoasterDateRangeAction(params);
   }, []);
 
   // console.log("markedDates", JSON.stringify(markedDates, null, 4));
@@ -182,10 +185,17 @@ const RosterScreen = (props) => {
       <View style={[styles.container]}>
         <View style={styles.topContain}>
           <View style={styles.weekDateTextContainer}>
-            <AppText
-              style={styles.weekDateTextStyle}
-              text={"Mon, 09-05 - Sun, 15-05, 2022"}
-            />
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <AppText
+                style={styles.weekDateTextStyle}
+                text={dayDateReturn(startDay, false)}
+              />
+              <Text> - </Text>
+              <AppText
+                style={styles.weekDateTextStyle}
+                text={dayDateReturn(endDay, true)}
+              />
+            </View>
             <Pressable
               style={styles.caledarContainer}
               onPress={onClickCalendar}

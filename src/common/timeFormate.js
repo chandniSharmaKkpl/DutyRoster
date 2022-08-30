@@ -14,6 +14,21 @@ export const convertDateTime = (dateString, isDate, isTime) => {
     }
 };
 
+export const dayDateReturn = (
+    dateString,
+   isYear
+  ) => {
+    console.log("dayDateReturn =>", dateString);
+    if (isYear) {
+        let formattedDate = moment(dateString).format('ddd, d-MM, YYYY');
+        return formattedDate
+    }else{
+        let formattedDate = moment(dateString).format('ddd, d-MM');
+        return formattedDate
+    }
+   
+  };
+
 export default {
     convertDateTime
   };

@@ -21,7 +21,7 @@ const Login = (props) => {
   });
 
   const [email, setEmail] = useState("emp999@yopmail.com");
-  const [password, setPassword] = useState("test1234");
+  const [password, setPassword] = useState("Test@123");
 
   const [isClickEye, setIsClickEye] = useState(false);
   const loginResponse = useSelector((state) => state.LoginReducer);
