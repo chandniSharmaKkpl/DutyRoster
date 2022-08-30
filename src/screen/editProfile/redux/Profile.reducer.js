@@ -52,7 +52,6 @@ const UpdateProfileReducer = (
 ) => {
   switch (type) {
     case actionConstant.ACTION_UPDATE_PROFILE_REQUEST: {
-      console.log("ACTION_UPDATE_PROFILE_REQUEST   =>>>>>>>");
       return {
         ...state,
         data: {},
@@ -61,8 +60,7 @@ const UpdateProfileReducer = (
       };
     }
     case actionConstant.ACTION_UPDATE_PROFILE_SUCCESS: {
-      alert()
-      console.log("ACTION_UPDATE_PROFILE_SUCCESS 9898 ====> ", payload);
+     
       return {
         ...state,
         data: payload.data,

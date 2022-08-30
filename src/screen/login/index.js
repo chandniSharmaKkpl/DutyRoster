@@ -19,8 +19,10 @@ const Login = (props) => {
     emailErr: "",
     passwordErr: "",
   });
+
   const [email, setEmail] = useState("emp999@yopmail.com");
   const [password, setPassword] = useState("test1234");
+
   const [isClickEye, setIsClickEye] = useState(false);
   const loginResponse = useSelector((state) => state.LoginReducer);
   const navigation = useNavigation();
@@ -111,7 +113,7 @@ const Login = (props) => {
 
   return (
     <>
-    {console.log(" login respinse ", loginResponse)}
+      {console.log(" login respinse ", loginResponse)}
       <KeyboardAwareScrollView
         style={styles.scrollViewStyle}
         showsVerticalScrollIndicator={false}
@@ -140,7 +142,7 @@ const Login = (props) => {
               iconStyle={styles.emailIconStyle}
               error={error.emailErr}
               keyboardType="email-address"
-              caretHidden = {false}
+              caretHidden={false}
             />
             <View style={{ height: hp("2.8%") }} />
 

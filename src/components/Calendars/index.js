@@ -15,6 +15,26 @@ const Calendars = (props) => {
     console.log("onClickDate =>", day);
   };
 
+  const createMarkedDateObject = (arrayDates) => {
+    var newDaysObject = {};
+    if (arrayDates && arrayDates.length > 0) {
+      arrayDates.forEach((day) => {
+        newDaysObject[day] = {
+          selected: true,
+          marked: true,
+          dotColor: AppColor.colors.RED,
+        };
+      });
+    }
+    setMarkedDates(newDaysObject);
+  };
+
+  // [2022-08-22, 2022-08-23]
+  // Array dates  []
+// Array of objects 
+// 
+// 
+
   return (
     <>
       <Calendar

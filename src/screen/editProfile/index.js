@@ -26,7 +26,11 @@ import { CommonHeader } from "@/components";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import commonStyle from "../../common/commonStyle";
 import { TextInputCustom } from "@/components/TextInput";
-import { isEmailValid, isMobileNumberValid } from "@/helper/validations";
+import {
+  isEmailValid,
+  isMobileNumberValid,
+  isValidPassword,
+} from "@/helper/validations";
 import { navigationRef } from "@/navigators/utils";
 import UploadImage from "@/components/uploadImage";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -72,6 +76,10 @@ const EditProfile = (props) => {
   const [cnfPassword, setCnfPassword] = useState("");
   const [isRequesting, setRequesting] = useState(true);
   const [onOpenMediaPicker, setOnOpenMediaPicker] = useState(false);
+  const [employee_id, setEmployee_id] = useState("");
+  const [isClickEye, setIsClickEye] = useState(false);
+  const [isClickEyeConfirm, setIsClickEyeConfirm] = useState(false);
+
   const onChangeTitle = useCallback((text) => setTitle(text), []);
   // const onChangePayment = useCallback((text) => setPayment(text), []);
   const onChangeName = useCallback((text) => setName(text), []);
@@ -85,7 +93,6 @@ const EditProfile = (props) => {
     (text) => setCnfPassword(text),
     []
   );
-
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
 
@@ -98,9 +105,9 @@ const EditProfile = (props) => {
       let responsedata = await localDb.getUser().then((response) => {
         return response;
       });
-      console.log("responsedata.user.id", responsedata.user.id);
-  
-      props.requestToGetProfile({
+      setEmployee_id(responsedata.user.id);
+      console.log(" emp id ----", employee_id);
+      await props.requestToGetProfile({
         employee_id: responsedata.user.id,
         navigation: navigation,
       });
@@ -119,7 +126,12 @@ const EditProfile = (props) => {
 
   useEffect(() => {
     if (profileResponse?.ViewProfileReducer) {
+     
       let profileInformation = profileResponse.ViewProfileReducer.data;
+      console.log(
+        "************ profileInformation ::::::: 130 =====>",
+        profileInformation
+      );
       setTitle(profileInformation?.title);
       setName(profileInformation?.name);
       setEmail(profileInformation?.email);
@@ -127,16 +139,20 @@ const EditProfile = (props) => {
       setTFN(profileInformation?.tfn_number);
       setAddress(profileInformation?.address);
       setDob(profileInformation?.dob);
-      if (profileInformation.hasOwnProperty("image")) {
-        setImageSource(profileInformation?.image);
-      }
+      setPayment(profileInformation?.payment_type);
+       setImageSource(profileInformation?.image);
     }
   }, [profileResponse]);
 
 
   React.useEffect(() => {
     if (profileResponse.UpdateProfileReducer) {
-      let profileInformation = profileResponse.UpdateProfileReducer;
+      let profileInformation = profileResponse.UpdateProfileReducer.data;
+      console.log(
+        "::::::: profileInformation ::::::: 657 =====>",
+        profileInformation
+      );
+
       setTitle(profileInformation?.title);
       setName(profileInformation?.name);
       setEmail(profileInformation?.email);
@@ -150,6 +166,13 @@ const EditProfile = (props) => {
     }
   }, [profileResponse.UpdateProfileReducer]);
 
+  const onPressRight = () => {
+    setIsClickEye(!isClickEye);
+  };
+
+  const onPressRightConfirm = () => {
+    setIsClickEyeConfirm(!isClickEyeConfirm);
+  };
   const showDatePicker = () => {
     setDatePickerVisibility(true);
   };
@@ -171,7 +194,9 @@ const EditProfile = (props) => {
     phone,
     dob,
     address,
-    tfn
+    tfn,
+    password,
+    cnfPassword
   ) {
     let titleErr = "";
     // let paymentErr = "";
@@ -181,6 +206,8 @@ const EditProfile = (props) => {
     let dobErr = "";
     let addressErr = "";
     let tfnErr = "";
+    let passwordErr = "";
+    let cnfpasswordErr = "";
 
     if (title.trim() === "") {
       titleErr = "Title cannot be empty";
@@ -201,11 +228,11 @@ const EditProfile = (props) => {
     }
 
     if (phone === "") {
-      phoneErr = "Phone cannot be empty";
+      phoneErr = alertMsgConstant.MSG_PHONE_NOT_EMPTY;
     } else if (phone.length < 10) {
-      phoneErr = "Phone number must be atleast 10 numbers ";
+      phoneErr = "Phone number should contain 10 digits";
     } else if (phone.length > 10) {
-      phoneErr = "Phone number no not more than 10 char";
+      phoneErr = "Phone number no not more than 10 digits";
     }
 
     if (dob === "") {
@@ -218,17 +245,22 @@ const EditProfile = (props) => {
 
     if (tfn === "") {
       tfnErr = "TFN cannot be empty";
+    } else if (tfn.length < 8) {
+      tfnErr = alertMsgConstant.TFN_CHAR_LIMIT;
     }
 
-    // if (password.trim() === "") {
-    //   passwordErr = alertMsgConstant.PASSWORD_NOT_EMPTY;
-    // }
+    // If password there then only confirm password validation will be checked
+    if (password && password.length > 0) {
+      if (!isValidPassword(password)) {
+        passwordErr = alertMsgConstant.MSG_STRONG_PWD;
+      }
 
-    // if (cnfPassword.trim() === "") {
-    //   cnfpasswordErr = alertMsgConstant.CONFIRM_PASSWORD_NOT_EMPTY;
-    // } else if (password.trim() !== cnfPassword.trim()) {
-    //   cnfpasswordErr = alertMsgConstant.PASSWORD_NOT_EQUAL;
-    // }
+      if (cnfPassword.trim() === "") {
+        cnfpasswordErr = alertMsgConstant.CONFIRM_PASSWORD_NOT_EMPTY;
+      } else if (password.trim() !== cnfPassword.trim()) {
+        cnfpasswordErr = alertMsgConstant.PASSWORD_NOT_EQUAL;
+      }
+    }
 
     if (
       titleErr === "" &&
@@ -237,7 +269,9 @@ const EditProfile = (props) => {
       phoneErr === "" &&
       dobErr === "" &&
       addressErr === "" &&
-      tfnErr === ""
+      tfnErr === "" &&
+      passwordErr == "" &&
+      cnfpasswordErr == ""
     ) {
       return "ok";
     } else {
@@ -250,6 +284,8 @@ const EditProfile = (props) => {
         dobErr,
         addressErr,
         tfnErr,
+        passwordErr,
+        cnfpasswordErr,
       };
     }
   }
@@ -279,7 +315,9 @@ const EditProfile = (props) => {
       phone,
       dob,
       address,
-      tfn
+      tfn,
+      password,
+      cnfPassword
     );
 
     setError(
@@ -294,24 +332,31 @@ const EditProfile = (props) => {
             dobErr: "",
             addressErr: "",
             tfnErr: "",
+            passwordErr: "",
+            cnfpasswordErr: "",
           }
     );
-    if (validate == "ok") {
+    if (validate == "ok")
+     {
+      console.log(" image *******", ImageSource);
+
       const params = new FormData();
-      params.append("title", "chandni");
-      params.append("name", "sharma");
-      params.append("dob", "1995-09-18");
-      params.append("email", "emp1@yopmail.com");
-      // params.append("phone", "9090909090");
-      // params.append("address", "address");
-      params.append("tfn_number", "123456");
+
+     params.append("title", title);
+     params.append("name", name);
+      params.append("dob", dob);
+     params.append("email", email);
+     params.append("phone", phone);
+      params.append("address", address);
+      params.append("tfn_number", tfn);
       params.append("image", {
         name: Math.floor(new Date().getTime() / 1000) + ".png",
         type: "image/jpeg",
         uri: ImageSource ? ImageSource : "https://via.placeholder.com/150",
       });
-      params.append("employee_id", "1");
-      params.append("password", "password");
+      params.append("employee_id", employee_id);
+
+      password.length > 0 ? params.append("password", password) : null;
       requestToUpdateProfileAction({
         params,
         // navigation: navigation,
@@ -331,7 +376,8 @@ const EditProfile = (props) => {
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="always"
       >
-        <Pressable onPress={() => Keyboard.dismiss()}>
+        <Pressable style={styles.viewPressable} onPress={() => Keyboard.dismiss()}>
+
           <UploadImage
             onOpenMediaPicker={onOpenMediaPicker}
             setOnOpenMediaPicker={setOnOpenMediaPicker}
@@ -359,7 +405,11 @@ const EditProfile = (props) => {
                     ? imageConstant.IMAGE_AVTAR_ICON
                     : { uri: ImageSource }
                 }
-                style={styles.img}
+                style={
+                  ImageSource && ImageSource?.length == ""
+                    ? styles.imgEmpty
+                    : styles.img
+                }
               />
               <TouchableOpacity
                 onPress={() => openMediaPicker()}
@@ -410,7 +460,6 @@ const EditProfile = (props) => {
                 placeholder={"Enter Email Address"}
                 error={error.emailErr}
                 caretHidden={false}
-                inputViewStyle={styles.inputViewStyle}
               />
               <Text style={styles.inputTextTitle}>Phone</Text>
               <TextInputCustom
@@ -433,6 +482,8 @@ const EditProfile = (props) => {
                 error={error.dobErr}
                 inputViewStyle={styles.inputViewStyle}
               />
+              <Pressable onPress={showDatePicker} style={{width: '100%', height: '7%', marginTop: '-14%'}}> 
+               </Pressable> 
               <Text style={styles.inputTextTitle}>Address</Text>
               <TextInputCustom
                 label={"Address"}
@@ -456,25 +507,39 @@ const EditProfile = (props) => {
               <View>
                 <Text style={styles.inputTextTitle}>Password</Text>
                 <TextInputCustom
-                  secureTextEntry={true}
+                   secureTextEntry={isClickEye ? false : true}
+
                   label={"Password"}
                   value={password}
                   onChangeText={onChangePassword}
                   // placeholder={"Password"}
                   error={error.passwordErr}
                   inputViewStyle={styles.inputViewStyle}
+                  rightIcon={
+                    isClickEye
+                      ? require("../../assets/images/ResetPasswordScreen/eyeSlash.png")
+                      : require("../../assets/images/LoginScreen/privacyEye.png")
+                  }
+                  onPressRight={onPressRight}
                 />
               </View>
               <View>
                 <Text style={styles.inputTextTitle}>Confirm Password</Text>
                 <TextInputCustom
-                  secureTextEntry={true}
+                  secureTextEntry={isClickEyeConfirm ? false : true}
+
                   label={"Confirm Password"}
                   value={cnfPassword}
                   onChangeText={onChangeConfirmPassword}
                   // placeholder={"Confirm Password"}
                   error={error.cnfpasswordErr}
                   inputViewStyle={styles.inputViewStyle}
+                  rightIcon={
+                    isClickEyeConfirm
+                      ? require("../../assets/images/ResetPasswordScreen/eyeSlash.png")
+                      : require("../../assets/images/LoginScreen/privacyEye.png")
+                  }
+                  onPressRight={onPressRightConfirm}
                 />
               </View>
               {/* </View> */}
