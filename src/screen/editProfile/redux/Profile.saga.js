@@ -41,14 +41,21 @@ export function* workersUpdateProfile(action) {
           stringCombined = stringCombined + stringTemp.toString();
         }
       }
-      alert(stringCombined);
-      
+      toast.show(stringCombined, {
+        type: alertMsgConstant.TOAST_DANGER,
+      });
+      yield put({
+        type: actionConstant.ACTION_UPDATE_PROFILE_FAILURE,
+        payload: stringCombined,
+      });
     } else {
       yield put({
         type: actionConstant.ACTION_UPDATE_PROFILE_SUCCESS,
         payload: viewUpdateProfileResponse,
       });
-      alert(viewUpdateProfileResponse.message);
+      toast.show(viewUpdateProfileResponse.message, {
+        type: alertMsgConstant.TOAST_SUCCESS,
+      });
     }
 
     //localDb.setUser(loginResponse.data);
