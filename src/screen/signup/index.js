@@ -33,14 +33,17 @@ import * as ImagePicker from "react-native-image-picker";
 import IconAnt from "react-native-vector-icons/AntDesign";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import moment from "moment";
-import { isEmailValid, isMobileNumberValid,isValidPassword } from "../../helper/validations";
+import {
+  isEmailValid,
+  isMobileNumberValid,
+  isValidPassword,
+} from "../../helper/validations";
 import Textarea from "react-native-textarea";
 import { requestToSignup } from "./redux/Signup.action";
 import { connect, useSelector } from "react-redux";
 import Loader from "@/components/Loader";
 import DeviceInfo from "react-native-device-info";
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
-
 
 const Signup = (props) => {
   const [error, setError] = React.useState({
@@ -103,8 +106,7 @@ const Signup = (props) => {
     setDatePickerVisibility(false);
   };
 
-  useEffect(() => {
-  }, [isDatePickerVisible]);
+  useEffect(() => {}, [isDatePickerVisible]);
 
   const handleConfirm = (date) => {
     // console.warn("A date has been picked: ", date);
@@ -182,10 +184,10 @@ const Signup = (props) => {
 
     if (phone === "") {
       phoneErr = "Phone cannot be empty";
-    } else if (phone.length<10) {
+    } else if (phone.length < 10) {
       phoneErr = "Phone number must be atleast 10 numbers ";
-    } else if  (phone.length>10) {
-      phoneErr = "Phone number no not more than 10 char"
+    } else if (phone.length > 10) {
+      phoneErr = "Phone number no not more than 10 char";
     }
 
     if (dob === "") {
@@ -204,7 +206,7 @@ const Signup = (props) => {
 
     if (password.trim() === "") {
       passwordErr = alertMsgConstant.PASSWORD_NOT_EMPTY;
-    }else if (!isValidPassword(password)) {
+    } else if (!isValidPassword(password)) {
       passwordErr = alertMsgConstant.MSG_STRONG_PWD;
     }
 
@@ -277,22 +279,22 @@ const Signup = (props) => {
       const params = new FormData();
       params.append("title", title);
       params.append("name", name);
-       params.append("dob", dob);
+      params.append("dob", dob);
       params.append("email", email);
       params.append("phone", phone);
-       params.append("address", address);
-       params.append("tfn_number", tfn);
-       params.append("image", {
-         name: Math.floor(new Date().getTime() / 1000) + ".png",
-         type: "image/jpeg",
-         uri: ImageSource ? ImageSource : "https://via.placeholder.com/150",
-       });
-       password.length > 0 ? params.append("password", password) : null;
-       params.append("device_token", 3143);//need to do in dynamic
-       params.append("uuid", 24314);//need to do in dynamic
-       params.append("device_type", 2132);//need to do in dynamic
-       params.append("device_name", DeviceName);//need to do in dynamic
-       props.requestToRegister({params ,   navigation: navigation});
+      params.append("address", address);
+      params.append("tfn_number", tfn);
+      params.append("image", {
+        name: Math.floor(new Date().getTime() / 1000) + ".png",
+        type: "image/jpeg",
+        uri: ImageSource ? ImageSource : "https://via.placeholder.com/150",
+      });
+      password.length > 0 ? params.append("password", password) : null;
+      params.append("device_token", 3143); //need to do in dynamic
+      params.append("uuid", 24314); //need to do in dynamic
+      params.append("device_type", 2132); //need to do in dynamic
+      params.append("device_name", DeviceName); //need to do in dynamic
+      props.requestToRegister({ params, navigation: navigation });
       // let infor = await props.requestToRegister({
       //   title,
       //   // payment,
@@ -317,7 +319,6 @@ const Signup = (props) => {
     navigation.navigate("Login");
   };
 
-  
   return (
     <>
       <KeyboardAwareScrollView
@@ -327,12 +328,12 @@ const Signup = (props) => {
       >
         <View style={stylesCommon.container}>
           <Pressable onPress={() => Keyboard.dismiss()}>
-          <UploadImage
-            onOpenMediaPicker={onOpenMediaPicker}
-            setOnOpenMediaPicker={setOnOpenMediaPicker}
-            setProfiilePath={setProfiilePath}
-            setImageSource={setImageSource}
-          />
+            <UploadImage
+              onOpenMediaPicker={onOpenMediaPicker}
+              setOnOpenMediaPicker={setOnOpenMediaPicker}
+              setProfiilePath={setProfiilePath}
+              setImageSource={setImageSource}
+            />
             <View style={stylesCommon.imageContainer}>
               <Image
                 resizeMode={"contain"}
@@ -431,23 +432,26 @@ const Signup = (props) => {
                 //onPressFocus={()=> Keyboard.addListener()}
               />
               <View style={{ height: hp("2.8%") }} />
-             
-              <TextInputCustom
-                label={"Dob"}
-                value={dob}
-                onChangeText={onChangeDOB}
-                placeholder={"Enter Date of Birth"}
-                icon={require("../../assets/images/SignupScreen/dob.png")}
-                rightIcon={require("../../assets/images/SignupScreen/calendar.png")}
-                onPressRight={showDatePicker}
-                rightIconStyle={{height:20, width: 20}}
-                iconStyle={styles.IconStyle}
-                error={error.dobErr}
-                onPressIn={showDatePicker}
-                //onPressFocus={()=> Keyboard.dismiss()}
-              />
-               <Pressable onPress={showDatePicker} style={{width: '100%', height: '7%', marginTop: '-14%'}}> 
-               </Pressable> 
+              <View style={{ width: wp("90%"), height: hp("6%"), position: 'relative'}}>
+                <TextInputCustom
+                  label={"Dob"}
+                  value={dob}
+                  onChangeText={onChangeDOB}
+                  placeholder={"Enter Date of Birth"}
+                  icon={require("../../assets/images/SignupScreen/dob.png")}
+                  rightIcon={require("../../assets/images/SignupScreen/calendar.png")}
+                  onPressRight={showDatePicker}
+                  rightIconStyle={{ height: 20, width: 20 }}
+                  iconStyle={styles.IconStyle}
+                  error={error.dobErr}
+                  onPressIn={showDatePicker}
+                  //onPressFocus={()=> Keyboard.dismiss()}
+                />
+                <Pressable
+                  onPress={showDatePicker}
+                  style={{ width: "100%", height: '100%',flex: 1, position : 'absolute' }}
+                ></Pressable>
+              </View>
               <View style={{ height: hp("2.8%") }} />
 
               <TextInputCustom
@@ -586,6 +590,7 @@ const Signup = (props) => {
           mode="date"
           onConfirm={handleConfirm}
           onCancel={hideDatePicker}
+          maximumDate={new Date()}
         />
       )}
 

@@ -36,6 +36,9 @@ export default (state = initialState, { type, payload }) => {
         error: {},
       };
     }
+    case actionConstant.ACTION_USER_LOGOUT : {
+      return initialState
+    }
     default:
       return state;
   }

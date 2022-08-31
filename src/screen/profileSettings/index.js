@@ -8,8 +8,12 @@ import { appConstant } from "@/constant";
 import { CommonHeader } from "@/components";
 import { Images } from "@/constant/svgImgConst";
 import { navigationRef } from "@/navigators/utils";
+import { connect } from "react-redux";
+import { userLogoutAction } from "../login/redux/Login.action";
 
 const ProfileSetting = (props) => {
+  const { userLogoutActionCall } = props;
+
   const navigation = useNavigation();
   const route = useRoute();
 
@@ -39,6 +43,7 @@ const ProfileSetting = (props) => {
   };
 
   const onLogout = () => {
+    userLogoutActionCall();
     navigationRef.navigate(appConstant.LOGIN);
   };
 
@@ -121,4 +126,9 @@ const ProfileSetting = (props) => {
   );
 };
 
-export default ProfileSetting;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    userLogoutActionCall: () => dispatch(userLogoutAction()),
+  };
+};
+export default connect(null, mapDispatchToProps)(ProfileSetting);

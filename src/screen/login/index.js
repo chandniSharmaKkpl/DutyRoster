@@ -19,8 +19,8 @@ const Login = (props) => {
     emailErr: "",
     passwordErr: "",
   });
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("emp_8_25@yopmail.com");
+  const [password, setPassword] = useState("Test123");
 
   const [isClickEye, setIsClickEye] = useState(false);
   const loginResponse = useSelector((state) => state.LoginReducer);
@@ -191,7 +191,7 @@ const Login = (props) => {
           </View>
           <View style={styles.versionContainer}>
             <AppText
-              text={" App Vesrion 1.6"}
+              text={" App Vesrion 1.7"}
               style={{ ...styles.appVersion }}
             />
           </View>
