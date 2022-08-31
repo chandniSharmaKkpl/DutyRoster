@@ -104,7 +104,6 @@ const Signup = (props) => {
   };
 
   useEffect(() => {
-    console.log("isDatePickerVisible ===>", isDatePickerVisible);
   }, [isDatePickerVisible]);
 
   const handleConfirm = (date) => {
@@ -288,8 +287,6 @@ const Signup = (props) => {
          type: "image/jpeg",
          uri: ImageSource ? ImageSource : "https://via.placeholder.com/150",
        });
- 
-       console.log(ImageSource, 'ImageSource')
        password.length > 0 ? params.append("password", password) : null;
        params.append("device_token", 3143);//need to do in dynamic
        params.append("uuid", 24314);//need to do in dynamic

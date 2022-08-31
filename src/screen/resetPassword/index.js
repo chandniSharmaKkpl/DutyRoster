@@ -32,7 +32,6 @@ import Loader from "@/components/Loader";
 import { isValidPassword } from "@/helper/validations";
 
 const ResetPassword = (props) => {
-  // console.log("props ===>", props.route.params.email);
   const [error, setError] = React.useState({
     refCodeErr: "",
     newPasswordErr: "",

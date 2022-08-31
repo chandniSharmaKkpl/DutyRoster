@@ -95,7 +95,6 @@ const EditProfile = (props) => {
   );
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
-
   const handleBackButtonClick = () => {
     moveBack();
     return true;
@@ -106,13 +105,11 @@ const EditProfile = (props) => {
         return response;
       });
       setEmployee_id(responsedata.user.id);
-      console.log(" emp id ----", employee_id);
       await props.requestToGetProfile({
         employee_id: responsedata.user.id,
         navigation: navigation,
       });
     })();
-
 
     BackHandler.addEventListener("hardwareBackPress", handleBackButtonClick);
 
@@ -126,12 +123,8 @@ const EditProfile = (props) => {
 
   useEffect(() => {
     if (profileResponse?.ViewProfileReducer) {
-     
       let profileInformation = profileResponse.ViewProfileReducer.data;
-      console.log(
-        "************ profileInformation ::::::: 130 =====>",
-        profileInformation
-      );
+
       setTitle(profileInformation?.title);
       setName(profileInformation?.name);
       setEmail(profileInformation?.email);
@@ -140,19 +133,13 @@ const EditProfile = (props) => {
       setAddress(profileInformation?.address);
       setDob(profileInformation?.dob);
       setPayment(profileInformation?.payment_type);
-       setImageSource(profileInformation?.image);
+      setImageSource(profileInformation?.image);
     }
   }, [profileResponse]);
-
 
   React.useEffect(() => {
     if (profileResponse.UpdateProfileReducer) {
       let profileInformation = profileResponse.UpdateProfileReducer.data;
-      console.log(
-        "::::::: profileInformation ::::::: 657 =====>",
-        profileInformation
-      );
-
       setTitle(profileInformation?.title);
       setName(profileInformation?.name);
       setEmail(profileInformation?.email);
@@ -294,10 +281,6 @@ const EditProfile = (props) => {
     props.navigation.goBack();
   };
 
-  const goToLogin = () => {
-    props.navigation.navigate(appConstant.LOGIN);
-  };
-
   const onGoBack = () => {
     navigation.navigate(appConstant.ROASTER);
   };
@@ -336,17 +319,13 @@ const EditProfile = (props) => {
             cnfpasswordErr: "",
           }
     );
-    if (validate == "ok")
-     {
-      console.log(" image *******", ImageSource);
-
-      const params = new FormData();
-
-     params.append("title", title);
-     params.append("name", name);
+    if (validate == "ok") {
+      let params = new FormData();
+      params.append("title", title);
+      params.append("name", name);
       params.append("dob", dob);
-     params.append("email", email);
-     params.append("phone", phone);
+      params.append("email", email);
+      params.append("phone", phone);
       params.append("address", address);
       params.append("tfn_number", tfn);
       params.append("image", {
@@ -355,18 +334,28 @@ const EditProfile = (props) => {
         uri: ImageSource ? ImageSource : "https://via.placeholder.com/150",
       });
       params.append("employee_id", employee_id);
-
       password.length > 0 ? params.append("password", password) : null;
-      requestToUpdateProfileAction({
-        params,
-        // navigation: navigation,
-      });
-      console.log("123456789 =======>", params);
+      const data = {
+        title: title,
+        name: name,
+        dob: dob,
+        email,
+        phone,
+        address,
+        tfn_number: tfn,
+        password,
+        employee_id: employee_id,
+      };
+      if (profilePath) {
+        data["image"] = {
+          name: Math.floor(new Date().getTime() / 1000) + ".png",
+          type: "image/jpeg",
+          uri: ImageSource ? ImageSource : "https://via.placeholder.com/150",
+        };
+      }
+      requestToUpdateProfileAction(data);
     }
   };
-
-  // const userData = await localDb.getUser().then((response)=> {
-  //   return response});
 
   return (
     <>
@@ -376,8 +365,10 @@ const EditProfile = (props) => {
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="always"
       >
-        <Pressable style={styles.viewPressable} onPress={() => Keyboard.dismiss()}>
-
+        <Pressable
+          style={styles.viewPressable}
+          onPress={() => Keyboard.dismiss()}
+        >
           <UploadImage
             onOpenMediaPicker={onOpenMediaPicker}
             setOnOpenMediaPicker={setOnOpenMediaPicker}
@@ -483,8 +474,10 @@ const EditProfile = (props) => {
                 error={error.dobErr}
                 inputViewStyle={styles.inputViewStyle}
               />
-              <Pressable onPress={showDatePicker} style={{width: '100%', height: '7%', marginTop: '-14%'}}> 
-               </Pressable> 
+              <Pressable
+                onPress={showDatePicker}
+                style={{ width: "100%", height: "7%", marginTop: "-14%" }}
+              ></Pressable>
               <Text style={styles.inputTextTitle}>Address</Text>
               <TextInputCustom
                 label={"Address"}
@@ -508,8 +501,7 @@ const EditProfile = (props) => {
               <View>
                 <Text style={styles.inputTextTitle}>Password</Text>
                 <TextInputCustom
-                   secureTextEntry={isClickEye ? false : true}
-
+                  secureTextEntry={isClickEye ? false : true}
                   label={"Password"}
                   value={password}
                   onChangeText={onChangePassword}
@@ -528,7 +520,6 @@ const EditProfile = (props) => {
                 <Text style={styles.inputTextTitle}>Confirm Password</Text>
                 <TextInputCustom
                   secureTextEntry={isClickEyeConfirm ? false : true}
-
                   label={"Confirm Password"}
                   value={cnfPassword}
                   onChangeText={onChangeConfirmPassword}
@@ -575,13 +566,11 @@ const EditProfile = (props) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    requestToGetProfile: (params) => {
-      return dispatch(profileAction.requestToViewProfile(params));
-    },
+    requestToGetProfile: (params) =>
+      dispatch(profileAction.requestToViewProfile(params)),
 
-    requestToUpdateProfileAction: (params) => {
-      return dispatch(profileAction.requestToUpdateProfile(params));
-    },
+    requestToUpdateProfileAction: (params) =>
+      dispatch(profileAction.requestToUpdateProfile(params)),
   };
 };
 export default connect(null, mapDispatchToProps)(EditProfile);

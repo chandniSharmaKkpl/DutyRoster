@@ -12,7 +12,6 @@ const client = axios.create({
 });
 
 client.interceptors.response.use(undefined, (error) => {
-  // console.log(error.response.data.data.error_email , 'requesterror');
   if (error.response?.status === 401) {
     // if (isLocalStorageAvailable()) {
     //   AsyncStorage.removeItem("persist:root");

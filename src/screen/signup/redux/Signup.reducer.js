@@ -18,7 +18,6 @@ export default (state = initialState, { type, payload }) => {
             };
           }
           case actionConstant.ACTION_GET_SIGN_UP_SUCCESS: {
-            console.log(payload , 'payload');
             return {
               ...state,
               data: payload.data,
@@ -27,7 +26,6 @@ export default (state = initialState, { type, payload }) => {
             };
           }
           case actionConstant.ACTION_GET_SIGN_UP_FAILURE: {
-            console.log(JSON.stringify(payload) , 'payload data')
             return {
               ...state,
               data: payload,

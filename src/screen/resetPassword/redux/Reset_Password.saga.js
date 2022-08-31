@@ -5,7 +5,6 @@ import { resetPasswordCall } from "./Reset_Password.api";
 export function* workerResetPassword(action) {
   try {
     const response = yield call(resetPasswordCall, action.payload);
-    console.log("!response.success ", !response.success);
     if (!response.data.success) {
       var stringCombined = "";
       let arrayTemp = Object.keys(response.data.error);
@@ -30,7 +29,6 @@ export function* workerResetPassword(action) {
         type: actionConstant.ACTION_RESET_PASSWORD_SUCCESS,
         payload: response.data.message,
       });
-      console.log("resp===", response);
       if (response) {
         alert(response.data.message);
         action.payload.navigation.navigate(appConstant.LOGIN);

@@ -18,12 +18,11 @@ export const dayDateReturn = (
     dateString,
    isYear
   ) => {
-    console.log("dayDateReturn =>", dateString);
     if (isYear) {
-        let formattedDate = moment(dateString).format('ddd, d-MM, YYYY');
+        let formattedDate = moment(dateString).format('ddd, DD-MM, YYYY');
         return formattedDate
     }else{
-        let formattedDate = moment(dateString).format('ddd, d-MM');
+        let formattedDate = moment(dateString).format('ddd, DD-MM');
         return formattedDate
     }
    

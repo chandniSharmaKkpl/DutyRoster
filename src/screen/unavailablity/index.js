@@ -60,7 +60,6 @@ const Unavailablity = (props) => {
   };
 
   const showInTimePicker = (index) => {
-    console.log(index , 'index')
     setTimeInPickerVisibility(true);
   };
 

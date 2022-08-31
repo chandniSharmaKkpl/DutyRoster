@@ -35,10 +35,8 @@ const isValidTitle = (string) => {
 const isValidPassword = (password) => {
   var format = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,30}$/;
   if (password.match(format)) {
-    console.log("Your password is strong.");
     return true;
   } else {
-    console.log("Meh, not so much.");
     return false;
   }
 };

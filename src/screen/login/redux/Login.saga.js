@@ -1,6 +1,7 @@
 import { actionConstant, appConstant, alertMsgConstant } from "@/constant";
 import { takeLatest, take, call, put, select, all } from "redux-saga/effects";
 import { loginCall } from "./Login.api";
+import localDb from "@/database/localDb";
 
 export function* workerGetAccessToken(action) {
   try {
@@ -30,6 +31,8 @@ export function* workerGetAccessToken(action) {
         type: actionConstant.ACTION_GET_ACCESS_TOKEN_SUCCESS,
         payload: loginResponse,
       });
+      localDb.setUser(loginResponse.data);
+      localDb.setAccessToken(loginResponse.data.token);
       if (loginResponse.data) {
         action.payload.navigation.navigate(appConstant.HOME, {
           userData: loginResponse.data,

@@ -90,8 +90,7 @@ const RosterScreen = (props) => {
     endDate = moment(startDate).add(7, "d");
     setStartDay(startDate);
     setEndDay(endDate);
-    // console.log("endDate", endDate);
-    console.log(enumerateDaysBetweenDates(startDate, endDate));
+
     const _dateList = {};
     const _dateRange = enumerateDaysBetweenDates(startDate, endDate);
     _dateRange.map((item, index) => {
@@ -106,7 +105,6 @@ const RosterScreen = (props) => {
       };
 
       // Set data of top dates
-      console.log(" date Range", item);
     });
     setMarkeDatesAction(_dateList);
 
@@ -117,11 +115,10 @@ const RosterScreen = (props) => {
     const params = new FormData();
     params.append("from", fromDate);
     params.append("to", toDate);
-    console.log("fromDate & toDate", params);
     requestToGetRoasterDateRangeAction(params);
   }, []);
 
-  // console.log("markedDates", JSON.stringify(markedDates, null, 4));
+
   const getSelectedDayEvents = (date) => {
     // let markedDates = {};
     // markedDates[date] = {
@@ -129,7 +126,6 @@ const RosterScreen = (props) => {
     //   color: appColor.RED,
     //   textColor: appColor.WHITE,
     // };
-    // console.log("markedDates ----->", markedDates);
     // let serviceDate = moment(date);
     // serviceDate = serviceDate.format("DD.MM.YYYY");
     // setSelectedDate(serviceDate);

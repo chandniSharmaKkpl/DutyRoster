@@ -302,7 +302,7 @@ PODS:
     - React-Core
   - react-native-flipper (0.127.0):
     - React-Core
-  - react-native-image-picker (4.8.5):
+  - react-native-image-picker (4.10.0):
     - React-Core
   - react-native-safe-area-context (3.4.1):
     - React-Core
@@ -375,15 +375,15 @@ PODS:
     - React-jsi (= 0.66.4)
     - React-logger (= 0.66.4)
     - React-perflogger (= 0.66.4)
-  - RNCAsyncStorage (1.17.9):
+  - RNCAsyncStorage (1.17.10):
     - React-Core
   - RNCMaskedView (0.2.7):
     - React-Core
-  - RNDateTimePicker (6.3.1):
+  - RNDateTimePicker (6.3.2):
     - React-Core
   - RNDeviceInfo (8.7.1):
     - React-Core
-  - RNGestureHandler (2.5.0):
+  - RNGestureHandler (2.6.0):
     - React-Core
   - RNImageCropPicker (0.38.0):
     - React-Core
@@ -396,7 +396,7 @@ PODS:
     - TOCropViewController
   - RNPermissions (2.2.2):
     - React-Core
-  - RNReanimated (2.9.1):
+  - RNReanimated (2.10.0):
     - DoubleConversion
     - FBLazyVector
     - FBReactNativeSpec
@@ -423,7 +423,7 @@ PODS:
     - React-RCTText
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNScreens (3.15.0):
+  - RNScreens (3.17.0):
     - React-Core
     - React-RCTImage
   - RNSVG (12.4.4):
@@ -666,7 +666,7 @@ SPEC CHECKSUMS:
   React-logger: 933f80c97c633ee8965d609876848148e3fef438
   react-native-camera: 3eae183c1d111103963f3dd913b65d01aef8110f
   react-native-flipper: b9e2e817604af8da0d5a9ba20a8516e780e30f3c
-  react-native-image-picker: cd420f97f6ed6ff74fc4686d27dbcfdbd051db91
+  react-native-image-picker: 4bc9ed38c8be255b515d8c88babbaf74973f91a8
   react-native-safe-area-context: 9e40fb181dac02619414ba1294d6c2a807056ab9
   react-native-splash-screen: 4312f786b13a81b5169ef346d76d33bc0c6dc457
   react-native-webview: e771bc375f789ebfa02a26939a57dbc6fa897336
@@ -682,15 +682,15 @@ SPEC CHECKSUMS:
   React-RCTVibration: e3ffca672dd3772536cb844274094b0e2c31b187
   React-runtimeexecutor: dec32ee6f2e2a26e13e58152271535fadff5455a
   ReactCommon: 57b69f6383eafcbd7da625bfa6003810332313c4
-  RNCAsyncStorage: b2489b49e38c85e10ed45a888d13a2a4c7b32ea1
+  RNCAsyncStorage: 0c357f3156fcb16c8589ede67cc036330b6698ca
   RNCMaskedView: cb9670ea9239998340eaab21df13fa12a1f9de15
-  RNDateTimePicker: 95e0cb71cba4c2f08c62444029f834e6168a2b96
+  RNDateTimePicker: 4f1fc917f5af9d9ae4c5fc0c63a4474d61338693
   RNDeviceInfo: aad3c663b25752a52bf8fce93f2354001dd185aa
-  RNGestureHandler: bad495418bcbd3ab47017a38d93d290ebd406f50
+  RNGestureHandler: 920eb17f5b1e15dae6e5ed1904045f8f90e0b11e
   RNImageCropPicker: ffbba608264885c241cbf3a8f78eb7aeeb978241
   RNPermissions: 5df468064df661a4c8c017e2791ce90d7695eea5
-  RNReanimated: 11e6e30bbc49079b7f0c321ac5830e6d113d0224
-  RNScreens: 4a1af06327774490d97342c00aee0c2bafb497b7
+  RNReanimated: f9055ab75a49358b30f99155637f95d77727e7dc
+  RNScreens: 0df01424e9e0ed7827200d6ed1087ddd06c493f9
   RNSVG: ecd661f380a07ba690c9c5929c475a44f432d674
   RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
   TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863

@@ -19,9 +19,8 @@ const Login = (props) => {
     emailErr: "",
     passwordErr: "",
   });
-
-  const [email, setEmail] = useState("emp999@yopmail.com");
-  const [password, setPassword] = useState("Test@123");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const [isClickEye, setIsClickEye] = useState(false);
   const loginResponse = useSelector((state) => state.LoginReducer);
@@ -113,7 +112,6 @@ const Login = (props) => {
 
   return (
     <>
-      {console.log(" login respinse ", loginResponse)}
       <KeyboardAwareScrollView
         style={styles.scrollViewStyle}
         showsVerticalScrollIndicator={false}
@@ -193,13 +191,12 @@ const Login = (props) => {
           </View>
           <View style={styles.versionContainer}>
             <AppText
-              text={" App Vesrion 1.5"}
+              text={" App Vesrion 1.6"}
               style={{ ...styles.appVersion }}
             />
           </View>
         </View>
       </KeyboardAwareScrollView>
-
       {loginResponse.isRequestingLoader ? (
         <Loader loading={loginResponse.isRequestingLoader} />
       ) : null}

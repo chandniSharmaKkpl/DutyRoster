@@ -23,7 +23,6 @@ const ViewProfileReducer = (state = initialState, { type, payload }) => {
       };
     }
     case actionConstant.ACTION_GET_PROFILE_SUCCESS: {
-      console.log("ACTION_GET_PROFILE_SUCCESS ::::::::=>", payload);
       return {
         ...state,
         data: payload.data,
@@ -32,7 +31,6 @@ const ViewProfileReducer = (state = initialState, { type, payload }) => {
       };
     }
     case actionConstant.ACTION_GET_PROFILE_FAILURE: {
-      console.log(JSON.stringify(payload), "payload data");
       return {
         ...state,
         data: payload,

@@ -12,7 +12,6 @@ export function* workerGetRoasterDateResponse(action) {
       type: actionConstant.ACTION_GET_ROASTER_DATE_SUCCESS,
       payload: roasterDateRangeResponse,
     });
-    console.log(" roasterDateRangeResponse =====>", roasterDateRangeResponse);
   } catch (error) {
     console.log(error);
     yield put({

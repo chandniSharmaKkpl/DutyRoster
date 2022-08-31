@@ -12,7 +12,6 @@ const Calendars = (props) => {
 
   const onClickDate = (day) => {
     props.onDayPress(day);
-    console.log("onClickDate =>", day);
   };
 
   const createMarkedDateObject = (arrayDates) => {

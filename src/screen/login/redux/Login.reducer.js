@@ -40,3 +40,6 @@ export default (state = initialState, { type, payload }) => {
       return state;
   }
 };
+
+
+export const selectorToken = (state) => state.LoginReducer.accessToken;

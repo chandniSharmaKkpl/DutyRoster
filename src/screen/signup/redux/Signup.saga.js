@@ -14,14 +14,13 @@ export function* workerSingup(action) {
 
       for (let index = 0; index < arrayTemp.length; index++) {
         const element = arrayTemp[index];
-        element1 = signupResponse.error[element];
+        let element1 = signupResponse.error[element];
 
         if (element1.length > 0) {
           let stringTemp = element1[0];
           stringCombined = stringCombined + stringTemp.toString();
         }
       }
-      console.log(stringCombined , 'stringCombined')
       toast.show(stringCombined, {
         type: alertMsgConstant.TOAST_DANGER,
       });
@@ -34,15 +33,12 @@ export function* workerSingup(action) {
         type: actionConstant.ACTION_GET_SIGN_UP_SUCCESS,
         payload: signupResponse,
       });
-      console.log(signupResponse.message, 'signupResponse.message')
       toast.show(signupResponse.message, {
         type: alertMsgConstant.TOAST_SUCCESS,
       });
       action.payload.navigation.navigate(appConstant.LOGIN);
     }
   } catch (error) {
-    // console.log(JSON.stringify(error.message.data.error_emails) , 'eerrr')
-    // alert(JSON.stringify(error.message.data.error_email)); 
     yield put({
       type: actionConstant.ACTION_GET_SIGN_UP_FAILURE,
       payload: error,

@@ -139,7 +139,6 @@ const UploadImage = (props) => {
       freeStyleCropEnabled: true,
     })
       .then((response) => {
-        console.log("choose Media ====>", response);
         setProfiilePath(response);
         setProfile_imagePath(
           Platform.OS == "ios"
