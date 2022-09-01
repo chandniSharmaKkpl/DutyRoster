@@ -16,8 +16,9 @@ export default {
   SURE_TO_DECLINE: 'Are you sure to decline?',
   LOGIN_SUCCESSFUL: 'You are successfully logged in',
   PLEASE_CONFIRM: 'Please Confirm?',
-  DO_YOU_SURE_WANT_TO_CANCEL_JOURNEY:
-    'Are you sure want to cancel this journey?',
+  MINIMUM_10_DIGIT : 'phone number must be at least 10 digit',
+  MAXIMUM_12_DIGIT  : 'phone number may not be greater than 12 digit',
+  PHONE_NUMBER_NOT_VALID : 'phone number not vallid',
   NO: 'No',
   YES: 'Yes',
   ARE_YOU_SURE_TO_LOGOUT:'Are you sure to logout?',

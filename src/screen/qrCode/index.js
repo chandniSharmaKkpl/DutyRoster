@@ -173,6 +173,8 @@ const QRCodeScreen = (props) => {
         <QRCodeScanner
           onRead={onSuccess}
           cameraStyle={{ height: SCREEN_HEIGHT, width: SCREEN_WIDTH }}
+          reactivate={true} 
+          reactivateTimeout={3000}
           showMarker
           markerStyle={{
             borderColor: appColor.WHITE,

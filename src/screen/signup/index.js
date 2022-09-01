@@ -185,9 +185,11 @@ const Signup = (props) => {
     if (phone === "") {
       phoneErr = "Phone cannot be empty";
     } else if (phone.length < 10) {
-      phoneErr = "Phone number must be atleast 10 numbers ";
-    } else if (phone.length > 10) {
-      phoneErr = "Phone number no not more than 10 char";
+      phoneErr = alertMsgConstant.MINIMUM_10_DIGIT;
+    } else if (phone.length > 12) {
+      phoneErr = alertMsgConstant.MAXIMUM_12_DIGIT;
+    } else if(phone.length == 11) {
+      phoneErr = alertMsgConstant.PHONE_NUMBER_NOT_VALID;
     }
 
     if (dob === "") {

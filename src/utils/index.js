@@ -12,4 +12,32 @@ const enumerateDaysBetweenDates = function (_startDate, _endDate) {
   }
   return dates;
 };
-export { enumerateDaysBetweenDates };
+
+function getCurrentWeek(date) {
+  var currentDate = moment(date);
+  var weekStart = currentDate.clone().startOf("isoWeek");
+  // console.log("weekStart", weekStart);
+  var weekEnd = currentDate.clone().endOf("isoWeek");
+  // console.log("weekEnd", weekEnd);
+  var days = [];
+  for (var i = 0; i <= 6; i++) {
+    days.push(moment(weekStart).add(i, "days").format("YYYY-MM-DD"));
+  }
+  return { days, weekStart, weekEnd };
+}
+function getDayfromDate(date) {
+  return moment(date).format('ddd');
+}
+function getDatefromFullDate(date) {
+  return moment(date).format("DD");
+}
+function getTimeStampfromDate(date) {
+  return moment(date).format("X");
+}
+export {
+  enumerateDaysBetweenDates,
+  getCurrentWeek,
+  getDayfromDate,
+  getDatefromFullDate,
+  getTimeStampfromDate,
+};

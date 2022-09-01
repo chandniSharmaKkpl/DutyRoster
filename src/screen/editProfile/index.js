@@ -217,9 +217,11 @@ const EditProfile = (props) => {
     if (phone === "") {
       phoneErr = alertMsgConstant.MSG_PHONE_NOT_EMPTY;
     } else if (phone.length < 10) {
-      phoneErr = "Phone number should contain 10 digits";
-    } else if (phone.length > 10) {
-      phoneErr = "Phone number no not more than 10 digits";
+      phoneErr = alertMsgConstant.MINIMUM_10_DIGIT;
+    } else if (phone.length > 12) {
+      phoneErr = alertMsgConstant.MAXIMUM_12_DIGIT;
+    } else if(phone.length == 11) {
+      phoneErr = alertMsgConstant.PHONE_NUMBER_NOT_VALID;
     }
 
     if (dob === "") {
@@ -343,7 +345,7 @@ const EditProfile = (props) => {
         phone,
         address,
         tfn_number: tfn,
-        password,
+
         employee_id: employee_id,
       };
       if (profilePath) {
@@ -352,6 +354,9 @@ const EditProfile = (props) => {
           type: "image/jpeg",
           uri: ImageSource ? ImageSource : "https://via.placeholder.com/150",
         };
+      }
+      if (password) {
+        data["password"] = password;
       }
       requestToUpdateProfileAction(data);
     }
@@ -423,7 +428,7 @@ const EditProfile = (props) => {
                 error={error.titleErr}
                 inputViewStyle={styles.inputViewStyle}
               />
-              <Text style={styles.inputTextTitle}>Payment</Text>
+              <Text style={styles.inputTextTitle}>Payment Type</Text>
               <TextInputCustom
                 label={"Payment"}
                 value={payment}
@@ -464,20 +469,33 @@ const EditProfile = (props) => {
                 inputViewStyle={styles.inputViewStyle}
               />
               <Text style={styles.inputTextTitle}>Date of Birth</Text>
-              <TextInputCustom
-                label={"Dob"}
-                value={dob}
-                onChangeText={onChangeDOB}
-                placeholder={"Enter Date of Birth"}
-                eyeIcon={require("../../assets/images/SignupScreen/calendar.png")}
-                onPressRight={showDatePicker}
-                error={error.dobErr}
-                inputViewStyle={styles.inputViewStyle}
-              />
-              <Pressable
-                onPress={showDatePicker}
-                style={{ width: "100%", height: "7%", marginTop: "-14%" }}
-              ></Pressable>
+              <View
+                style={{
+                  width: wp("90%"),
+                  height: hp("6%"),
+                  position: "relative",
+                }}
+              >
+                <TextInputCustom
+                  label={"Dob"}
+                  value={dob}
+                  onChangeText={onChangeDOB}
+                  placeholder={"Enter Date of Birth"}
+                  eyeIcon={require("../../assets/images/SignupScreen/calendar.png")}
+                  onPressRight={showDatePicker}
+                  error={error.dobErr}
+                  inputViewStyle={styles.inputViewStyle}
+                />
+                <Pressable
+                  onPress={showDatePicker}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    flex: 1,
+                    position: "absolute",
+                  }}
+                ></Pressable>
+              </View>
               <Text style={styles.inputTextTitle}>Address</Text>
               <TextInputCustom
                 label={"Address"}
@@ -552,6 +570,7 @@ const EditProfile = (props) => {
         mode="date"
         onConfirm={handleConfirm}
         onCancel={hideDatePicker}
+        maximumDate={new Date()}
       />
 
       {profileResponse?.ViewProfileReducer?.isRequesting ? (

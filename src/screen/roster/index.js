@@ -18,13 +18,20 @@ import { Images } from "@/constant/svgImgConst";
 import EmpTimeCard from "@/components/roasterEmpTimeCard";
 import Calendars from "@/components/Calendars";
 import moment from "moment";
-import { enumerateDaysBetweenDates } from "@/utils";
+import {
+  enumerateDaysBetweenDates,
+  getCurrentWeek,
+  getDatefromFullDate,
+  getDayfromDate,
+  getTimeStampfromDate,
+} from "@/utils";
 import { connect } from "react-redux";
 import {
   requestToGetRoasterDateRange,
   setMarkeDates,
 } from "./redux/Roster.action";
 import { dayDateReturn } from "@/common/timeFormate";
+import { useSelector } from "react-redux";
 
 const RosterScreen = (props) => {
   const navigation = useNavigation();
@@ -34,65 +41,45 @@ const RosterScreen = (props) => {
     setMarkeDatesAction,
     markedDates,
     requestToGetRoasterDateRangeAction,
+    selectedWeek,
+    startDay,
+    endDay,
   } = props;
   const [selectedItem, setSelectedItem] = useState(3);
   const [isCalendarShow, setIsCalendarShow] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
   const [isAlertShow, setIsAlertShow] = useState(false);
-  const [startDay, setStartDay] = useState();
-  const [endDay, setEndDay] = useState();
 
   var countBack = 0;
-
-  const dateData = [
-    {
-      id: 1,
-      day: "Mon",
-      date: "09",
-    },
-    {
-      id: 2,
-      day: "Tue",
-      date: "10",
-    },
-    {
-      id: 3,
-      day: "Wed",
-      date: "11",
-    },
-    {
-      id: 4,
-      day: "Thu",
-      date: "12",
-    },
-    {
-      id: 5,
-      day: "Fri",
-      date: "13",
-    },
-    {
-      id: 6,
-      day: "Sat",
-      date: "14",
-    },
-    {
-      id: 7,
-      day: "Sun",
-      date: "15",
-    },
-  ];
-
   // markedDates obj function
 
   React.useEffect(() => {
     var endDate = "";
     var startDate = new Date();
     endDate = moment(startDate).add(7, "d");
-    setStartDay(startDate);
-    setEndDay(endDate);
+    console.log("startDate", startDate);
+    setSelectedWeek(startDate);
+    setSelectedDate(startDate);
+    // action to api call format date
+    // const fromDate = moment(startDate).format("YYYY-MM-DD");
+    // const toDate = moment(endDate).format("YYYY-MM-DD");
 
+    // const params = new FormData();
+    // params.append("from", fromDate);
+    // params.append("to", toDate);
+    // requestToGetRoasterDateRangeAction(params);
+  }, []);
+
+  const getSelectedDayEvents = (date) => {
+    setSelectedWeek(date);
+  };
+
+  const setSelectedWeek = React.useCallback((date) => {
     const _dateList = {};
-    const _dateRange = enumerateDaysBetweenDates(startDate, endDate);
+    const _dateFlatList = [];
+
+    const { days: _dateRange, weekStart, weekEnd } = getCurrentWeek(date);
+
     _dateRange.map((item, index) => {
       _dateList[item] = {
         startingDay: index === 0 ? true : false,
@@ -103,35 +90,20 @@ const RosterScreen = (props) => {
           : appColor.RED,
         textColor: appColor.WHITE,
       };
-
-      // Set data of top dates
+      _dateFlatList.push({
+        id: getTimeStampfromDate(item),
+        date: getDatefromFullDate(item),
+        day: getDayfromDate(item),
+      });
     });
-    setMarkeDatesAction(_dateList);
-
-    // action to api call format date
-    const fromDate = moment(startDate).format("YYYY-MM-DD");
-    const toDate = moment(endDate).format("YYYY-MM-DD");
-
-    const params = new FormData();
-    params.append("from", fromDate);
-    params.append("to", toDate);
-    requestToGetRoasterDateRangeAction(params);
+    setMarkeDatesAction({
+      markedDates: _dateList,
+      selectedWeek: _dateFlatList,
+      weekStart: weekStart,
+      weekEnd: weekEnd,
+    });
   }, []);
-
-
-  const getSelectedDayEvents = (date) => {
-    // let markedDates = {};
-    // markedDates[date] = {
-    //   selected: true,
-    //   color: appColor.RED,
-    //   textColor: appColor.WHITE,
-    // };
-    // let serviceDate = moment(date);
-    // serviceDate = serviceDate.format("DD.MM.YYYY");
-    // setSelectedDate(serviceDate);
-    // setMarkeDates(markedDates);
-  };
-
+  console.log(startDay, endDay);
   const Item = ({ day, date, id }) => (
     <Pressable
       onPress={() => {
@@ -174,14 +146,14 @@ const RosterScreen = (props) => {
   const onClickCalendar = () => {
     setIsCalendarShow(!isCalendarShow);
   };
-
+  console.log("getCurrentWeek", getCurrentWeek());
   return (
     <>
       <CommonHeader screenName={route?.name} />
       <View style={[styles.container]}>
         <View style={styles.topContain}>
           <View style={styles.weekDateTextContainer}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
               <AppText
                 style={styles.weekDateTextStyle}
                 text={dayDateReturn(startDay, false)}
@@ -203,7 +175,7 @@ const RosterScreen = (props) => {
             <FlatList
               horizontal={true}
               removeClippedSubviews
-              data={dateData}
+              data={selectedWeek}
               renderItem={renderItem}
               keyExtractor={(item) => item.id}
               contentContainerStyle={{
@@ -268,6 +240,9 @@ const RosterScreen = (props) => {
 };
 const mapStateToProps = (state) => ({
   markedDates: state.RosterReducer.markedDates,
+  selectedWeek: state.RosterReducer.selectedWeek.data,
+  startDay: state.RosterReducer.selectedWeek.weekStart,
+  endDay: state.RosterReducer.selectedWeek.weekEnd,
 });
 const mapDispatchToProps = (dispatch) => {
   return {

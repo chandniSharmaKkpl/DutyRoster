@@ -2,6 +2,7 @@ import { actionConstant, appConstant, alertMsgConstant } from "@/constant";
 import { takeLatest, take, call, put, select, all } from "redux-saga/effects";
 import { loginCall } from "./Login.api";
 import localDb from "@/database/localDb";
+import { StackActions, CommonActions } from "@react-navigation/native";
 
 export function* workerGetAccessToken(action) {
   try {
@@ -34,9 +35,23 @@ export function* workerGetAccessToken(action) {
       localDb.setUser(loginResponse.data);
       localDb.setAccessToken(loginResponse.data.token);
       if (loginResponse.data) {
-        action.payload.navigation.navigate(appConstant.HOME, {
-          userData: loginResponse.data,
-        });
+        // action.payload.navigation.navigate(appConstant.HOME, {
+        //   userData: loginResponse.data,
+        // });
+
+        try {
+          const resetAction = StackActions.reset({
+            index: 0,
+            actions: [
+              action.payload.navigation.navigate(appConstant.HOME, {
+                userData: loginResponse.data,
+              }),
+            ],
+          });
+          action.payload.navigation.dispatch(resetAction);
+        } catch (error) {
+          console.log("error", error);
+        }
       }
       toast.show(loginResponse.message, {
         type: alertMsgConstant.TOAST_SUCCESS,

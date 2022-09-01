@@ -5,6 +5,11 @@ const initialState = {
   data: {},
   error: {},
   markedDates: {},
+  selectedWeek: {
+    data: [],
+    weekStart: null,
+    weekEnd: null,
+  },
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -36,10 +41,20 @@ export default (state = initialState, { type, payload }) => {
     case actionConstant.ACTION_SET_MARKED_DATES: {
       return {
         ...state,
-        markedDates: payload,
+        markedDates: payload.markedDates,
+        selectedWeek: {
+          ...state.selectedWeek,
+          data: payload.selectedWeek,
+          weekStart: payload.weekStart,
+          weekEnd: payload.weekEnd,
+        },
       };
     }
+
     default:
       return state;
   }
 };
+
+export const selectorForSelectedWeek = (state) =>
+  state.RosterReducer.selectedWeek;
