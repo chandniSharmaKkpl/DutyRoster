@@ -1,0 +1,132 @@
+// login required parameter
+
+    {
+        "email": "user@email.com",
+        "password": "user@123",
+        "device_uuid":"12234556",
+        "device_name":"iPhone11",
+        "device_token":"1dsfsdruiutyiurytiueryugrugt"
+
+    },
+
+////////////////////////  OR  /////////////////////////
+
+    {
+        "username": "user", 
+        "mobile no": 1234567891,
+    }
+
+
+//  login successfully response
+  
+//HTTP Status : 200 Ok
+
+    {   
+        "responseCode": 1,
+        "errorCode": "init_success",
+        "status": "true",
+        "message": "App initialized successfully.",
+        "data": {
+            "sessid": "CCWmq3p7EFpdzZVHXlUzGlGqpdiY3j1e",
+            "user_detail": {
+                "user_id": "1",
+                "firstname": "Mahek",
+                "lastname": "Manvar",
+                "email": "mahek@2excel.com.au"
+            },
+
+        }
+       
+    }
+
+    ////////////////////////  OR  /////////////////////////
+
+    {
+        "token_type" : 'Bearer',
+        "expires_in": 6044800,
+        "access_token":
+            "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0IiwianRpIj
+            oiOWQ5ODZmYzQwNjE3ODhkNTVhZGRiMDZjNTI1YmUxZGE1OTkzZDc1NWVlMDc0Y2UwMzZjNWZjYmFjNTc5
+            OTczZDFkMDUzNjlhOTU0YWY3ODQiLCJpYXQiOjE2NTA4NjQ5NjMuNDU1MTUzLCJuYmYiOjE2NTA4NjQ5NjM
+            uNDU1MTU5LCJleHAiOjE2NTE0Njk3NjMuNDMzNDg2LCJzdWIiOiI4NSIsInNjb3BlcyI6WyIqIl19.cbYEmgOWb
+            BSH-n1X078yvmBehotEkwHDJSpA9JnrN4gO5kVYFdynrpotHDY-MyTmqCQKmlOu5iTYB7e9ygsNHHOjGRsW5DPvf8
+            3YChPtAI7SdQm32oPE_1uKZhDBiM5hl36gtK_MzIQEPwj3vgOzcSLIsKPtZilpPXS-CLmITDEHxtzUunTTgGNCVMy
+            Lpqr4GA-_xFKlhSejngAIIFBIzVbbR6kV9VHplND0wwcfm1dgDGPT0TTfeF1LpwYZ5reg8SufhBsaxK4HLgYhGdcb31
+            yUT9aAbc5QVzkxV5AEoNdedOqRL-9rkMgRajLSY78kJt6ytAEBKjLVfoU5tbVG7znh0aHb___o1QuUw8T1mmRbihS
+            rGBL00-ScAkO8fmi9WU4v1bV_AT2-dgfAcL2_paWbnysUeyeXdBhp6XlB8axk7fcdS72G_8-rPtaRwLW-AfYXodL-yc
+            XhRhS49GI1zuuvD0fbyQhXOUDhMPEbcscB-Yb4JbyQcYAdTlbHNFNS82pwMlKbyzhdObNnnDQ93D_1ynM6X5eIt1
+            oAbgbalPajERWWLgw8xYqdDIm26RGDZHXIc8Bd7LT6o12cuMkI2pQ0ZxWixbayx_efvxilRQyvnxc-I
+            tw728cA_DiPzSEhhZ69bGL3D6E7vJtCBvYaGVOVW0bRAJkUoLskZKsgC
+            pU",
+        "refresh_token": 
+            "def50200f16c173c535a892254856efdd3082d510ce1bb24f5d36a45b935b1a844
+            afbed90e91d1b0146b1256c0a44708b373a88e521ade91b0391c4b0581755112ffd7d89503f43866a7fd
+            0a587b440aa01d0e3bdc1c2b5fe851d4ef8c5669f4e11b9d15ba879be9ff702d2f24eb17c1b126f604a74c
+            40b5b6c281db02732ccf4160fbcdc90dac18785fc24aee6635886bec83561b29df949be291323f270e0eb3
+            1e5b01dd36e0fd13af4fa597adf190a703967c83b402521a6cd50aafe8198af6349b10df1d534a8bdb405e4
+            2567e3e61774d6cff1999e55183599c3a34033590c371c05326125fcdc0a9cb8d85a368db214fb5618a90e2
+            0a97381f3e9f9e6a8f6d5d0cdd5a33e9c87fa4d9afe86bbd4be2f649938fe68d03771fdadf48ef2ce6398b90
+            e26ba3ce8901eca378775c3238653b82d9a53433385bff77d80990e23c5b788d95d3fdcc60f345fad195765
+            338321d4d3bf5e0bcaddd3024e1f320eeb5fbe7dbda"
+
+    }
+
+    ////////////////////////  OR  /////////////////////////
+
+    {
+        "success": true,
+        "data": {
+            "token": 
+                "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIzIiwianRpIjoiM
+                TY5N2ViZjg1YjhiMWIwZmZmZTFiM2RhNmNmODMzMGEwMTM0YzhlNDExOGVmOTU3MTI3MWYwMjF
+                hMWNmMWNkN2FkODhhODc5NDBlYTFlYjMiLCJpYXQiOjE2NTA4NjUwNzkuMjA3MzgyLCJuYmYiOjE
+                2NTA4NjUwNzkuMjA3Mzg3LCJleHAiOjE2ODI0MDEwNzkuMTg3NzU2LCJzdWIiOiIyOTkiLCJzY2
+                9wZXMiOltdfQ.gzqvMdAmplLb6bvvp2xxcPKBVHeVqikeXE7ExMiICnkgxe6U29UN7WkPKOkFyt
+                Am3iw-HIRB2l6eIGnll4p-0fJwAyhKXuMMB-JdMAp054dr87D6ZI1kOBcY38Acs6d4ib-ovvvlTS
+                OXRqLDyOELeV6h3zlfxwVRotkvhP141ld7CYiE0qpE5j934ydRp6tZgd-FjAagqx4iTTrmgVmYwt
+                np29m61UnYaiWATxrg-CXBTIwwtQMDNla7ubTEy93jcepO1S4UyeUrRjE3ROIxYSMj5hjGAPlH2e
+                X-a7P8zCBNq1MUAhGFTJlMrxu0PB0NXzHLOEkIsJIJ82LGAXmfEPmij8uzvLo1LAa8h5qqCXkl32
+                ck4lhNU2aLviVTyykGnQTJ0wkvckcHDV_77Jy-8EuWAlyW-YnMAMA7nIX8ugFNQmec9r6RhX6Az-0kYDa
+                jh1YhQBsFrAWvQfHFA37Rg4ga-ZuXagD9VwQWd5IHt5PrtpCK6V54SE1B1b8lqiVHmwziXlVQBKUHs5I
+                bAHGa_g0JimX_qpc5hWXj8RZ3IUue425tfpnN6uz84JNrjZ7CNiULDfM7HPpd3GKKw9-NiqVXtjAaQf
+                XJRTssZJVndfT2imfxBK865PhRhGUTTKQuQaeIi6hIZNuMsljABlFkxVZ2DtK-Ia0T3xMTZMos9GI",
+            "user": {
+                "user_id": 1,
+                "first_name": "Mahek",
+                "email": "mahek@2excel.com.au",
+            }
+        },
+        "message": "User logged in successfully"
+    }
+
+// login failed responce
+
+//HTTP Status : 200 Ok
+
+    {
+        "responseCode": 0,
+        "errorCode": "login_fail",
+        "message": "Email address / password not found in our database.",
+        "data" : ""
+    }
+
+
+///****** Login Failed expected response based on error codes ******//
+
+    // response 401
+
+    {
+        "responseCode": 401,
+        "message" : "User not authorised",
+        "error": "Unauthorised",
+        "status": "false"
+    }   
+
+    //  response 403
+
+    {
+        "responseCode": 403,
+        "message" : "User authorised but no permission to access",
+        "error": "Access Forbidden",
+        "status": "false"
+    }   

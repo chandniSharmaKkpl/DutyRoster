@@ -1,0 +1,11 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+export default async function isLocalStorageAvailable() {
+  var key = "isStorageAvailable";
+  try {
+    await AsyncStorage.setItem(key, true);
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
