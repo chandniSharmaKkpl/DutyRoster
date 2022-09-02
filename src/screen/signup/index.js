@@ -386,7 +386,7 @@ const Signup = (props) => {
                 />
               </TouchableOpacity>
             </View>
-            {error.imgErr ? <AppText text={" Chandni"} style={styles.txtError} /> : null}
+            {error.imgErr ? <AppText text={error.imgErr} style={styles.txtError} /> : null}
 
 </>
             <View style={styles.viewTxtInput}>

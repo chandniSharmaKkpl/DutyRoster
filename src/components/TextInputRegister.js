@@ -149,7 +149,7 @@ export const styles = {
     textAlign: "left",
     position: "absolute",
     color: appColor.RED,
-    bottom: -18,
+    top : hp('6.2%'),
     fontSize: fontConstant.TEXT_H3_SIZE_REGULAR,
     fontFamily: fontConstant.FONT_REGULAR,
   },
