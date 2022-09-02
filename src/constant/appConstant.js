@@ -9,7 +9,7 @@ export default {
   RESER_PWD: "ResetPassword",
   ROASTER: "Roster",
   TIMESHEETS: "Timesheets",
-  QR_CODE: "QRCode",
+  QR_CODE: "QR Code",
   EDIT_PROFILE: "Edit Profile",
   PROFILE_SETTINGS: "Profile Settings",
   UNAVAILABILITY: "Availability",

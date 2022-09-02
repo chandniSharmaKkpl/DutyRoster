@@ -24,6 +24,17 @@ export const dayDateReturn = (dateString, isYear) => {
   }
 };
 
+export const birthDateFormat = (dateString, isDDmmYYYY) => {
+  console.log(" date string -------------", dateString);
+  if (isDDmmYYYY) {
+    let formattedDate = moment(dateString).format("DD-MM-YYYY");
+    return formattedDate;
+  } else {
+    let formattedDate = moment(dateString).format("YYYY-MM-DD");
+    return formattedDate;
+  }
+};
+
 export default {
   convertDateTime,
 };

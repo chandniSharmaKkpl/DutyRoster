@@ -37,7 +37,7 @@ const ForgotPassword = (props) => {
     emailErr: "",
   });
 
-  const [email, setEmail] = useState("emp999@yopmail.com");
+  const [email, setEmail] = useState("");
   const responseData = useSelector((state) => state.Forgot_PasswordReducer);
   const navigation = useNavigation();
   const onChangeEmail = useCallback((text) => setEmail(text), []);

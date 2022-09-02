@@ -7,7 +7,7 @@ import { useNavigation } from "@react-navigation/native";
 
 const Calendars = (props) => {
   const navigation = useNavigation();
-  const {markedDates} = props;
+  const { markedDates } = props;
   const [getDisabledDates, setGetDisabledDates] = useState();
 
   const onClickDate = (day) => {
@@ -28,12 +28,6 @@ const Calendars = (props) => {
     setMarkedDates(newDaysObject);
   };
 
-  // [2022-08-22, 2022-08-23]
-  // Array dates  []
-// Array of objects 
-// 
-// 
-
   return (
     <>
       <Calendar
@@ -44,7 +38,7 @@ const Calendars = (props) => {
         markedDates={markedDates}
         monthFormat={"MMMM yyyy "}
         onDayPress={(day) => onClickDate(day.dateString)}
-        allowRangeSelection={true}
+        // allowRangeSelection={true}        
       />
     </>
   );

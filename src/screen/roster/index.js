@@ -84,11 +84,15 @@ const RosterScreen = (props) => {
       _dateList[item] = {
         startingDay: index === 0 ? true : false,
         endingDay: index === _dateRange.length - 1 ? true : false,
-        selected: false,
         color: !(index === 0 || index === _dateRange.length - 1)
-          ? appColor.LIGHT_ORANGE
-          : appColor.RED,
+          // ? appColor.LIGHT_ORANGE
+          ? '#70d7c7'
+          // : appColor.RED, 
+          : '#50cebb',
         textColor: appColor.WHITE,
+        selected : index === _dateRange.length - 1 ? true : false,
+        // selectedColor: 'blue'
+        disabled: true
       };
       _dateFlatList.push({
         id: getTimeStampfromDate(item),

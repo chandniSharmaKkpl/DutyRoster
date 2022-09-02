@@ -251,6 +251,20 @@ const EditProfile = (props) => {
       }
     }
 
+     // If confirm password there then only password validation will be checked
+     if (cnfPassword && cnfPassword.length > 0) {
+      if (!isValidPassword(cnfPassword)) {
+        cnfpasswordErr = alertMsgConstant.MSG_STRONG_PWD;
+      }
+
+      if (password.trim() === "") {
+        passwordErr = alertMsgConstant.PASSWORD_NOT_EMPTY;
+      } else if (password.trim() !== cnfPassword.trim()) {
+        passwordErr = alertMsgConstant.PASSWORD_NOT_EQUAL;
+      }
+    }
+
+
     if (
       titleErr === "" &&
       nameErr === "" &&

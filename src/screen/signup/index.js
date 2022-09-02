@@ -110,7 +110,7 @@ const Signup = (props) => {
 
   const handleConfirm = (date) => {
     // console.warn("A date has been picked: ", date);
-    setDob(moment(date).format("YYYY-MM-DD"));
+    setDob(moment(date).format("DD-MM-YYYY"));
     hideDatePicker();
   };
 
@@ -593,6 +593,7 @@ const Signup = (props) => {
           onConfirm={handleConfirm}
           onCancel={hideDatePicker}
           maximumDate={new Date()}
+          dateFormat="dayofweek day month"
         />
       )}
 
