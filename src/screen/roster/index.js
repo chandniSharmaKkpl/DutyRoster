@@ -85,10 +85,8 @@ const RosterScreen = (props) => {
         startingDay: index === 0 ? true : false,
         endingDay: index === _dateRange.length - 1 ? true : false,
         color: !(index === 0 || index === _dateRange.length - 1)
-          // ? appColor.LIGHT_ORANGE
-          ? '#70d7c7'
-          // : appColor.RED, 
-          : '#50cebb',
+          ? appColor.LIGHT_ORANGE
+          : appColor.RED, 
         textColor: appColor.WHITE,
         selected : index === _dateRange.length - 1 ? true : false,
         // selectedColor: 'blue'

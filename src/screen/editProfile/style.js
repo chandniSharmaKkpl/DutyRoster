@@ -64,7 +64,7 @@ paddingBottom:'20%'
     fontSize: fontConstant.TEXT_H1_SIZE_REGULAR,
     color: appColor.BLACK,
     paddingBottom: hp("1%"),
-    paddingTop: hp("2%"),
+    paddingTop: hp("1%"),
   },
   passwordContainer: {
     flexDirection: "row",

@@ -37,49 +37,49 @@ export const TextInputCustom = (props) => {
     editable,
     onFocus,
     caretHidden,
-    onPressFocus
-
+    onPressFocus,
   } = props;
 
   return (
-    <View style={[styles.view, inputViewStyle]}>
-      <View style={styles.view1}>
-        <Image
-          source={icon} //Change your icon image here
-          // style={iconStyle}
-        />
+    <View style={{ width: wp("90%") }}>
+      <View style={[styles.view, inputViewStyle]}>
+        <View style={styles.view1}>
+          <Image
+            source={icon} //Change your icon image here
+            // style={iconStyle}
+          />
 
-        <TextInput
-          style={[styles.txtInput, style]}
-          value={value}
-          label={label}
-          onChangeText={onChangeText}
-          placeholder={placeholder}
-          placeholderTextSize={50}
-          secureTextEntry={secureTextEntry}
-          keyboardType={keyboardType}
-          placeholderTextColor={appColor.GRAY}
-          // onPressIn={onPressRight}
-          // onSubmitEditing={onSubmitEditing}
-          editable={editable}
-          caretHidden={caretHidden}
-          onFocus = {onPressFocus} 
-          // onFocus={onFocus}
-          // onTouchStart={() => {
-          //   // Keyboard.dismiss();
-          //   onFocus();
-          // }}
+          <TextInput
+            style={[styles.txtInput, style]}
+            value={value}
+            label={label}
+            onChangeText={onChangeText}
+            placeholder={placeholder}
+            placeholderTextSize={50}
+            secureTextEntry={secureTextEntry}
+            keyboardType={keyboardType}
+            placeholderTextColor={appColor.GRAY}
+            // onPressIn={onPressRight}
+            // onSubmitEditing={onSubmitEditing}
+            editable={editable}
+            caretHidden={caretHidden}
+            onFocus={onPressFocus}
+            // onFocus={onFocus}
+            // onTouchStart={() => {
+            //   // Keyboard.dismiss();
+            //   onFocus();
+            // }}
 
-          // onKeyPress={keyPress => console.log('keyPress',keyPress)}
-        />
+            // onKeyPress={keyPress => console.log('keyPress',keyPress)}
+          />
+        </View>
+        <Pressable style={styles.eyeContainer} onPress={onPressRight}>
+          <Image
+            source={rightIcon} //Change your icon image here
+            style={[styles.iconStyle, rightIconStyle]}
+          />
+        </Pressable>
       </View>
-      <Pressable style={styles.eyeContainer} onPress={onPressRight}>
-        <Image
-          source={rightIcon} //Change your icon image here
-          style={[styles.iconStyle, rightIconStyle]}
-        />
-      </Pressable>
-
       {error ? <AppText text={error} style={styles.txtError} /> : null}
     </View>
   );
@@ -108,10 +108,6 @@ export const styles = {
     flexDirection: "row",
     alignItems: "center",
   },
-  // txtError: {
-  //   color: appColor.RED,
-  //   paddingBottom: hp("2%"),
-  // },
   somePlaceholderStyle: {
     fontSize: fontConstant.TEXT_16_SIZE_REGULAR,
     color: "red",
@@ -130,7 +126,6 @@ export const styles = {
   },
   eyeIconStyle: {
     height: 20,
-
     width: 17.55,
     resizeMode: "center",
     justifyContent: "flex-end",
@@ -143,7 +138,7 @@ export const styles = {
     padding: 0,
     fontSize: fontConstant.TEXT_17_SIZE_REGULAR,
     fontWeight: fontConstant.WEIGHT_LEIGHT,
-    color:'#000'
+    color: "#000",
   },
   txtError: {
     
@@ -153,5 +148,4 @@ export const styles = {
     fontSize: fontConstant.TEXT_H3_SIZE_REGULAR,
     fontFamily: fontConstant.FONT_REGULAR,
   },
-
 };

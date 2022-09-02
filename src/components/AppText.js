@@ -7,7 +7,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 export const AppText =(props)=>{
 const {text,style  } = props;
     return(
-       <Text numberOfLines={1} style={[styles.text,style]}>{text}</Text>
+       <Text  style={[styles.text,style]}>{text}</Text>
     )
 }
 
