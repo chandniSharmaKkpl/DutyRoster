@@ -17,7 +17,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
-export const TextInputCustom = (props) => {
+export const TextInputRegister = (props) => {
   const {
     value,
     label,
@@ -146,12 +146,11 @@ export const styles = {
     color:'#000'
   },
   txtError: {
-    
+    textAlign: "left",
+    position: "absolute",
     color: appColor.RED,
-    paddingLeft:wp('1%'),
-     paddingTop: hp("1%"),
+    bottom: -18,
     fontSize: fontConstant.TEXT_H3_SIZE_REGULAR,
     fontFamily: fontConstant.FONT_REGULAR,
   },
-
 };

@@ -38,6 +38,8 @@ export default {
   CAPTURE_IMAGE: "Take Photo",
   SELECT_PHOTO_FROM_LIBRARY: "Select Photo from Library",
   CANCELLED_IMAGE_SELECTION: 'User cancelled image selection',
+  IMAGE_REQUIRED:"The image field is required.",
+
   //** Toast types **/
   TOAST_SUCCESS:"success",
   TOAST_NORMAL:"normal",

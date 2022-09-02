@@ -167,6 +167,14 @@ export default StyleSheet.create({
       height:'100%',
       justifyContent:'center', 
       alignItems:'center'
-  }
+  },
+  txtError: {
+    alignSelf:'center',
+    color: appColor.RED,
+    paddingLeft:wp('1%'),
+     paddingTop: hp("1%"),
+    fontSize: fontConstant.TEXT_H3_SIZE_REGULAR,
+    fontFamily: fontConstant.FONT_REGULAR,
+  },
  
 });
