@@ -162,6 +162,7 @@ export default function HomeNavigation(props) {
         component={QRCodeScreen}
         headerShown={false}
         options={{
+          tabBarStyle: { display: "none" },
           tabBarIcon: ({ focused }) => (
             <View style={styles.tab}>
               <View style={styles.redCircle}>
