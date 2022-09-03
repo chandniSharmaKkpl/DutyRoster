@@ -82,11 +82,11 @@ export default function HomeNavigation(props) {
     redCircle: {
       width: 72,
       height: 72,
-      opacity: 0.8,
+      opacity: 1,
       backgroundColor: appColor.RED,
       alignItems: "center",
       position: "absolute",
-      bottom: Platform.OS === "android" ? hp("5.8%") : hp("2.5%"),
+      bottom: Platform.OS === "android" ? 40 : hp("2.5%"),
       borderWidth: 1,
       borderRadius: 50,
       borderColor: appColor.RED,

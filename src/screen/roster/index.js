@@ -85,7 +85,7 @@ const RosterScreen = (props) => {
         startingDay: index === 0 ? true : false,
         endingDay: index === _dateRange.length - 1 ? true : false,
         color: !(index === 0 || index === _dateRange.length - 1)
-          ? appColor.LIGHT_ORANGE
+          ? appColor.RED
           : appColor.RED, 
         textColor: appColor.WHITE,
         selected : index === _dateRange.length - 1 ? true : false,
@@ -105,45 +105,45 @@ const RosterScreen = (props) => {
       weekEnd: weekEnd,
     });
   }, []);
-  console.log(startDay, endDay);
-  const Item = ({ day, date, id }) => (
-    <Pressable
-      onPress={() => {
-        setSelectedItem(id);
-      }}
-    >
-      <View
-        style={
-          selectedItem === id
-            ? styles.dateTextBoxSelect
-            : styles.dateTextunSelectBox
-        }
-      >
-        <Text
-          style={
-            selectedItem === id
-              ? styles.dayTextStyle
-              : styles.unSelectDayTextStyle
-          }
-        >
-          {day}
-        </Text>
-        <Text
-          style={
-            selectedItem === id
-              ? styles.dateTextStyle
-              : styles.unSelectBoxDateTextStyle
-          }
-        >
-          {date}
-        </Text>
-      </View>
-    </Pressable>
-  );
 
-  const renderItem = ({ item }) => (
-    <Item id={item.id} day={item.day} date={item.date} />
-  );
+  // const Item = ({ day, date, id }) => (
+  //   <Pressable
+  //     onPress={() => {
+  //       setSelectedItem(id);
+  //     }}
+  //   >
+  //     <View
+  //       style={
+  //         selectedItem === id
+  //           ? styles.dateTextBoxSelect
+  //           : styles.dateTextunSelectBox
+  //       }
+  //     >
+  //       <Text
+  //         style={
+  //           selectedItem === id
+  //             ? styles.dayTextStyle
+  //             : styles.unSelectDayTextStyle
+  //         }
+  //       >
+  //         {day}
+  //       </Text>
+  //       <Text
+  //         style={
+  //           selectedItem === id
+  //             ? styles.dateTextStyle
+  //             : styles.unSelectBoxDateTextStyle
+  //         }
+  //       >
+  //         {date}
+  //       </Text>
+  //     </View>
+  //   </Pressable>
+  // );
+
+  // const renderItem = ({ item }) => (
+  //   <Item id={item.id} day={item.day} date={item.date} />
+  // );
 
   const onClickCalendar = () => {
     setIsCalendarShow(!isCalendarShow);
@@ -173,7 +173,7 @@ const RosterScreen = (props) => {
               <Images.IMAGE_CALENDAE_SVG style={styles.caledarStyles} />
             </Pressable>
           </View>
-          <View style={styles.dateLabelContainer}>
+          {/* <View style={styles.dateLabelContainer}>
             <FlatList
               horizontal={true}
               removeClippedSubviews
@@ -189,7 +189,7 @@ const RosterScreen = (props) => {
                 borderWidth: 0,
               }}
             />
-          </View>
+          </View> */}
         </View>
         <View style={styles.empTimeCardDetails}>
           <EmpTimeCard />
@@ -208,11 +208,6 @@ const RosterScreen = (props) => {
             />
           </View>
         )}
-        {/* <View style={styles.viewBottom}>
-          <TouchableOpacity onPress={goToLogin} style={styles.btnTransparant}>
-            <AppText style={styles.txtBtnTry} text={"Go To Calander"} />
-          </TouchableOpacity>
-        </View> */}
       </View>
       {isAlertShow
         ? Alert.alert(

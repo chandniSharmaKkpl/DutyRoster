@@ -35,6 +35,11 @@ export const birthDateFormat = (dateString, isDDmmYYYY) => {
   }
 };
 
+export const EmpTimeCardDateFormate = (dateString) => {
+  let formattedDate = moment(dateString).format("ddd, DD-MM-YYYY");
+  return formattedDate;
+};
+
 export default {
   convertDateTime,
 };
