@@ -44,10 +44,10 @@ const Login = (props) => {
     return true;
   };
   useEffect(() => {
-    // if (accessToken) {
-    //   const resetAction = StackActions.replace(appConstant.HOME);
-    //   navigation.dispatch(resetAction);
-    // }
+    if (accessToken) {
+      const resetAction = StackActions.replace(appConstant.HOME);
+      navigation.dispatch(resetAction);
+    }
     BackHandler.addEventListener("hardwareBackPress", handleBackButtonClick);
 
     return () => {

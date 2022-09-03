@@ -41,16 +41,6 @@ export function* workerGetAccessToken(action) {
 
         try {
           const resetAction = StackActions.replace(appConstant.HOME);
-          
-          // {
-          //   index: 0,
-          //   actions: [
-          //     // action.payload.navigation.navigate(appConstant.HOME, {
-          //     //   userData: loginResponse.data,
-          //     // }),
-          //   ],
-          // });
-          // console.log('action.payload.navigation',action.payload.navigation);
           action.payload.navigation.dispatch(resetAction);
         } catch (error) {
           console.log("error", error);

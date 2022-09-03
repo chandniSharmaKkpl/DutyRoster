@@ -26,7 +26,7 @@ export default (state = initialState, { type, payload }) => {
       return {
         ...state,
         isRequesting: false,
-        data: payload.data,
+        data: payload,
         error: {},
       };
     }

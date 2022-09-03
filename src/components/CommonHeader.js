@@ -20,6 +20,7 @@ import {
 // import IconMaterial from "react-native-vector-icons/MaterialIcons";
 import { AppText } from "./AppText";
 import { navigationRef } from "@/navigators/utils";
+import { connect } from "react-redux";
 
 const CommonHeader = (props) => {
   const {
@@ -31,7 +32,9 @@ const CommonHeader = (props) => {
     iconRight,
     screenName,
     onGoBack,
+    profileImage,
   } = props;
+  console.log("profileImage", profileImage);
 
   const styles = StyleSheet.create({
     viewOuter: {
@@ -88,6 +91,16 @@ const CommonHeader = (props) => {
       alignItems: "center",
       justifyContent: "flex-end",
     },
+    img: {
+      height: 40,
+      width: 40,
+      borderRadius: 20,
+    },
+    imgEmpty: {
+      height: 40,
+      width: 40,
+      borderRadius: 20,
+    },
   });
 
   const onEditProfile = () => {
@@ -126,7 +139,14 @@ const CommonHeader = (props) => {
         {screenName === appConstant.ROASTER ||
         screenName === appConstant.TIMESHEETS ? (
           <Pressable style={styles.viewRightProfile} onPress={onEditProfile}>
-            <Image source={imageConstant.IMAGE_USER_PROFILE_ICON} />
+            <Image
+              source={
+                profileImage
+                  ? { uri: profileImage }
+                  : imageConstant.IMAGE_USER_PROFILE_ICON
+              }
+              style={!profileImage ? styles.imgEmpty : styles.img}
+            />
           </Pressable>
         ) : (
           <View style={styles.viewRightProfile} />
@@ -136,4 +156,7 @@ const CommonHeader = (props) => {
   );
 };
 
-export default CommonHeader;
+const mapStateToProps = (state) => ({
+  profileImage: state.LoginReducer.user?.image,
+});
+export default connect(mapStateToProps)(CommonHeader);

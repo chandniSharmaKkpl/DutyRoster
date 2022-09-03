@@ -4,6 +4,7 @@ const initialState = {
   isRequestingLoader: false,
   accessToken: null,
   isAuth: false,
+  user: {},
   error: {},
 };
 
@@ -22,7 +23,8 @@ export default (state = initialState, { type, payload }) => {
       return {
         ...state,
         accessToken: payload.data.token,
-        isRequestingLoader: false,
+        user: payload.data.user,
+        isRequestingLoader: false,  
         isAuth: true,
         error: {},
       };

@@ -439,12 +439,14 @@ const DATA = {
   ],
 };
 const EmpTimeCard = (props) => {
+  const {data} = props;
   const renderItem = ({ item }) => <Item item={item} key={item[0]} />;
 
+  // console.log('DATA',data);
   return (
     <View>
       <FlatList
-        data={Object.entries(DATA)}
+        data={data ? Object.entries(data) : []}
         renderItem={renderItem}
         keyExtractor={(item) => item[0]}
         showsVerticalScrollIndicator={false}
