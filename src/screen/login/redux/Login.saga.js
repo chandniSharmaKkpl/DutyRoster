@@ -13,7 +13,7 @@ export function* workerGetAccessToken(action) {
 
       for (let index = 0; index < arrayTemp.length; index++) {
         const element = arrayTemp[index];
-        element1 = loginResponse.error[element];
+        let element1 = loginResponse.error[element];
 
         if (element1.length > 0) {
           let stringTemp = element1[0];
@@ -40,14 +40,17 @@ export function* workerGetAccessToken(action) {
         // });
 
         try {
-          const resetAction = StackActions.reset({
-            index: 0,
-            actions: [
-              action.payload.navigation.navigate(appConstant.HOME, {
-                userData: loginResponse.data,
-              }),
-            ],
-          });
+          const resetAction = StackActions.replace(appConstant.HOME);
+          
+          // {
+          //   index: 0,
+          //   actions: [
+          //     // action.payload.navigation.navigate(appConstant.HOME, {
+          //     //   userData: loginResponse.data,
+          //     // }),
+          //   ],
+          // });
+          // console.log('action.payload.navigation',action.payload.navigation);
           action.payload.navigation.dispatch(resetAction);
         } catch (error) {
           console.log("error", error);

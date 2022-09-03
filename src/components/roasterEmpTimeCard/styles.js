@@ -6,6 +6,9 @@ import {
 import { appColor, fontConstant } from "@/constant";
 
 export default StyleSheet.create({
+  listContainer: {
+    
+  },
   timeCardContainer: {
     minHeight: hp("11%"),
     // borderWidth: 1,
@@ -30,6 +33,7 @@ export default StyleSheet.create({
     fontFamily: fontConstant.FONT_REGULAR,
     fontSize: fontConstant.TEXT_H3_SIZE_BOLD,
     fontWeight: fontConstant.WEIGHT_BOLD,
+    color: appColor.BLACK,
   },
   titleContainer: {
     flexDirection: "row",
@@ -37,7 +41,7 @@ export default StyleSheet.create({
     borderBottomColor: appColor.DARK_SKY,
     borderBottomWidth: 1,
     paddingHorizontal: 10,
-    paddingVertical: 8
+    paddingVertical: 8,
   },
   titleText: {
     textAlign: "left",
@@ -48,17 +52,18 @@ export default StyleSheet.create({
   },
   contentContainer: {
     paddingHorizontal: 10,
-    paddingVertical: 12
+    paddingVertical: 12,
   },
-  contentTextContainer : {
+  contentTextContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingVertical: 2
+    paddingVertical: 2,
   },
   contentText: {
     textAlign: "left",
     fontWeight: fontConstant.WEIGHT_REGULAR,
     paddingVertical: 5,
+    color: appColor.BLACK,
   },
   emptyDataContainer: {
     backgroundColor: appColor.LIGHT_ORANGE,
@@ -72,8 +77,9 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  emptyDataText : {
-    fontSize : fontConstant.TEXT_15_SIZE_BOLD,
-    fontWeight: fontConstant.WEIGHT_SEMI_BOLD
-  }
+  emptyDataText: {
+    fontSize: fontConstant.TEXT_15_SIZE_BOLD,
+    fontWeight: fontConstant.WEIGHT_SEMI_BOLD,
+    color: "#242424B3",
+  },
 });

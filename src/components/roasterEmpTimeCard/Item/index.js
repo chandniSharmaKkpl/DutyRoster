@@ -12,7 +12,7 @@ const Item = ({ item }) => {
   //   console.log("value", items);
 
   return (
-    <View style={styles.timeCardContainer}>
+    <View style={styles.timeCardContainer} key={_date}>
       <View style={styles.dateContainerTextCenter}>
         <Text style={styles.day_date_style}>
           {EmpTimeCardDateFormate(_date)}

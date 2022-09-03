@@ -4,6 +4,8 @@
     <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="android:autofilledHighlight">@drawable/autofill_highlight</item>
+        <item name="android:forceDarkAllowed">false</item>
+
     </style>
 
     <style name="SplashTheme" parent="AppTheme">
