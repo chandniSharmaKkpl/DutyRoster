@@ -146,7 +146,6 @@ const RosterScreen = (props) => {
   const onClickCalendar = () => {
     setIsCalendarShow(!isCalendarShow);
   };
-  console.log("getCurrentWeek", getCurrentWeek());
   return (
     <>
       <CommonHeader screenName={route?.name} />
@@ -206,12 +205,9 @@ const RosterScreen = (props) => {
             />
           </View>
         )}
-        {/* <View style={styles.viewBottom}>
-          <TouchableOpacity onPress={goToLogin} style={styles.btnTransparant}>
-            <AppText style={styles.txtBtnTry} text={"Go To Calander"} />
-          </TouchableOpacity>
-        </View> */}
+       
       </View>
+     
       {isAlertShow
         ? Alert.alert(
             alertMsgConstant.PLEASE_CONFIRM,

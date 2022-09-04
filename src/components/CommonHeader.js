@@ -95,7 +95,7 @@ const CommonHeader = (props) => {
   };
 
   const onUnavailablity = () => {
-    navigationRef.navigate(appConstant.UNAVAILABILITY);
+    navigationRef.navigate(appConstant.AVAILABILITY);
   };
 
   return (
@@ -105,14 +105,14 @@ const CommonHeader = (props) => {
           {screenName === appConstant.ROASTER ? (
             <Pressable style={styles.buttonStyle} onPress={onUnavailablity}>
               <AppText
-                text={appConstant.UNAVAILABILITY}
+                text={appConstant.AVAILABILITY}
                 style={styles.txtLeft}
               />
             </Pressable>
           ) : (
             <View />
           )}
-          {screenName === appConstant.UNAVAILABILITY ||
+          {screenName === appConstant.AVAILABILITY ||
           screenName === appConstant.EDIT_PROFILE ||
           screenName === appConstant.QR_CODE ? (
             <Pressable onPress={onGoBack}>

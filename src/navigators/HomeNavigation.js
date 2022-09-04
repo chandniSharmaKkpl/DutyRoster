@@ -22,8 +22,10 @@ import {
   widthPercentageToDP as wp,
 } from "../responsiveScreen";
 import QRCodeScreen from "@/screen/qrCode";
-import EditProfile from "@/screen/editProfile";
 import { navigationRef } from "@/Navigation/RootNavigation";
+import EditProfile from "@/screen/editProfile";
+import Availability from "@/screen/availability";
+import ProfileSetting from "@/screen/profileSettings";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -43,8 +45,6 @@ const Tab = createBottomTabNavigator();
 // };
 
 export default function HomeNavigation(props) {
-
-  
   const tabOffsetValue = useRef(new Animated.Value(0)).current;
 
   const styles = StyleSheet.create({
@@ -101,16 +101,25 @@ export default function HomeNavigation(props) {
     },
   });
 
-  // const ProfileNavigation = () => {
-  //   return (
-  //     <Stack.Navigator
-  //       screenOptions={{ headerShown: false }}
-  //       initialRouteName={appConstant.LOGIN}
-  //     >
-  //       <Stack.Screen name={appConstant.EDIT_PROFILE} component={EditProfile} />
-  //     </Stack.Navigator>
-  //   );
-  // };
+  function RosterStack() {
+    return (
+      <Stack.Navigator>
+        <Stack.Screen name={appConstant.ROASTER} component={RosterScreen} />
+        {/* <Stack.Screen name="Profile" component={Profile} />
+        <Stack.Screen name="Settings" component={Settings} /> */}
+
+        <Stack.Screen
+          name={appConstant.PROFILE_SETTINGS}
+          component={ProfileSetting}
+        />
+        <Stack.Screen name={appConstant.EDIT_PROFILE} component={EditProfile} />
+        <Stack.Screen
+          name={appConstant.AVAILABILITY}
+          component={Availability}
+        />
+      </Stack.Navigator>
+    );
+  }
 
   return (
     <Tab.Navigator
@@ -120,13 +129,6 @@ export default function HomeNavigation(props) {
         showLabel: false,
       }}
     >
-      {/* <Stack.Screen
-        screenOptions={{ tabBarVisible: false }}
-        options={{ tabBarVisible: false, title: "My home" }}
-        name={appConstant.EDIT_PROFILE}
-        component={EditProfile}
-      /> */}
-
       <Tab.Screen
         name={appConstant.ROASTER}
         component={RosterScreen}

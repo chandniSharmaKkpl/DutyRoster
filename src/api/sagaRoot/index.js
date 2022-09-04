@@ -7,6 +7,7 @@ import { watchResetPassword } from "@/screen/resetPassword/redux/Reset_Password.
 import { watchGetQRCodeResponse } from "@/screen/qrCode/redux/QRCode.saga";
 import { watchProfile } from "@/screen/editProfile/redux/Profile.saga";
 import { watchGetRoasterDate } from "@/screen/roster/redux/Roster.saga";
+import { watchGetAvailabilityDate } from "@/screen/availability/redux/Availability.saga";
 
 export default function* sagaRoot() {
   yield all([
@@ -18,5 +19,7 @@ export default function* sagaRoot() {
     fork(watchGetQRCodeResponse),
     fork(watchProfile),
     fork(watchGetRoasterDate),
+    fork(watchGetAvailabilityDate),
+
   ]);
 }

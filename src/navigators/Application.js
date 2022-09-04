@@ -18,16 +18,22 @@ import ForgotPassword from "../screen/forgotPassword";
 import ResetPassword from "@/screen/resetPassword";
 import HomeNavigation from "./HomeNavigation";
 import EditProfile from "@/screen/editProfile";
-import Unavailablity from "@/screen/unavailablity";
+import Availability from "@/screen/availability";
 import ProfileSetting from "@/screen/profileSettings";
 import Calendars from "@/components/Calendars";
 
 export const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
+
 // @refresh reset
+
 const ApplicationNavigator = () => {
   // const { Layout, darkMode, NavigationTheme } = useTheme()
   // const { colors } = NavigationTheme
+
+
+
+
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -35,7 +41,7 @@ const ApplicationNavigator = () => {
         <StatusBar backgroundColor={appColor.RED} />
         <Stack.Navigator
           screenOptions={{ headerShown: false }}
-          initialRouteName={appConstant.LOGIN}
+          initialRouteName={appConstant.AVAILABILITY}
         >
           <Stack.Screen name={appConstant.HOME} component={HomeNavigation} />
           <Stack.Screen name={appConstant.LOGIN} component={Login} />
@@ -53,13 +59,13 @@ const ApplicationNavigator = () => {
             component={EditProfile}
           />
           <Stack.Screen
-            name={appConstant.UNAVAILABILITY}
-            component={Unavailablity}
+            name={appConstant.AVAILABILITY}
+            component={Availability}
           />
-          <Stack.Screen
+          {/* <Stack.Screen
             name={appConstant.CALENDAR}
             component={Calendars}
-          />
+          /> */}
           <Stack.Screen name={appConstant.PROFILE_SETTINGS} component={ProfileSetting} />
         </Stack.Navigator>
       </NavigationContainer>
