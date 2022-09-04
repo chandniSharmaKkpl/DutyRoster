@@ -47,7 +47,8 @@ import {
   setSelectedDateAction,
   setCityAndTimeArray,
   requestToGetAvailability, 
-  requestToSaveAvailability
+  requestToSaveAvailability,
+  setSelectedDistricts
 } from "../availability/redux/Availability.action";
 import { dayDateReturn } from "@/common/timeFormate";
 import { useSelector } from "react-redux";
@@ -60,11 +61,15 @@ const Availability = (props) => {
   const {
     setMarkeDatesAction,
     markedDates,
-    requestToGetRoasterDateRangeAction,
+    requestToGetAvailabilityAction,
     selectedWeek,
     startDay,
     endDay,
     arraySelectedDate,
+    arrayDistricts,
+    setSelectedDistrictsAction,
+    selectedDistrict,
+    availabilityData
     // arrayCityAndTime,
   } = props;
 
@@ -72,7 +77,6 @@ const Availability = (props) => {
   const [isCalendarShow, setIsCalendarShow] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
   const [isAlertShow, setIsAlertShow] = useState(false);
-  const [arrayCityAndTime, setArrayCityAndTime] = useState(["1", "2"]);
 
   const [unavailablityDate, setUnavailablityDate] = useState("");
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -82,8 +86,6 @@ const Availability = (props) => {
   const [isTimeOutPickerVisible, setTimeOutPickerVisibility] = useState(false);
   const [timeData, setTimeData] = useState([]);
   const [isShowDistrictList, setIsShowDistrictList] = useState(false);
-  const [arrayDistricts, setArrayDistricts] = useState(["Test1", "Test2"]);
-  const [selectedDistrict, setselectedDistrict] = useState("Melboure City");
   const onChangeUnavailablityDate = useCallback(
     (text) => setUnavailablityDate(text),
     []
@@ -93,18 +95,23 @@ const Availability = (props) => {
     var endDate = "";
     var startDate = new Date();
     endDate = moment(startDate).add(7, "d");
-    console.log("startDate", startDate);
     setSelectedWeek(startDate);
     setSelectedDate(startDate);
     // setCityAndTimeArray(["1", "2"]);
     // action to api call format date
-    // const fromDate = moment(startDate).format("YYYY-MM-DD");
-    // const toDate = moment(endDate).format("YYYY-MM-DD");
+    const fromDate = moment(startDate).format("YYYY-MM-DD");
+    const toDate = moment(endDate).format("YYYY-MM-DD");
+    const params = {
+      week_start: "2022-09-05",
+      week_end: "2022-09-11",
+    };
+    requestToGetAvailabilityAction(params);
+    console.log("array dist", arrayDistricts);
 
-    // const params = new FormData();
-    // params.append("from", fromDate);
-    // params.append("to", toDate);
-    // requestToGetRoasterDateRangeAction(params);
+    if (arrayDistricts.length>0) {
+      setSelectedDistrictsAction(arrayDistricts[0])
+    }
+
   }, []);
 
   React.useEffect(()=>{
@@ -284,17 +291,15 @@ const Availability = (props) => {
     );
   };
 
-  const renderReasonList = ({ item }) => {
+  const renderDistrictList = ({ item }) => {
     return (
       <View>
         <Pressable
-        // onPress={() => {
-        //   setReason(item.item.reason);
-        //   setReasonId(item.item.id);
-        //   setShowReasonList(!showReasonList);
-        // }}
-        >
-          <Text style={styles.textRow}>{item}</Text>
+        onPress={() => {
+          setSelectedDistrictsAction(item);
+          setIsShowDistrictList(false)
+        }}>
+          <Text style={styles.textRow}>{item.district_name}</Text>
         </Pressable>
         <View style={styles.singleLine} />
       </View>
@@ -371,9 +376,9 @@ const Availability = (props) => {
               text={"Shift Availability Detail"}
               style={styles.txtUnavailablity}
             />
-            <View>
-{/* <Shift arrayShift ={}/> */}
-            </View>
+           <View>
+<Shift availabilityData ={availabilityData}/>
+            </View> 
           </View>
 
           <View style={styles.viewTopTitle}>
@@ -401,8 +406,7 @@ const Availability = (props) => {
               >
                 <View style={[styles.buttonInsideReason]}>
                   <Text multiline="true" style={styles.reasonText}>
-                    {/* {reason === 'Select Reason For Decline'?  getDataFromResponse(responseGetReasonList): reason} */}
-                    {selectedDistrict}
+                    {selectedDistrict?.district_name}
                   </Text>
                   {isShowDistrictList ? (
                     <View style={styles.viewArrow}>
@@ -425,67 +429,15 @@ const Availability = (props) => {
               </TouchableOpacity>
             </View>
           </View>
+
+          {/* Time */}
           <View style={styles.viewTopTitle}>
             <AppText style={styles.txtUnavailablity} text={appConstant.TIME} />
-            {timeData.length > 0 &&
-              timeData.map((item, key) => {
-                return (
-                  <View
-                    key={key}
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                      marginBottom: "5%",
-                    }}
-                  >
-                    <TextInputCustom
-                      value={item.inTime}
-                      placeholder={appConstant.IN_TIME}
-                      inputViewStyle={{
-                        width: "40%",
-                        backgroundColor: "white",
-                        borderColor: "white",
-                      }}
-                      rightIcon={imageConstant.IMAGE_TIME_ICON}
-                      rightIconStyle={styles.timeIconStyle}
-                      onChangeText={(text) => {
-                        onSetInTime(text, key);
-                      }}
-                      onPressRight={(key) => {
-                        showInTimePicker(key);
-                      }}
-                      onPressIn={(key) => {
-                        showInTimePicker(key);
-                      }}
-                    />
-                    <TextInputCustom
-                      value={item.outTime}
-                      placeholder={appConstant.OUT_TIME}
-                      inputViewStyle={{
-                        width: "40%",
-                        backgroundColor: "white",
-                        borderColor: "white",
-                      }}
-                      rightIcon={imageConstant.IMAGE_TIME_ICON}
-                      rightIconStyle={styles.timeIconStyle}
-                      onChangeText={(text) => {
-                        setOutTime(text);
-                      }}
-                      onPressRight={showOutTimePicker}
-                      onPressIn={showOutTimePicker}
-                    />
-                    <TouchableOpacity onPress={onPressAddIcon}>
-                      <View style={styles.addTimeIconContainer}>
-                        <Text style={styles.iconText}>+</Text>
-                      </View>
-                    </TouchableOpacity>
-                  </View>
-                );
-              })}
+         
             <View
-              style={{ flexDirection: "row", justifyContent: "space-between" }}
+              style={{ flexDirection: "row",  width:'20%' }}
             >
-              <TextInputCustom
+              {/* <TextInputCustom
                 value={inTime}
                 placeholder={appConstant.IN_TIME}
                 inputViewStyle={{
@@ -500,8 +452,8 @@ const Availability = (props) => {
                 }}
                 onPressRight={showInTimePicker}
                 onPressIn={showInTimePicker}
-              />
-              <TextInputCustom
+              /> */}
+              {/* <TextInputCustom
                 value={outTime}
                 placeholder={appConstant.OUT_TIME}
                 inputViewStyle={{
@@ -516,12 +468,12 @@ const Availability = (props) => {
                 }}
                 onPressRight={showOutTimePicker}
                 onPressIn={showOutTimePicker}
-              />
-              <TouchableOpacity onPress={onPressAddIcon}>
+              /> */}
+              {/* <TouchableOpacity onPress={onPressAddIcon}>
                 <View style={styles.addTimeIconContainer}>
                   <Text style={styles.iconText}>+</Text>
                 </View>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
           </View>
           <TouchableOpacity style={styles.btnBlack}>
@@ -576,7 +528,7 @@ const Availability = (props) => {
             <View style={[styles.viewFlatList]}>
               <FlatList
                 data={arrayDistricts ? arrayDistricts : []}
-                renderItem={renderReasonList}
+                renderItem={renderDistrictList}
                 scrollEnabled={false}
                 keyExtractor={(item, index) => index.toString()}
               />
@@ -589,18 +541,24 @@ const Availability = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state) => (
+  // console.log(" availbility state ", state),
+  {
+    selectedDistrict: state.AvailabilityReducer.selectedDistrict,
   markedDates: state.AvailabilityReducer.markedDates,
   selectedWeek: state.AvailabilityReducer.selectedWeek.data,
   startDay: state.AvailabilityReducer.selectedWeek.weekStart,
   endDay: state.AvailabilityReducer.selectedWeek.weekEnd,
   arraySelectedDate: state.AvailabilityReducer.arraySelectedDate,
   // arrayCityAndTime: state.AvailabilityReducer.arrayCityAndTime,
-  arrayShift: state.AvailabilityReducer.arrayShift
+  availabilityData: state.AvailabilityReducer.availabilityData,
+  arrayDistricts: state.LoginReducer.districts,
+
 });
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    setSelectedDistrictsAction:(params) => dispatch(setSelectedDistricts(params)),
     setMarkeDatesAction: (params) => dispatch(setMarkeDates(params)),
     requestToGetRoasterDateRangeAction: (params) =>
       dispatch(requestToGetRoasterDateRange(params)),

@@ -38,13 +38,15 @@ export default {
   CAPTURE_IMAGE: "Take Photo",
   SELECT_PHOTO_FROM_LIBRARY: "Select Photo from Library",
   CANCELLED_IMAGE_SELECTION: 'User cancelled image selection',
+  IMAGE_REQUIRED:"The image field is required.",
+
   //** Toast types **/
   TOAST_SUCCESS:"success",
   TOAST_NORMAL:"normal",
   TOAST_WARNING:"warning",
   TOAST_DANGER:"danger",
   TOAST_CUSTOM:"custom",
-MSG_STRONG_PWD: "Please enter the strong password",
+MSG_STRONG_PWD: "Password must be 6 characters long and should contain at least 1 Uppercase and 1 Numeric",
 MSG_PHONE_NOT_EMPTY: "Phone cannot be empty",
 TFN_CHAR_LIMIT:"TFN no should be 8 digit",
   //** Bio metric authentication error messages  */

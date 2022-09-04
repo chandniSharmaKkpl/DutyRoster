@@ -111,10 +111,10 @@ export default StyleSheet.create({
   },
   calendarStyleAndroid: {
     position: "absolute",
-    left: wp("34%"),
+    left: wp("32%"),
     top: hp("7.5%"),
     height: 'auto',
-    width: wp('60%'),
+    width: wp('66%'),
     borderWidth: 1,
     borderColor: "#D2D2D2",
     borderRadius: 8,

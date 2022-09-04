@@ -25,7 +25,7 @@ import styles from "./style";
 import { CommonHeader } from "@/components/CommonHeader";
 import { CustomButton } from "@/components/CustomButton";
 import { AppText } from "@/components/AppText";
-import { TextInputCustom } from "@/components/TextInput";
+import { TextInputRegister } from "@/components/TextInputRegister";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useNavigation } from "@react-navigation/core";
 import Modal from "react-native-modal";
@@ -38,7 +38,6 @@ import {
   isMobileNumberValid,
   isValidPassword,
 } from "../../helper/validations";
-import Textarea from "react-native-textarea";
 import { requestToSignup } from "./redux/Signup.action";
 import { connect, useSelector } from "react-redux";
 import Loader from "@/components/Loader";
@@ -57,6 +56,7 @@ const Signup = (props) => {
     tfnErr: "",
     passwordErr: "",
     cnfpasswordErr: "",
+    imgErr:""
   });
 
   const navigation = useNavigation();
@@ -110,7 +110,7 @@ const Signup = (props) => {
 
   const handleConfirm = (date) => {
     // console.warn("A date has been picked: ", date);
-    setDob(moment(date).format("YYYY-MM-DD"));
+    setDob(moment(date).format("DD-MM-YYYY"));
     hideDatePicker();
   };
 
@@ -151,7 +151,8 @@ const Signup = (props) => {
     address,
     tfn,
     password,
-    cnfPassword
+    cnfPassword, 
+    ImageSource
   ) {
     let titleErr = "";
     // let paymentErr = "";
@@ -163,6 +164,13 @@ const Signup = (props) => {
     let tfnErr = "";
     let passwordErr = "";
     let cnfpasswordErr = "";
+    let imgErr = "";
+
+    console.log(" img source ----", ImageSource);
+
+    if (ImageSource == "") {
+      imgErr = alertMsgConstant.IMAGE_REQUIRED
+    }
 
     if (title.trim() === "") {
       titleErr = "Title cannot be empty";
@@ -218,6 +226,8 @@ const Signup = (props) => {
       cnfpasswordErr = alertMsgConstant.PASSWORD_NOT_EQUAL;
     }
 
+
+
     if (
       titleErr === "" &&
       // paymentErr === "" &&
@@ -228,7 +238,7 @@ const Signup = (props) => {
       addressErr === "" &&
       tfnErr === "" &&
       passwordErr === "" &&
-      cnfpasswordErr === ""
+      cnfpasswordErr === "" && imgErr == ""
     ) {
       return "ok";
     } else {
@@ -243,6 +253,7 @@ const Signup = (props) => {
         tfnErr,
         passwordErr,
         cnfpasswordErr,
+        imgErr
       };
     }
   }
@@ -258,7 +269,8 @@ const Signup = (props) => {
       address,
       tfn,
       password,
-      cnfPassword
+      cnfPassword, 
+      ImageSource
     );
     setError(
       validate !== "ok"
@@ -274,6 +286,7 @@ const Signup = (props) => {
             tfnErr: "",
             passwordErr: "",
             cnfpasswordErr: "",
+            imgErr:""
           }
     );
 
@@ -348,6 +361,7 @@ const Signup = (props) => {
               <Text style={stylesCommon.titleText}>Signup</Text>
             </View>
             <View style={{ height: hp("2.8%") }} />
+            <>
             <View
               style={{
                 alignSelf: "center",
@@ -372,9 +386,12 @@ const Signup = (props) => {
                 />
               </TouchableOpacity>
             </View>
+            {error.imgErr ? <AppText text={error.imgErr} style={styles.txtError} /> : null}
+
+</>
             <View style={styles.viewTxtInput}>
               <View style={{ height: hp("2.8%") }} />
-              <TextInputCustom
+              <TextInputRegister
                 label={"Title"}
                 value={title}
                 onChangeText={onChangeTitle}
@@ -386,7 +403,7 @@ const Signup = (props) => {
                 //onPressFocus={()=> Keyboard.addListener()}
               />
               <View style={{ height: hp("2.8%") }} />
-              {/* <TextInputCustom
+              {/* <TextInputRegister
                 label={"Payment"}
                 value={payment}
                 onChangeText={onChangePayment}
@@ -397,7 +414,7 @@ const Signup = (props) => {
                 keyboardType="default"
               /> */}
               {/* <View style={{ height: hp("2.8%") }} /> */}
-              <TextInputCustom
+              <TextInputRegister
                 label={"Name"}
                 value={name}
                 onChangeText={onChangeName}
@@ -409,7 +426,7 @@ const Signup = (props) => {
                 //onPressFocus={()=> Keyboard.addListener()}
               />
               <View style={{ height: hp("2.8%") }} />
-              <TextInputCustom
+              <TextInputRegister
                 label={"Email"}
                 value={email}
                 onChangeText={onChangeEmail}
@@ -422,7 +439,7 @@ const Signup = (props) => {
               />
               <View style={{ height: hp("2.8%") }} />
 
-              <TextInputCustom
+              <TextInputRegister
                 label={"Phone"}
                 value={phone}
                 onChangeText={onChangePhone}
@@ -435,7 +452,7 @@ const Signup = (props) => {
               />
               <View style={{ height: hp("2.8%") }} />
               <View style={{ width: wp("90%"), height: hp("6%"), position: 'relative'}}>
-                <TextInputCustom
+                <TextInputRegister
                   label={"Dob"}
                   value={dob}
                   onChangeText={onChangeDOB}
@@ -456,7 +473,7 @@ const Signup = (props) => {
               </View>
               <View style={{ height: hp("2.8%") }} />
 
-              <TextInputCustom
+              <TextInputRegister
                 label={"Address"}
                 value={address}
                 onChangeText={onChangeAddress}
@@ -469,7 +486,7 @@ const Signup = (props) => {
               />
               <View style={{ height: hp("2.8%") }} />
 
-              <TextInputCustom
+              <TextInputRegister
                 label={"Tfn"}
                 value={tfn}
                 onChangeText={onChangeTFN}
@@ -482,7 +499,7 @@ const Signup = (props) => {
               />
               <View style={{ height: hp("2.8%") }} />
 
-              <TextInputCustom
+              <TextInputRegister
                 secureTextEntry={isClickEye ? false : true}
                 label={"Password"}
                 value={password}
@@ -502,7 +519,7 @@ const Signup = (props) => {
 
               <View style={{ height: hp("2.8%") }} />
 
-              <TextInputCustom
+              <TextInputRegister
                 secureTextEntry={isClickEyeConfirm ? false : true}
                 label={"Confirm-Password"}
                 value={cnfPassword}
@@ -593,6 +610,7 @@ const Signup = (props) => {
           onConfirm={handleConfirm}
           onCancel={hideDatePicker}
           maximumDate={new Date()}
+          dateFormat="dayofweek day month"
         />
       )}
 
@@ -605,14 +623,14 @@ const Signup = (props) => {
         <AppText text={"Signin with email"} style={styles.textSignin} />
 
         <View style={styles.viewTxtInput}>
-          <TextInputCustom
+          <TextInputRegister
             label={"Email"}
             value={email}
             onChangeText={onChangeEmail}
             placeholder={"Email"}
           />
           <View style={{ height: hp("1%") }} />
-          <TextInputCustom
+          <TextInputRegister
             label={"Password"}
             value={password}
             onChangeText={onChangePassword}

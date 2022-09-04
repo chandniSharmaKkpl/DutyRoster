@@ -1,7 +1,9 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { View, Text, Image, BackHandler, TouchableOpacity } from "react-native";
 import stylesCommon from "../../common/commonStyle";
-import { imageConstant, alertMsgConstant } from "../../constant";
+import { StackActions } from "@react-navigation/native";
+
+import { imageConstant, alertMsgConstant, appConstant } from "../../constant";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import { useNavigation } from "@react-navigation/core";
 import { isEmailValid, isValidPassword } from "../../helper/validations";
@@ -15,11 +17,12 @@ import { requestToGetAccessToken } from "./redux/Login.action";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const Login = (props) => {
+  const { accessToken } = props;
   const [error, setError] = React.useState({
     emailErr: "",
     passwordErr: "",
   });
-  const [email, setEmail] = useState("windodee@yopmail.com");
+  const [email, setEmail] = useState("windodee1@yopmail.com");
   const [password, setPassword] = useState("Test@123");
 
   const [isClickEye, setIsClickEye] = useState(false);
@@ -38,6 +41,10 @@ const Login = (props) => {
     return true;
   };
   useEffect(() => {
+    if (accessToken) {
+      const resetAction = StackActions.replace(appConstant.HOME);
+      navigation.dispatch(resetAction);
+    }
     BackHandler.addEventListener("hardwareBackPress", handleBackButtonClick);
 
     return () => {
@@ -191,7 +198,7 @@ const Login = (props) => {
           </View>
           <View style={styles.versionContainer}>
             <AppText
-              text={" App Vesrion 1.7"}
+              text={" App Vesrion 1.9"}
               style={{ ...styles.appVersion }}
             />
           </View>
@@ -203,11 +210,13 @@ const Login = (props) => {
     </>
   );
 };
-
+const mapStateToProps = (state) => ({
+  accessToken: state.LoginReducer.accessToken,
+});
 const mapDispatchToProps = (dispatch) => {
   return {
     requestToGetAccessTokenAction: (params) =>
       dispatch(requestToGetAccessToken(params)),
   };
 };
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

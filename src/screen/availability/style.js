@@ -138,7 +138,7 @@ export default StyleSheet.create({
     borderRadius: 10,
   },
   scrollView:{
-    backgroundColor:'pink', 
+    // backgroundColor:'pink', 
     // width: wp("9=100%"), 
     height: hp('60%')
   },

@@ -26,7 +26,7 @@ function getCurrentWeek(date) {
   return { days, weekStart, weekEnd };
 }
 function getDayfromDate(date) {
-  return moment(date).format('ddd');
+  return moment(date).format("ddd");
 }
 function getDatefromFullDate(date) {
   return moment(date).format("DD");
@@ -34,10 +34,14 @@ function getDatefromFullDate(date) {
 function getTimeStampfromDate(date) {
   return moment(date).format("X");
 }
+function getTimeFromDateTime(dateTime) {
+  return moment(dateTime).format("hh:mm");
+}
 export {
   enumerateDaysBetweenDates,
   getCurrentWeek,
   getDayfromDate,
   getDatefromFullDate,
   getTimeStampfromDate,
+  getTimeFromDateTime,
 };

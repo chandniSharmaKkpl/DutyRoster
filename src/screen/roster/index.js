@@ -44,30 +44,22 @@ const RosterScreen = (props) => {
     selectedWeek,
     startDay,
     endDay,
+    data,
   } = props;
   const [selectedItem, setSelectedItem] = useState(3);
   const [isCalendarShow, setIsCalendarShow] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
   const [isAlertShow, setIsAlertShow] = useState(false);
 
-  var countBack = 0;
   // markedDates obj function
 
   React.useEffect(() => {
     var endDate = "";
     var startDate = new Date();
     endDate = moment(startDate).add(7, "d");
-    console.log("startDate", startDate);
+    // console.log("startDate", startDate);
     setSelectedWeek(startDate);
     setSelectedDate(startDate);
-    // action to api call format date
-    // const fromDate = moment(startDate).format("YYYY-MM-DD");
-    // const toDate = moment(endDate).format("YYYY-MM-DD");
-
-    // const params = new FormData();
-    // params.append("from", fromDate);
-    // params.append("to", toDate);
-    // requestToGetRoasterDateRangeAction(params);
   }, []);
 
   const getSelectedDayEvents = (date) => {
@@ -84,11 +76,13 @@ const RosterScreen = (props) => {
       _dateList[item] = {
         startingDay: index === 0 ? true : false,
         endingDay: index === _dateRange.length - 1 ? true : false,
-        selected: false,
         color: !(index === 0 || index === _dateRange.length - 1)
-          ? appColor.LIGHT_ORANGE
+          ? appColor.RED
           : appColor.RED,
         textColor: appColor.WHITE,
+        selected: index === _dateRange.length - 1 ? true : false,
+        // selectedColor: 'blue'
+        disabled: true,
       };
       _dateFlatList.push({
         id: getTimeStampfromDate(item),
@@ -102,46 +96,53 @@ const RosterScreen = (props) => {
       weekStart: weekStart,
       weekEnd: weekEnd,
     });
+    const fromDate = moment(weekStart).format("YYYY-MM-DD");
+    const toDate = moment(weekEnd).format("YYYY-MM-DD");
+    const params = {
+      from: fromDate,
+      to: toDate,
+    };
+    requestToGetRoasterDateRangeAction(params);
   }, []);
-  console.log(startDay, endDay);
-  const Item = ({ day, date, id }) => (
-    <Pressable
-      onPress={() => {
-        setSelectedItem(id);
-      }}
-    >
-      <View
-        style={
-          selectedItem === id
-            ? styles.dateTextBoxSelect
-            : styles.dateTextunSelectBox
-        }
-      >
-        <Text
-          style={
-            selectedItem === id
-              ? styles.dayTextStyle
-              : styles.unSelectDayTextStyle
-          }
-        >
-          {day}
-        </Text>
-        <Text
-          style={
-            selectedItem === id
-              ? styles.dateTextStyle
-              : styles.unSelectBoxDateTextStyle
-          }
-        >
-          {date}
-        </Text>
-      </View>
-    </Pressable>
-  );
 
-  const renderItem = ({ item }) => (
-    <Item id={item.id} day={item.day} date={item.date} />
-  );
+  // const Item = ({ day, date, id }) => (
+  //   <Pressable
+  //     onPress={() => {
+  //       setSelectedItem(id);
+  //     }}
+  //   >
+  //     <View
+  //       style={
+  //         selectedItem === id
+  //           ? styles.dateTextBoxSelect
+  //           : styles.dateTextunSelectBox
+  //       }
+  //     >
+  //       <Text
+  //         style={
+  //           selectedItem === id
+  //             ? styles.dayTextStyle
+  //             : styles.unSelectDayTextStyle
+  //         }
+  //       >
+  //         {day}
+  //       </Text>
+  //       <Text
+  //         style={
+  //           selectedItem === id
+  //             ? styles.dateTextStyle
+  //             : styles.unSelectBoxDateTextStyle
+  //         }
+  //       >
+  //         {date}
+  //       </Text>
+  //     </View>
+  //   </Pressable>
+  // );
+
+  // const renderItem = ({ item }) => (
+  //   <Item id={item.id} day={item.day} date={item.date} />
+  // );
 
   const onClickCalendar = () => {
     setIsCalendarShow(!isCalendarShow);
@@ -170,7 +171,7 @@ const RosterScreen = (props) => {
               <Images.IMAGE_CALENDAE_SVG style={styles.caledarStyles} />
             </Pressable>
           </View>
-          <View style={styles.dateLabelContainer}>
+          {/* <View style={styles.dateLabelContainer}>
             <FlatList
               horizontal={true}
               removeClippedSubviews
@@ -186,10 +187,10 @@ const RosterScreen = (props) => {
                 borderWidth: 0,
               }}
             />
-          </View>
+          </View> */}
         </View>
         <View style={styles.empTimeCardDetails}>
-          <EmpTimeCard />
+          <EmpTimeCard data={data} />
         </View>
         {isCalendarShow && (
           <View
@@ -205,7 +206,6 @@ const RosterScreen = (props) => {
             />
           </View>
         )}
-       
       </View>
      
       {isAlertShow
@@ -239,6 +239,7 @@ const mapStateToProps = (state) => ({
   selectedWeek: state.RosterReducer.selectedWeek.data,
   startDay: state.RosterReducer.selectedWeek.weekStart,
   endDay: state.RosterReducer.selectedWeek.weekEnd,
+  data: state.RosterReducer.data,
 });
 const mapDispatchToProps = (dispatch) => {
   return {

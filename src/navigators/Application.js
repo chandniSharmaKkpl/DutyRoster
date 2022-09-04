@@ -1,13 +1,18 @@
 import React from "react";
-import { SafeAreaView, StatusBar } from "react-native";
+import { SafeAreaView, StatusBar, useColorScheme } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { NavigationContainer } from "@react-navigation/native";
+import {
+  NavigationContainer,
+  DefaultTheme,
+  DarkTheme,
+  useTheme,
+} from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { useTheme } from "@/hooks";
+
 import { navigationRef } from "./utils";
 import { appColor, appConstant } from "../constant";
 // import CustomDrawer from './CustomDrawer'
@@ -24,24 +29,24 @@ import Calendars from "@/components/Calendars";
 
 export const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
-
+const MyTheme = {
+  ...DefaultTheme,
+  dark: false,
+  colors: {
+    ...DefaultTheme.colors,
+  },
+};
 // @refresh reset
-
-const ApplicationNavigator = () => {
+const ApplicationNavigator = (props) => {
   // const { Layout, darkMode, NavigationTheme } = useTheme()
   // const { colors } = NavigationTheme
-
-
-
-
-
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <NavigationContainer ref={navigationRef}>
+      <NavigationContainer ref={navigationRef} theme={MyTheme}>
         <StatusBar backgroundColor={appColor.RED} />
         <Stack.Navigator
           screenOptions={{ headerShown: false }}
-          initialRouteName={appConstant.AVAILABILITY}
+          initialRouteName={appConstant.Login}
         >
           <Stack.Screen name={appConstant.HOME} component={HomeNavigation} />
           <Stack.Screen name={appConstant.LOGIN} component={Login} />
@@ -62,14 +67,15 @@ const ApplicationNavigator = () => {
             name={appConstant.AVAILABILITY}
             component={Availability}
           />
-          {/* <Stack.Screen
-            name={appConstant.CALENDAR}
-            component={Calendars}
-          /> */}
-          <Stack.Screen name={appConstant.PROFILE_SETTINGS} component={ProfileSetting} />
+          <Stack.Screen name={appConstant.CALENDAR} component={Calendars} />
+          <Stack.Screen
+            name={appConstant.PROFILE_SETTINGS}
+            component={ProfileSetting}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaView>
   );
 };
+
 export default ApplicationNavigator;
