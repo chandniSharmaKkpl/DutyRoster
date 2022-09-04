@@ -30,11 +30,16 @@ export const setCityAndTimeArray = (params) => ({
 })
 
 export const requestToGetAvailability = (params) => ({
-    type : actionConstant.ACTION_ADD_REMOVE_CITY_AND_TIME,
+    type : actionConstant.ACTION_GET_AVAILABILITY_REQUEST,
     payload : params
 })
 
 export const requestToSaveAvailability = (params) => ({
-    type : actionConstant.ACTION_ADD_REMOVE_CITY_AND_TIME,
+    type : actionConstant.ACTION_SAVE_AVAILABILITY_REQUEST,
+    payload : params
+})
+
+export const setSelectedDistricts =(params)=>({
+    type : actionConstant.ACTION_SET_SELECTED_DISTRICTS,
     payload : params
 })

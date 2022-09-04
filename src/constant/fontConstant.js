@@ -31,6 +31,7 @@ export default {
   TEXT_16_SIZE_REGULAR: hp('1.9%'), //16
   TEXT_20_SIZE_REGULAR: hp('2.4%'), //20
 
+  TEXT_11_SIZE_REGULAR: hp('1.5%'), // 14
 
   TEXT_14_SIZE_REGULAR: hp('2%'), // 14
 

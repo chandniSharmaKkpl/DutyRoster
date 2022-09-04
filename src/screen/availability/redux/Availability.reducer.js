@@ -13,12 +13,22 @@ const initialState = {
   arraySelectedDate:[],
   arrayCityAndTime:["1", "2"],
   arrayShift: ["1", "2"], 
-  availabilityData:{}
+  availabilityData:{}, 
+  selectedDistrict:{}
 };
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
-    // Get 
+    
+    case actionConstant.ACTION_SET_SELECTED_DISTRICTS:{
+      console.log(" selected dist rducer=======",payload);
+      return{
+        ...state,
+        selectedDistrict:payload
+      }
+    }
+
+    // Get Availability
     case actionConstant.ACTION_GET_AVAILABILITY_REQUEST: {
       return {
         ...state,
@@ -44,6 +54,7 @@ export default (state = initialState, { type, payload }) => {
       };
     }
 
+    // Save availability
     case actionConstant.ACTION_SAVE_AVAILABILITY_REQUEST: {
       return {
         ...state,

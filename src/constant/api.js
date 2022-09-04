@@ -7,5 +7,8 @@ export default {
   ADD_TIMESHEET : '/add-timesheet',
   VIEW_PROFILE:'/view-profile',
   EDIT_PROFILE:'/edit-profile',
-  ROASTER_DATE_RANGE : '/view-roaster-between-dates'
+  ROASTER_DATE_RANGE : '/view-roaster-between-dates', 
+  GET_AVAILABILITY: '/availability/list', 
+  SAVE_AVAILABILITY: '/availability', 
+
 };

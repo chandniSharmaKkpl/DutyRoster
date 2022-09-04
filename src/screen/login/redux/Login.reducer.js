@@ -6,6 +6,7 @@ const initialState = {
   isAuth: false,
   user: {},
   error: {},
+  districts:[]
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -16,6 +17,8 @@ export default (state = initialState, { type, payload }) => {
         accessToken: {},
         isRequestingLoader: true,
         isAuth: false,
+        user:{},
+        districts:[],
         error: {},
       };
     }
@@ -24,6 +27,7 @@ export default (state = initialState, { type, payload }) => {
         ...state,
         accessToken: payload.data.token,
         user: payload.data.user,
+        districts: payload.data.districts,
         isRequestingLoader: false,  
         isAuth: true,
         error: {},

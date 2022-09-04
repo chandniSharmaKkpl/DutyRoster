@@ -34,7 +34,6 @@ const CommonHeader = (props) => {
     onGoBack,
     profileImage,
   } = props;
-  console.log("profileImage", profileImage);
 
   const styles = StyleSheet.create({
     viewOuter: {

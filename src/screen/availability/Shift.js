@@ -1,23 +1,10 @@
 import React, { useState, useCallback, useEffect } from "react";
 import {
   View,
-  BackHandler,
-  Keyboard,
-  Text,
-  FlatList,
-  Dimensions,
-  ScrollView,
-  Image,
+  FlatList
 } from "react-native";
-import stylesCommon from "../../common/commonStyle";
 import { AppText } from "@/components/AppText";
-import { useRoute, useNavigation } from "@react-navigation/core";
-import { CustomButton } from "@/components/CustomButton";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import {
-  appConstant,
-  imageConstant,
-  alertMsgConstant,
   appColor,
   fontConstant,
 } from "@/constant";
@@ -27,54 +14,121 @@ import {
 } from "react-native-responsive-screen";
 
 const Shift = (props) => {
-  const { arrayShift } = props;
+  const { availabilityData } = props;
+
+  var arrayDates = Object.keys(availabilityData);
+  console.log(" availability data ", arrayDates);
 
   const renderItem = ({ item }) => {
+    console.log(" item ", availabilityData[item].times);
+    let arrayTimes = [];
+
+    if (!Array.isArray(availabilityData[item])) {
+      arrayTimes = availabilityData[item].times;
+    }
 
     return (
-         <View>
+      <View>
+        <View style={{ flexDirection: "row", justifyContent:'space-between',paddingHorizontal: wp("5%") }}>
+        {arrayTimes.length > 0? <AppText text={item} style={styles.txtRow} /> : null}
 
-    </View>
-    )
+          {/* Districts  */}
+          {arrayTimes.length > 0? <View style={styles.viewColumn}> 
+               {arrayTimes.map((dataObj) => {
+                  return (
+                    <AppText
+                      text={dataObj.district_name}
+                      style={styles.txtRow}
+                    />
+                  );
+                })}
+          </View>: null}
+
+          {/* InTime  */}
+          {arrayTimes.length > 0? <View style={styles.viewColumn}>
+            { arrayTimes.map((dataObj) => {
+                  return (
+                    <AppText text={dataObj.start_time} style={styles.txtRow} />
+                  );
+                })
+             }
+          </View> : null}
+
+          {/* OutTime */}
+          {arrayTimes.length > 0
+              ? <View style={styles.viewColumn}>
+            {arrayTimes.map((dataObj) => {
+                  return (
+                    <AppText text={dataObj.end_time} style={styles.txtRow} />
+                  );
+                })
+               }
+          </View>: null}
+        </View>
+        <View style={styles.singleLine}/>
+      </View>
+    );
   };
   return (
     <View style={styles.viewOuter}>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <AppText text={"DATE"} style={styles.txtRed}/>
-            <AppText text={"DISTRICTS"} style={styles.txtRed}/>
-            <AppText text={"IN"} style={styles.txtRed}/>
-            <AppText text={"OUT"} style={styles.txtRed}/>
-
-             </View>
-      <FlatList
-        data={arrayShift}
-        renderItem={renderItem}
-        keyExtractor={(item, index) => index.toString()}
-      />
+      <View style={{ paddingHorizontal: wp("5%") }}>
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <AppText text={"DATE"} style={styles.txtRed} />
+          <AppText text={"DISTRICTS"} style={styles.txtRed} />
+          <AppText text={"IN"} style={styles.txtRed} />
+          <AppText text={"OUT"} style={styles.txtRed} />
+        </View>
+      </View>
+      <View style={styles.singleLine} />
+      <View style={{  }}>
+        <FlatList
+          data={arrayDates}
+          renderItem={renderItem}
+          keyExtractor={(item, index) => index.toString()}
+        />
+      </View>
     </View>
   );
 };
 
-export const styles={
-    viewOuter:{
-        backgroundColor:appColor.WHITE, 
-        borderWidth: 1,
-        borderColor: "#D2D2D2",
-        borderRadius: 10,
-        shadowColor: "#0000001A",
-        shadowOffset: {
-          width: 1,
-          height: 1,
-        },
-        shadowOpacity: 22,
-        shadowRadius: 4.65,
+export const styles = {
+  singleLine: {
+    marginVertical: "1%",
+    backgroundColor: appColor.GRAY,
+    width: "100%",
+    height: "0.1%",
+  },
+  viewColumn: {
+    // padding: "2%",
+    //  width: wp('40%'),
+    // backgroundColor: appColor.LIGH_ORANGE,
+  },
+  viewOuter: {
+    backgroundColor: appColor.WHITE,
+    borderWidth: 1,
+    borderColor: "#D2D2D2",
+    borderRadius: 10,
+    shadowColor: "#0000001A",
+    shadowOffset: {
+      width: 1,
+      height: 1,
     },
- txtRed:{
+    shadowOpacity: 22,
+    shadowRadius: 4.65,
+  },
+  txtRed: {
     fontFamily: fontConstant.FONT_SEMI_BOLD,
     fontSize: fontConstant.TEXT_18_SIZE_REGULAR,
     color: appColor.RED,
     paddingVertical: hp("1%"),
     // paddingHorizontal:wp("1%")
- }
-}
-export default Shift; 
+  },
+  txtRow: {
+    fontFamily: fontConstant.FONT_SEMI_BOLD,
+    fontSize: fontConstant.TEXT_11_SIZE_REGULAR,
+    color: appColor.GRAY,
+    paddingVertical: hp("1%"),
+    // paddingHorizontal:wp("1%")
+  },
+};
+export default Shift;

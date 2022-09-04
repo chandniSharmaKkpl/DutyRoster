@@ -1,8 +1,5 @@
 import * as API from "@/api/user";
-import axios from "axios";
-import * as ApiInterceptor from "@/services/ApiInterceptor";
-import { apiConstant } from "@/constant";
-import localDb from "@/database/localDb";
+
 
 export const ViewProfile = async (params) => {
   try {
