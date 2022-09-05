@@ -65,6 +65,9 @@ export function* workerSaveAvailability(action) {
       type: actionConstant.ACTION_SAVE_AVAILABILITY_SUCCESS,
       payload: saveAvailabilityRes,
     });
+    toast.show(saveAvailabilityRes.message, {
+      type: alertMsgConstant.TOAST_SUCCESS,
+    });
   } catch (error) {
     // alert("workerSaveAvailability error");
     toast.show(error, {

@@ -63,10 +63,7 @@ const ApplicationNavigator = (props) => {
             name={appConstant.EDIT_PROFILE}
             component={EditProfile}
           />
-          {/* <Stack.Screen
-            name={appConstant.AVAILABILITY}
-            component={Availability}
-          /> */}
+
           <Stack.Screen name={appConstant.CALENDAR} component={Calendars} />
           <Stack.Screen
             name={appConstant.PROFILE_SETTINGS}

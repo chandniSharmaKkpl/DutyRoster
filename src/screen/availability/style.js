@@ -366,7 +366,7 @@ export default StyleSheet.create({
     marginVertical: hp("5%"),
     alignItems: "center",
     justifyContent: "space-around",
-    paddingBottom: hp("5.6%") 
+    paddingBottom: hp("5.6%"),
   },
 
   btnSave: {
