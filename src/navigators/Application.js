@@ -46,7 +46,7 @@ const ApplicationNavigator = (props) => {
         <StatusBar backgroundColor={appColor.RED} />
         <Stack.Navigator
           screenOptions={{ headerShown: false }}
-          initialRouteName={appConstant.Login}
+          // initialRouteName={appConstant.LOGIN}
         >
           <Stack.Screen name={appConstant.HOME} component={HomeNavigation} />
           <Stack.Screen name={appConstant.LOGIN} component={Login} />
@@ -63,10 +63,10 @@ const ApplicationNavigator = (props) => {
             name={appConstant.EDIT_PROFILE}
             component={EditProfile}
           />
-          <Stack.Screen
+          {/* <Stack.Screen
             name={appConstant.AVAILABILITY}
             component={Availability}
-          />
+          /> */}
           <Stack.Screen name={appConstant.CALENDAR} component={Calendars} />
           <Stack.Screen
             name={appConstant.PROFILE_SETTINGS}

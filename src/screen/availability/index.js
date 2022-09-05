@@ -323,15 +323,16 @@ const Availability = (props) => {
               </>
             );
           })}
-
-          <TouchableOpacity
-            style={styles.btnBlack}
-            onPress={() => {
-              requestToSaveAvailabilityAction();
-            }}
-          >
-            <AppText style={styles.saveButton} text={"Add"} />
-          </TouchableOpacity>
+          <View>
+            <Pressable
+              style={styles.btnBlack}
+              onPress={() => {
+                requestToSaveAvailabilityAction();
+              }}
+            >
+              <AppText style={styles.saveButton} text={"Add"} />
+            </Pressable>
+          </View>
 
           {/* Shift Availability Detail  */}
 

@@ -103,15 +103,7 @@ const AvailabilityItem = (props) => {
             style={styles.txtUnavailablity}
             text={appConstant.DISCTRICTS}
           />
-          <View style={[styles.districts, { width: wp("15%") }]}>
-            <Pressable
-              style={styles.plusView}
-              onPress={() => {
-                addNewAvailabilityAction();
-              }}
-            >
-              <Images.IMAGE_PLUS style={styles.plusImage} />
-            </Pressable>
+          <View style={[styles.iconContainer, { width: wp("15%") }]}>
             {id !== 0 && (
               <Pressable
                 style={styles.minusView}
@@ -122,6 +114,14 @@ const AvailabilityItem = (props) => {
                 <Images.IMAGE_REMOVE style={styles.plusImage} />
               </Pressable>
             )}
+            <Pressable
+              style={styles.plusView}
+              onPress={() => {
+                addNewAvailabilityAction();
+              }}
+            >
+              <Images.IMAGE_PLUS style={styles.plusImage} />
+            </Pressable>
           </View>
         </View>
 

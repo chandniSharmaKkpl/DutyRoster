@@ -26,6 +26,7 @@ import { navigationRef } from "@/Navigation/RootNavigation";
 import EditProfile from "@/screen/editProfile";
 import Availability from "@/screen/availability";
 import ProfileSetting from "@/screen/profileSettings";
+import availability from "@/screen/availability";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -123,11 +124,19 @@ export default function HomeNavigation(props) {
 
   return (
     <Tab.Navigator
-      screenOptions={{ headerShown: false, tabBarStyle: styles.tabBar }}
       initialRouteName={appConstant.ROASTER}
       tabBarOptions={{
         showLabel: false,
       }}
+      screenOptions={({ route }) => ({
+        headerShown: false,
+        tabBarStyle: styles.tabBar,
+        tabBarButton: [appConstant.AVAILABILITY].includes(route.name)
+          ? () => {
+              return null;
+            }
+          : undefined,
+      })}
     >
       <Tab.Screen
         name={appConstant.ROASTER}
@@ -218,6 +227,17 @@ export default function HomeNavigation(props) {
             }).start();
           },
         })}
+      />
+
+      <Tab.Screen
+        name={appConstant.AVAILABILITY}
+        component={availability}
+        tabBarOptions={{
+          showLabel: false,
+          style: { height: 40, width: "166%" },
+          visible: false,
+        }}
+        options={{ tabBarIcon: ({ focused, color, size }) => null }}
       />
     </Tab.Navigator>
   );

@@ -171,23 +171,6 @@ const RosterScreen = (props) => {
               <Images.IMAGE_CALENDAE_SVG style={styles.caledarStyles} />
             </Pressable>
           </View>
-          {/* <View style={styles.dateLabelContainer}>
-            <FlatList
-              horizontal={true}
-              removeClippedSubviews
-              data={selectedWeek}
-              renderItem={renderItem}
-              keyExtractor={(item) => item.id}
-              contentContainerStyle={{
-                flex: 1,
-                overflow: "hidden",
-                backgroundColor: "white",
-                alignItems: "center",
-                width: Dimensions.get("window").width,
-                borderWidth: 0,
-              }}
-            />
-          </View> */}
         </View>
         <View style={styles.empTimeCardDetails}>
           <EmpTimeCard data={data} />

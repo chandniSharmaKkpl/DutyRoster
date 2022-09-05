@@ -130,6 +130,11 @@ export default StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
+  iconContainer: {
+    flexDirection: "row-reverse",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
   addDelete: {
     flexDirection: "row",
   },
@@ -148,6 +153,7 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 10,
+    // flex: 1,
   },
   scrollView: {
     // backgroundColor:'pink',
@@ -360,6 +366,7 @@ export default StyleSheet.create({
     marginVertical: hp("5%"),
     alignItems: "center",
     justifyContent: "space-around",
+    paddingBottom: hp("5.6%") 
   },
 
   btnSave: {
