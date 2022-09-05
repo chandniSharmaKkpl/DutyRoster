@@ -1,13 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
-import {
-  View,
-  FlatList
-} from "react-native";
+import { View, FlatList } from "react-native";
 import { AppText } from "@/components/AppText";
-import {
-  appColor,
-  fontConstant,
-} from "@/constant";
+import { appColor, fontConstant } from "@/constant";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -18,7 +12,7 @@ const Shift = (props) => {
 
   var arrayDates = Object.keys(availabilityData);
   const renderItem = ({ item }) => {
-    let arrayTimes = [];
+    var arrayTimes = [];
 
     if (!Array.isArray(availabilityData[item])) {
       arrayTimes = availabilityData[item].times;
@@ -26,43 +20,51 @@ const Shift = (props) => {
 
     return (
       <View>
-        <View style={{ flexDirection: "row", justifyContent:'space-between',paddingHorizontal: wp("5%") }}>
-        {arrayTimes.length > 0? <AppText text={item} style={styles.txtRow} /> : null}
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            paddingHorizontal: wp("5%"),
+          }}
+        >
+          {arrayTimes && arrayTimes.length > 0 ? (
+            <AppText text={item} style={styles.txtRow} />
+          ) : null}
 
           {/* Districts  */}
-          {arrayTimes.length > 0? <View style={styles.viewColumn}> 
-               {arrayTimes.map((dataObj) => {
-                  return (
-                    <AppText
-                      text={dataObj.district_name}
-                      style={styles.txtRow}
-                    />
-                  );
-                })}
-          </View>: null}
+          {arrayTimes && arrayTimes.length > 0 ? (
+            <View style={styles.viewColumn}>
+              {arrayTimes.map((dataObj) => {
+                return (
+                  <AppText text={dataObj.district_name} style={styles.txtRow} />
+                );
+              })}
+            </View>
+          ) : null}
 
           {/* InTime  */}
-          {arrayTimes.length > 0? <View style={styles.viewColumn}>
-            { arrayTimes.map((dataObj) => {
-                  return (
-                    <AppText text={dataObj.start_time} style={styles.txtRow} />
-                  );
-                })
-             }
-          </View> : null}
+          {arrayTimes && arrayTimes.length > 0 ? (
+            <View style={styles.viewColumn}>
+              {arrayTimes.map((dataObj) => {
+                return (
+                  <AppText text={dataObj.start_time} style={styles.txtRow} />
+                );
+              })}
+            </View>
+          ) : null}
 
           {/* OutTime */}
-          {arrayTimes.length > 0
-              ? <View style={styles.viewColumn}>
-            {arrayTimes.map((dataObj) => {
-                  return (
-                    <AppText text={dataObj.end_time} style={styles.txtRow} />
-                  );
-                })
-               }
-          </View>: null}
+          {arrayTimes && arrayTimes.length > 0 ? (
+            <View style={styles.viewColumn}>
+              {arrayTimes.map((dataObj) => {
+                return (
+                  <AppText text={dataObj.end_time} style={styles.txtRow} />
+                );
+              })}
+            </View>
+          ) : null}
         </View>
-        <View style={styles.singleLine}/>
+        <View style={styles.singleLine} />
       </View>
     );
   };
@@ -77,7 +79,7 @@ const Shift = (props) => {
         </View>
       </View>
       <View style={styles.singleLine} />
-      <View style={{  }}>
+      <View style={{}}>
         <FlatList
           data={arrayDates}
           renderItem={renderItem}

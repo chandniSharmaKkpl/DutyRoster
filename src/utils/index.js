@@ -34,8 +34,15 @@ function getDatefromFullDate(date) {
 function getTimeStampfromDate(date) {
   return moment(date).format("X");
 }
+function getDateFromTimeStamp(timestamp) {
+  return moment.unix(timestamp).format("YYYY-MM-DD");
+}
 function getTimeFromDateTime(dateTime) {
   return moment(dateTime).format("hh:mm");
+}
+
+function get24HrFrom12HrFormat(time) {
+  return moment(time, ["h:mm A"]).format("HH:mm");
 }
 export {
   enumerateDaysBetweenDates,
@@ -44,4 +51,6 @@ export {
   getDatefromFullDate,
   getTimeStampfromDate,
   getTimeFromDateTime,
+  get24HrFrom12HrFormat,
+  getDateFromTimeStamp,
 };

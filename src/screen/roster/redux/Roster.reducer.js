@@ -34,8 +34,8 @@ export default (state = initialState, { type, payload }) => {
       return {
         ...state,
         isRequesting: false,
-        data: payload,
-        error: {},
+        data: {},
+        error: payload,
       };
     }
     case actionConstant.ACTION_SET_MARKED_DATES: {

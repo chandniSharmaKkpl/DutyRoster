@@ -12,9 +12,10 @@ export const getAvailabilityApiCall = async (params) => {
 };
 
 export const saveAvailabilityApiCall = async (params) => {
+  // throw 'error';
   try {
     const res = await API.saveAvailbility(params);
-    console.log(" save Availability api call ======,", res);
+    // console.log(" save Availability api call ======,", res);
 
     return res.data;
   } catch (error) {

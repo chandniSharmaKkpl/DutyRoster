@@ -1,5 +1,5 @@
 export default {
-  BASE_URL: "https://2exceltest.com.au:8443/dodee/api",
+  BASE_URL: "https://dodee.2exceltest.com.au:8443/api/v0.1",
   LOGIN : "/login",
   SIGNUP:"/register",
   FORGOT_PWD : "/forgot-password",

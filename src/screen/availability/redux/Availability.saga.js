@@ -5,10 +5,14 @@ import {
   saveAvailabilityApiCall,
 } from "./Availability.api";
 import { selectorToken } from "@/screen/login/redux/Login.reducer";
+import { createAvailibilityParams } from "@/utils/Availablity";
+import {
+  selectedAvailabilityData,
+  selectorForSelectedWeek,
+} from "./Availability.reducer";
 
 export function* workerGetAvailabilityDateResponse(action) {
   try {
-
     const response = yield call(getAvailabilityApiCall, action.payload);
 
     if (!response.success) {
@@ -48,16 +52,24 @@ export function* workerGetAvailabilityDateResponse(action) {
 
 export function* workerSaveAvailability(action) {
   try {
-    const saveAvailabilityRes = yield call(
-      saveAvailabilityApiCall,
-      action.payload
-    );
+    const selectedData = yield select(selectedAvailabilityData);
+    const selectedWeek = yield select(selectorForSelectedWeek);
+
+    const params = createAvailibilityParams({
+      selected: selectedData,
+      ...selectedWeek,
+    });
+    // alert("workerSaveAvailability params", params);
+    const saveAvailabilityRes = yield call(saveAvailabilityApiCall, params);
     yield put({
       type: actionConstant.ACTION_SAVE_AVAILABILITY_SUCCESS,
       payload: saveAvailabilityRes,
     });
   } catch (error) {
-    console.log(error);
+    // alert("workerSaveAvailability error");
+    toast.show(error, {
+      type: alertMsgConstant.TOAST_DANGER,
+    });
     yield put({
       type: actionConstant.ACTION_SAVE_AVAILABILITY_FAILURE,
       payload: error,

@@ -5,7 +5,7 @@ export const RoasterDateRangeCall = async (params) => {
     const res = await API.roasterDateRange(params);
     return res.data;
   } catch (error) {
-    console.log(error);
+    console.log("error", JSON.stringify(error, null, 4));
     throw error;
   }
 };

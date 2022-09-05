@@ -4,7 +4,7 @@ export default function addAuthTokenInterceptor(store) {
   client.interceptors.request.use((req) => {
     const token = store.getState().LoginReducer.accessToken;
     if (!token) return req;
-    req.headers.common["Authorization"] = `Bearer ${"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIzIiwianRpIjoiNTJiYmQ1ZDkwMDFjNzVkNDY1N2M0OGNhMTQ0NzdmOTM3MWU5NmY5MTQ4MTJkMTI3YzhhMjUyZGUyMDA1OTczOTMyYzg3ODUwNDY1MDg4OWMiLCJpYXQiOjE2NjEzNDI3NTkuMzQxNTg5OTI3NjczMzM5ODQzNzUsIm5iZiI6MTY2MTM0Mjc1OS4zNDE1OTA4ODEzNDc2NTYyNSwiZXhwIjoxNjkyODc4NzU5LjMzNzQ5Mjk0MjgxMDA1ODU5Mzc1LCJzdWIiOiI3OSIsInNjb3BlcyI6W119.tbqmXg8q5pI4go7JrbfuIYbUxLQDawGgW8ebCsOJoqAspIHSMFxPGNt61D2hfKJ4r-Y0WKoHg1OrD_Ps0uD-D4f-_nYY32MVtFMcom_R-OxDQZPauxef3p4blbpf7LVJgeC9ruyuvw_3HUIsO9dpm4G98WjKDWTpi3R_x7ruqADCkxpZn-QvrC8HPn94Rlwoy_CZD8sjhkPzbJ3UW3QuhYDM_Dgafk-lm1PhDZcTIyvgyjWxn8zexIQ-l3VFGkPZuTMO68f6HkYU-td1Icl3sx8Aii0ESPxfN24MHIKrwLTL-eaDHGFyVDdhB8OAIEEusGC4dryRJxsuR5TBYMFIYol3WLCvpyfGjzzNPKGrVRQ3iIUK_lgwX7-MLBcVNItC_xt6YCkJeWNP1Krb3EvjKq7cWLb0w75cHzLvLCBBddzOtfuoqFGez-4bv5m_7G4MREK5uGgQXLzsWWRYQkICK6FH7hCPCF2vWGwRKGPj-1gGLthvI0O2rYB0Zff-qpEU_VyVYVW-gg-6aOmEPUAjNyMHQId-1_wAzK24c0s7tWYf5PrW7KQEa4vYMdD8J23XxEKqAgCbT7glEFtXe_2mCEuGNZGNqdL8HVKJOIY5HUrjFuWo_KgZtedDZILmQ7hybRYaBjw9YvLc7Jcd5_YzdEEvchsQOUHj5dhW3DywQHU"}`;
+    req.headers.common["Authorization"] = `Bearer ${token}`;
     return req;
   });
 }

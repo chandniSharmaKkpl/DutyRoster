@@ -116,10 +116,7 @@ const CommonHeader = (props) => {
         <View style={styles.viewLeft}>
           {screenName === appConstant.ROASTER ? (
             <Pressable style={styles.buttonStyle} onPress={onUnavailablity}>
-              <AppText
-                text={appConstant.AVAILABILITY}
-                style={styles.txtLeft}
-              />
+              <AppText text={appConstant.AVAILABILITY} style={styles.txtLeft} />
             </Pressable>
           ) : (
             <View />

@@ -1,3 +1,3 @@
 export const Config = {
-  API_URL: 'https://2exceltest.com.au:8443/dodee/api',
+  API_URL: 'https://dodee.2exceltest.com.au:8443/api/v0.1',
 }

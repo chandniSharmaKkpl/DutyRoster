@@ -10,113 +10,125 @@ export default StyleSheet.create({
     fontFamily: fontConstant.BARLOW_REGULAR,
     fontSize: fontConstant.TEXT_H1_SIZE_REGULAR,
     color: appColor.BLACK,
-    paddingLeft: '2%',
-    paddingRight: '2%',
-    paddingTop: '2%',
-    paddingBottom: '2%',
-    width: '80%',
+    paddingLeft: "2%",
+    paddingRight: "2%",
+    paddingTop: "2%",
+    paddingBottom: "2%",
+    width: "80%",
     // backgroundColor: appColor.GRAY,
     // height:hp('4%')
   },
-  
+
   viewFlatList: {
     // height: hp('30%'),
     // backgroundColor: 'pink',
     backgroundColor: appColor.DARK_SKY,
-    position: 'absolute',
+    position: "absolute",
     // width: getOrientation() === 'portrait' ? '90%' : '94%',
     // width: '90%',
-    top: hp('14%'),
-    alignSelf: 'center',
+    top: hp("14%"),
+    alignSelf: "center",
     borderRadius: 10,
     borderBottomRightRadius: 10,
-    borderColor: Platform.OS === 'android' ? appColor.BORDER : appColor.GRAY,
+    borderColor: Platform.OS === "android" ? appColor.BORDER : appColor.GRAY,
     shadowColor: appColor.SHADOW,
     shadowOffset: {
       width: 1,
       height: 1,
     },
-    width: wp('88%'),
-    shadowOpacity: Platform.OS === 'android' ? 0.2 : 0.62,
-    shadowRadius: Platform.OS === 'android' ? 1.2 : 2.22,
+    width: wp("88%"),
+    shadowOpacity: Platform.OS === "android" ? 0.2 : 0.62,
+    shadowRadius: Platform.OS === "android" ? 1.2 : 2.22,
     elevation: 5,
+    zIndex: 1,
   },
   singleLine: {
-    width: '100%',
-    height: hp('0.05%'),
+    width: "100%",
+    height: hp("0.05%"),
     backgroundColor: appColor.GRAY_LIGHT,
   },
   textRow: {
     fontSize: fontConstant.TEXT_14_SIZE_BOLD,
     color: appColor.BLACK,
-    paddingLeft: wp('5%'),
-    paddingRight: '2%',
-    paddingTop: '5%',
-    paddingBottom: '5%',
+    paddingLeft: wp("5%"),
+    paddingRight: "2%",
+    paddingTop: "5%",
+    paddingBottom: "5%",
   },
-  viewArrow:{
-   width: wp('5%'), 
-   height: hp('2%')
+  viewArrow: {
+    width: wp("5%"),
+    height: hp("2%"),
   },
   buttonInsideReason: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     // width: getOrientation() === 'landscap' ? '90%' : '100%',
-    alignItems: 'center',
-    width: '93%',
+    alignItems: "center",
+    width: "93%",
   },
   buttonReason: {
-    paddingLeft: wp('5%'),
-    paddingRight: wp('5%'),
+    paddingLeft: wp("5%"),
+    paddingRight: wp("5%"),
     borderRadius: 14,
-    borderColor: Platform.OS === 'android' ? appColor.BORDER : appColor.GRAY,
+    borderColor: Platform.OS === "android" ? appColor.BORDER : appColor.GRAY,
     shadowColor: appColor.SHADOW,
     shadowOffset: {
       width: 1,
       height: 1,
     },
-    shadowOpacity: Platform.OS === 'android' ? 0.2 : 0.62,
-    shadowRadius: Platform.OS === 'android' ? 1.2 : 2.22,
+    shadowOpacity: Platform.OS === "android" ? 0.2 : 0.62,
+    shadowRadius: Platform.OS === "android" ? 1.2 : 2.22,
     elevation: 5,
-    height: hp('6%'),
+    height: hp("6%"),
     backgroundColor: appColor.WHITE,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
-  viewTopTitle: { 
+  viewTopTitle: {
     paddingTop: hp("1.5%"),
-   paddingHorizontal:wp('5%')
+    paddingHorizontal: wp("5%"),
+  },
+  inOutTimeContainer: {
+    width: "100%",
+    // backgroundColor: "pink",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  inputTimeText: {
+    flex: 1,
+    // marginHorizontal: 10,
+    // marginRight: 10,
   },
   textInput: {
-    backgroundColor: '#fff',
-    borderWidth:0,
+    backgroundColor: "#fff",
+    borderWidth: 0,
   },
-  txtUnavailablity : {
+  txtUnavailablity: {
     fontFamily: fontConstant.FONT_SEMI_BOLD,
     fontSize: fontConstant.TEXT_H1_SIZE_REGULAR,
     color: appColor.BLACK,
     paddingBottom: hp("1%"),
     paddingTop: hp("2%"),
   },
-  plusTxt:{
+  plusTxt: {
     fontFamily: fontConstant.FONT_SEMI_BOLD,
     fontSize: fontConstant.TEXT_H1_SIZE_BOLD,
     color: appColor.WHITE,
-   
   },
-  image:{
-   width: '100%', 
-   height: '100%'
+  image: {
+    width: "100%",
+    height: "100%",
   },
-  rightIconStyle : {
-      height: hp('4%'),
-      width : wp('4%')
+  rightIconStyle: {
+    height: hp("4%"),
+    width: wp("4%"),
   },
   districts: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems:'center'
+    alignItems: "center",
   },
   addDelete: {
     flexDirection: "row",
@@ -137,10 +149,10 @@ export default StyleSheet.create({
     alignItems: "center",
     borderRadius: 10,
   },
-  scrollView:{
-    // backgroundColor:'pink', 
-    // width: wp("9=100%"), 
-    height: hp('60%')
+  scrollView: {
+    // backgroundColor:'pink',
+    // width: wp("9=100%"),
+    height: hp("60%"),
   },
   minusView: {
     backgroundColor: appColor.RED,
@@ -185,9 +197,9 @@ export default StyleSheet.create({
     height: 18,
     fill: appColor.WHITE,
   },
-  plusImage:{
-    width: wp('2%'),
-    height: hp('2%'),
+  plusImage: {
+    width: wp("4%"),
+    height: hp("2%"),
     fill: appColor.WHITE,
   },
   dateTextunSelectBox: {
@@ -301,10 +313,10 @@ export default StyleSheet.create({
     fontSize: fontConstant.TEXT_14_SIZE_BOLD,
     fontWeight: "600",
   },
-  addTimeIconContainer : {
-    height: hp('6%'),
-    width: wp('13%'),
-    backgroundColor : appColor.WHITE,
+  addTimeIconContainer: {
+    height: hp("6%"),
+    width: wp("13%"),
+    backgroundColor: appColor.WHITE,
     borderWidth: 1,
     borderColor: appColor.WHITE,
     borderRadius: 10,
@@ -315,64 +327,60 @@ export default StyleSheet.create({
     },
     shadowOpacity: 0.8,
     shadowRadius: 2.22,
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: "center",
+    alignItems: "center",
   },
-  iconText : {
-    fontSize: 30
+  iconText: {
+    fontSize: 30,
     // fontFamily : fontConstant.FONT_REGULAR
   },
   textInput: {
-    backgroundColor: '#fff',
-    borderWidth:0,
+    backgroundColor: "#fff",
+    borderWidth: 0,
   },
   timeIconStyle: {
     marginRight: 10,
     height: 20,
-    width:20,
+    width: 20,
     // paddingTop:'4%'
   },
   btnBlack: {
-    marginTop:'8%',
+    marginTop: "8%",
     backgroundColor: appColor.BLACK,
-    borderRadius:hp('5%'),
+    borderRadius: hp("5%"),
     // height:'10%'
-     padding:hp('1%'),
-    width: '40%',
-    alignItems: 'center',
-    alignSelf:'center'
+    padding: hp("1%"),
+    width: "40%",
+    alignItems: "center",
+    alignSelf: "center",
   },
-  viewSaveCopy:{
-   flexDirection:'row', 
-  // backgroundColor: 'orange', 
-   marginVertical: hp('5%'), 
-   alignItems: 'center', 
-   justifyContent:'space-around'
+  viewSaveCopy: {
+    flexDirection: "row",
+    // backgroundColor: 'orange',
+    marginVertical: hp("5%"),
+    alignItems: "center",
+    justifyContent: "space-around",
   },
 
   btnSave: {
-   
     backgroundColor: appColor.BLACK,
-    borderRadius:hp('5%'),
+    borderRadius: hp("5%"),
     // height:'10%'
-     padding:hp('1%'),
-    width: wp('40%'),
-    alignItems: 'center',
-  
+    padding: hp("1%"),
+    width: wp("40%"),
+    alignItems: "center",
   },
   btnCopy: {
-   
     backgroundColor: appColor.RED,
-    borderRadius:hp('5%'),
+    borderRadius: hp("5%"),
     // height:'10%'
-     padding:hp('1%'),
-    width: wp('40%'),
-    alignItems: 'center',
-    
+    padding: hp("1%"),
+    width: wp("40%"),
+    alignItems: "center",
   },
   saveButton: {
     color: appColor.WHITE,
     fontSize: fontConstant.TEXT_20_SIZE_BOLD,
     fontWeight: "600",
-  }
+  },
 });
