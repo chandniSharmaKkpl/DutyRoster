@@ -21,7 +21,6 @@ export default (state = initialState, { type, payload }) => {
   switch (type) {
     
     case actionConstant.ACTION_SET_SELECTED_DISTRICTS:{
-      console.log(" selected dist rducer=======",payload);
       return{
         ...state,
         selectedDistrict:payload

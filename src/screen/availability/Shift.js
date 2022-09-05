@@ -17,10 +17,7 @@ const Shift = (props) => {
   const { availabilityData } = props;
 
   var arrayDates = Object.keys(availabilityData);
-  console.log(" availability data ", arrayDates);
-
   const renderItem = ({ item }) => {
-    console.log(" item ", availabilityData[item].times);
     let arrayTimes = [];
 
     if (!Array.isArray(availabilityData[item])) {

@@ -43,3 +43,8 @@ export const setSelectedDistricts =(params)=>({
     type : actionConstant.ACTION_SET_SELECTED_DISTRICTS,
     payload : params
 })
+
+export const setArraySelectedDate =(params)=>({
+    type : actionConstant.ACTION_SET_SELECTED_DISTRICTS,
+    payload : params
+})

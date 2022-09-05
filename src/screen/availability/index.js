@@ -48,7 +48,8 @@ import {
   setCityAndTimeArray,
   requestToGetAvailability, 
   requestToSaveAvailability,
-  setSelectedDistricts
+  setSelectedDistricts, 
+  setArraySelectedDate,
 } from "../availability/redux/Availability.action";
 import { dayDateReturn } from "@/common/timeFormate";
 import { useSelector } from "react-redux";
@@ -69,7 +70,8 @@ const Availability = (props) => {
     arrayDistricts,
     setSelectedDistrictsAction,
     selectedDistrict,
-    availabilityData
+    availabilityData, 
+    setArraySelectedDateAction
     // arrayCityAndTime,
   } = props;
 
@@ -115,8 +117,9 @@ const Availability = (props) => {
   }, []);
 
   React.useEffect(()=>{
+ // Get all dates to show selected 
 
-  })
+  },[])
 
   const getSelectedDayEvents = (date) => {
     setSelectedWeek(date);
@@ -371,7 +374,7 @@ const Availability = (props) => {
           {/* City and Time list */}
 
           {/* Shift Availability Detail  */}
-          <View style={styles.viewTopTitle}>
+          {/* <View style={styles.viewTopTitle}>
             <AppText
               text={"Shift Availability Detail"}
               style={styles.txtUnavailablity}
@@ -379,9 +382,11 @@ const Availability = (props) => {
            <View>
 <Shift availabilityData ={availabilityData}/>
             </View> 
-          </View>
+          </View> */}
 
           <View style={styles.viewTopTitle}>
+
+            {/* Showing plus minus icon besides districts title */}
             <View style={styles.districts}>
               <AppText
                 style={styles.txtUnavailablity}
@@ -398,6 +403,7 @@ const Availability = (props) => {
               </View>
             </View>
 
+{/* Showing district list  */}
             <View style={styles.buttonReason}>
               <TouchableOpacity
                 onPress={() => {
@@ -419,7 +425,7 @@ const Availability = (props) => {
                   ) : (
                     <View style={styles.viewArrow}>
                       <Image
-                        source={imageConstant.IMAGE_UP_ICON}
+                        source={imageConstant.IMAGE_DOWN_ICON}
                         style={styles.image}
                         resizeMode={"contain"}
                       />
@@ -435,13 +441,14 @@ const Availability = (props) => {
             <AppText style={styles.txtUnavailablity} text={appConstant.TIME} />
          
             <View
-              style={{ flexDirection: "row",  width:'20%' }}
+              style={{   width: '80%', backgroundColor:'pink' }}
             >
-              {/* <TextInputCustom
+              <View style={{}}>
+              <TextInputCustom
                 value={inTime}
                 placeholder={appConstant.IN_TIME}
                 inputViewStyle={{
-                  width: "40%",
+                   width: "40%",
                   backgroundColor: "white",
                   borderColor: "white",
                 }}
@@ -452,12 +459,12 @@ const Availability = (props) => {
                 }}
                 onPressRight={showInTimePicker}
                 onPressIn={showInTimePicker}
-              /> */}
-              {/* <TextInputCustom
+              />
+              <TextInputCustom
                 value={outTime}
                 placeholder={appConstant.OUT_TIME}
                 inputViewStyle={{
-                  width: "40%",
+                   width: "40%",
                   backgroundColor: "white",
                   borderColor: "white",
                 }}
@@ -468,12 +475,14 @@ const Availability = (props) => {
                 }}
                 onPressRight={showOutTimePicker}
                 onPressIn={showOutTimePicker}
-              /> */}
-              {/* <TouchableOpacity onPress={onPressAddIcon}>
+              />
+               <TouchableOpacity onPress={onPressAddIcon}>
                 <View style={styles.addTimeIconContainer}>
                   <Text style={styles.iconText}>+</Text>
                 </View>
-              </TouchableOpacity> */}
+              </TouchableOpacity>
+              </View>
+             
             </View>
           </View>
           <TouchableOpacity style={styles.btnBlack}>
@@ -558,6 +567,8 @@ const mapStateToProps = (state) => (
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    setArraySelectedDateAction:(params) => dispatch(setArraySelectedDate(params)),
+
     setSelectedDistrictsAction:(params) => dispatch(setSelectedDistricts(params)),
     setMarkeDatesAction: (params) => dispatch(setMarkeDates(params)),
     requestToGetRoasterDateRangeAction: (params) =>
