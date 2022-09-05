@@ -1,4 +1,4 @@
-import { appColor } from "@/constant";
+import { appColor, appConstant } from "@/constant";
 import React from "react";
 import {
   View,
@@ -38,6 +38,7 @@ export const TextInputCustom = (props) => {
     onFocus,
     caretHidden,
     onPressFocus,
+    viewName
   } = props;
 
   return (
@@ -80,7 +81,7 @@ export const TextInputCustom = (props) => {
           />
         </Pressable>
       </View>
-      {error ? <AppText text={error} style={styles.txtError} /> : null}
+      {error ? <AppText text={error} style={viewName == appConstant.PROFILE?styles.txtErrorProfile: styles.txtError} /> : null}
     </View>
   );
 };
@@ -140,8 +141,17 @@ export const styles = {
     fontWeight: fontConstant.WEIGHT_LEIGHT,
     color: "#000",
   },
+  txtErrorProfile: {
+   
+    color: appColor.RED,
+    paddingLeft:wp('1%'),
+     paddingTop: hp("1%"),
+    //  marginb: hp('-1%'),
+    fontSize: fontConstant.TEXT_H3_SIZE_REGULAR,
+    fontFamily: fontConstant.FONT_REGULAR,
+  },
   txtError: {
-    
+    paddingBottom:hp('1%'),
     color: appColor.RED,
     paddingLeft:wp('1%'),
      paddingTop: hp("1%"),

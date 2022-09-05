@@ -8,6 +8,13 @@ import appColor from "../../constant/colorConstant";
 const { height, width } = Dimensions.get("screen");
 
 export default StyleSheet.create({
+  inputTextTitle: {
+    fontFamily: fontConstant.FONT_SEMI_BOLD,
+    fontSize: fontConstant.TEXT_H1_SIZE_REGULAR,
+    color: appColor.BLACK,
+    paddingBottom: hp("1%"),
+    paddingTop: hp("1%"),
+  },
   scrollViewStyle: {
     flex: 1,
     // paddingTop: 20,
@@ -31,7 +38,7 @@ export default StyleSheet.create({
     paddingTop: hp("2%"),
   },
   viewTxtInput: {
-    alignItems:'center', 
+   // alignItems:'center', 
     paddingTop:hp('2%')
   },
   viewForgotPass:{

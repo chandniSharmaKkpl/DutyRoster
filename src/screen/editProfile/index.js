@@ -435,6 +435,7 @@ const EditProfile = (props) => {
             <View style={styles.textInputContainer}>
               <Text style={styles.inputTextTitle}>Title </Text>
               <TextInputCustom
+                viewName={appConstant.PROFILE}
                 label={"Title"}
                 value={title}
                 placeholder={"Enter Title"}
@@ -444,6 +445,7 @@ const EditProfile = (props) => {
               />
               <Text style={styles.inputTextTitle}>Payment Type</Text>
               <TextInputCustom
+                viewName={appConstant.PROFILE}
                 label={"Payment"}
                 value={payment}
                 // onChangeText={onChangePayment}
@@ -455,6 +457,7 @@ const EditProfile = (props) => {
 
               <Text style={styles.inputTextTitle}>Name</Text>
               <TextInputCustom
+                viewName={appConstant.PROFILE}
                 label={"Name"}
                 value={name}
                 onChangeText={onChangeName}
@@ -464,6 +467,7 @@ const EditProfile = (props) => {
               />
               <Text style={styles.inputTextTitle}>Email Address</Text>
               <TextInputCustom
+                viewName={appConstant.PROFILE}
                 label={"Email Address"}
                 value={email}
                 onChangeText={onChangeEmail}
@@ -474,6 +478,7 @@ const EditProfile = (props) => {
               />
               <Text style={styles.inputTextTitle}>Phone</Text>
               <TextInputCustom
+                viewName={appConstant.PROFILE}
                 label={"Phone"}
                 value={phone}
                 onChangeText={onChangePhone}
@@ -491,6 +496,7 @@ const EditProfile = (props) => {
                 }}
               >
                 <TextInputCustom
+                viewName={appConstant.PROFILE}
                   label={"Dob"}
                   value={dob}
                   onChangeText={onChangeDOB}
@@ -512,6 +518,7 @@ const EditProfile = (props) => {
               </View>
               <Text style={styles.inputTextTitle}>Address</Text>
               <TextInputCustom
+                viewName={appConstant.PROFILE}
                 label={"Address"}
                 value={address}
                 onChangeText={onChangeAddress}
@@ -521,6 +528,7 @@ const EditProfile = (props) => {
               />
               <Text style={styles.inputTextTitle}>TFN Number</Text>
               <TextInputCustom
+                viewName={appConstant.PROFILE}
                 label={"Tfn"}
                 value={tfn}
                 onChangeText={onChangeTFN}
@@ -533,6 +541,7 @@ const EditProfile = (props) => {
               <View>
                 <Text style={styles.inputTextTitle}>Password</Text>
                 <TextInputCustom
+                viewName={appConstant.PROFILE}
                   secureTextEntry={isClickEye ? false : true}
                   label={"Password"}
                   value={password}
@@ -551,6 +560,7 @@ const EditProfile = (props) => {
               <View>
                 <Text style={styles.inputTextTitle}>Confirm Password</Text>
                 <TextInputCustom
+                viewName={appConstant.PROFILE}
                   secureTextEntry={isClickEyeConfirm ? false : true}
                   label={"Confirm Password"}
                   value={cnfPassword}
