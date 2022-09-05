@@ -25,7 +25,6 @@ import styles from "./style";
 import { CommonHeader } from "@/components/CommonHeader";
 import { CustomButton } from "@/components/CustomButton";
 import { AppText } from "@/components/AppText";
-import { TextInputRegister } from "@/components/TextInputRegister";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useNavigation } from "@react-navigation/core";
 import Modal from "react-native-modal";
@@ -43,6 +42,7 @@ import { connect, useSelector } from "react-redux";
 import Loader from "@/components/Loader";
 import DeviceInfo from "react-native-device-info";
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
+import { TextInputCustom } from "@/components/TextInput";
 
 const Signup = (props) => {
   const [error, setError] = React.useState({
@@ -390,8 +390,9 @@ const Signup = (props) => {
 
 </>
             <View style={styles.viewTxtInput}>
-              <View style={{ height: hp("2.8%") }} />
-              <TextInputRegister
+              {/* <View style={{ height: hp("2.8%") }} /> */}
+              <TextInputCustom
+              viewName={appConstant.SIGNUP}
                 label={"Title"}
                 value={title}
                 onChangeText={onChangeTitle}
@@ -402,7 +403,7 @@ const Signup = (props) => {
                 keyboardType="default"
                 //onPressFocus={()=> Keyboard.addListener()}
               />
-              <View style={{ height: hp("2.8%") }} />
+              {/* <View style={{ height: hp("2.8%") }} /> */}
               {/* <TextInputRegister
                 label={"Payment"}
                 value={payment}
@@ -414,7 +415,8 @@ const Signup = (props) => {
                 keyboardType="default"
               /> */}
               {/* <View style={{ height: hp("2.8%") }} /> */}
-              <TextInputRegister
+               <TextInputCustom
+              viewName={appConstant.SIGNUP}
                 label={"Name"}
                 value={name}
                 onChangeText={onChangeName}
@@ -425,8 +427,8 @@ const Signup = (props) => {
                 keyboardType="default"
                 //onPressFocus={()=> Keyboard.addListener()}
               />
-              <View style={{ height: hp("2.8%") }} />
-              <TextInputRegister
+               <TextInputCustom
+              viewName={appConstant.SIGNUP}
                 label={"Email"}
                 value={email}
                 onChangeText={onChangeEmail}
@@ -437,9 +439,10 @@ const Signup = (props) => {
                 keyboardType="email-address"
                 //onPressFocus={()=> Keyboard.addListener()}
               />
-              <View style={{ height: hp("2.8%") }} />
+              {/* <View style={{ height: hp("2.8%") }} /> */}
 
-              <TextInputRegister
+               <TextInputCustom
+              viewName={appConstant.SIGNUP}
                 label={"Phone"}
                 value={phone}
                 onChangeText={onChangePhone}
@@ -450,30 +453,40 @@ const Signup = (props) => {
                 keyboardType="number-pad"
                 //onPressFocus={()=> Keyboard.addListener()}
               />
-              <View style={{ height: hp("2.8%") }} />
-              <View style={{ width: wp("90%"), height: hp("6%"), position: 'relative'}}>
-                <TextInputRegister
+              {/* <View style={{ height: hp("2.8%") }} /> */}
+              {/* <View
+                style={{
+                  width: wp("90%"),
+                  height: hp("9%"),
+                  position: "relative",
+                }}
+              > */}
+                 <TextInputCustom
+              viewName={appConstant.SIGNUP}
                   label={"Dob"}
                   value={dob}
                   onChangeText={onChangeDOB}
                   placeholder={"Enter Date of Birth"}
-                  icon={require("../../assets/images/SignupScreen/dob.png")}
-                  rightIcon={require("../../assets/images/SignupScreen/calendar.png")}
+                  eyeIcon={require("../../assets/images/SignupScreen/calendar.png")}
                   onPressRight={showDatePicker}
-                  rightIconStyle={{ height: 20, width: 20 }}
-                  iconStyle={styles.IconStyle}
                   error={error.dobErr}
-                  onPressIn={showDatePicker}
-                  //onPressFocus={()=> Keyboard.dismiss()}
+                  inputViewStyle={styles.inputViewStyle}
                 />
                 <Pressable
                   onPress={showDatePicker}
-                  style={{ width: "100%", height: '100%',flex: 1, position : 'absolute' }}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    flex: 1,
+                    position: "absolute",
+                  }}
                 ></Pressable>
-              </View>
-              <View style={{ height: hp("2.8%") }} />
+              {/* </View> */}
+              
+              {/* <View style={{ height: hp("2.8%") }} /> */}
 
-              <TextInputRegister
+               <TextInputCustom
+              viewName={appConstant.SIGNUP}
                 label={"Address"}
                 value={address}
                 onChangeText={onChangeAddress}
@@ -484,9 +497,10 @@ const Signup = (props) => {
                 keyboardType="default"
                 //onPressFocus={()=> Keyboard.addListener()}
               />
-              <View style={{ height: hp("2.8%") }} />
+              {/* <View style={{ height: hp("2.8%") }} /> */}
 
-              <TextInputRegister
+               <TextInputCustom
+              viewName={appConstant.SIGNUP}
                 label={"Tfn"}
                 value={tfn}
                 onChangeText={onChangeTFN}
@@ -497,9 +511,10 @@ const Signup = (props) => {
                 keyboardType="number-pad"
                 //onPressFocus={()=> Keyboard.addListener()}
               />
-              <View style={{ height: hp("2.8%") }} />
+              {/* <View style={{ height: hp("2.8%") }} /> */}
 
-              <TextInputRegister
+               <TextInputCustom
+              viewName={appConstant.SIGNUP}
                 secureTextEntry={isClickEye ? false : true}
                 label={"Password"}
                 value={password}
@@ -517,9 +532,10 @@ const Signup = (props) => {
                 ////onPressFocus={()=> Keyboard.addListener()}
               />
 
-              <View style={{ height: hp("2.8%") }} />
+              {/* <View style={{ height: hp("2.8%") }} /> */}
 
-              <TextInputRegister
+               <TextInputCustom
+              viewName={appConstant.SIGNUP}
                 secureTextEntry={isClickEyeConfirm ? false : true}
                 label={"Confirm-Password"}
                 value={cnfPassword}
@@ -537,7 +553,7 @@ const Signup = (props) => {
                 //onPressFocus={()=> Keyboard.addListener()}
               />
 
-              <View style={{ height: hp("2.8%") }} />
+              {/* <View style={{ height: hp("2.8%") }} /> */}
             </View>
 
             <View style={styles.viewSocialMediaBtn}>

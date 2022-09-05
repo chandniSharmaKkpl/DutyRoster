@@ -374,7 +374,7 @@ const Availability = (props) => {
           {/* City and Time list */}
 
           {/* Shift Availability Detail  */}
-          {/* <View style={styles.viewTopTitle}>
+          <View style={styles.viewTopTitle}>
             <AppText
               text={"Shift Availability Detail"}
               style={styles.txtUnavailablity}
@@ -382,7 +382,7 @@ const Availability = (props) => {
            <View>
 <Shift availabilityData ={availabilityData}/>
             </View> 
-          </View> */}
+          </View>
 
           <View style={styles.viewTopTitle}>
 

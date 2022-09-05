@@ -59,12 +59,20 @@ paddingBottom:'20%'
   inputViewStyle : {
     backgroundColor : appColor.WHITE
   },
+  inputTextTitleError: {
+    fontFamily: fontConstant.FONT_SEMI_BOLD,
+    fontSize: fontConstant.TEXT_H1_SIZE_REGULAR,
+    color: appColor.BLACK,
+    paddingBottom: hp("1%"),
+    paddingTop: hp("-1%"),
+  },
   inputTextTitle: {
     fontFamily: fontConstant.FONT_SEMI_BOLD,
     fontSize: fontConstant.TEXT_H1_SIZE_REGULAR,
     color: appColor.BLACK,
     paddingBottom: hp("1%"),
     paddingTop: hp("1%"),
+    paddingLeft: wp('1%')
   },
   passwordContainer: {
     flexDirection: "row",
