@@ -3,6 +3,7 @@ import { actionConstant } from "@/constant";
 const initialState = {
   isRequesting: false,
   data: {},
+  cardData: {},
   error: {},
   markedDates: {},
   selectedWeek: {
@@ -23,10 +24,12 @@ export default (state = initialState, { type, payload }) => {
       };
     }
     case actionConstant.ACTION_GET_ROASTER_DATE_SUCCESS: {
+      const {roaster, ...others} = payload;
       return {
         ...state,
         isRequesting: false,
-        data: payload,
+        data: roaster,
+        cardData: others,
         error: {},
       };
     }

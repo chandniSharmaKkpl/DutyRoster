@@ -45,6 +45,90 @@ export const cardConfig = [
   },
 ];
 
+export const bottomCardConfig = [
+  {
+    mainTitle: null,
+    key: "totalshift",
+    data: [
+      {
+        key: "HRS",
+        title: "Total LHRS",
+        value: (value) => {
+          return `${value.toFixed(2)}`;
+        },
+      },
+      {
+        key: "LHR",
+        title: "Total LHR",
+        value: (value) => {
+          return `${value.toFixed(2)}`;
+        },
+      },
+      {
+        key: "DHR",
+        title: "Total DHR",
+        value: (value) => {
+          return `${value.toFixed(2)}`;
+        },
+      },
+      {
+        key: "SHR",
+        title: "Total SHR",
+        value: (value) => {
+          return `${value.toFixed(2)}`;
+        },
+      },
+    ],
+  },
+  {
+    mainTitle: "Bank",
+    key: "bank",
+    data: [
+      {
+        key: "default_hours",
+        title: "Default Hour",
+        value: null,
+        label: null
+      },
+      {
+        key: "rate_per_hour",
+        title: "Rate / HR",
+        value: (value) => {
+          return `${value.toFixed(2)}`;
+        },
+      },
+      {
+        key: "book_total_hours",
+        title: "BOOK TOTAL",
+        value: null,
+        label: {
+          key: "book_total_dollar",
+          value: (value) => {
+            return `$${value.toFixed(2)}`;
+          },
+        },
+      },
+    ],
+  },
+  {
+    mainTitle: "Cash",
+    key: "bank",
+    data: [
+      {
+        key: "rate_per_hour",
+        title: "Rate / HR",
+        value: null,
+      },
+      {
+        key: "book_total_hours",
+        title: "BOOK TOTAL",
+        value: null,
+        label: null,
+      },
+    ],
+  },
+];
+
 export const extractData = (item, { key, type }) => {
   if (key === "location") {
     return item[key];

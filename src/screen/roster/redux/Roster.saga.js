@@ -11,7 +11,7 @@ export function* workerGetRoasterDateResponse(action) {
     // console.log('roasterDateRangeResponse',JSON.stringify(roasterDateRangeResponse, null,4));
     yield put({
       type: actionConstant.ACTION_GET_ROASTER_DATE_SUCCESS,
-      payload: roasterDateRangeResponse?.data?.roaster,
+      payload: roasterDateRangeResponse?.data,
     });
   } catch (error) {
     console.log("SAGA error",error.status);

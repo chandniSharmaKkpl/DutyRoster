@@ -109,6 +109,10 @@ export default StyleSheet.create({
     marginTop: hp("2%"),
     paddingHorizontal: 20,
   },
+  bottomCardDetails: {
+    marginTop: hp("2%"),
+    paddingHorizontal: 20,
+  },
   calendarStyleAndroid: {
     position: "absolute",
     left: wp("32%"),

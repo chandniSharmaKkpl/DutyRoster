@@ -67,6 +67,17 @@ export function isArrayEmpty(arr) {
     return true;
   }
 }
+
+export const checkObjectHasData = (data, key) => {
+  try {
+    if (data.hasOwnProperty(key)) {
+      return true;
+    }
+    throw "Not data";
+  } catch (error) {
+    return null;
+  }
+};
 export function isStringEmpty(x) {
   return (
     //don't put newline after return

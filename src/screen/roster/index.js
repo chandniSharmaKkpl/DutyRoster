@@ -34,6 +34,7 @@ import {
 } from "./redux/Roster.action";
 import { dayDateReturn } from "@/common/timeFormate";
 import { useSelector } from "react-redux";
+import RosterBottomCard from "@/components/RosterBottomCard";
 
 const RosterScreen = (props) => {
   const navigation = useNavigation();
@@ -46,7 +47,7 @@ const RosterScreen = (props) => {
     selectedWeek,
     startDay,
     endDay,
-    data,
+    data,cardData,
     accessToken,
     isAuth,
   } = props;
@@ -115,45 +116,6 @@ const RosterScreen = (props) => {
     requestToGetRoasterDateRangeAction(params);
   }, []);
 
-  // const Item = ({ day, date, id }) => (
-  //   <Pressable
-  //     onPress={() => {
-  //       setSelectedItem(id);
-  //     }}
-  //   >
-  //     <View
-  //       style={
-  //         selectedItem === id
-  //           ? styles.dateTextBoxSelect
-  //           : styles.dateTextunSelectBox
-  //       }
-  //     >
-  //       <Text
-  //         style={
-  //           selectedItem === id
-  //             ? styles.dayTextStyle
-  //             : styles.unSelectDayTextStyle
-  //         }
-  //       >
-  //         {day}
-  //       </Text>
-  //       <Text
-  //         style={
-  //           selectedItem === id
-  //             ? styles.dateTextStyle
-  //             : styles.unSelectBoxDateTextStyle
-  //         }
-  //       >
-  //         {date}
-  //       </Text>
-  //     </View>
-  //   </Pressable>
-  // );
-
-  // const renderItem = ({ item }) => (
-  //   <Item id={item.id} day={item.day} date={item.date} />
-  // );
-
   const onClickCalendar = () => {
     setIsCalendarShow(!isCalendarShow);
   };
@@ -183,8 +145,11 @@ const RosterScreen = (props) => {
           </View>
         </View>
         <View style={styles.empTimeCardDetails}>
-          <EmpTimeCard data={data} />
+          <EmpTimeCard data={data} cardData={cardData}/>
         </View>
+        {/* <View style={styles.bottomCardDetails}>
+          <RosterBottomCard data={data} />
+        </View> */}
         {isCalendarShow && (
           <View
             style={
@@ -233,6 +198,8 @@ const mapStateToProps = (state) => ({
   startDay: state.RosterReducer.selectedWeek.weekStart,
   endDay: state.RosterReducer.selectedWeek.weekEnd,
   data: state.RosterReducer.data,
+  cardData: state.RosterReducer.cardData,
+
   accessToken: state.LoginReducer.accessToken,
   isAuth: state.LoginReducer.isAuth,
 });

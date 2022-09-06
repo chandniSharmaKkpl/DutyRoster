@@ -10,12 +10,15 @@ import {
 const Shift = (props) => {
   const { availabilityData } = props;
 
+  // console.log('availabilityData',availabilityData);
   var arrayDates = Object.keys(availabilityData);
   const renderItem = ({ item }) => {
     var arrayTimes = [];
 
     if (!Array.isArray(availabilityData[item])) {
       arrayTimes = availabilityData[item].times;
+    }else{
+      return (<></>);
     }
 
     return (
@@ -117,7 +120,7 @@ export const styles = {
   },
   txtRed: {
     fontFamily: fontConstant.FONT_SEMI_BOLD,
-    fontSize: fontConstant.TEXT_17_SIZE_REGULAR,
+    fontSize: fontConstant.TEXT_18_SIZE_REGULAR,
     color: appColor.RED,
     paddingVertical: hp("1%"),
     // paddingHorizontal:wp("1%")
