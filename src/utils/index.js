@@ -44,6 +44,43 @@ function getTimeFromDateTime(dateTime) {
 function get24HrFrom12HrFormat(time) {
   return moment(time, ["h:mm A"]).format("HH:mm");
 }
+export function checkObject(arr) {
+  // check if arr is array
+  const result = Array.isArray(arr);
+
+  if (result) {
+    console.log(`[${arr}] is an array.`);
+    return false;
+  } else {
+    console.log(`${arr} is not an array.`);
+    return true;
+  }
+}
+
+export function isArrayEmpty(arr) {
+  try {
+    if (Array.isArray(arr) && arr.length) {
+      return false;
+    }
+    return true;
+  } catch (error) {
+    return true;
+  }
+}
+export function isStringEmpty(x) {
+  return (
+    //don't put newline after return
+    typeof x == "undefined" ||
+    x == null ||
+    x == false || //same as: !x
+    x.length == 0 ||
+    x == 0 || // note this line, you might not need this.
+    x == "" ||
+    x.replace(/\s/g, "") == "" ||
+    !/[^\s]/.test(x) ||
+    /^\s*$/.test(x)
+  );
+}
 export {
   enumerateDaysBetweenDates,
   getCurrentWeek,

@@ -56,7 +56,7 @@ export default StyleSheet.create({
     paddingBottom: "5%",
   },
   viewArrow: {
-    width: wp("5%"),
+    width: wp("4%"),
     height: hp("2%"),
   },
   buttonInsideReason: {
@@ -95,6 +95,8 @@ export default StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
+    position: "relative",
+
   },
   inputTimeText: {
     flex: 1,
@@ -356,7 +358,7 @@ export default StyleSheet.create({
     borderRadius: hp("5%"),
     // height:'10%'
     padding: hp("1%"),
-    width: "40%",
+    width: wp("35%"),
     alignItems: "center",
     alignSelf: "center",
   },
@@ -374,7 +376,7 @@ export default StyleSheet.create({
     borderRadius: hp("5%"),
     // height:'10%'
     padding: hp("1%"),
-    width: wp("40%"),
+    width: wp("35%"),
     alignItems: "center",
   },
   btnCopy: {
@@ -382,12 +384,12 @@ export default StyleSheet.create({
     borderRadius: hp("5%"),
     // height:'10%'
     padding: hp("1%"),
-    width: wp("40%"),
+    width: wp("35%"),
     alignItems: "center",
   },
   saveButton: {
     color: appColor.WHITE,
-    fontSize: fontConstant.TEXT_20_SIZE_BOLD,
-    fontWeight: "600",
+    fontSize: fontConstant.TEXT_20_SIZE_REGULAR,
+    fontWeight: fontConstant.WEIGHT_SEMI_BOLD,
   },
 });

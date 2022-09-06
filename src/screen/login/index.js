@@ -22,9 +22,12 @@ const Login = (props) => {
     emailErr: "",
     passwordErr: "",
   });
+  // console.log('state.LoginReducer',props.LoginReducer);
   const [email, setEmail] = useState("windodee1@yopmail.com");
   const [password, setPassword] = useState("Test@123");
 
+//windodee1@yopmail.com
+//Test@123
   const [isClickEye, setIsClickEye] = useState(false);
   const loginResponse = useSelector((state) => state.LoginReducer);
   const navigation = useNavigation();
@@ -198,7 +201,7 @@ const Login = (props) => {
           </View>
           <View style={styles.versionContainer}>
             <AppText
-              text={" App Vesrion 1.9"}
+              text={" App Vesrion 2.1"}
               style={{ ...styles.appVersion }}
             />
           </View>
@@ -212,6 +215,8 @@ const Login = (props) => {
 };
 const mapStateToProps = (state) => ({
   accessToken: state.LoginReducer.accessToken,
+  // LoginReducer: state.LoginReducer
+
 });
 const mapDispatchToProps = (dispatch) => {
   return {

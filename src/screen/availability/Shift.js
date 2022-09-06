@@ -117,7 +117,7 @@ export const styles = {
   },
   txtRed: {
     fontFamily: fontConstant.FONT_SEMI_BOLD,
-    fontSize: fontConstant.TEXT_18_SIZE_REGULAR,
+    fontSize: fontConstant.TEXT_17_SIZE_REGULAR,
     color: appColor.RED,
     paddingVertical: hp("1%"),
     // paddingHorizontal:wp("1%")

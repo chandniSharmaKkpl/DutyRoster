@@ -172,7 +172,6 @@ const AvailabilityItem = (props) => {
               value={inTime}
               placeholder={appConstant.IN_TIME}
               inputViewStyle={{
-                // width: "45%",
                 backgroundColor: "white",
                 borderColor: "white",
               }}
@@ -182,8 +181,15 @@ const AvailabilityItem = (props) => {
                 // setInTime(text);
               }}
               onPressRight={showInTimePicker}
-              onPressIn={showInTimePicker}
-              //
+            />
+            <Pressable
+              onPress={showInTimePicker}
+              style={{
+                width: "100%",
+                height: "100%",
+                flex: 1,
+                position: "absolute",
+              }}
             />
           </View>
           <View style={[styles.inputTimeText, { marginLeft: 10 }]}>
@@ -191,7 +197,6 @@ const AvailabilityItem = (props) => {
               value={outTime}
               placeholder={appConstant.OUT_TIME}
               inputViewStyle={{
-                // width: "45%",
                 backgroundColor: "white",
                 borderColor: "white",
               }}
@@ -201,8 +206,15 @@ const AvailabilityItem = (props) => {
                 // setOutTime(text);
               }}
               onPressRight={showOutTimePicker}
-              onPressIn={showOutTimePicker}
-              //   style={styles.inputTimeText}
+            />
+             <Pressable
+              onPress={showOutTimePicker}
+              style={{
+                width: "100%",
+                height: "100%",
+                flex: 1,
+                position: "absolute",
+              }}
             />
           </View>
         </View>

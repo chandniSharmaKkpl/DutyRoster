@@ -34,6 +34,10 @@ const ProfileSetting = (props) => {
     };
   }, []);
 
+  const onGoBack = () => {
+    moveBack()
+  };
+
   const moveBack = () => {
     props.navigation.goBack();
   };
@@ -44,7 +48,6 @@ const ProfileSetting = (props) => {
 
   const onLogout = () => {
     userLogoutActionCall();
-    navigationRef.navigate(appConstant.LOGIN);
   };
 
   const DATA = [
@@ -108,7 +111,7 @@ const ProfileSetting = (props) => {
 
   return (
     <>
-      <CommonHeader screenName={route?.name} />
+      <CommonHeader screenName={route?.name} onGoBack={onGoBack} />
       <View style={[stylesCommon.container, styles.container]}>
         <View style={styles.viewTopTitle}>
           <AppText

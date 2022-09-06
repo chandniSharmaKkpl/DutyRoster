@@ -1,32 +1,11 @@
-import React, { useState, useCallback, useEffect } from "react";
-import {
-  View,
-  BackHandler,
-  Keyboard,
-  Text,
-  FlatList,
-  Dimensions,
-  ScrollView,
-  Image,
-} from "react-native";
-import stylesCommon from "../../common/commonStyle";
+import React, { useState, useCallback } from "react";
+import { View, Text, FlatList, Dimensions, ScrollView } from "react-native";
 import styles from "./style";
 import { AppText } from "@/components/AppText";
 import { useRoute, useNavigation } from "@react-navigation/core";
-import { CustomButton } from "@/components/CustomButton";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import {
-  appConstant,
-  imageConstant,
-  alertMsgConstant,
-  appColor,
-} from "@/constant";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
+import { appConstant, appColor } from "@/constant";
 import { CommonHeader } from "@/components";
-import { TextInputCustom } from "@/components/TextInput";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import moment from "moment";
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
@@ -55,9 +34,9 @@ import {
   setDataItemOfAvailability,
 } from "../availability/redux/Availability.action";
 import { dayDateReturn } from "@/common/timeFormate";
-import { useSelector } from "react-redux";
 import Shift from "./Shift";
 import AvailabilityItem from "@/screen/availability/AvailabilityItem";
+import Loader from "@/components/Loader";
 
 const Availability = (props) => {
   const navigation = useNavigation();
@@ -73,12 +52,8 @@ const Availability = (props) => {
     arraySelectedDate,
     arrayDistricts,
     setSelectedDateAction,
-    setSelectedDistrictsAction,
     removeSelectedDateAction,
-    selectedDistrict,
     availabilityData,
-    setArraySelectedDateAction,
-    // arrayCityAndTime,
     selectedAvailabilityData,
     addNewAvailabilityAction,
     removeAvailabilityAction,
@@ -111,8 +86,6 @@ const Availability = (props) => {
   }, []);
 
   React.useEffect(() => {
-    // setCityAndTimeArray(["1", "2"]);
-    // action to api call format date
     var startDate = new Date();
     endDate = moment(startDate).add(7, "d");
 
@@ -127,14 +100,6 @@ const Availability = (props) => {
     //   setSelectedDistrictsAction(arrayDistricts[0]);
     // }
   }, []);
-
-  React.useEffect(() => {
-    // Get all dates to show selected
-    // console.log(
-    //   "AvailabilityReducer",
-    //   JSON.stringify(props.AvailabilityReducer, null, 4)
-    // );
-  }, [props.AvailabilityReducer]);
 
   const getSelectedDayEvents = (date) => {
     setSelectedWeek(date);
@@ -159,9 +124,8 @@ const Availability = (props) => {
     } else {
       setTimeData([{ inTime: "", outTime: "" }]);
     }
-
-    console.log(timeData, "time");
   };
+
   const setSelectedWeek = React.useCallback((date) => {
     const _dateList = {};
     const _dateFlatList = [];
@@ -186,7 +150,6 @@ const Availability = (props) => {
       _selectedDates.push(getTimeStampfromDate(item));
     });
 
-    console.log("_selectedDates", _selectedDates);
     setMarkeDatesAction({
       markedDates: _dateList,
       selectedWeek: _dateFlatList,
@@ -255,6 +218,18 @@ const Availability = (props) => {
     navigation.navigate(appConstant.ROASTER);
   };
 
+  const onNextWeekCopyData = () => {
+    const startNextWeek = moment(endDay).add(1, "weeks").startOf("isoWeek");
+    setSelectedWeek(startNextWeek);
+  };
+
+  if (!startDay || !endDay) {
+    return (
+      <>
+        <Loader loading={true} />
+      </>
+    );
+  }
   return (
     <>
       <CommonHeader screenName={route?.name} onGoBack={onGoBack} />
@@ -347,10 +322,18 @@ const Availability = (props) => {
           </View>
           {/* Save and Copy button  */}
           <View style={styles.viewSaveCopy}>
-            <TouchableOpacity style={styles.btnSave}>
+            <TouchableOpacity
+              style={styles.btnSave}
+              onPress={() => {
+                requestToSaveAvailabilityAction();
+              }}
+            >
               <AppText style={styles.saveButton} text={"Save"} />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.btnCopy}>
+            <TouchableOpacity
+              style={styles.btnCopy}
+              onPress={onNextWeekCopyData}
+            >
               <AppText style={styles.saveButton} text={"Copy"} />
             </TouchableOpacity>
           </View>
@@ -381,6 +364,9 @@ const Availability = (props) => {
           </View>
         )}
       </View>
+      {props.AvailabilityReducer.isRequesting ? (
+        <Loader loading={props.AvailabilityReducer.isRequesting} />
+      ) : null}
     </>
   );
 };

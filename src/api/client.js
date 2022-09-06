@@ -13,10 +13,10 @@ const client = axios.create({
 
 client.interceptors.response.use(undefined, (error) => {
   if (error.response?.status === 401) {
-    // if (isLocalStorageAvailable()) {
-    //   AsyncStorage.removeItem("persist:root");
-    //   navigate(appConstant.LOGIN);
-    // }
+    if (isLocalStorageAvailable()) {
+      AsyncStorage.removeItem("persist:root");
+      navigate(appConstant.LOGIN);
+    }
   }
 
   error.message = error.response

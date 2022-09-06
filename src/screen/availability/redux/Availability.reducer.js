@@ -1,4 +1,5 @@
 import { actionConstant } from "@/constant";
+import { isArrayEmpty } from "@/utils";
 import { SET_DATA_TYPE } from "@/utils/Availablity";
 
 const initialState = {
@@ -136,6 +137,13 @@ export default (state = initialState, { type, payload }) => {
       };
     }
     case actionConstant.ACTION_SET_MARKED_DATES: {
+      const newAvailabilitySelectedDate = !isArrayEmpty(
+        state.selected.availabilitySelectedDate
+      )
+        ? state.selected.availabilitySelectedDate.concat(
+            payload.availabilitySelectedDate
+          )
+        : payload.availabilitySelectedDate;
       return {
         ...state,
         markedDates: payload.markedDates,
@@ -147,13 +155,12 @@ export default (state = initialState, { type, payload }) => {
         },
         selected: {
           ...state.selected,
-          availabilitySelectedDate: payload.availabilitySelectedDate,
+          availabilitySelectedDate: newAvailabilitySelectedDate,
         },
       };
     }
 
     case actionConstant.ACTION_SET_SELECTED_DATES: {
-      console.log("ACTION_SET_SELECTED_DATES", payload);
       return {
         ...state,
         selected: {

@@ -1,13 +1,10 @@
 import React from "react";
 import {
   Animated,
-  BackHandler,
-  Dimensions,
   Image,
   Platform,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -27,6 +24,9 @@ import EditProfile from "@/screen/editProfile";
 import Availability from "@/screen/availability";
 import ProfileSetting from "@/screen/profileSettings";
 import availability from "@/screen/availability";
+import profileSettings from "@/screen/profileSettings";
+import { hideTabBar } from "@/utils/Navigation";
+import editProfile from "@/screen/editProfile";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -51,8 +51,6 @@ export default function HomeNavigation(props) {
   const styles = StyleSheet.create({
     tabBar: {
       height: Platform.OS === "android" ? 80 : 60,
-      // backgroundColor: "pink",
-      // padding: 20,
       shadowColor: appColor.BOX_SHADOW,
     },
     tab: {
@@ -131,11 +129,7 @@ export default function HomeNavigation(props) {
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarStyle: styles.tabBar,
-        tabBarButton: [appConstant.AVAILABILITY].includes(route.name)
-          ? () => {
-              return null;
-            }
-          : undefined,
+        tabBarButton: hideTabBar(route),
       })}
     >
       <Tab.Screen
@@ -229,16 +223,14 @@ export default function HomeNavigation(props) {
         })}
       />
 
+      <Tab.Screen name={appConstant.AVAILABILITY} component={availability} />
+
       <Tab.Screen
-        name={appConstant.AVAILABILITY}
-        component={availability}
-        tabBarOptions={{
-          showLabel: false,
-          style: { height: 40, width: "166%" },
-          visible: false,
-        }}
-        options={{ tabBarIcon: ({ focused, color, size }) => null }}
+        name={appConstant.PROFILE_SETTINGS}
+        component={profileSettings}
       />
+
+      <Tab.Screen name={appConstant.EDIT_PROFILE} component={editProfile} />
     </Tab.Navigator>
   );
 }

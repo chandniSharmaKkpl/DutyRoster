@@ -43,6 +43,7 @@ export const createAvailibilityParams = ({ selected, weekStart, weekEnd }) => {
             end_time: get24HrFrom12HrFormat(_el.outTime),
           };
         });
+        console.log('selected.availabilitySelectedDate',selected.availabilitySelectedDate);
 
         selected.availabilitySelectedDate.forEach((element) => {
           availability[getDateFromTimeStamp(element)] = {
@@ -58,7 +59,7 @@ export const createAvailibilityParams = ({ selected, weekStart, weekEnd }) => {
       }
       params.week_start = moment(weekStart).format("YYYY-MM-DD");
       params.week_end = moment(weekEnd).format("YYYY-MM-DD");
-    //   console.log("createAvailibilityParams", JSON.stringify(params, null, 2));
+      console.log("createAvailibilityParams", JSON.stringify(params, null, 2));
       return params;
     } else {
     //   toast.show("Please Select Availability Date", {

@@ -56,7 +56,7 @@ const Signup = (props) => {
     tfnErr: "",
     passwordErr: "",
     cnfpasswordErr: "",
-    imgErr:""
+    imgErr: "",
   });
 
   const navigation = useNavigation();
@@ -151,7 +151,7 @@ const Signup = (props) => {
     address,
     tfn,
     password,
-    cnfPassword, 
+    cnfPassword,
     ImageSource
   ) {
     let titleErr = "";
@@ -169,7 +169,7 @@ const Signup = (props) => {
     console.log(" img source ----", ImageSource);
 
     if (ImageSource == "") {
-      imgErr = alertMsgConstant.IMAGE_REQUIRED
+      imgErr = alertMsgConstant.IMAGE_REQUIRED;
     }
 
     if (title.trim() === "") {
@@ -196,7 +196,7 @@ const Signup = (props) => {
       phoneErr = alertMsgConstant.MINIMUM_10_DIGIT;
     } else if (phone.length > 12) {
       phoneErr = alertMsgConstant.MAXIMUM_12_DIGIT;
-    } else if(phone.length == 11) {
+    } else if (phone.length == 11) {
       phoneErr = alertMsgConstant.PHONE_NUMBER_NOT_VALID;
     }
 
@@ -226,8 +226,6 @@ const Signup = (props) => {
       cnfpasswordErr = alertMsgConstant.PASSWORD_NOT_EQUAL;
     }
 
-
-
     if (
       titleErr === "" &&
       // paymentErr === "" &&
@@ -238,7 +236,8 @@ const Signup = (props) => {
       addressErr === "" &&
       tfnErr === "" &&
       passwordErr === "" &&
-      cnfpasswordErr === "" && imgErr == ""
+      cnfpasswordErr === "" &&
+      imgErr == ""
     ) {
       return "ok";
     } else {
@@ -253,7 +252,7 @@ const Signup = (props) => {
         tfnErr,
         passwordErr,
         cnfpasswordErr,
-        imgErr
+        imgErr,
       };
     }
   }
@@ -269,7 +268,7 @@ const Signup = (props) => {
       address,
       tfn,
       password,
-      cnfPassword, 
+      cnfPassword,
       ImageSource
     );
     setError(
@@ -286,7 +285,7 @@ const Signup = (props) => {
             tfnErr: "",
             passwordErr: "",
             cnfpasswordErr: "",
-            imgErr:""
+            imgErr: "",
           }
     );
 
@@ -362,37 +361,38 @@ const Signup = (props) => {
             </View>
             <View style={{ height: hp("2.8%") }} />
             <>
-            <View
-              style={{
-                alignSelf: "center",
-                flexDirection: "row",
-              }}
-            >
-              <Image
-                source={
-                  ImageSource.length == ""
-                    ? require("../../assets/images/SignupScreen/avatar-placeholder.png")
-                    : { uri: ImageSource }
-                }
-                style={styles.img}
-              />
-              <TouchableOpacity
-                onPress={() => openMediaPicker()}
-                style={styles.touch}
+              <View
+                style={{
+                  alignSelf: "center",
+                  flexDirection: "row",
+                }}
               >
                 <Image
-                  source={require("../../assets/images/SignupScreen/camera.png")}
-                  style={styles.editImg}
+                  source={
+                    ImageSource.length == ""
+                      ? require("../../assets/images/SignupScreen/avatar-placeholder.png")
+                      : { uri: ImageSource }
+                  }
+                  style={styles.img}
                 />
-              </TouchableOpacity>
-            </View>
-            {error.imgErr ? <AppText text={error.imgErr} style={styles.txtError} /> : null}
-
-</>
+                <TouchableOpacity
+                  onPress={() => openMediaPicker()}
+                  style={styles.touch}
+                >
+                  <Image
+                    source={require("../../assets/images/SignupScreen/camera.png")}
+                    style={styles.editImg}
+                  />
+                </TouchableOpacity>
+              </View>
+              {error.imgErr ? (
+                <AppText text={error.imgErr} style={styles.txtError} />
+              ) : null}
+            </>
             <View style={styles.viewTxtInput}>
               {/* <View style={{ height: hp("2.8%") }} /> */}
               <TextInputCustom
-              viewName={appConstant.SIGNUP}
+                viewName={appConstant.SIGNUP}
                 label={"Title"}
                 value={title}
                 onChangeText={onChangeTitle}
@@ -415,8 +415,8 @@ const Signup = (props) => {
                 keyboardType="default"
               /> */}
               {/* <View style={{ height: hp("2.8%") }} /> */}
-               <TextInputCustom
-              viewName={appConstant.SIGNUP}
+              <TextInputCustom
+                viewName={appConstant.SIGNUP}
                 label={"Name"}
                 value={name}
                 onChangeText={onChangeName}
@@ -427,8 +427,8 @@ const Signup = (props) => {
                 keyboardType="default"
                 //onPressFocus={()=> Keyboard.addListener()}
               />
-               <TextInputCustom
-              viewName={appConstant.SIGNUP}
+              <TextInputCustom
+                viewName={appConstant.SIGNUP}
                 label={"Email"}
                 value={email}
                 onChangeText={onChangeEmail}
@@ -441,8 +441,8 @@ const Signup = (props) => {
               />
               {/* <View style={{ height: hp("2.8%") }} /> */}
 
-               <TextInputCustom
-              viewName={appConstant.SIGNUP}
+              <TextInputCustom
+                viewName={appConstant.SIGNUP}
                 label={"Phone"}
                 value={phone}
                 onChangeText={onChangePhone}
@@ -461,32 +461,32 @@ const Signup = (props) => {
                   position: "relative",
                 }}
               > */}
-                 <TextInputCustom
-              viewName={appConstant.SIGNUP}
-                  label={"Dob"}
-                  value={dob}
-                  onChangeText={onChangeDOB}
-                  placeholder={"Enter Date of Birth"}
-                  eyeIcon={require("../../assets/images/SignupScreen/calendar.png")}
-                  onPressRight={showDatePicker}
-                  error={error.dobErr}
-                  inputViewStyle={styles.inputViewStyle}
-                />
-                <Pressable
-                  onPress={showDatePicker}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    flex: 1,
-                    position: "absolute",
-                  }}
-                ></Pressable>
+              <TextInputCustom
+                viewName={appConstant.SIGNUP}
+                label={"Dob"}
+                value={dob}
+                onChangeText={onChangeDOB}
+                placeholder={"Enter Date of Birth"}
+                eyeIcon={require("../../assets/images/SignupScreen/calendar.png")}
+                onPressRight={showDatePicker}
+                error={error.dobErr}
+                inputViewStyle={styles.inputViewStyle}
+              />
+              <Pressable
+                onPress={showDatePicker}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  flex: 1,
+                  position: "absolute",
+                }}
+              ></Pressable>
               {/* </View> */}
-              
+
               {/* <View style={{ height: hp("2.8%") }} /> */}
 
-               <TextInputCustom
-              viewName={appConstant.SIGNUP}
+              <TextInputCustom
+                viewName={appConstant.SIGNUP}
                 label={"Address"}
                 value={address}
                 onChangeText={onChangeAddress}
@@ -499,8 +499,8 @@ const Signup = (props) => {
               />
               {/* <View style={{ height: hp("2.8%") }} /> */}
 
-               <TextInputCustom
-              viewName={appConstant.SIGNUP}
+              <TextInputCustom
+                viewName={appConstant.SIGNUP}
                 label={"Tfn"}
                 value={tfn}
                 onChangeText={onChangeTFN}
@@ -513,8 +513,8 @@ const Signup = (props) => {
               />
               {/* <View style={{ height: hp("2.8%") }} /> */}
 
-               <TextInputCustom
-              viewName={appConstant.SIGNUP}
+              <TextInputCustom
+                viewName={appConstant.SIGNUP}
                 secureTextEntry={isClickEye ? false : true}
                 label={"Password"}
                 value={password}
@@ -534,8 +534,8 @@ const Signup = (props) => {
 
               {/* <View style={{ height: hp("2.8%") }} /> */}
 
-               <TextInputCustom
-              viewName={appConstant.SIGNUP}
+              <TextInputCustom
+                viewName={appConstant.SIGNUP}
                 secureTextEntry={isClickEyeConfirm ? false : true}
                 label={"Confirm-Password"}
                 value={cnfPassword}

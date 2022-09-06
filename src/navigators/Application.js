@@ -59,16 +59,10 @@ const ApplicationNavigator = (props) => {
             name={appConstant.RESER_PWD}
             component={ResetPassword}
           />
-          <Stack.Screen
-            name={appConstant.EDIT_PROFILE}
-            component={EditProfile}
-          />
+         
 
           <Stack.Screen name={appConstant.CALENDAR} component={Calendars} />
-          <Stack.Screen
-            name={appConstant.PROFILE_SETTINGS}
-            component={ProfileSetting}
-          />
+         
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaView>

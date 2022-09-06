@@ -123,7 +123,7 @@ const CommonHeader = (props) => {
           )}
           {screenName === appConstant.AVAILABILITY ||
           screenName === appConstant.EDIT_PROFILE ||
-          screenName === appConstant.QR_CODE ? (
+          screenName === appConstant.QR_CODE || screenName === appConstant.PROFILE_SETTINGS ? (
             <Pressable onPress={onGoBack}>
               <Image source={imageConstant.IMAGE_BACK_ARROW_ICON} />
             </Pressable>

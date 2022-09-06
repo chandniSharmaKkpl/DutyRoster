@@ -9,10 +9,12 @@ import {
   Platform,
   Alert,
 } from "react-native";
+import { StackActions } from "@react-navigation/native";
+
 import styles from "./style";
 import { AppText } from "@/components/AppText";
 import { useRoute, useNavigation } from "@react-navigation/core";
-import { alertMsgConstant, appColor } from "@/constant";
+import { alertMsgConstant, appColor, appConstant } from "@/constant";
 import { CommonHeader } from "@/components";
 import { Images } from "@/constant/svgImgConst";
 import EmpTimeCard from "@/components/roasterEmpTimeCard";
@@ -45,6 +47,8 @@ const RosterScreen = (props) => {
     startDay,
     endDay,
     data,
+    accessToken,
+    isAuth,
   } = props;
   const [selectedItem, setSelectedItem] = useState(3);
   const [isCalendarShow, setIsCalendarShow] = useState(false);
@@ -53,6 +57,12 @@ const RosterScreen = (props) => {
 
   // markedDates obj function
 
+  React.useLayoutEffect(() => {
+    if (!accessToken || !isAuth) {
+      const resetAction = StackActions.replace(appConstant.LOGIN);
+      navigation.dispatch(resetAction);
+    }
+  }, []);
   React.useEffect(() => {
     var endDate = "";
     var startDate = new Date();
@@ -190,7 +200,7 @@ const RosterScreen = (props) => {
           </View>
         )}
       </View>
-     
+
       {isAlertShow
         ? Alert.alert(
             alertMsgConstant.PLEASE_CONFIRM,
@@ -223,6 +233,8 @@ const mapStateToProps = (state) => ({
   startDay: state.RosterReducer.selectedWeek.weekStart,
   endDay: state.RosterReducer.selectedWeek.weekEnd,
   data: state.RosterReducer.data,
+  accessToken: state.LoginReducer.accessToken,
+  isAuth: state.LoginReducer.isAuth,
 });
 const mapDispatchToProps = (dispatch) => {
   return {
