@@ -123,7 +123,7 @@ export const styles = {
     },
     shadowOpacity: 0.8,
     shadowRadius: 2.22,
-    marginVertical: hp('0.5%')
+    marginVertical: hp('1%')
   },
   view1: {
     flexDirection: "row",
