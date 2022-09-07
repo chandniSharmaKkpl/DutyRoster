@@ -6,6 +6,14 @@ import {
 import { appColor, fontConstant } from "@/constant";
 
 export default StyleSheet.create({
+  // modalView: {
+  //   position: "absolute",
+  //   backgroundColor: "rgba(0,0,0,0.6)",
+  //   width: wp("100%"),
+  //   height: hp("100%"),
+  //   top: 0,
+  //   bottom: 0,
+  // },
   reasonText: {
     fontFamily: fontConstant.BARLOW_REGULAR,
     fontSize: fontConstant.TEXT_H1_SIZE_REGULAR,
@@ -41,6 +49,7 @@ export default StyleSheet.create({
     shadowRadius: Platform.OS === "android" ? 1.2 : 2.22,
     elevation: 5,
     zIndex: 2,
+    maxHeight: 120,
   },
   singleLine: {
     width: "100%",

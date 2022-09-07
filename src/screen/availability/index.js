@@ -330,7 +330,7 @@ const Availability = (props) => {
         <View style={styles.empTimeCardDetails}>{/* <EmpTimeCard /> */}</View>
 
         {/*  Need to add scroll view here  */}
-        <ScrollView style={styles.scrollView}>
+        <ScrollView nestedScrollEnabled style={styles.scrollView}>
           {/* City and Time list */}
 
           {/* Shift Availability Detail  */}

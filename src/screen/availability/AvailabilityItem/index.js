@@ -257,25 +257,18 @@ const AvailabilityItem = (props) => {
         />
       )}
       {isShowDistrictList ? (
-        // <Modal
-        //   animationType="none"
-        //   transparent={true}
-        //   visible={isShowDistrictList}
-        //   onRequestClose={() => {
-        //     Alert.alert("Modal has been closed.");
-        //     setIsShowDistrictList(!isShowDistrictList);
-        //   }}
-        // >
-          <View style={[styles.viewFlatList]}>
-            <FlatList
-              data={arrayDistricts ? arrayDistricts : []}
-              renderItem={renderDistrictList}
-              scrollEnabled={false}
-              keyExtractor={(item, index) => index.toString()}
-            />
-          </View>
-        // </Modal>
-      ) : null}
+        //  <View  style={styles.modalView}>
+        <ScrollView style={[styles.viewFlatList]}>
+          <FlatList
+            data={arrayDistricts ? arrayDistricts : []}
+            renderItem={renderDistrictList}
+            scrollEnabled={false}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        </ScrollView>
+      ) : // </View>
+
+      null}
     </View>
   );
 };

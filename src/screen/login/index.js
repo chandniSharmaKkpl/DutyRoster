@@ -23,8 +23,8 @@ const Login = (props) => {
     passwordErr: "",
   });
   // console.log('state.LoginReducer',props.LoginReducer);
-  const [email, setEmail] = useState("windodee1@yopmail.com");
-  const [password, setPassword] = useState("Test@123");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
 //windodee1@yopmail.com
 //Test@123
