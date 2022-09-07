@@ -80,6 +80,7 @@ const RosterScreen = (props) => {
 
   const getSelectedDayEvents = (date) => {
     setSelectedWeek(date);
+    onClickCalendar();
   };
 
   const setSelectedWeek = React.useCallback((date) => {

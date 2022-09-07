@@ -125,6 +125,7 @@ const Availability = (props) => {
 
   const getSelectedDayEvents = (date) => {
     setSelectedWeek(date);
+    onClickCalendar();
   };
   const showDatePicker = () => {
     setDatePickerVisibility(true);
