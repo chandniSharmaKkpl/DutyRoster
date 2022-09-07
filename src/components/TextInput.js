@@ -43,11 +43,11 @@ export const TextInputCustom = (props) => {
 
   return (
     <View style={{ width: wp("90%") }}>
-      <View style={[styles.view, inputViewStyle]}>
+      <View style={[viewName == appConstant.SIGNUP? styles.viewSignup: styles.view, inputViewStyle]}>
         <View style={styles.view1}>
           <Image
             source={icon} //Change your icon image here
-            // style={iconStyle}
+           
           />
 
           <TextInput
@@ -104,10 +104,31 @@ export const styles = {
     },
     shadowOpacity: 0.8,
     shadowRadius: 2.22,
+
+  },
+  viewSignup: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: wp("3%"),
+    width: wp("90%"),
+    height: hp("6%"),
+    borderColor: appColor.BORDER_BLACK,
+    borderWidth: 1,
+    borderRadius: 10,
+    shadowColor: appColor.SHADOW,
+    shadowOffset: {
+      width: 1,
+      height: 1,
+    },
+    shadowOpacity: 0.8,
+    shadowRadius: 2.22,
+    marginVertical: hp('0.5%')
   },
   view1: {
     flexDirection: "row",
     alignItems: "center",
+  
   },
   somePlaceholderStyle: {
     fontSize: fontConstant.TEXT_16_SIZE_REGULAR,
@@ -132,11 +153,12 @@ export const styles = {
     justifyContent: "flex-end",
     alignItems: "flex-end",
   },
+  
   txtInput: {
     includeFontPadding: false,
     marginLeft: 10,
     width: "80%",
-    padding: 0,
+    marginVertical: '5%',
     fontSize: fontConstant.TEXT_17_SIZE_REGULAR,
     fontWeight: fontConstant.WEIGHT_LEIGHT,
     color: "#000",
