@@ -150,7 +150,7 @@ const Unavailablity = (props) => {
            <View style={styles.viewTopTitle}>
           <AppText
             style={styles.txtUnavailablity}
-            text={appConstant.DISCTRICTS}
+            text={appConstant.DISTRICTS}
           />
           <TextInputCustom
                inputViewStyle={{...styles.textInput }}

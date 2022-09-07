@@ -40,7 +40,7 @@ export default StyleSheet.create({
     shadowOpacity: Platform.OS === "android" ? 0.2 : 0.62,
     shadowRadius: Platform.OS === "android" ? 1.2 : 2.22,
     elevation: 5,
-    zIndex: 1,
+    zIndex: 2,
   },
   singleLine: {
     width: "100%",
@@ -84,6 +84,16 @@ export default StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    zIndex: 1,
+  },
+
+  availabilityContainer: {
+    position: "relative",
+    zIndex: 1,
+    // backgroundColor: appColor.GRAY,
+    // borderColor: appColor.RED,
+    // borderWidth: 1,
+    // padding:
   },
   viewTopTitle: {
     paddingTop: hp("1.5%"),
@@ -96,7 +106,7 @@ export default StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     position: "relative",
-
+    zIndex: -1,
   },
   inputTimeText: {
     flex: 1,
@@ -361,6 +371,8 @@ export default StyleSheet.create({
     width: wp("35%"),
     alignItems: "center",
     alignSelf: "center",
+    position: "relative",
+    zIndex: -1,
   },
   viewSaveCopy: {
     flexDirection: "row",

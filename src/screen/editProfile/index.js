@@ -132,6 +132,7 @@ const EditProfile = (props) => {
       setTFN(profileInformation?.tfn_number);
       setAddress(profileInformation?.address);
       setDob(profileInformation?.dob);
+      console.log('dob',profileInformation?.dob);
       setPayment(profileInformation?.payment_type);
       setImageSource(profileInformation?.image);
     }
@@ -147,6 +148,7 @@ const EditProfile = (props) => {
       setTFN(profileInformation?.tfn_number);
       setAddress(profileInformation?.address);
       setDob(profileInformation?.dob);
+      console.log('dob 123',profileInformation?.dob);
       if (profileInformation.hasOwnProperty("image")) {
         setImageSource(profileInformation?.image);
       }
@@ -169,7 +171,8 @@ const EditProfile = (props) => {
   };
 
   const handleConfirm = (date) => {
-    setDob(moment(date).format("YYYY-MM-DD"));
+    setDob(moment(date).format("DD-MM-YYYY"));
+    // setDob(date)
     hideDatePicker();
   };
 
@@ -336,25 +339,10 @@ const EditProfile = (props) => {
           }
     );
     if (validate == "ok") {
-      let params = new FormData();
-      params.append("title", title);
-      params.append("name", name);
-      params.append("dob", dob);
-      params.append("email", email);
-      params.append("phone", phone);
-      params.append("address", address);
-      params.append("tfn_number", tfn);
-      params.append("image", {
-        name: Math.floor(new Date().getTime() / 1000) + ".png",
-        type: "image/jpeg",
-        uri: ImageSource ? ImageSource : "https://via.placeholder.com/150",
-      });
-      params.append("employee_id", employee_id);
-      password.length > 0 ? params.append("password", password) : null;
       const data = {
         title: title,
         name: name,
-        dob: dob,
+        dob: moment(dob,"DD-MM-YYYY").format("YYYY-MM-DD"),
         email,
         phone,
         address,

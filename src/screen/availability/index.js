@@ -1,10 +1,21 @@
 import React, { useState, useCallback } from "react";
-import { View, Text, FlatList, Dimensions, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  Dimensions,
+  ScrollView,
+  Alert,
+} from "react-native";
 import styles from "./style";
 import { AppText } from "@/components/AppText";
-import { useRoute, useNavigation } from "@react-navigation/core";
+import {
+  useRoute,
+  useNavigation,
+  useFocusEffect,
+} from "@react-navigation/core";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { appConstant, appColor } from "@/constant";
+import { appConstant, appColor, alertMsgConstant } from "@/constant";
 import { CommonHeader } from "@/components";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import moment from "moment";
@@ -32,6 +43,7 @@ import {
   removeAvailability,
   addNewAvailability,
   setDataItemOfAvailability,
+  resetAvailabilityData,
 } from "../availability/redux/Availability.action";
 import { dayDateReturn } from "@/common/timeFormate";
 import Shift from "./Shift";
@@ -55,10 +67,12 @@ const Availability = (props) => {
     removeSelectedDateAction,
     availabilityData,
     selectedAvailabilityData,
+    isSelectedAvailabilityDataSaved,
     addNewAvailabilityAction,
     removeAvailabilityAction,
     setDataItemofAvailabilityAction,
     requestToSaveAvailabilityAction,
+    resetAvailabilityDataAction,
   } = props;
 
   const [isCalendarShow, setIsCalendarShow] = useState(false);
@@ -77,25 +91,33 @@ const Availability = (props) => {
     (text) => setUnavailablityDate(text),
     []
   );
-  React.useLayoutEffect(() => {
-    var endDate = "";
-    var startDate = new Date();
-    endDate = moment(startDate).add(7, "d");
-    setSelectedWeek(startDate);
-    setSelectedDate(startDate);
-  }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      var endDate = "";
+      var startDate = new Date();
+      endDate = moment(startDate).add(7, "d");
+      setSelectedWeek(startDate);
+      setSelectedDate(startDate);
+      // var startDate = new Date();
+      // endDate = moment(startDate).add(7, "d");
+
+      // const fromDate = moment(startDate).format("YYYY-MM-DD");
+      // const toDate = moment(endDate).format("YYYY-MM-DD");
+      // const params = {
+      //   week_start: fromDate,
+      //   week_end: toDate,
+      // };
+      // requestToGetAvailabilityAction(params);
+      return () => {
+        resetAvailabilityDataAction();
+      };
+    }, [])
+  );
+
+  React.useLayoutEffect(() => {}, []);
 
   React.useEffect(() => {
-    var startDate = new Date();
-    endDate = moment(startDate).add(7, "d");
-
-    const fromDate = moment(startDate).format("YYYY-MM-DD");
-    const toDate = moment(endDate).format("YYYY-MM-DD");
-    const params = {
-      week_start: "2022-09-05",
-      week_end: "2022-09-11",
-    };
-    requestToGetAvailabilityAction(params);
     // if (arrayDistricts.length > 0) {
     //   setSelectedDistrictsAction(arrayDistricts[0]);
     // }
@@ -138,7 +160,7 @@ const Availability = (props) => {
         endingDay: index === _dateRange.length - 1 ? true : false,
         selected: false,
         color: !(index === 0 || index === _dateRange.length - 1)
-          ? appColor.LIGHT_ORANGE
+          ? appColor.RED
           : appColor.RED,
         textColor: appColor.WHITE,
       };
@@ -157,6 +179,12 @@ const Availability = (props) => {
       weekEnd: weekEnd,
       availabilitySelectedDate: _selectedDates,
     });
+
+    const params = {
+      week_start: weekStart,
+      week_end: weekEnd,
+    };
+    requestToGetAvailabilityAction(params);
   }, []);
 
   const onClickDate = (id) => {
@@ -219,8 +247,31 @@ const Availability = (props) => {
   };
 
   const onNextWeekCopyData = () => {
-    const startNextWeek = moment(endDay).add(1, "weeks").startOf("isoWeek");
-    setSelectedWeek(startNextWeek);
+    if (!isSelectedAvailabilityDataSaved) {
+      Alert.alert(
+        alertMsgConstant.WARNING,
+        alertMsgConstant.AVAILABILITY_ALERT_MSG,
+        [
+          {
+            text: alertMsgConstant.CANCEL,
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel",
+          },
+          {
+            text: alertMsgConstant.OK,
+            onPress: () => {
+              const startNextWeek = moment(endDay)
+                .add(1, "weeks")
+                .startOf("isoWeek");
+              setSelectedWeek(startNextWeek);
+            },
+          },
+        ]
+      );
+    } else {
+      const startNextWeek = moment(endDay).add(1, "weeks").startOf("isoWeek");
+      setSelectedWeek(startNextWeek);
+    }
   };
 
   if (!startDay || !endDay) {
@@ -322,14 +373,16 @@ const Availability = (props) => {
           </View>
           {/* Save and Copy button  */}
           <View style={styles.viewSaveCopy}>
-            <TouchableOpacity
-              style={styles.btnSave}
-              onPress={() => {
-                requestToSaveAvailabilityAction();
-              }}
-            >
-              <AppText style={styles.saveButton} text={"Save"} />
-            </TouchableOpacity>
+            {!isSelectedAvailabilityDataSaved && (
+              <TouchableOpacity
+                style={styles.btnSave}
+                onPress={() => {
+                  requestToSaveAvailabilityAction();
+                }}
+              >
+                <AppText style={styles.saveButton} text={"Save"} />
+              </TouchableOpacity>
+            )}
             <TouchableOpacity
               style={styles.btnCopy}
               onPress={onNextWeekCopyData}
@@ -380,6 +433,7 @@ const mapStateToProps = (state) => ({
   arraySelectedDate:
     state.AvailabilityReducer.selected.availabilitySelectedDate,
 
+  isSelectedAvailabilityDataSaved: state.AvailabilityReducer.selected.isSaved,
   selectedAvailabilityData: state.AvailabilityReducer.selected.availabilityData,
   // arrayCityAndTime: state.AvailabilityReducer.arrayCityAndTime,
   availabilityData: state.AvailabilityReducer.availabilityData,
@@ -413,6 +467,8 @@ const mapDispatchToProps = (dispatch) => {
     removeAvailabilityAction: (params) => dispatch(removeAvailability(params)),
     setDataItemofAvailabilityAction: (params) =>
       dispatch(setDataItemOfAvailability(params)),
+
+    resetAvailabilityDataAction: () => dispatch(resetAvailabilityData()),
   };
 };
 export default connect(

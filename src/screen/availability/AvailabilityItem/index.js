@@ -18,14 +18,16 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { appConstant, imageConstant } from "@/constant";
 import { TextInputCustom } from "@/screen/availability/AvailabilityItem/TextInput";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-
+import DropDownPicker from "react-native-dropdown-picker";
+// import DropDownPicker from "@/utils/"
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import DropDownPicker from "react-native-dropdown-picker";
+
 import { SET_DATA_TYPE } from "@/utils/Availablity";
 import moment from "moment";
+import { Modal } from "react-native";
 
 const AvailabilityItem = (props) => {
   const {
@@ -37,7 +39,13 @@ const AvailabilityItem = (props) => {
     removeAvailabilityAction,
     setDataItemofAvailabilityAction,
   } = props;
-
+  const districtRef = React.useRef();
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);
+  const [items, setItems] = useState([
+    { label: "Apple", value: "apple" },
+    { label: "Banana", value: "banana" },
+  ]);
   const { district_id, inTime, outTime, id } = data;
   const [isShowDistrictList, setIsShowDistrictList] = useState(false);
   const [isTimeInPickerVisible, setTimeInPickerVisibility] = useState(false);
@@ -95,13 +103,13 @@ const AvailabilityItem = (props) => {
     );
   };
   return (
-    <View>
+    <View style={styles.availabilityContainer}>
       <View style={styles.viewTopTitle}>
         {/* Showing plus minus icon besides districts title */}
         <View style={styles.districts}>
           <AppText
             style={styles.txtUnavailablity}
-            text={appConstant.DISCTRICTS}
+            text={appConstant.DISTRICTS}
           />
           <View style={[styles.iconContainer, { width: wp("15%") }]}>
             {id !== 0 && (
@@ -129,8 +137,20 @@ const AvailabilityItem = (props) => {
         <View style={styles.buttonReason}>
           <TouchableOpacity
             onPress={() => {
+              console.log("districtRef", districtRef.current);
+              // if (districtRef.current) {
+              //   districtRef.current.measure((fx, fy, width, height, px, py) => {
+              //     console.log("Component width is: " + width);
+              //     console.log("Component height is: " + height);
+              //     console.log("X offset to frame: " + fx);
+              //     console.log("Y offset to frame: " + fy);
+              //     console.log("X offset to page:  " + px);
+              //     console.log("Y offset to page: " + py);
+              //   });
+              // }
               setIsShowDistrictList(!isShowDistrictList);
             }}
+            ref={districtRef}
           >
             <View style={[styles.buttonInsideReason]}>
               <Text multiline="true" style={styles.reasonText}>
@@ -207,7 +227,7 @@ const AvailabilityItem = (props) => {
               }}
               onPressRight={showOutTimePicker}
             />
-             <Pressable
+            <Pressable
               onPress={showOutTimePicker}
               style={{
                 width: "100%",
@@ -237,14 +257,24 @@ const AvailabilityItem = (props) => {
         />
       )}
       {isShowDistrictList ? (
-        <View style={[styles.viewFlatList]}>
-          <FlatList
-            data={arrayDistricts ? arrayDistricts : []}
-            renderItem={renderDistrictList}
-            scrollEnabled={false}
-            keyExtractor={(item, index) => index.toString()}
-          />
-        </View>
+        // <Modal
+        //   animationType="none"
+        //   transparent={true}
+        //   visible={isShowDistrictList}
+        //   onRequestClose={() => {
+        //     Alert.alert("Modal has been closed.");
+        //     setIsShowDistrictList(!isShowDistrictList);
+        //   }}
+        // >
+          <View style={[styles.viewFlatList]}>
+            <FlatList
+              data={arrayDistricts ? arrayDistricts : []}
+              renderItem={renderDistrictList}
+              scrollEnabled={false}
+              keyExtractor={(item, index) => index.toString()}
+            />
+          </View>
+        // </Modal>
       ) : null}
     </View>
   );

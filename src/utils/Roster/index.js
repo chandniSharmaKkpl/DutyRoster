@@ -54,28 +54,28 @@ export const bottomCardConfig = [
         key: "HRS",
         title: "Total LHRS",
         value: (value) => {
-          return `${value.toFixed(2)}`;
+          return `${parseFloat(value).toFixed(2)}`;
         },
       },
       {
         key: "LHR",
         title: "Total LHR",
         value: (value) => {
-          return `${value.toFixed(2)}`;
+          return `${parseFloat(value).toFixed(2)}`;
         },
       },
       {
         key: "DHR",
         title: "Total DHR",
         value: (value) => {
-          return `${value.toFixed(2)}`;
+          return `${parseFloat(value).toFixed(2)}`;
         },
       },
       {
         key: "SHR",
         title: "Total SHR",
         value: (value) => {
-          return `${value.toFixed(2)}`;
+          return `${parseFloat(value).toFixed(2)}`;
         },
       },
     ],
@@ -88,13 +88,13 @@ export const bottomCardConfig = [
         key: "default_hours",
         title: "Default Hour",
         value: null,
-        label: null
+        label: null,
       },
       {
         key: "rate_per_hour",
         title: "Rate / HR",
         value: (value) => {
-          return `${value.toFixed(2)}`;
+          return `$${parseFloat(value).toFixed(2)}`;
         },
       },
       {
@@ -104,7 +104,7 @@ export const bottomCardConfig = [
         label: {
           key: "book_total_dollar",
           value: (value) => {
-            return `$${value.toFixed(2)}`;
+            return `$${parseFloat(value).toFixed(2)}`;
           },
         },
       },
@@ -117,13 +117,97 @@ export const bottomCardConfig = [
       {
         key: "rate_per_hour",
         title: "Rate / HR",
-        value: null,
+        value: (value) => {
+          return `$${parseFloat(value).toFixed(2)}`;
+        },
       },
       {
         key: "book_total_hours",
-        title: "BOOK TOTAL",
+        title: "Cash TOTAL",
         value: null,
         label: null,
+      },
+    ],
+  },
+  {
+    mainTitle: "Cash Extra",
+    key: "cash.cash_extra",
+    data: [
+      // FRI,SAT
+      {
+        key: "cash_fri_sat_rate",
+        title: "Rate / HR",
+        value: (value) => {
+          return `$${parseFloat(value).toFixed()}`;
+        },
+      },
+      {
+        key: "cash_fri_sat_hour",
+        title: "FRI,SAT",
+        value: null,
+        label: {
+          key: "cash_fri_sat_dollar",
+          value: (value) => {
+            return `$${parseFloat(value).toFixed(2)}`;
+          },
+        },
+      },
+      // Sunday
+      {
+        key: "cash_sun_rate",
+        title: "Rate / HR",
+        value: (value) => {
+          return `$${parseFloat(value).toFixed()}`;
+        },
+      },
+      {
+        key: "cash_sun_hour",
+        title: "Sunday",
+        value: null,
+        label: {
+          key: "cash_sun_dollar",
+          value: (value) => {
+            return `$${parseFloat(value).toFixed(2)}`;
+          },
+        },
+      },
+      // OverTime
+      {
+        key: "cash_overtime_rate",
+        title: "Rate / HR",
+        value: (value) => {
+          return `$${parseFloat(value).toFixed()}`;
+        },
+      },
+      {
+        key: "cash_overtime_hour",
+        title: "OverTime",
+        value: null,
+        label: {
+          key: "cash_overtime_dollar",
+          value: (value) => {
+            return `$${parseFloat(value).toFixed(2)}`;
+          },
+        },
+      },
+      // Holiday
+      {
+        key: "cash_holiday_rate",
+        title: "Rate / HR",
+        value: (value) => {
+          return `$${parseFloat(value).toFixed()}`;
+        },
+      },
+      {
+        key: "cash_holiday_hour",
+        title: "Holiday",
+        value: null,
+        label: {
+          key: "cash_holiday_dollar",
+          value: (value) => {
+            return `$${parseFloat(value).toFixed(2)}`;
+          },
+        },
       },
     ],
   },

@@ -35,6 +35,7 @@ import {
 import { dayDateReturn } from "@/common/timeFormate";
 import { useSelector } from "react-redux";
 import RosterBottomCard from "@/components/RosterBottomCard";
+import Loader from "@/components/Loader";
 
 const RosterScreen = (props) => {
   const navigation = useNavigation();
@@ -47,9 +48,11 @@ const RosterScreen = (props) => {
     selectedWeek,
     startDay,
     endDay,
-    data,cardData,
+    data,
+    cardData,
     accessToken,
     isAuth,
+    rosterReducer,
   } = props;
   const [selectedItem, setSelectedItem] = useState(3);
   const [isCalendarShow, setIsCalendarShow] = useState(false);
@@ -57,6 +60,8 @@ const RosterScreen = (props) => {
   const [isAlertShow, setIsAlertShow] = useState(false);
 
   // markedDates obj function
+
+  console.log("cardData ===>", JSON.stringify(rosterReducer, null, 4));
 
   React.useLayoutEffect(() => {
     if (!accessToken || !isAuth) {
@@ -145,7 +150,7 @@ const RosterScreen = (props) => {
           </View>
         </View>
         <View style={styles.empTimeCardDetails}>
-          <EmpTimeCard data={data} cardData={cardData}/>
+          <EmpTimeCard data={data} cardData={cardData} />
         </View>
         {/* <View style={styles.bottomCardDetails}>
           <RosterBottomCard data={data} />
@@ -189,6 +194,10 @@ const RosterScreen = (props) => {
             ]
           )
         : null}
+
+      {rosterReducer.isRequesting ? (
+        <Loader loading={rosterReducer.isRequesting} />
+      ) : null}
     </>
   );
 };
@@ -199,7 +208,7 @@ const mapStateToProps = (state) => ({
   endDay: state.RosterReducer.selectedWeek.weekEnd,
   data: state.RosterReducer.data,
   cardData: state.RosterReducer.cardData,
-
+  rosterReducer: state.RosterReducer,
   accessToken: state.LoginReducer.accessToken,
   isAuth: state.LoginReducer.isAuth,
 });

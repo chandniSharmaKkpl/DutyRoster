@@ -39,6 +39,7 @@ export default {
   SELECT_PHOTO_FROM_LIBRARY: "Select Photo from Library",
   CANCELLED_IMAGE_SELECTION: 'User cancelled image selection',
   IMAGE_REQUIRED:"The image field is required.",
+  AVAILABILITY_ALERT_MSG : "If you will not save your current selection data then you will lose these changes",
 
   //** Toast types **/
   TOAST_SUCCESS:"success",
@@ -48,7 +49,7 @@ export default {
   TOAST_CUSTOM:"custom",
 MSG_STRONG_PWD: "Password must be 6 characters long and should contain at least 1 Uppercase and 1 Numeric",
 MSG_PHONE_NOT_EMPTY: "Phone cannot be empty",
-TFN_CHAR_LIMIT:"TFN no should be 8 digit",
+TFN_CHAR_LIMIT:"TFN number should be 8 digit",
   //** Bio metric authentication error messages  */
   //ios
   MSG_AUTHENTICATION_FAILED: 'Authentication was not successful please provide valid credentials',

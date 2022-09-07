@@ -38,9 +38,10 @@ export const TextInputCustom = (props) => {
     onFocus,
     caretHidden,
     onPressFocus,
-    viewName
+    viewName,
   } = props;
 
+  console.log(" viewName ---", viewName);
   return (
     <View style={{ width: wp("90%") }}>
       <View style={[styles.view, inputViewStyle]}>
@@ -49,30 +50,41 @@ export const TextInputCustom = (props) => {
             source={icon} //Change your icon image here
             // style={iconStyle}
           />
-
-          <TextInput
-            style={[styles.txtInput, style]}
-            value={value}
-            label={label}
-            onChangeText={onChangeText}
-            placeholder={placeholder}
-            placeholderTextSize={50}
-            secureTextEntry={secureTextEntry}
-            keyboardType={keyboardType}
-            placeholderTextColor={appColor.GRAY}
-            // onPressIn={onPressRight}
-            // onSubmitEditing={onSubmitEditing}
-            editable={editable}
-            caretHidden={caretHidden}
-            onFocus={onPressFocus}
-            // onFocus={onFocus}
-            // onTouchStart={() => {
-            //   // Keyboard.dismiss();
-            //   onFocus();
-            // }}
-
-            // onKeyPress={keyPress => console.log('keyPress',keyPress)}
-          />
+          {viewName == appConstant.SIGNUP ? (
+            <TextInput
+              style={[styles.txtInputSignup, style]}
+              value={value}
+              label={label}
+              onChangeText={onChangeText}
+              placeholder={placeholder}
+              placeholderTextSize={50}
+              secureTextEntry={secureTextEntry}
+              keyboardType={keyboardType}
+              placeholderTextColor={appColor.GRAY}
+              // onPressIn={onPressRight}
+              // onSubmitEditing={onSubmitEditing}
+              editable={editable}
+              caretHidden={caretHidden}
+              onFocus={onPressFocus}
+            />
+          ) : (
+            <TextInput
+              style={[styles.txtInput, style]}
+              value={value}
+              label={label}
+              onChangeText={onChangeText}
+              placeholder={placeholder}
+              placeholderTextSize={50}
+              secureTextEntry={secureTextEntry}
+              keyboardType={keyboardType}
+              placeholderTextColor={appColor.GRAY}
+              // onPressIn={onPressRight}
+              // onSubmitEditing={onSubmitEditing}
+              editable={editable}
+              caretHidden={caretHidden}
+              onFocus={onPressFocus}
+            />
+          )}
         </View>
         <Pressable style={styles.eyeContainer} onPress={onPressRight}>
           <Image
@@ -81,7 +93,16 @@ export const TextInputCustom = (props) => {
           />
         </Pressable>
       </View>
-      {error ? <AppText text={error} style={viewName == appConstant.PROFILE?styles.txtErrorProfile: styles.txtError} /> : null}
+      {error ? (
+        <AppText
+          text={error}
+          style={
+            viewName == appConstant.PROFILE
+              ? styles.txtErrorProfile
+              : styles.txtError
+          }
+        />
+      ) : null}
     </View>
   );
 };
@@ -132,6 +153,19 @@ export const styles = {
     justifyContent: "flex-end",
     alignItems: "flex-end",
   },
+
+  txtInputSignup: {
+    includeFontPadding: false,
+    marginLeft: 10,
+    width: "80%",
+    paddingTop: hp("12%"),
+    paddingBottom: hp("12%"),
+    fontSize: fontConstant.TEXT_17_SIZE_REGULAR,
+    fontWeight: fontConstant.WEIGHT_LEIGHT,
+    color: "#000", 
+    backgroundColor : 'pink'
+  },
+
   txtInput: {
     includeFontPadding: false,
     marginLeft: 10,
@@ -142,19 +176,18 @@ export const styles = {
     color: "#000",
   },
   txtErrorProfile: {
-   
     color: appColor.RED,
-    paddingLeft:wp('1%'),
-     paddingTop: hp("1%"),
+    paddingLeft: wp("1%"),
+    paddingTop: hp("1%"),
     //  marginb: hp('-1%'),
     fontSize: fontConstant.TEXT_H3_SIZE_REGULAR,
     fontFamily: fontConstant.FONT_REGULAR,
   },
   txtError: {
-    paddingBottom:hp('1%'),
+    paddingBottom: hp("1%"),
     color: appColor.RED,
-    paddingLeft:wp('1%'),
-     paddingTop: hp("1%"),
+    paddingLeft: wp("1%"),
+    paddingTop: hp("1%"),
     fontSize: fontConstant.TEXT_H3_SIZE_REGULAR,
     fontFamily: fontConstant.FONT_REGULAR,
   },

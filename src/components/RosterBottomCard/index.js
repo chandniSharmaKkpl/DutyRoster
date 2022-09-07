@@ -1,25 +1,35 @@
-import { checkObjectHasData } from "@/utils";
+import { checkObjectHasData, getValueFromDeepKey } from "@/utils";
 import { bottomCardConfig } from "@/utils/Roster";
 import React from "react";
 import { Text, View } from "react-native";
 import { AppText } from "../AppText";
 import styles from "./style";
 const getData = (obj, parentKey, childKey, value) => {
-  //   console.log("getData", obj, parentKey, childKey, value);
   if (checkObjectHasData(obj, parentKey)) {
-    if (checkObjectHasData(obj[parentKey], childKey)) {
-      if (value) {
-        return value(obj[parentKey][childKey]);
-      } else {
-        return JSON.stringify(obj[parentKey][childKey]);
-      }
+    // console.log(
+    //   "getData",
+    //   `${parentKey}.${childKey}`,
+    //   getValueFromDeepKey(obj, `${parentKey}.${childKey}`)
+    // );
+    if (value) {
+      return value(getValueFromDeepKey(obj, `${parentKey}.${childKey}`));
+    } else {
+      return getValueFromDeepKey(obj, `${parentKey}.${childKey}`);
     }
   }
   return "-";
 };
 export default function RosterBottomCard(props) {
   const { cardData } = props;
-  //   console.log("Data =-===>", JSON.stringify(cardData, null, 4));
+  console.log("Data =-===>", JSON.stringify(cardData, null, 4));
+  if (!cardData) {
+    return (
+      <View style={styles.cardContainer}>
+        {/* <Text>No Data Exist</Text> */}
+      </View>
+    );
+  }
+
   return (
     <View style={styles.cardContainer}>
       {bottomCardConfig.map((cardItem) => {

@@ -1,4 +1,4 @@
-import { actionConstant } from "@/constant";
+import { actionConstant, appConstant } from "@/constant";
 import { isArrayEmpty } from "@/utils";
 import { SET_DATA_TYPE } from "@/utils/Availablity";
 
@@ -22,6 +22,7 @@ const initialState = {
       { district_id: null, inTime: null, outTime: null, id: 0 },
     ],
     availabilitySelectedDate: [],
+    isSaved: false,
   },
   /*
   selected: {
@@ -68,6 +69,10 @@ export default (state = initialState, { type, payload }) => {
         isRequesting: true,
         availabilityData: {},
         error: {},
+        // selected: {
+        //   ...state.selected,
+        //   isSaved: false,
+        // },
       };
     }
     case actionConstant.ACTION_GET_AVAILABILITY_SUCCESS: {
@@ -94,6 +99,10 @@ export default (state = initialState, { type, payload }) => {
         isRequesting: true,
         // availabilityData: {},
         error: {},
+        selected: {
+          ...state.selected,
+          isSaved: false,
+        },
       };
     }
     case actionConstant.ACTION_SAVE_AVAILABILITY_SUCCESS: {
@@ -102,6 +111,14 @@ export default (state = initialState, { type, payload }) => {
         isRequesting: false,
         availabilityData: payload.data,
         error: {},
+        selected: {
+          ...state.selected,
+
+          // availabilityData: [
+          //   { district_id: null, inTime: null, outTime: null, id: 0 },
+          // ],
+          isSaved: true,
+        },
       };
     }
     case actionConstant.ACTION_SAVE_AVAILABILITY_FAILURE: {
@@ -110,6 +127,10 @@ export default (state = initialState, { type, payload }) => {
         isRequesting: false,
         // availabilityData: payload,
         error: payload,
+        selected: {
+          ...state.selected,
+          isSaved: false,
+        },
       };
     }
 
@@ -155,6 +176,7 @@ export default (state = initialState, { type, payload }) => {
         },
         selected: {
           ...state.selected,
+          isSaved: false,
           availabilitySelectedDate: newAvailabilitySelectedDate,
         },
       };
@@ -165,6 +187,7 @@ export default (state = initialState, { type, payload }) => {
         ...state,
         selected: {
           ...state.selected,
+          isSaved: false,
           availabilitySelectedDate: [
             ...state.selected.availabilitySelectedDate,
             payload,
@@ -178,6 +201,7 @@ export default (state = initialState, { type, payload }) => {
         ...state,
         selected: {
           ...state.selected,
+          isSaved: false,
           availabilitySelectedDate:
             state.selected.availabilitySelectedDate.filter(
               (_el) => _el !== payload
@@ -198,6 +222,8 @@ export default (state = initialState, { type, payload }) => {
         ...state,
         selected: {
           ...state.selected,
+          isSaved: false,
+
           availabilityData: [...state.selected.availabilityData, payload],
         },
       };
@@ -207,6 +233,8 @@ export default (state = initialState, { type, payload }) => {
         ...state,
         selected: {
           ...state.selected,
+          isSaved: false,
+
           availabilityData: state.selected.availabilityData.filter(
             (_el) => _el.id !== payload
           ),
@@ -224,6 +252,7 @@ export default (state = initialState, { type, payload }) => {
         ...state,
         selected: {
           ...state.selected,
+          isSaved: false,
           availabilityData: [
             ...state.selected.availabilityData.slice(0, index),
             {
@@ -235,6 +264,11 @@ export default (state = initialState, { type, payload }) => {
         },
       };
     }
+
+    case actionConstant.ACTION_RESET_AVAILABILITY_DATA: {
+      return initialState;
+    }
+
     default:
       return state;
   }

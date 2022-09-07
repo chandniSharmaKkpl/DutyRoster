@@ -76,3 +76,9 @@ export const setDataItemOfAvailability = ({ type, data, id }) => {
     payload: params,
   };
 };
+
+export const resetAvailabilityData = () => {
+  return {
+    type : actionConstant.ACTION_RESET_AVAILABILITY_DATA,
+  }
+}

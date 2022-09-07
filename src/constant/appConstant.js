@@ -22,7 +22,7 @@ export default {
   LOCATION: "Location",
   SHIFT: "Shift",
   AVAILABLE_DATE : 'Available Date',
-  DISCTRICTS : 'Disctricts',
+  DISTRICTS : 'Districts',
   TIME : 'Time',
 
   // Placeholder text

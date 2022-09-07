@@ -21,6 +21,7 @@ export default {
   GRAY_DARK : '#F1F1F1',
   BOX_SHADOW : '#1111114D',
   LIGHT_ORANGE : '#FFDAD4',
-  DARK_SKY : '#F6F8FC'
+  DARK_SKY : '#F6F8FC',
+  BORDER_GRAY_DARK : '#E0E0E0'
 
 };

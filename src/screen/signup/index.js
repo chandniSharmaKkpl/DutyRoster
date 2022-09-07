@@ -404,7 +404,7 @@ const Signup = (props) => {
                 //onPressFocus={()=> Keyboard.addListener()}
               />
               {/* <View style={{ height: hp("2.8%") }} /> */}
-              {/* <TextInputRegister
+              {/* <TextInputRegister 
                 label={"Payment"}
                 value={payment}
                 onChangeText={onChangePayment}

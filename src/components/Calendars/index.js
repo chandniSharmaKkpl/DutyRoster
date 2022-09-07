@@ -37,6 +37,7 @@ const Calendars = (props) => {
         markingType={"period"}
         markedDates={markedDates}
         monthFormat={"MMMM yyyy "}
+        firstDay={1}
         onDayPress={(day) => onClickDate(day.dateString)}
         // allowRangeSelection={true}        
       />

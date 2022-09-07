@@ -1,5 +1,5 @@
 import moment from "moment";
-
+import _ from "lodash";
 const enumerateDaysBetweenDates = function (_startDate, _endDate) {
   var startDate = moment(_startDate);
   var endDate = moment(_endDate);
@@ -70,7 +70,7 @@ export function isArrayEmpty(arr) {
 
 export const checkObjectHasData = (data, key) => {
   try {
-    if (data.hasOwnProperty(key)) {
+    if (_.hasIn(data, key)) {
       return true;
     }
     throw "Not data";
@@ -92,6 +92,21 @@ export function isStringEmpty(x) {
     /^\s*$/.test(x)
   );
 }
+
+export const getValueFromDeepKey = (o, s) => {
+  s = s.replace(/\[(\w+)\]/g, ".$1"); // convert indexes to properties
+  s = s.replace(/^\./, ""); // strip a leading dot
+  var a = s.split(".");
+  for (var i = 0, n = a.length; i < n; ++i) {
+    var k = a[i];
+    if (k in o) {
+      o = o[k];
+    } else {
+      return;
+    }
+  }
+  return o;
+};
 export {
   enumerateDaysBetweenDates,
   getCurrentWeek,
