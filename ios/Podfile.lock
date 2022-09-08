@@ -304,6 +304,8 @@ PODS:
     - React-Core
   - react-native-image-picker (4.10.0):
     - React-Core
+  - react-native-location (2.5.0):
+    - React
   - react-native-safe-area-context (3.4.1):
     - React-Core
   - react-native-splash-screen (3.3.0):
@@ -483,6 +485,7 @@ DEPENDENCIES:
   - react-native-camera (from `../node_modules/react-native-camera`)
   - react-native-flipper (from `../node_modules/react-native-flipper`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
+  - react-native-location (from `../node_modules/react-native-location`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
   - react-native-webview (from `../node_modules/react-native-webview`)
@@ -575,6 +578,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-flipper"
   react-native-image-picker:
     :path: "../node_modules/react-native-image-picker"
+  react-native-location:
+    :path: "../node_modules/react-native-location"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-splash-screen:
@@ -667,6 +672,7 @@ SPEC CHECKSUMS:
   react-native-camera: 3eae183c1d111103963f3dd913b65d01aef8110f
   react-native-flipper: b9e2e817604af8da0d5a9ba20a8516e780e30f3c
   react-native-image-picker: 4bc9ed38c8be255b515d8c88babbaf74973f91a8
+  react-native-location: 5a40ec1cc6abf2f6d94df979f98ec76c3a415681
   react-native-safe-area-context: 9e40fb181dac02619414ba1294d6c2a807056ab9
   react-native-splash-screen: 4312f786b13a81b5169ef346d76d33bc0c6dc457
   react-native-webview: e771bc375f789ebfa02a26939a57dbc6fa897336
@@ -697,6 +703,6 @@ SPEC CHECKSUMS:
   Yoga: e7dc4e71caba6472ff48ad7d234389b91dadc280
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 9767adc129837c7ccf8ce4ff13c5e10893acfdb8
+PODFILE CHECKSUM: b33e53e61eba06e54eb0ef420372e1b13ace1b6b
 
 COCOAPODS: 1.11.3

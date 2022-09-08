@@ -1,3 +1,4 @@
+import { appColor } from "@/constant";
 import { checkObjectHasData, getValueFromDeepKey } from "@/utils";
 import { bottomCardConfig } from "@/utils/Roster";
 import React from "react";
@@ -50,7 +51,7 @@ export default function RosterBottomCard(props) {
                       </View>
 
                       <View style={styles.valueColumn}>
-                        <Text>
+                        <Text style={{color: appColor.BLACK}}>
                           {getData(cardData, key, item?.key, item?.value)}
                         </Text>
                         {item.label && (

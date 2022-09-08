@@ -5,26 +5,26 @@ export const cardConfig = [
     title: "Location",
     key: "location",
     flag: false,
-    minWidth: 100,
+    minWidth: "30%",
   },
   {
     title: "IN",
     key: "signin",
     flag: false,
-    minWidth: 50,
+    minWidth: "10%",
   },
   {
     title: "OUT",
     key: "signout",
     flag: false,
-    minWidth: 50,
+    minWidth: "10%",
   },
   {
     title: "LHR",
     key: "shift",
     flag: true,
     type: "LHR",
-    minWidth: 50,
+    minWidth: "10%",
     textAlign: "center",
   },
   {
@@ -32,7 +32,7 @@ export const cardConfig = [
     key: "shift",
     type: "DHR",
     flag: true,
-    minWidth: 50,
+    minWidth: "10%",
     textAlign: "center",
   },
   {
@@ -40,7 +40,7 @@ export const cardConfig = [
     key: "shift",
     type: "SHR",
     flag: true,
-    minWidth: 50,
+    minWidth: "10%",
     textAlign: "center",
   },
 ];

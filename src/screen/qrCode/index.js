@@ -19,6 +19,7 @@ import { connect } from "react-redux";
 import moment from "moment";
 import { convertDateTime } from "@/common/timeFormate";
 import { requestToGetQRCodeResponse } from "./redux/QRCode.action";
+// import RNLocation from "react-native-location";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
@@ -26,6 +27,7 @@ const SCREEN_WIDTH = Dimensions.get("window").width;
 const QRCodeScreen = (props) => {
   const { requestToFetQRCodeResponseAction } = props;
 
+  const [currentLocation, setCurrentLocation] = useState(null);
   const svgRef = React.useRef();
   const textSVGRef = React.useRef();
 
@@ -42,11 +44,12 @@ const QRCodeScreen = (props) => {
     );
 
     const res = JSON.parse(e.data);
+    console.log("QR code =>", res);
     const currentTime = new Date(); // get current date & time
     const location_id = res.location_id; // get location id when user scan QR code response
     const signIn = convertDateTime(currentTime, false, true); // convert time formate and get current time
     const date = convertDateTime(currentTime, true, false); // covert date formate and get current date
-
+    // permissionHandle()
     requestToFetQRCodeResponseAction({
       location_id: location_id,
       signin: signIn,
@@ -56,7 +59,6 @@ const QRCodeScreen = (props) => {
 
   React.useEffect(() => {
     BackHandler.addEventListener("hardwareBackPress", handleBackButtonClick);
-
     return () => {
       BackHandler.removeEventListener(
         "hardwareBackPress",
@@ -92,6 +94,7 @@ const QRCodeScreen = (props) => {
       // const result = textSVGRef.current.getBBox();
     }
   }, [textSVGRef]);
+
   const CircleMAsk = () => {
     const rectWidth = SCREEN_WIDTH * 0.45;
     const rectHeight = SCREEN_HEIGHT * 0.45;
@@ -166,6 +169,38 @@ const QRCodeScreen = (props) => {
     );
   };
 
+  // useEffect(() => {
+  //   RNLocation.configure({
+  //     distanceFilter: 5.0,
+  //   });
+
+  //   RNLocation.requestPermission({
+  //     ios: "whenInUse",
+  //     android: {
+  //       detail: "fine",
+  //       rationale: {
+  //         title: "Location permission",
+  //         message: "We use your location to demo the library",
+  //         buttonPositive: "OK",
+  //         buttonNegative: "Cancel",
+  //       },
+  //     },
+  //   }).then((granted) => {
+  //     if (granted) {
+  //       startUpdatingLocation();
+  //     }
+  //   });
+  // }, []);
+
+
+  // const startUpdatingLocation = () => {
+  //   const locationSubscription = RNLocation.subscribeToLocationUpdates(
+  //     locations => {
+  //       this.setState({ location: locations[0] });
+  //     }
+  //   );
+  // };
+
   return (
     <>
       <CommonHeader screenName={route?.name} onGoBack={onGoBack} />
@@ -173,7 +208,7 @@ const QRCodeScreen = (props) => {
         <QRCodeScanner
           onRead={onSuccess}
           cameraStyle={{ height: SCREEN_HEIGHT, width: SCREEN_WIDTH }}
-          reactivate={true} 
+          reactivate={true}
           reactivateTimeout={3000}
           showMarker
           markerStyle={{
