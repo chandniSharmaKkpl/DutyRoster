@@ -6,7 +6,6 @@ import {
   Text,
   FlatList,
   Dimensions,
-  ScrollView,
   Image,
   Pressable,
 } from "react-native";
@@ -19,6 +18,7 @@ import { appConstant, imageConstant } from "@/constant";
 import { TextInputCustom } from "@/screen/availability/AvailabilityItem/TextInput";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import DropDownPicker from "react-native-dropdown-picker";
+import { ScrollView } from "react-native-gesture-handler";
 // import DropDownPicker from "@/utils/"
 import {
   widthPercentageToDP as wp,

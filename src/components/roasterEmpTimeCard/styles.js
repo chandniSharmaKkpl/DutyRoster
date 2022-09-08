@@ -6,9 +6,7 @@ import {
 import { appColor, fontConstant } from "@/constant";
 
 export default StyleSheet.create({
-  listContainer: {
-    
-  },
+  listContainer: {},
   timeCardContainer: {
     minHeight: hp("11%"),
     // borderWidth: 1,
@@ -49,6 +47,8 @@ export default StyleSheet.create({
     textTransform: "uppercase",
     fontWeight: fontConstant.WEIGHT_SEMI_BOLD,
     paddingVertical: 10,
+    borderColor: "#FFF",
+    borderWidth: 1,
   },
   contentContainer: {
     paddingHorizontal: 10,
@@ -58,6 +58,7 @@ export default StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     paddingVertical: 2,
+    display: "flex",
   },
   contentText: {
     textAlign: "left",

@@ -14,7 +14,7 @@ import {
 export function* workerGetAvailabilityDateResponse(action) {
   try {
     const response = yield call(getAvailabilityApiCall, action.payload);
-
+    console.log(JSON.stringify(response, null, 4));
     if (!response.success) {
       var stringCombined = "";
       let arrayTemp = Object.keys(response.error);

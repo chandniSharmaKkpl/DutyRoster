@@ -12,18 +12,26 @@ const enumerateDaysBetweenDates = function (_startDate, _endDate) {
   }
   return dates;
 };
+// moment.setDefault('America/New_York');
 
 function getCurrentWeek(date) {
   var currentDate = moment(date);
-  var weekStart = currentDate.clone().startOf("isoWeek");
-  // console.log("weekStart", weekStart);
-  var weekEnd = currentDate.clone().endOf("isoWeek");
-  // console.log("weekEnd", weekEnd);
+  console.log("date", date);
+  var weekStart = currentDate.clone().startOf("isoWeek").toDate();
+  console.log("weekStart", weekStart);
+  var weekEnd = currentDate.clone().endOf("isoWeek").toDate();
+  console.log("weekEnd", weekEnd);
   var days = [];
-  for (var i = 0; i <= 6; i++) {
-    days.push(moment(weekStart).add(i, "days").format("YYYY-MM-DD"));
+  // days.push(moment(weekStart).format("YYYY-MM-DD"));
+
+  for (let i = 0; i <= 6; i++) {
+    days.push(moment(weekStart).add(i, "d").format("YYYY-MM-DD"));
   }
-  return { days, weekStart, weekEnd };
+  return {
+    days,
+    weekStart,
+    weekEnd: weekEnd,
+  };
 }
 function getDayfromDate(date) {
   return moment(date).format("ddd");

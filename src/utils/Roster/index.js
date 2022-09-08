@@ -5,43 +5,49 @@ export const cardConfig = [
     title: "Location",
     key: "location",
     flag: false,
-    minWidth: 100,
+    maxWidth: "25%",
+    flex: 2,
   },
   {
     title: "IN",
     key: "signin",
     flag: false,
-    minWidth: 50,
+    maxWidth: "15%",
+    flex: 1,
   },
   {
     title: "OUT",
     key: "signout",
     flag: false,
-    minWidth: 50,
+    maxWidth: "15%",
+    flex: 1,
   },
   {
     title: "LHR",
     key: "shift",
     flag: true,
     type: "LHR",
-    minWidth: 50,
-    textAlign: "center",
+    maxWidth: "15%",
+    flex: 1,
+    textAlign: "left",
   },
   {
     title: "DHR",
     key: "shift",
     type: "DHR",
     flag: true,
-    minWidth: 50,
-    textAlign: "center",
+    maxWidth: "15%",
+    flex: 1,
+    textAlign: "left",
   },
   {
     title: "SHR",
     key: "shift",
     type: "SHR",
     flag: true,
-    minWidth: 50,
-    textAlign: "center",
+    maxWidth: "15%",
+    flex: 1,
+    textAlign: "left",
   },
 ];
 
@@ -52,7 +58,7 @@ export const bottomCardConfig = [
     data: [
       {
         key: "HRS",
-        title: "Total LHRS",
+        title: "Total HRS",
         value: (value) => {
           return `${parseFloat(value).toFixed(2)}`;
         },

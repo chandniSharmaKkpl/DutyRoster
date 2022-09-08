@@ -26,7 +26,7 @@ const Item = ({ item }) => {
                 style={[
                   styles.titleText,
                   {
-                    minWidth: _el.minWidth,
+                    minWidth: _el.maxWidth,
                     textAlign: _el.textAlign ?? "left",
                   },
                 ]}
@@ -45,19 +45,18 @@ const Item = ({ item }) => {
                 <View style={styles.contentTextContainer}>
                   {cardConfig.map((_el) => {
                     return (
-                      <View>
-                        <Text
-                          style={[
-                            styles.contentText,
-                            {
-                              minWidth: _el.minWidth,
-                              textAlign: _el.textAlign ?? "left",
-                            },
-                          ]}
-                        >
-                          {extractData(_item, _el)}
-                        </Text>
-                      </View>
+                      <Text
+                        style={[
+                          styles.contentText,
+                          {
+                            minWidth: _el.maxWidth,
+                            flex: _el.flex,
+                            textAlign: _el.textAlign ?? "left",
+                          },
+                        ]}
+                      >
+                        {extractData(_item, _el)}
+                      </Text>
                     );
                   })}
                 </View>
