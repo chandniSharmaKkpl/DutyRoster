@@ -2,8 +2,12 @@ import { actionConstant } from "@/constant";
 
 const initialState = {
   isRequesting: false,
-  data : {},
+  data: {},
   error: {},
+  location: {
+    latitude: null,
+    longitude: null,
+  },
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -12,12 +16,12 @@ export default (state = initialState, { type, payload }) => {
       return {
         ...state,
         isRequesting: true,
-        data : {},
+        data: {},
         error: {},
       };
     }
     case actionConstant.ACTION_GET_QR_CODE_SUCCESS: {
-      return { 
+      return {
         ...state,
         isRequesting: false,
         data: payload.data,
@@ -30,6 +34,16 @@ export default (state = initialState, { type, payload }) => {
         isRequesting: false,
         data: payload,
         error: {},
+      };
+    }
+
+    case actionConstant.ACTION_QR_CODE_SET_LOCATION: {
+      return {
+        ...state,
+        location: {
+          latitude: payload.latitude,
+          longitude: payload.longitude,
+        },
       };
     }
     default:

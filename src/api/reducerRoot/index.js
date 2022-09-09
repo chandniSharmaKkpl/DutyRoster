@@ -11,11 +11,11 @@ import LoginReducer from "@/screen/login/redux/Login.reducer";
 import SignupReducer from "@/screen/signup/redux/Signup.reducer";
 import Forgot_PasswordReducer from "@/screen/forgotPassword/redux/Forgot_Password.reducer";
 import Reset_PasswordReducer from "@/screen/resetPassword/redux/Reset_Password.reducer";
-import QRCode_ResponseReducer from "@/screen/qrCode/redux/QRCode.raducer.js";
+import QRCode_ResponseReducer from "@/screen/qrCode/redux/QRCode.reducer.js";
 import ProfileReducer from "@/screen/editProfile/redux/Profile.reducer";
 import RosterReducer from "@/screen/roster/redux/Roster.reducer";
 import AvailabilityReducer from "@/screen/availability/redux/Availability.reducer";
-
+import TimeSheetReducer from "@/screen/timeSheet/redux/TimeSheet.reducer";
 
 const encryptor = encryptTransform({
   secretKey: "dodee_app",
@@ -37,7 +37,8 @@ const ReducerRoot = combineReducers({
   QRCode_ResponseReducer,
   ProfileReducer,
   RosterReducer,
-  AvailabilityReducer
+  AvailabilityReducer,
+  TimeSheetReducer
 });
 
 export default persistReducer(persistConfig, ReducerRoot);

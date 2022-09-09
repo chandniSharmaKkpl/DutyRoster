@@ -22,7 +22,7 @@ const getData = (obj, parentKey, childKey, value) => {
 };
 export default function RosterBottomCard(props) {
   const { cardData } = props;
-  console.log("Data =-===>", JSON.stringify(cardData, null, 4));
+  // console.log("Data =-===>", JSON.stringify(cardData, null, 4));
   if (!cardData) {
     return (
       <View style={styles.cardContainer}>

@@ -4,8 +4,8 @@
 
 import { actionConstant } from "@/constant";
 
-export const requestToGetRoasterDateRange = (params) => ({
-    type : actionConstant.ACTION_GET_ROASTER_DATE_REQUEST,
+export const requestToGetTimeSheetDateRange = (params) => ({
+    type : actionConstant.ACTION_GET_TIMESHEET_DATE_REQUEST,
     payload: params,
 })
 

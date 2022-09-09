@@ -29,33 +29,37 @@ import {
 } from "@/utils";
 import { connect } from "react-redux";
 import {
-  requestToGetRoasterDateRange,
+  requestToGetTimeSheetDateRange,
   setMarkeDates,
-} from "./redux/Roster.action";
+} from "./redux/TimeSheet.action";
 import { dayDateReturn } from "@/common/timeFormate";
 import { useSelector } from "react-redux";
+import Loader from "@/components/Loader";
 
-const RosterScreen = (props) => {
+const TimeSheetScreen = (props) => {
   const navigation = useNavigation();
   const route = useRoute();
 
   const {
     setMarkeDatesAction,
     markedDates,
-    requestToGetRoasterDateRangeAction,
+    requestToGetTimeSheetDateRangeAction,
     selectedWeek,
     startDay,
     endDay,
     data,
     accessToken,
     isAuth,
+    cardData,
+    timeSheetReducer
   } = props;
-  const [selectedItem, setSelectedItem] = useState(3);
+  const [selectedItem, setSelectedItem] = useState(3); 
   const [isCalendarShow, setIsCalendarShow] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
   const [isAlertShow, setIsAlertShow] = useState(false);
 
-  // markedDates obj function
+
+  console.log("cardData ===>", JSON.stringify(data, null, 4));
 
   React.useLayoutEffect(() => {
     if (!accessToken || !isAuth) {
@@ -74,6 +78,7 @@ const RosterScreen = (props) => {
 
   const getSelectedDayEvents = (date) => {
     setSelectedWeek(date);
+    onClickCalendar();
   };
 
   const setSelectedWeek = React.useCallback((date) => {
@@ -112,48 +117,10 @@ const RosterScreen = (props) => {
       from: fromDate,
       to: toDate,
     };
-    requestToGetRoasterDateRangeAction(params);
+    requestToGetTimeSheetDateRangeAction(params);
   }, []);
 
-  // const Item = ({ day, date, id }) => (
-  //   <Pressable
-  //     onPress={() => {
-  //       setSelectedItem(id);
-  //     }}
-  //   >
-  //     <View
-  //       style={
-  //         selectedItem === id
-  //           ? styles.dateTextBoxSelect
-  //           : styles.dateTextunSelectBox
-  //       }
-  //     >
-  //       <Text
-  //         style={
-  //           selectedItem === id
-  //             ? styles.dayTextStyle
-  //             : styles.unSelectDayTextStyle
-  //         }
-  //       >
-  //         {day}
-  //       </Text>
-  //       <Text
-  //         style={
-  //           selectedItem === id
-  //             ? styles.dateTextStyle
-  //             : styles.unSelectBoxDateTextStyle
-  //         }
-  //       >
-  //         {date}
-  //       </Text>
-  //     </View>
-  //   </Pressable>
-  // );
-
-  // const renderItem = ({ item }) => (
-  //   <Item id={item.id} day={item.day} date={item.date} />
-  // );
-
+ 
   const onClickCalendar = () => {
     setIsCalendarShow(!isCalendarShow);
   };
@@ -163,7 +130,7 @@ const RosterScreen = (props) => {
       <View style={[styles.container]}>
         <View style={styles.topContain}>
           <View style={styles.weekDateTextContainer}>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
               <AppText
                 style={styles.weekDateTextStyle}
                 text={dayDateReturn(startDay, false)}
@@ -183,7 +150,7 @@ const RosterScreen = (props) => {
           </View>
         </View>
         <View style={styles.empTimeCardDetails}>
-          <EmpTimeCard data={data} />
+          <EmpTimeCard data={data} cardData={cardData} />
         </View>
         {isCalendarShow && (
           <View
@@ -224,23 +191,28 @@ const RosterScreen = (props) => {
             ]
           )
         : null}
+        {timeSheetReducer.isRequesting ? (
+        <Loader loading={timeSheetReducer.isRequesting} />
+      ) : null}
     </>
   );
 };
 const mapStateToProps = (state) => ({
-  markedDates: state.RosterReducer.markedDates,
-  selectedWeek: state.RosterReducer.selectedWeek.data,
-  startDay: state.RosterReducer.selectedWeek.weekStart,
-  endDay: state.RosterReducer.selectedWeek.weekEnd,
-  data: state.RosterReducer.data,
+  markedDates: state.TimeSheetReducer.markedDates,
+  selectedWeek: state.TimeSheetReducer.selectedWeek.data,
+  startDay: state.TimeSheetReducer.selectedWeek.weekStart,
+  endDay: state.TimeSheetReducer.selectedWeek.weekEnd,
+  data: state.TimeSheetReducer.data,
+  cardData: state.TimeSheetReducer.cardData,
+  timeSheetReducer: state.TimeSheetReducer,
   accessToken: state.LoginReducer.accessToken,
   isAuth: state.LoginReducer.isAuth,
 });
 const mapDispatchToProps = (dispatch) => {
   return {
     setMarkeDatesAction: (params) => dispatch(setMarkeDates(params)),
-    requestToGetRoasterDateRangeAction: (params) =>
-      dispatch(requestToGetRoasterDateRange(params)),
+    requestToGetTimeSheetDateRangeAction: (params) =>
+      dispatch(requestToGetTimeSheetDateRange(params)),
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(RosterScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(TimeSheetScreen);

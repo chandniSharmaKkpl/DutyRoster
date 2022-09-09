@@ -106,7 +106,7 @@ export const styles = {
     // backgroundColor: appColor.LIGH_ORANGE,
   },
   viewOuter: {
-    backgroundColor: appColor.WHITE,
+    backgroundColor: appColor.GREEN,
     borderWidth: 1,
     borderColor: "#D2D2D2",
     borderRadius: 10,
@@ -117,6 +117,7 @@ export const styles = {
     },
     shadowOpacity: 22,
     shadowRadius: 4.65,
+    paddingBottom: '3%'
   },
   txtRed: {
     fontFamily: fontConstant.FONT_SEMI_BOLD,

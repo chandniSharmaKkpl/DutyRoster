@@ -15,12 +15,20 @@ import { TextInputCustom } from "@/components/TextInput";
 import { connect, useSelector } from "react-redux";
 import { requestToGetAccessToken } from "./redux/Login.action";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import DeviceInfo from "react-native-device-info";
 
 const hasError = (_err) => {
   return (
     Object.values(_err).filter((err) => err.toString().length > 0).length > 0
   );
 };
+
+  // let deviceToken = DeviceInfo.getDeviceToken;
+  // let deviceType = DeviceInfo.getDeviceType;
+  // let deviceUuid = DeviceInfo.syncUniqueId;
+  // let deviceName = DeviceInfo.getDeviceName;
+  // let appVersion = DeviceInfo.getVersion;
+
 const Login = (props) => {
   const { accessToken } = props;
   const [error, setError] = React.useState({
@@ -29,17 +37,50 @@ const Login = (props) => {
   });
   // console.log('state.LoginReducer',props.LoginReducer);
   const [email, setEmail] = useState(
-    process.env.NODE_ENV !== "production" ? "testnew@2excel.com.au" : ""
+    process.env.NODE_ENV !== "production" ? "testemail@yopmail.com" : ""
   );
   const [password, setPassword] = useState(
-    process.env.NODE_ENV !== "production" ? "Test@123" : ""
+    process.env.NODE_ENV !== "production" ? "Letmein12@" : ""
   );
+  // const [device_token, setDevice_token] = useState();
+  // const [device_type, setDevice_type] = useState();
+  // const [device_uuid, setDevice_uuid] = useState();
+  // const [device_name, setDevice_name] = useState();
+  // const [app_version, setApp_version] = useState();
+  // const [device_token, setDevice_token] = useState ();
+
+
+
+  // console.log("device_token : =>", deviceToken);
+  // console.log("device_type : =>", deviceType);
+  // console.log("device_uuid : =>", deviceUuid);
+  // console.log("device_name : =>", deviceName);
+  // console.log("app_version : =>", appVersion);
 
   //windodee1@yopmail.com
   //Test@123
   const [isClickEye, setIsClickEye] = useState(false);
   const loginResponse = useSelector((state) => state.LoginReducer);
   const navigation = useNavigation();
+
+  // DeviceInfo.getDeviceToken().then((deviceToken) => {
+  //   setDevice_token(deviceToken);
+  // });
+
+  // let type = DeviceInfo.getDeviceType();
+  // setDevice_type(type);
+
+  // DeviceInfo.syncUniqueId().then((uniqueId) => {
+  //   setDevice_uuid(uniqueId);
+  // });
+
+  // DeviceInfo.getDeviceName().then((deviceName) => {
+  //   setDevice_name(deviceName);
+  // });
+
+  // let version = DeviceInfo.getVersion();
+  // setApp_version(version);
+
   const onChangeEmail = (text) => {
     setEmail(text);
   };
@@ -117,6 +158,12 @@ const Login = (props) => {
         email: email,
         password: password,
         navigation: navigation,
+        // device_token: device_token,
+        // device_type: device_type,
+        // device_uuid: device_uuid,
+        // device_name: device_name,
+        // app_version: app_version,
+        // os_version: os_version,
       });
     }
   };

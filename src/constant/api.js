@@ -10,5 +10,5 @@ export default {
   ROASTER_DATE_RANGE : '/view-roaster-between-dates', 
   GET_AVAILABILITY: '/availability/list', 
   SAVE_AVAILABILITY: '/availability', 
-
+  TIMESHEET_DATE_RANGE: '/view-timesheet-between-dates',
 };

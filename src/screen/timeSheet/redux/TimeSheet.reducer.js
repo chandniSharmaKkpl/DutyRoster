@@ -14,7 +14,7 @@ const initialState = {
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
-    case actionConstant.ACTION_GET_ROASTER_DATE_REQUEST: {
+    case actionConstant.ACTION_GET_TIMESHEET_DATE_REQUEST: {
       return {
         ...state,
         isRequesting: true,
@@ -22,7 +22,7 @@ export default (state = initialState, { type, payload }) => {
         error: {},
       };
     }
-    case actionConstant.ACTION_GET_ROASTER_DATE_SUCCESS: {
+    case actionConstant.ACTION_GET_TIMESHEET_DATE_SUCCESS: {
       return {
         ...state,
         isRequesting: false,
@@ -30,7 +30,7 @@ export default (state = initialState, { type, payload }) => {
         error: {},
       };
     }
-    case actionConstant.ACTION_GET_ROASTER_DATE_FAILURE: {
+    case actionConstant.ACTION_GET_TIMESHEET_DATE_FAILURE: {
       return {
         ...state,
         isRequesting: false,
@@ -57,4 +57,4 @@ export default (state = initialState, { type, payload }) => {
 };
 
 export const selectorForSelectedWeek = (state) =>
-  state.RosterReducer.selectedWeek;
+  state.TimeSheetReducer.selectedWeek;
