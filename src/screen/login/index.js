@@ -16,6 +16,11 @@ import { connect, useSelector } from "react-redux";
 import { requestToGetAccessToken } from "./redux/Login.action";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
+const hasError = (_err) => {
+  return (
+    Object.values(_err).filter((err) => err.toString().length > 0).length > 0
+  );
+};
 const Login = (props) => {
   const { accessToken } = props;
   const [error, setError] = React.useState({
@@ -23,11 +28,15 @@ const Login = (props) => {
     passwordErr: "",
   });
   // console.log('state.LoginReducer',props.LoginReducer);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState(
+    process.env.NODE_ENV !== "production" ? "testnew@2excel.com.au" : ""
+  );
+  const [password, setPassword] = useState(
+    process.env.NODE_ENV !== "production" ? "Test@123" : ""
+  );
 
-//windodee1@yopmail.com
-//Test@123
+  //windodee1@yopmail.com
+  //Test@123
   const [isClickEye, setIsClickEye] = useState(false);
   const loginResponse = useSelector((state) => state.LoginReducer);
   const navigation = useNavigation();
@@ -152,7 +161,11 @@ const Login = (props) => {
               keyboardType="email-address"
               caretHidden={false}
             />
-            <View style={{ height: hp("2.8%") }} />
+            {!hasError(error) && (
+              <>
+                <View style={{ height: hp("2.8%") }} />
+              </>
+            )}
 
             <TextInputCustom
               secureTextEntry={isClickEye ? false : true}
@@ -201,7 +214,7 @@ const Login = (props) => {
           </View>
           <View style={styles.versionContainer}>
             <AppText
-              text={" App Vesrion 2.1"}
+              text={" App Vesrion 2.2"}
               style={{ ...styles.appVersion }}
             />
           </View>
@@ -216,7 +229,6 @@ const Login = (props) => {
 const mapStateToProps = (state) => ({
   accessToken: state.LoginReducer.accessToken,
   // LoginReducer: state.LoginReducer
-
 });
 const mapDispatchToProps = (dispatch) => {
   return {

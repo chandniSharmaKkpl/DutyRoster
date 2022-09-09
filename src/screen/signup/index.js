@@ -403,17 +403,7 @@ const Signup = (props) => {
                 keyboardType="default"
                 //onPressFocus={()=> Keyboard.addListener()}
               />
-              {/* <View style={{ height: hp("2.8%") }} /> */}
-              {/* <TextInputRegister 
-                label={"Payment"}
-                value={payment}
-                onChangeText={onChangePayment}
-                placeholder={"Enter Payment Type"}
-                icon={require("../../assets/images/SignupScreen/payment.png")}
-                iconStyle={styles.IconStyle}
-                error={error.paymentErr}
-                keyboardType="default"
-              /> */}
+
               {/* <View style={{ height: hp("2.8%") }} /> */}
               <TextInputCustom
                 viewName={appConstant.SIGNUP}
@@ -454,34 +444,34 @@ const Signup = (props) => {
                 //onPressFocus={()=> Keyboard.addListener()}
               />
               {/* <View style={{ height: hp("2.8%") }} /> */}
-              {/* <View
+              <View
                 style={{
                   width: wp("90%"),
-                  height: hp("9%"),
                   position: "relative",
+                  
                 }}
-              > */}
-              <TextInputCustom
-                viewName={appConstant.SIGNUP}
-                label={"Dob"}
-                value={dob}
-                onChangeText={onChangeDOB}
-                placeholder={"Enter Date of Birth"}
-                eyeIcon={require("../../assets/images/SignupScreen/calendar.png")}
-                onPressRight={showDatePicker}
-                error={error.dobErr}
-                inputViewStyle={styles.inputViewStyle}
-              />
-              <Pressable
-                onPress={showDatePicker}
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  flex: 1,
-                  position: "absolute",
-                }}
-              ></Pressable>
-              {/* </View> */}
+              >
+                <TextInputCustom
+                  viewName={appConstant.SIGNUP}
+                  label={"Dob"}
+                  value={dob}
+                  onChangeText={onChangeDOB}
+                  placeholder={"Enter Date of Birth"}
+                  eyeIcon={require("../../assets/images/SignupScreen/calendar.png")}
+                  onPressRight={showDatePicker}
+                  error={error.dobErr}
+                  inputViewStyle={styles.inputViewStyle}
+                />
+                <Pressable
+                  onPress={showDatePicker}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    flex: 1,
+                    position: "absolute",
+                  }}
+                ></Pressable>
+              </View>
 
               {/* <View style={{ height: hp("2.8%") }} /> */}
 

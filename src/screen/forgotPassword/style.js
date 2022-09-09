@@ -46,6 +46,7 @@ export default StyleSheet.create({
   baseText: {
     textAlign: "center",
     paddingTop: 30,
+    color: appColor.BLACK
   },
   innerText: {
     color: appColor.RED,

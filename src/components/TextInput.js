@@ -43,7 +43,7 @@ export const TextInputCustom = (props) => {
 
   return (
     <View style={{ width: wp("90%") }}>
-      <View style={[viewName == appConstant.SIGNUP? styles.viewSignup: styles.view, inputViewStyle]}>
+      <View style={[viewName == appConstant.SIGNUP? styles.viewSignup: styles.view, {inputViewStyle}]}>
         <View style={styles.view1}>
           <Image
             source={icon} //Change your icon image here
@@ -158,7 +158,7 @@ export const styles = {
     includeFontPadding: false,
     marginLeft: 10,
     width: "80%",
-    marginVertical: '5%',
+    // marginVertical: '5%',
     fontSize: fontConstant.TEXT_17_SIZE_REGULAR,
     fontWeight: fontConstant.WEIGHT_LEIGHT,
     color: "#000",

@@ -38,6 +38,11 @@ export default StyleSheet.create({
     alignSelf:'center',
     paddingTop: hp('2%')
   },
+  txtSignup: {
+    color: appColor.BLACK,
+    fontFamily: fontConstant.FONT_REGULAR,
+    fontSize: fontConstant.TEXT_H2_SIZE_REGULAR,
+  },
   txtForgotPass: {
     color: appColor.RED,
     fontFamily: fontConstant.FONT_BOLD,
