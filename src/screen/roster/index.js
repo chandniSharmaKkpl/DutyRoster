@@ -82,6 +82,7 @@ const RosterScreen = (props) => {
       // console.log("startDate", startDate);
       setSelectedWeek(startDate);
       setSelectedDate(startDate);
+      setIsCalendarShow(false)
     }, [])
   );
 
@@ -174,6 +175,7 @@ const RosterScreen = (props) => {
             <Calendars
               markedDates={markedDates}
               onDayPress={getSelectedDayEvents}
+              initialDate={startDay}
             />
           </View>
         )}
