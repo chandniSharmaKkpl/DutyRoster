@@ -4,8 +4,8 @@ import { QRCodeCall } from "./QRCode.api";
 
 export function* workerGetQRCodeResponse(action) {
   try {
+    console.log("qrCodeParams", JSON.stringify(action.payload, null, 4));
     const qrCodeResponse = yield call(QRCodeCall, action.payload);
-
     if (!qrCodeResponse.success) {
       var stringCombined = "";
       let arrayTemp = Object.keys(qrCodeResponse.error);

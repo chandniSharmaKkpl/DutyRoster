@@ -4,6 +4,7 @@ const initialState = {
   isRequesting: false,
   data: {},
   error: {},
+  timesheet_id:null,
   location: {
     latitude: null,
     longitude: null,
@@ -25,6 +26,7 @@ export default (state = initialState, { type, payload }) => {
         ...state,
         isRequesting: false,
         data: payload.data,
+        timesheet_id: payload.data.timesheet_id,
         error: {},
       };
     }

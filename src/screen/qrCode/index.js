@@ -33,8 +33,12 @@ const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
 const QRCodeScreen = (props) => {
-  const { requestToFetQRCodeResponseAction, setQRLocationAction, location } =
-    props;
+  const {
+    requestToFetQRCodeResponseAction,
+    setQRLocationAction,
+    location,
+    timesheet_id,
+  } = props;
   const scannerRef = React.useRef();
   const svgRef = React.useRef();
   const textSVGRef = React.useRef();
@@ -49,7 +53,7 @@ const QRCodeScreen = (props) => {
   };
 
   const onSuccess = (e) => {
-     RNLocation.getLatestLocation({ timeout: 5000 }).then((latestLocation) => {
+    RNLocation.getLatestLocation({ timeout: 5000 }).then((latestLocation) => {
       try {
         let lat = latestLocation.latitude;
         let lon = latestLocation.longitude;
@@ -73,24 +77,26 @@ const QRCodeScreen = (props) => {
     const signIn = convertDateTime(currentTime, false, true); // convert time formate and get current time
     const date = convertDateTime(currentTime, true, false); // covert date formate and get current date
     // permissionHandle()
-    //  if(timesheetId){
-    //   requestToFetQRCodeResponseAction({
-    //     location_id: location_id,
-    //     signout: signIn,
-    //     date: date,
-    //     latitude: isLatitude,
-    //     longitude: isLongitude,
-    //     timesheet_id: timesheetId
-    //   });
-    //  }else{
-    requestToFetQRCodeResponseAction({
-      location_id: location_id,
-      signin: signIn,
-      date: date,
-      latitude: location.latitude,
-      longitude: location.longitude,
-    });
-    //  }
+    try {
+      if (timesheet_id) {
+        requestToFetQRCodeResponseAction({
+          location_id: location_id,
+          signout: signIn,
+          date: date,
+          latitude: isLatitude,
+          longitude: isLongitude,
+          timesheet_id: timesheet_id,
+        });
+      } else {
+        requestToFetQRCodeResponseAction({
+          location_id: location_id,
+          signin: signIn,
+          date: date,
+          latitude: location.latitude,
+          longitude: location.longitude,
+        });
+      }
+    } catch (error) {}
   };
 
   React.useEffect(() => {
@@ -240,79 +246,79 @@ const QRCodeScreen = (props) => {
   // React.useEffect(() => {
   //   requestPermission(setPermission, onRequestGranted);
   // }, []);
-  // React.useEffect(() => {
-  //   RNLocation.checkPermission({
-  //     ios: "always", // or 'always'
-  //     android: {
-  //       detail: "coarse", // or 'fine'
-  //     },
-  //   });
+  React.useEffect(() => {
+    RNLocation.checkPermission({
+      ios: "always", // or 'always'
+      android: {
+        detail: "coarse", // or 'fine'
+      },
+    });
 
-  //   RNLocation.requestPermission({
-  //     ios: "whenInUse",
-  //     android: {
-  //       detail: "fine",
-  //       rationale: {
-  //         title: "Location permission",
-  //         message: "We use your location to demo the library",
-  //         buttonPositive: "OK",
-  //         buttonNegative: "Cancel",
-  //       },
-  //     },
-  //   }).then((granted) => {
-  //     // alert(granted);
-  //     if (granted) {
-  //       startUpdatingLocation();
-  //     } else {
-  //       alert("Please allow location from settings");
-  //     }
-  //   });
+    RNLocation.requestPermission({
+      ios: "whenInUse",
+      android: {
+        detail: "fine",
+        rationale: {
+          title: "Location permission",
+          message: "We use your location to demo the library",
+          buttonPositive: "OK",
+          buttonNegative: "Cancel",
+        },
+      },
+    }).then((granted) => {
+      // alert(granted);
+      if (granted) {
+        startUpdatingLocation();
+      } else {
+        alert("Please allow location from settings");
+      }
+    });
 
-  //   // When Permission Changed
+    // When Permission Changed
 
-  //   // React.useEffect(() => {
-  //   //   // Subscribe
+    // React.useEffect(() => {
+    //   // Subscribe
 
-  //   //   return () => {
-  //   //     // unsubscribe();
-  //   //   };
-  //   //   // // Unsubscribe
-  //   // }, []);
-  //   // Subscribe
-  //   RNLocation.configure({
-  //     distanceFilter: 50, // Meters
+    //   return () => {
+    //     // unsubscribe();
+    //   };
+    //   // // Unsubscribe
+    // }, []);
+    // Subscribe
+    RNLocation.configure({
+      distanceFilter: 50, // Meters
 
-  //     desiredAccuracy: {
-  //       ios: "best",
-  //       android: "balancedPowerAccuracy",
-  //     },
-  //     // // Android only
-  //     // androidProvider: "auto",
-  //     // // interval: 10000, // Milliseconds
-  //     // // fastestInterval: 10000, // Milliseconds
-  //     // // maxWaitTime: 60000, // Milliseconds
-  //     // // iOS Only
-  //     activityType: "other",
-  //     allowsBackgroundLocationUpdates: false,
-  //     headingFilter: 1, // Degrees
-  //     headingOrientation: "portrait",
-  //     pausesLocationUpdatesAutomatically: false,
-  //     showsBackgroundLocationIndicator: false,
-  //   });
-  //   const unsubscribe = RNLocation.subscribeToPermissionUpdates(
-  //     (currentPermission) => {
-  //       if (currentPermission === "authorizedWhenInUse") {
-  //       } else if (currentPermission === "denied") {
-  //         alert("Please allow location from settings");
-  //       }
-  //       console.log("currentPermission", currentPermission);
-  //       // startUpdatingLocation();
-  //     }
-  //   );
-  //   return () => {
-  //     unsubscribe();
-  //   };
-  // }, []);
+      desiredAccuracy: {
+        ios: "best",
+        android: "balancedPowerAccuracy",
+      },
+      // // Android only
+      // androidProvider: "auto",
+      // // interval: 10000, // Milliseconds
+      // // fastestInterval: 10000, // Milliseconds
+      // // maxWaitTime: 60000, // Milliseconds
+      // // iOS Only
+      activityType: "other",
+      allowsBackgroundLocationUpdates: false,
+      headingFilter: 1, // Degrees
+      headingOrientation: "portrait",
+      pausesLocationUpdatesAutomatically: false,
+      showsBackgroundLocationIndicator: false,
+    });
+    const unsubscribe = RNLocation.subscribeToPermissionUpdates(
+      (currentPermission) => {
+        if (currentPermission === "authorizedWhenInUse") {
+        } else if (currentPermission === "denied") {
+          // alert("Please allow location from settings");
+        }
+        console.log("currentPermission", currentPermission);
+        // startUpdatingLocation();
+      }
+    );
+    return () => {
+      unsubscribe();
+    };
+  }, []);
   // const unsubscribe = RNLocation.subscribeToPermissionUpdates(
   //   (currentPermission) => {
   //     if (currentPermission === "authorizedWhenInUse") {
@@ -395,6 +401,7 @@ const QRCodeScreen = (props) => {
 const mapStateToProps = (state) => ({
   accessToken: state.LoginReducer.accessToken,
   location: state.QRCode_ResponseReducer.location,
+  timesheet_id: state.QRCode_ResponseReducer.data?.timesheet_id,
 });
 
 const mapDispatchToProps = (dispatch) => {
