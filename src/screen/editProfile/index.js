@@ -14,7 +14,11 @@ import {
 } from "react-native-responsive-screen";
 import styles from "./style";
 import { AppText } from "@/components/AppText";
-import { useRoute, useNavigation } from "@react-navigation/core";
+import {
+  useRoute,
+  useNavigation,
+  useFocusEffect,
+} from "@react-navigation/core";
 import { CustomButton } from "@/components/CustomButton";
 import {
   actionConstant,
@@ -99,18 +103,22 @@ const EditProfile = (props) => {
     moveBack();
     return true;
   };
-  useEffect(() => {
-    (async () => {
-      let responsedata = await localDb.getUser().then((response) => {
-        return response;
-      });
-      setEmployee_id(responsedata.user.id);
-      await props.requestToGetProfile({
-        employee_id: responsedata.user.id,
-        navigation: navigation,
-      });
-    })();
 
+  useFocusEffect(
+    React.useCallback(() => {
+      (async () => {
+        let responsedata = await localDb.getUser().then((response) => {
+          return response;
+        });
+        setEmployee_id(responsedata.user.id);
+        await props.requestToGetProfile({
+          employee_id: responsedata.user.id,
+          navigation: navigation,
+        });
+      })();
+    }, [])
+  );
+  useEffect(() => {
     BackHandler.addEventListener("hardwareBackPress", handleBackButtonClick);
 
     return () => {
@@ -132,7 +140,7 @@ const EditProfile = (props) => {
       setTFN(profileInformation?.tfn_number);
       setAddress(profileInformation?.address);
       setDob(profileInformation?.dob);
-      console.log('dob',profileInformation?.dob);
+      console.log("dob", profileInformation?.dob);
       setPayment(profileInformation?.payment_type);
       setImageSource(profileInformation?.image);
     }
@@ -148,7 +156,7 @@ const EditProfile = (props) => {
       setTFN(profileInformation?.tfn_number);
       setAddress(profileInformation?.address);
       setDob(profileInformation?.dob);
-      console.log('dob 123',profileInformation?.dob);
+      console.log("dob 123", profileInformation?.dob);
       if (profileInformation.hasOwnProperty("image")) {
         setImageSource(profileInformation?.image);
       }
@@ -223,7 +231,7 @@ const EditProfile = (props) => {
       phoneErr = alertMsgConstant.MINIMUM_10_DIGIT;
     } else if (phone.length > 12) {
       phoneErr = alertMsgConstant.MAXIMUM_12_DIGIT;
-    } else if(phone.length == 11) {
+    } else if (phone.length == 11) {
       phoneErr = alertMsgConstant.PHONE_NUMBER_NOT_VALID;
     }
 
@@ -254,8 +262,8 @@ const EditProfile = (props) => {
       }
     }
 
-     // If confirm password there then only password validation will be checked
-     if (cnfPassword && cnfPassword.length > 0) {
+    // If confirm password there then only password validation will be checked
+    if (cnfPassword && cnfPassword.length > 0) {
       if (!isValidPassword(cnfPassword)) {
         cnfpasswordErr = alertMsgConstant.MSG_STRONG_PWD;
       }
@@ -266,7 +274,6 @@ const EditProfile = (props) => {
         passwordErr = alertMsgConstant.PASSWORD_NOT_EQUAL;
       }
     }
-
 
     if (
       titleErr === "" &&
@@ -301,7 +308,7 @@ const EditProfile = (props) => {
   };
 
   const onGoBack = () => {
-    navigation.navigate(appConstant.ROASTER);
+    navigation.navigate(appConstant.PROFILE_SETTINGS);
   };
 
   const openMediaPicker = () => {
@@ -342,7 +349,7 @@ const EditProfile = (props) => {
       const data = {
         title: title,
         name: name,
-        dob: moment(dob,"DD-MM-YYYY").format("YYYY-MM-DD"),
+        dob: moment(dob, "DD-MM-YYYY").format("YYYY-MM-DD"),
         email,
         phone,
         address,
@@ -484,7 +491,7 @@ const EditProfile = (props) => {
                 }}
               >
                 <TextInputCustom
-                viewName={appConstant.PROFILE}
+                  viewName={appConstant.PROFILE}
                   label={"Dob"}
                   value={dob}
                   onChangeText={onChangeDOB}
@@ -529,7 +536,7 @@ const EditProfile = (props) => {
               <View>
                 <Text style={styles.inputTextTitle}>Password</Text>
                 <TextInputCustom
-                viewName={appConstant.PROFILE}
+                  viewName={appConstant.PROFILE}
                   secureTextEntry={isClickEye ? false : true}
                   label={"Password"}
                   value={password}
@@ -548,7 +555,7 @@ const EditProfile = (props) => {
               <View>
                 <Text style={styles.inputTextTitle}>Confirm Password</Text>
                 <TextInputCustom
-                viewName={appConstant.PROFILE}
+                  viewName={appConstant.PROFILE}
                   secureTextEntry={isClickEyeConfirm ? false : true}
                   label={"Confirm Password"}
                   value={cnfPassword}

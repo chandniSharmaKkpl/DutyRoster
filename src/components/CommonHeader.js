@@ -83,7 +83,7 @@ const CommonHeader = (props) => {
     },
     viewRightProfile: {
       flex: 1,
-
+      // backgroundColor: 'pink',
       height: hp("10%"),
       width: wp("10%"),
       flexDirection: "row",

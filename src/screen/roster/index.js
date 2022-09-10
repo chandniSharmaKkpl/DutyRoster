@@ -13,7 +13,11 @@ import { StackActions } from "@react-navigation/native";
 
 import styles from "./style";
 import { AppText } from "@/components/AppText";
-import { useRoute, useNavigation } from "@react-navigation/core";
+import {
+  useRoute,
+  useNavigation,
+  useFocusEffect,
+} from "@react-navigation/core";
 import { alertMsgConstant, appColor, appConstant } from "@/constant";
 import { CommonHeader } from "@/components";
 import { Images } from "@/constant/svgImgConst";
@@ -69,14 +73,18 @@ const RosterScreen = (props) => {
       navigation.dispatch(resetAction);
     }
   }, []);
-  React.useEffect(() => {
-    var endDate = "";
-    var startDate = new Date();
-    endDate = moment(startDate).add(7, "d");
-    // console.log("startDate", startDate);
-    setSelectedWeek(startDate);
-    setSelectedDate(startDate);
-  }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      var endDate = "";
+      var startDate = new Date();
+      endDate = moment(startDate).add(7, "d");
+      // console.log("startDate", startDate);
+      setSelectedWeek(startDate);
+      setSelectedDate(startDate);
+      setIsCalendarShow(false)
+    }, [])
+  );
 
   const getSelectedDayEvents = (date) => {
     setSelectedWeek(date);
@@ -167,6 +175,7 @@ const RosterScreen = (props) => {
             <Calendars
               markedDates={markedDates}
               onDayPress={getSelectedDayEvents}
+              initialDate={startDay}
             />
           </View>
         )}

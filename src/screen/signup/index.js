@@ -476,7 +476,7 @@ const Signup = (props) => {
                   value={dob}
                   onChangeText={onChangeDOB}
                   placeholder={"Enter Date of Birth"}
-                  eyeIcon={require("../../assets/images/SignupScreen/calendar.png")}
+                  icon={require("../../assets/images/SignupScreen/calendar.png")}
                   onPressRight={showDatePicker}
                   error={error.dobErr}
                   inputViewStyle={styles.inputViewStyle}

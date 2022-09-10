@@ -75,6 +75,8 @@ const Availability = (props) => {
     resetAvailabilityDataAction,
   } = props;
 
+  console.log("startDay --->", startDay);
+
   const [isCalendarShow, setIsCalendarShow] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
   const [isAlertShow, setIsAlertShow] = useState(false);
@@ -99,33 +101,41 @@ const Availability = (props) => {
       endDate = moment(startDate).add(7, "d");
       setSelectedWeek(startDate);
       setSelectedDate(startDate);
-      // var startDate = new Date();
-      // endDate = moment(startDate).add(7, "d");
-
-      // const fromDate = moment(startDate).format("YYYY-MM-DD");
-      // const toDate = moment(endDate).format("YYYY-MM-DD");
-      // const params = {
-      //   week_start: fromDate,
-      //   week_end: toDate,
-      // };
-      // requestToGetAvailabilityAction(params);
+      setIsCalendarShow(false);
       return () => {
         resetAvailabilityDataAction();
       };
     }, [])
   );
 
-  React.useLayoutEffect(() => {}, []);
-
-  React.useEffect(() => {
-    // if (arrayDistricts.length > 0) {
-    //   setSelectedDistrictsAction(arrayDistricts[0]);
-    // }
-  }, []);
-
   const getSelectedDayEvents = (date) => {
-    setSelectedWeek(date);
-    onClickCalendar();
+    if (!isSelectedAvailabilityDataSaved) {
+      Alert.alert(
+        alertMsgConstant.WARNING,
+        alertMsgConstant.AVAILABILITY_ALERT_MSG,
+        [
+          {
+            text: alertMsgConstant.CANCEL,
+
+            onPress: () => {
+              console.log("Cancel Pressed");
+              onClickCalendar();
+            },
+            style: "cancel",
+          },
+          {
+            text: alertMsgConstant.OK,
+            onPress: () => {
+              setSelectedWeek(date);
+              onClickCalendar();
+            },
+          },
+        ]
+      );
+    } else {
+      setSelectedWeek(date);
+      onClickCalendar();
+    }
   };
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -180,10 +190,11 @@ const Availability = (props) => {
       weekEnd: weekEnd,
       availabilitySelectedDate: _selectedDates,
     });
-
+    const fromDate = moment(weekStart).format("YYYY-MM-DD");
+    const toDate = moment(weekEnd).format("YYYY-MM-DD");
     const params = {
-      week_start: weekStart,
-      week_end: weekEnd,
+      week_start: fromDate,
+      week_end: toDate,
     };
     requestToGetAvailabilityAction(params);
   }, []);
@@ -414,6 +425,7 @@ const Availability = (props) => {
             <Calendars
               markedDates={markedDates}
               onDayPress={getSelectedDayEvents}
+              initialDate={startDay}
             />
           </View>
         )}

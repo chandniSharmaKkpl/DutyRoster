@@ -258,7 +258,7 @@ console.log("accessToken =>", accessToken);
           </View>
           <View style={styles.versionContainer}>
             <AppText
-              text={" App Vesrion 2.2"}
+              text={" App Vesrion 2.3"}
               style={{ ...styles.appVersion }}
             />
           </View>
