@@ -10,19 +10,24 @@ import {
 const Shift = (props) => {
   const { availabilityData } = props;
 
-  // console.log('availabilityData',availabilityData);
+  // console.log("availabilityData", availabilityData);
   var arrayDates = Object.keys(availabilityData);
-  const renderItem = ({ item }) => {
+  const renderItem = ({ item, index }) => {
     var arrayTimes = [];
 
     if (!Array.isArray(availabilityData[item])) {
       arrayTimes = availabilityData[item].times;
-    }else{
-      return (<></>);
+    } else {
+      return <></>;
     }
 
     return (
-      <View>
+      <View
+        style={[
+          styles.row,
+          { borderBottomWidth: index === arrayDates.length - 1 ? 0 : 1 },
+        ]}
+      >
         <View
           style={{
             flexDirection: "row",
@@ -31,7 +36,7 @@ const Shift = (props) => {
           }}
         >
           {arrayTimes && arrayTimes.length > 0 ? (
-            <AppText text={item} style={styles.txtRow} />
+            <AppText text={item} style={[styles.txtRow, styles.centerText]} />
           ) : null}
 
           {/* Districts  */}
@@ -67,7 +72,6 @@ const Shift = (props) => {
             </View>
           ) : null}
         </View>
-        <View style={styles.singleLine} />
       </View>
     );
   };
@@ -94,6 +98,10 @@ const Shift = (props) => {
 };
 
 export const styles = {
+  row: {
+    borderColor: "#D2D2D2",
+    borderBottomWidth: 1,
+  },
   singleLine: {
     marginVertical: "1%",
     backgroundColor: appColor.GRAY,
@@ -106,9 +114,8 @@ export const styles = {
     // backgroundColor: appColor.LIGH_ORANGE,
   },
   viewOuter: {
-    backgroundColor: appColor.GREEN,
-    borderWidth: 1,
-    borderColor: "#D2D2D2",
+    backgroundColor: appColor.WHITE,
+    // borderWidth: 1,
     borderRadius: 10,
     shadowColor: "#0000001A",
     shadowOffset: {
@@ -117,7 +124,7 @@ export const styles = {
     },
     shadowOpacity: 22,
     shadowRadius: 4.65,
-    paddingBottom: '3%'
+    paddingBottom: "3%",
   },
   txtRed: {
     fontFamily: fontConstant.FONT_SEMI_BOLD,
@@ -131,7 +138,14 @@ export const styles = {
     fontSize: fontConstant.TEXT_11_SIZE_REGULAR,
     color: appColor.GRAY,
     paddingVertical: hp("1%"),
+
     // paddingHorizontal:wp("1%")
+  },
+  centerText: {
+    // backgroundColor: appColor.RED,
+    display: "flex",
+    alignItems: "center",
+    alignSelf: "center",
   },
 };
 export default Shift;

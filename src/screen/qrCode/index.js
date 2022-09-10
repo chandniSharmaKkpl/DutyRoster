@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { View, BackHandler, Linking, Dimensions } from "react-native";
+import { View, BackHandler, Linking, Dimensions, Platform } from "react-native";
 import stylesCommon from "../../common/commonStyle";
 import styles from "./style";
 import {
@@ -27,6 +27,7 @@ import {
   setQRLocation,
 } from "./redux/QRCode.action";
 import RNLocation from "react-native-location";
+import { checkMultiplePermision, requestPermission } from "@/libs/Permission";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
@@ -34,10 +35,12 @@ const SCREEN_WIDTH = Dimensions.get("window").width;
 const QRCodeScreen = (props) => {
   const { requestToFetQRCodeResponseAction, setQRLocationAction, location } =
     props;
-
+  const scannerRef = React.useRef();
   const svgRef = React.useRef();
   const textSVGRef = React.useRef();
-
+  const [permission, setPermission] = React.useState(
+    Platform.OS === "ios" ? true : false
+  );
   const navigation = useNavigation();
   const route = useRoute();
   const handleBackButtonClick = () => {
@@ -46,6 +49,19 @@ const QRCodeScreen = (props) => {
   };
 
   const onSuccess = (e) => {
+     RNLocation.getLatestLocation({ timeout: 5000 }).then((latestLocation) => {
+      try {
+        let lat = latestLocation.latitude;
+        let lon = latestLocation.longitude;
+        console.log("lat && lon", lat, lon);
+        setQRLocationAction({
+          latitude: lat,
+          longitude: lon,
+        });
+      } catch (error) {
+        console.log("error at getlatestLocation", error);
+      }
+    });
     Linking.openURL(e.data).catch((err) =>
       console.log("An error occured", err)
     );
@@ -88,44 +104,23 @@ const QRCodeScreen = (props) => {
   }, []);
 
   useFocusEffect(() => {
-    // Subscribe
-    RNLocation.configure({
-      distanceFilter: 50, // Meters
-
-      desiredAccuracy: {
-        ios: "best",
-        android: "balancedPowerAccuracy",
-      },
-      // Android only
-      androidProvider: "auto",
-      interval: 1000, // Milliseconds
-      fastestInterval: 1000, // Milliseconds
-      maxWaitTime: 6000, // Milliseconds
-      // iOS Only
-      activityType: "other",
-      allowsBackgroundLocationUpdates: false,
-      headingFilter: 1, // Degrees
-      headingOrientation: "portrait",
-      pausesLocationUpdatesAutomatically: false,
-      showsBackgroundLocationIndicator: false,
-    });
-
-    RNLocation.getLatestLocation({ timeout: 5000 }).then((latestLocation) => {
-      try {
-        let lat = latestLocation.latitude;
-        let lon = latestLocation.longitude;
-        console.log("lat && lon", lat, lon);
-        setQRLocationAction({
-          latitude: lat,
-          longitude: lon,
-        });
-      } catch (error) {
-        console.log("error at getlatestLocation", error);
-      }
-    });
     // Unsubscribe
-
+    // RNLocation.getLatestLocation({ timeout: 5000 }).then((latestLocation) => {
+    //   try {
+    //     let lat = latestLocation.latitude;
+    //     let lon = latestLocation.longitude;
+    //     console.log("lat && lon", lat, lon);
+    //     setQRLocationAction({
+    //       latitude: lat,
+    //       longitude: lon,
+    //     });
+    //   } catch (error) {
+    //     console.log("error at getlatestLocation", error);
+    //   }
+    // });
     // unsubscribe();
+
+    requestPermission(setPermission, onRequestGranted);
   });
   const moveBack = () => {
     props.navigation.goBack();
@@ -229,29 +224,106 @@ const QRCodeScreen = (props) => {
     );
   };
 
-  React.useEffect(() => {
-    RNLocation.configure({
-      distanceFilter: 50,
-    });
-
-    RNLocation.requestPermission({
-      ios: "whenInUse",
-      android: {
-        detail: "fine",
-        rationale: {
-          title: "Location permission",
-          message: "We use your location to demo the library",
-          buttonPositive: "OK",
-          buttonNegative: "Cancel",
-        },
-      },
-    }).then((granted) => {
-      if (granted) {
-        startUpdatingLocation();
-      }
-    });
+  const reactiveQRCode = React.useCallback(() => {
+    console.log("reactiveQRCode");
+    if (scannerRef.current) {
+      // console.log("reactiveQRCode", scannerRef.current);
+      // scannerRef.current.reactivate();
+    }
   }, []);
 
+  const onRequestGranted = () => {
+    reactiveQRCode();
+    startUpdatingLocation();
+  };
+
+  // React.useEffect(() => {
+  //   requestPermission(setPermission, onRequestGranted);
+  // }, []);
+  // React.useEffect(() => {
+  //   RNLocation.checkPermission({
+  //     ios: "always", // or 'always'
+  //     android: {
+  //       detail: "coarse", // or 'fine'
+  //     },
+  //   });
+
+  //   RNLocation.requestPermission({
+  //     ios: "whenInUse",
+  //     android: {
+  //       detail: "fine",
+  //       rationale: {
+  //         title: "Location permission",
+  //         message: "We use your location to demo the library",
+  //         buttonPositive: "OK",
+  //         buttonNegative: "Cancel",
+  //       },
+  //     },
+  //   }).then((granted) => {
+  //     // alert(granted);
+  //     if (granted) {
+  //       startUpdatingLocation();
+  //     } else {
+  //       alert("Please allow location from settings");
+  //     }
+  //   });
+
+  //   // When Permission Changed
+
+  //   // React.useEffect(() => {
+  //   //   // Subscribe
+
+  //   //   return () => {
+  //   //     // unsubscribe();
+  //   //   };
+  //   //   // // Unsubscribe
+  //   // }, []);
+  //   // Subscribe
+  //   RNLocation.configure({
+  //     distanceFilter: 50, // Meters
+
+  //     desiredAccuracy: {
+  //       ios: "best",
+  //       android: "balancedPowerAccuracy",
+  //     },
+  //     // // Android only
+  //     // androidProvider: "auto",
+  //     // // interval: 10000, // Milliseconds
+  //     // // fastestInterval: 10000, // Milliseconds
+  //     // // maxWaitTime: 60000, // Milliseconds
+  //     // // iOS Only
+  //     activityType: "other",
+  //     allowsBackgroundLocationUpdates: false,
+  //     headingFilter: 1, // Degrees
+  //     headingOrientation: "portrait",
+  //     pausesLocationUpdatesAutomatically: false,
+  //     showsBackgroundLocationIndicator: false,
+  //   });
+  //   const unsubscribe = RNLocation.subscribeToPermissionUpdates(
+  //     (currentPermission) => {
+  //       if (currentPermission === "authorizedWhenInUse") {
+  //       } else if (currentPermission === "denied") {
+  //         alert("Please allow location from settings");
+  //       }
+  //       console.log("currentPermission", currentPermission);
+  //       // startUpdatingLocation();
+  //     }
+  //   );
+  //   return () => {
+  //     unsubscribe();
+  //   };
+  // }, []);
+  // const unsubscribe = RNLocation.subscribeToPermissionUpdates(
+  //   (currentPermission) => {
+  //     if (currentPermission === "authorizedWhenInUse") {
+  //     } else if (currentPermission === "denied") {
+  //       alert("Please allow location from settings");
+  //     }
+  //     console.log("currentPermission", currentPermission);
+  //     // startUpdatingLocation();
+  //   }
+  // );
+  // unsubscribe();
   const startUpdatingLocation = () => {
     return RNLocation.subscribeToLocationUpdates((locations) => {
       let lat = locations[0].latitude;
@@ -268,44 +340,52 @@ const QRCodeScreen = (props) => {
     <>
       <CommonHeader screenName={route?.name} onGoBack={onGoBack} />
       <View style={[styles.container]}>
-        <QRCodeScanner
-          onRead={onSuccess}
-          cameraStyle={{ height: SCREEN_HEIGHT, width: SCREEN_WIDTH }}
-          reactivate={true}
-          reactivateTimeout={3000}
-          showMarker
-          markerStyle={{
-            borderColor: appColor.WHITE,
-            borderRadius: 1,
-            height: SCREEN_HEIGHT,
-            width: SCREEN_WIDTH,
-          }}
-          customMarker={
-            <>
-              <View style={{ position: "relative" }}>
-                <View style={styles.rectangleContainer}>
-                  <View style={{ marginTop: MARGIN_TOP_RECT }} />
-                  <View style={{ flexDirection: "row" }}>
-                    <View style={styles.leftAndRightOverlay} />
-                    <View>
-                      <Animatable.View
-                        style={styles.scanBar}
-                        direction="alternate-reverse"
-                        iterationCount="infinite"
-                        duration={1800}
-                        easing="linear"
-                        animation={makeSlideOutTranslation("translateY", 150)}
-                      />
-                    </View>
-                    <View style={styles.leftAndRightOverlay} />
-                  </View>
+        {permission && (
+          <QRCodeScanner
+            // ref={scannerRef}
 
-                  <View style={styles.bottomOverlay} />
+            ref={(node) => {
+              scannerRef.current = node;
+            }}
+            checkAndroid6Permissions={true}
+            onRead={onSuccess}
+            cameraStyle={{ height: SCREEN_HEIGHT, width: SCREEN_WIDTH }}
+            reactivate={true}
+            reactivateTimeout={3000}
+            showMarker
+            markerStyle={{
+              borderColor: appColor.WHITE,
+              borderRadius: 1,
+              height: SCREEN_HEIGHT,
+              width: SCREEN_WIDTH,
+            }}
+            customMarker={
+              <>
+                <View style={{ position: "relative" }}>
+                  <View style={styles.rectangleContainer}>
+                    <View style={{ marginTop: MARGIN_TOP_RECT }} />
+                    <View style={{ flexDirection: "row" }}>
+                      <View style={styles.leftAndRightOverlay} />
+                      <View>
+                        <Animatable.View
+                          style={styles.scanBar}
+                          direction="alternate-reverse"
+                          iterationCount="infinite"
+                          duration={1800}
+                          easing="linear"
+                          animation={makeSlideOutTranslation("translateY", 150)}
+                        />
+                      </View>
+                      <View style={styles.leftAndRightOverlay} />
+                    </View>
+
+                    <View style={styles.bottomOverlay} />
+                  </View>
                 </View>
-              </View>
-            </>
-          }
-        />
+              </>
+            }
+          />
+        )}
         <CircleMAsk />
       </View>
     </>

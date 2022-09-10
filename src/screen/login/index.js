@@ -48,10 +48,7 @@ const Login = (props) => {
   const navigation = useNavigation();
 
   const [DeviceToken, setDeviceToken] = useState();
-  const [DeviceType, setDeviceType] = useState(
-    Platform.OS === "android" ? 1 : 2
-  );
-  console.log("===>", DeviceType);
+  
   const [DeviceUuid, setDeviceUuid] = useState();
   const [DeviceName, setDeviceName] = useState();
   const [AppVersion, setAppVersion] = useState();
@@ -69,8 +66,6 @@ const Login = (props) => {
       setDeviceUuid(uniqueId);
     });
 
-    let type = DeviceInfo.getDeviceType();
-    setDeviceType(type);
 
     let version = DeviceInfo.getVersion();
     setAppVersion(version);
@@ -156,7 +151,7 @@ console.log("accessToken =>", accessToken);
         password: password,
         navigation: navigation,
         device_token: 1234,
-        device_type: 1,
+        device_type: Platform.OS === "android" ? 1 : 2,
         device_uuid: DeviceUuid,
         device_name: DeviceName,
         app_version: AppVersion,
