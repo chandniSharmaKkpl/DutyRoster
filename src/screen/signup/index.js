@@ -94,10 +94,29 @@ const Signup = (props) => {
   );
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [DeviceName, setDeviceName] = useState(false);
+  const [DeviceToken, setDeviceToken] = useState()
+  const [DeviceUuid, setDeviceUuid] = useState()
+
+
   let isCalander;
   DeviceInfo.getDeviceName().then((device_name) => {
     setDeviceName(device_name);
   });
+
+  DeviceInfo.getDeviceToken().then((device_token) => {
+    setDeviceToken(device_token);
+  });
+
+    let type = DeviceInfo.getDeviceType();
+  console.log(type);
+
+  DeviceInfo.syncUniqueId().then((uniqueId) => {
+    setDeviceUuid(uniqueId);
+  });
+  console.log("setDeviceUuid", DeviceUuid);
+
+
+
   const showDatePicker = () => {
     setDatePickerVisibility(true);
   };

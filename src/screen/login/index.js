@@ -1,5 +1,12 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { View, Text, Image, BackHandler, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  BackHandler,
+  TouchableOpacity,
+  Platform,
+} from "react-native";
 import stylesCommon from "../../common/commonStyle";
 import { StackActions } from "@react-navigation/native";
 
@@ -23,12 +30,6 @@ const hasError = (_err) => {
   );
 };
 
-  // let deviceToken = DeviceInfo.getDeviceToken;
-  // let deviceType = DeviceInfo.getDeviceType;
-  // let deviceUuid = DeviceInfo.syncUniqueId;
-  // let deviceName = DeviceInfo.getDeviceName;
-  // let appVersion = DeviceInfo.getVersion;
-
 const Login = (props) => {
   const { accessToken } = props;
   const [error, setError] = React.useState({
@@ -42,44 +43,38 @@ const Login = (props) => {
   const [password, setPassword] = useState(
     process.env.NODE_ENV !== "production" ? "Letmein12@" : ""
   );
-  // const [device_token, setDevice_token] = useState();
-  // const [device_type, setDevice_type] = useState();
-  // const [device_uuid, setDevice_uuid] = useState();
-  // const [device_name, setDevice_name] = useState();
-  // const [app_version, setApp_version] = useState();
-  // const [device_token, setDevice_token] = useState ();
-
-
-
-  // console.log("device_token : =>", deviceToken);
-  // console.log("device_type : =>", deviceType);
-  // console.log("device_uuid : =>", deviceUuid);
-  // console.log("device_name : =>", deviceName);
-  // console.log("app_version : =>", appVersion);
-
-  //windodee1@yopmail.com
-  //Test@123
   const [isClickEye, setIsClickEye] = useState(false);
   const loginResponse = useSelector((state) => state.LoginReducer);
   const navigation = useNavigation();
 
-  // DeviceInfo.getDeviceToken().then((deviceToken) => {
-  //   setDevice_token(deviceToken);
-  // });
+  const [DeviceToken, setDeviceToken] = useState();
+  const [DeviceType, setDeviceType] = useState(
+    Platform.OS === "android" ? 1 : 2
+  );
+  console.log("===>", DeviceType);
+  const [DeviceUuid, setDeviceUuid] = useState();
+  const [DeviceName, setDeviceName] = useState();
+  const [AppVersion, setAppVersion] = useState();
 
-  // let type = DeviceInfo.getDeviceType();
-  // setDevice_type(type);
+  useEffect(() => {
+    DeviceInfo.getDeviceToken().then((deviceToken) => {
+      setDeviceToken(deviceToken);
+    });
 
-  // DeviceInfo.syncUniqueId().then((uniqueId) => {
-  //   setDevice_uuid(uniqueId);
-  // });
+    DeviceInfo.getDeviceName().then((device_name) => {
+      setDeviceName(device_name);
+    });
 
-  // DeviceInfo.getDeviceName().then((deviceName) => {
-  //   setDevice_name(deviceName);
-  // });
+    DeviceInfo.syncUniqueId().then((uniqueId) => {
+      setDeviceUuid(uniqueId);
+    });
 
-  // let version = DeviceInfo.getVersion();
-  // setApp_version(version);
+    let type = DeviceInfo.getDeviceType();
+    setDeviceType(type);
+
+    let version = DeviceInfo.getVersion();
+    setAppVersion(version);
+  }, []);
 
   const onChangeEmail = (text) => {
     setEmail(text);
@@ -132,6 +127,8 @@ const Login = (props) => {
     }
   }
 
+console.log("accessToken =>", accessToken);
+
   useEffect(() => {}, [isClickEye]);
 
   const onPressRight = () => {
@@ -158,12 +155,12 @@ const Login = (props) => {
         email: email,
         password: password,
         navigation: navigation,
-        // device_token: device_token,
-        // device_type: device_type,
-        // device_uuid: device_uuid,
-        // device_name: device_name,
-        // app_version: app_version,
-        // os_version: os_version,
+        device_token: 1234,
+        device_type: 1,
+        device_uuid: DeviceUuid,
+        device_name: DeviceName,
+        app_version: AppVersion,
+        os_version: Platform.Version,
       });
     }
   };

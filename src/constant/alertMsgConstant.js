@@ -40,7 +40,8 @@ export default {
   CANCELLED_IMAGE_SELECTION: 'User cancelled image selection',
   IMAGE_REQUIRED:"The image field is required.",
   AVAILABILITY_ALERT_MSG : "If you will not save your current selection data then you will lose these changes",
-
+  PLEASE_SELECT_IN_TIME: "Please select IN Time",
+  MINIMUM_3_HOURS: 'Please enter minimum 3 hours',
   //** Toast types **/
   TOAST_SUCCESS:"success",
   TOAST_NORMAL:"normal",

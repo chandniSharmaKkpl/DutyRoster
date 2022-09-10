@@ -15,7 +15,7 @@ import PropTypes from "prop-types";
 import { Images } from "@/constant/svgImgConst";
 import { AppText } from "@/components/AppText";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { appConstant, imageConstant } from "@/constant";
+import { alertMsgConstant, appConstant, imageConstant } from "@/constant";
 import { TextInputCustom } from "@/screen/availability/AvailabilityItem/TextInput";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import DropDownPicker from "react-native-dropdown-picker";
@@ -40,18 +40,18 @@ const AvailabilityItem = (props) => {
     setDataItemofAvailabilityAction,
   } = props;
   const districtRef = React.useRef();
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(null);
-  const [items, setItems] = useState([
-    { label: "Apple", value: "apple" },
-    { label: "Banana", value: "banana" },
-  ]);
   const { district_id, inTime, outTime, id } = data;
   const [isShowDistrictList, setIsShowDistrictList] = useState(false);
   const [isTimeInPickerVisible, setTimeInPickerVisibility] = useState(false);
   const [isTimeOutPickerVisible, setTimeOutPickerVisibility] = useState(false);
   const showOutTimePicker = () => {
-    setTimeOutPickerVisibility(true);
+    if (data.inTime) {
+      setTimeOutPickerVisibility(true);
+    } else {
+      toast.show(alertMsgConstant.PLEASE_SELECT_IN_TIME, {
+        type: alertMsgConstant.TOAST_DANGER,
+      });
+    }
   };
   const showInTimePicker = (index) => {
     setTimeInPickerVisibility(true);
@@ -74,12 +74,31 @@ const AvailabilityItem = (props) => {
   };
 
   const handleOutTimeConfirm = (date) => {
-    setDataItemofAvailabilityAction({
-      type: SET_DATA_TYPE.outTime,
-      data: moment(date).format("hh:mm A"),
-      id: id,
-    });
-    hideOutTimePicker();
+    if (data.inTime) {
+      if (
+        Number(moment(data.inTime, "hh:mm A").format("x")) +
+          3 * 60 * 60 * 1000 <=
+        moment(date).format("x")
+      ) {
+        setDataItemofAvailabilityAction({
+          type: SET_DATA_TYPE.outTime,
+          data: moment(date).format("hh:mm A"),
+          id: id,
+        });
+        hideOutTimePicker();
+      } else {
+        toast.show(alertMsgConstant.MINIMUM_3_HOURS, {
+          type: alertMsgConstant.TOAST_DANGER,
+        });
+        hideOutTimePicker();
+      }
+    } else {
+      // alert("Please");
+      toast.show("Please select IN Time", {
+        tyee: alertMsgConstant.TOAST_DANGER,
+      });
+      hideOutTimePicker();
+    }
   };
   const renderDistrictList = ({ item }) => {
     return (
@@ -137,15 +156,8 @@ const AvailabilityItem = (props) => {
         <View style={styles.buttonReason}>
           <TouchableOpacity
             onPress={() => {
-              console.log("districtRef", districtRef.current);
               // if (districtRef.current) {
               //   districtRef.current.measure((fx, fy, width, height, px, py) => {
-              //     console.log("Component width is: " + width);
-              //     console.log("Component height is: " + height);
-              //     console.log("X offset to frame: " + fx);
-              //     console.log("Y offset to frame: " + fy);
-              //     console.log("X offset to page:  " + px);
-              //     console.log("Y offset to page: " + py);
               //   });
               // }
               setIsShowDistrictList(!isShowDistrictList);

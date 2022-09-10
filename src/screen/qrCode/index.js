@@ -2,7 +2,11 @@ import React, { useState, useCallback, useEffect } from "react";
 import { View, BackHandler, Linking, Dimensions } from "react-native";
 import stylesCommon from "../../common/commonStyle";
 import styles from "./style";
-import { useNavigation, useRoute } from "@react-navigation/core";
+import {
+  useNavigation,
+  useRoute,
+  useFocusEffect,
+} from "@react-navigation/core";
 import { CustomButton } from "@/components/CustomButton";
 import { CommonHeader } from "@/components";
 import * as Animatable from "react-native-animatable";
@@ -31,9 +35,6 @@ const QRCodeScreen = (props) => {
   const { requestToFetQRCodeResponseAction, setQRLocationAction, location } =
     props;
 
-  const [currentLocation, setCurrentLocation] = useState(null);
-  const [isLatitude, setIsLatitude] = useState();
-  const [isLongitude, setIsLongitude] = useState();
   const svgRef = React.useRef();
   const textSVGRef = React.useRef();
 
@@ -46,10 +47,6 @@ const QRCodeScreen = (props) => {
 
   const onSuccess = (e) => {
     Linking.openURL(e.data).catch((err) =>
-
-    // if (condition) {
-      
-    // }
       console.log("An error occured", err)
     );
 
@@ -59,7 +56,7 @@ const QRCodeScreen = (props) => {
     const location_id = res.location_id; // get location id when user scan QR code response
     const signIn = convertDateTime(currentTime, false, true); // convert time formate and get current time
     const date = convertDateTime(currentTime, true, false); // covert date formate and get current date
-     // permissionHandle()
+    // permissionHandle()
     //  if(timesheetId){
     //   requestToFetQRCodeResponseAction({
     //     location_id: location_id,
@@ -70,18 +67,15 @@ const QRCodeScreen = (props) => {
     //     timesheet_id: timesheetId
     //   });
     //  }else{
-      requestToFetQRCodeResponseAction({
-        location_id: location_id,
-        signin: signIn,
-        date: date,
-        latitude: isLatitude,
-        longitude: isLongitude,
-      });
+    requestToFetQRCodeResponseAction({
+      location_id: location_id,
+      signin: signIn,
+      date: date,
+      latitude: location.latitude,
+      longitude: location.longitude,
+    });
     //  }
-   
   };
-
-
 
   React.useEffect(() => {
     BackHandler.addEventListener("hardwareBackPress", handleBackButtonClick);
@@ -93,6 +87,46 @@ const QRCodeScreen = (props) => {
     };
   }, []);
 
+  useFocusEffect(() => {
+    // Subscribe
+    RNLocation.configure({
+      distanceFilter: 50, // Meters
+
+      desiredAccuracy: {
+        ios: "best",
+        android: "balancedPowerAccuracy",
+      },
+      // Android only
+      androidProvider: "auto",
+      interval: 1000, // Milliseconds
+      fastestInterval: 1000, // Milliseconds
+      maxWaitTime: 6000, // Milliseconds
+      // iOS Only
+      activityType: "other",
+      allowsBackgroundLocationUpdates: false,
+      headingFilter: 1, // Degrees
+      headingOrientation: "portrait",
+      pausesLocationUpdatesAutomatically: false,
+      showsBackgroundLocationIndicator: false,
+    });
+
+    RNLocation.getLatestLocation({ timeout: 5000 }).then((latestLocation) => {
+      try {
+        let lat = latestLocation.latitude;
+        let lon = latestLocation.longitude;
+        console.log("lat && lon", lat, lon);
+        setQRLocationAction({
+          latitude: lat,
+          longitude: lon,
+        });
+      } catch (error) {
+        console.log("error at getlatestLocation", error);
+      }
+    });
+    // Unsubscribe
+
+    // unsubscribe();
+  });
   const moveBack = () => {
     props.navigation.goBack();
   };
@@ -219,13 +253,10 @@ const QRCodeScreen = (props) => {
   }, []);
 
   const startUpdatingLocation = () => {
-    RNLocation.subscribeToLocationUpdates((locations) => {
-      // console.log("locations: ", locations);
+    return RNLocation.subscribeToLocationUpdates((locations) => {
       let lat = locations[0].latitude;
-      let lon = locations[0].latitude;
+      let lon = locations[0].longitude;
       console.log("locations: ", lat, lon);
-      setIsLatitude(lat);
-      setIsLongitude(lon);
       setQRLocationAction({
         latitude: lat,
         longitude: lon,
@@ -283,7 +314,7 @@ const QRCodeScreen = (props) => {
 
 const mapStateToProps = (state) => ({
   accessToken: state.LoginReducer.accessToken,
-  location: state.LoginReducer.location,
+  location: state.QRCode_ResponseReducer.location,
 });
 
 const mapDispatchToProps = (dispatch) => {

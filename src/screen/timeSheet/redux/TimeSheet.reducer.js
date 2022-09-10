@@ -1,8 +1,11 @@
 import { actionConstant } from "@/constant";
+import roster from "@/screen/roster";
+import timeSheet from "..";
 
 const initialState = {
   isRequesting: false,
-  data: {},
+  data: null,
+  cardData: null,
   error: {},
   markedDates: {},
   selectedWeek: {
@@ -18,15 +21,18 @@ export default (state = initialState, { type, payload }) => {
       return {
         ...state,
         isRequesting: true,
-        data: {},
+        data: null,
+        cardData: null,
         error: {},
       };
     }
     case actionConstant.ACTION_GET_TIMESHEET_DATE_SUCCESS: {
+      const { roaster, ...others } = payload;
       return {
         ...state,
         isRequesting: false,
-        data: payload,
+        data: roaster,
+        cardData: others,
         error: {},
       };
     }
