@@ -47,7 +47,7 @@ import { connect, useSelector } from "react-redux";
 import Loader from "@/components/Loader";
 
 const EditProfile = (props) => {
-  const { requestToUpdateProfileAction } = props;
+  const { requestToUpdateProfileAction, requestToUpdateProfileInHeaderAction } = props;
   const navigation = useNavigation();
   const route = useRoute();
   const { user } = React.useContext(AuthContext);
@@ -65,6 +65,13 @@ const EditProfile = (props) => {
   });
 
   const profileResponse = useSelector((state) => state.ProfileReducer);
+
+  useEffect(() => {
+    console.log(
+      "profileResponse.UpdateProfileReducer =>",
+      JSON.stringify(profileResponse, null, 4)
+    );
+  }, [profileResponse]);
 
   const [profilePath, setProfiilePath] = useState(null);
   const [ImageSource, setImageSource] = useState("");
@@ -148,6 +155,7 @@ const EditProfile = (props) => {
 
   React.useEffect(() => {
     if (profileResponse.UpdateProfileReducer) {
+      requestToUpdateProfileInHeaderAction(profileResponse.UpdateProfileReducer)
       let profileInformation = profileResponse.UpdateProfileReducer.data;
       setTitle(profileInformation?.title);
       setName(profileInformation?.name);
@@ -609,6 +617,12 @@ const mapDispatchToProps = (dispatch) => {
 
     requestToUpdateProfileAction: (params) =>
       dispatch(profileAction.requestToUpdateProfile(params)),
+      
+      requestToUpdateProfileInHeaderAction : (params) =>
+      dispatch(profileAction.requestUpdateProfileHeader(params))
+
   };
+
+
 };
 export default connect(null, mapDispatchToProps)(EditProfile);

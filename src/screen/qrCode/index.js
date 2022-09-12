@@ -1,5 +1,13 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { View, BackHandler, Linking, Dimensions, Platform } from "react-native";
+import {
+  View,
+  BackHandler,
+  Linking,
+  Dimensions,
+  Platform,
+  InteractionManager,
+  AppState,
+} from "react-native";
 import stylesCommon from "../../common/commonStyle";
 import styles from "./style";
 import {
@@ -11,7 +19,7 @@ import { CustomButton } from "@/components/CustomButton";
 import { CommonHeader } from "@/components";
 import * as Animatable from "react-native-animatable";
 import QRCodeScanner from "react-native-qrcode-scanner";
-import { appColor, fontConstant } from "@/constant";
+import { alertMsgConstant, appColor, fontConstant } from "@/constant";
 import Svg, {
   Circle,
   Defs,
@@ -52,12 +60,32 @@ const QRCodeScreen = (props) => {
     return true;
   };
 
-  const onSuccess = (e) => {
-    RNLocation.getLatestLocation({ timeout: 5000 }).then((latestLocation) => {
+  const onSuccess = async (e) => {
+    let locations;
+    if (!permission) {
+      let newRequestpermission = await RNLocation.requestPermission({
+        ios: "whenInUse",
+        android: {
+          detail: "coarse",
+          rationale: {
+            title: "We need to access your location",
+            message: "We use your location to show where you are on the map",
+            buttonPositive: "OK",
+            buttonNegative: "Cancel",
+          },
+        },
+      });
+      if (newRequestpermission) {
+        startUpdatingLocation();
+      } else {
+        alert("Please allow location from settings");
+        return;
+      }
+      locations = await RNLocation.getLatestLocation({ timeout: 100 });
       try {
-        let lat = latestLocation.latitude;
-        let lon = latestLocation.longitude;
-        console.log("lat && lon", lat, lon);
+        let lat = locations.latitude;
+        let lon = locations.longitude;
+        // console.log("Geolocation.lat && Geolocation.lon", lat, lon);
         setQRLocationAction({
           latitude: lat,
           longitude: lon,
@@ -65,19 +93,36 @@ const QRCodeScreen = (props) => {
       } catch (error) {
         console.log("error at getlatestLocation", error);
       }
-    });
+    } else {
+      // console.log("Here 7");
+
+      locations = await RNLocation.getLatestLocation({ timeout: 100 });
+      console.log(locations);
+
+      try {
+        let lat = locations.latitude;
+        let lon = locations.longitude;
+        console.log("Geolocation.lat && Geolocation.lon", lat, lon);
+        setQRLocationAction({
+          latitude: lat,
+          longitude: lon,
+        });
+      } catch (error) {
+        console.log("error at getlatestLocation", error);
+      }
+    }
     Linking.openURL(e.data).catch((err) =>
       console.log("An error occured", err)
     );
 
-    const res = JSON.parse(e.data);
-    console.log("QR code =>", res);
-    const currentTime = new Date(); // get current date & time
-    const location_id = res.location_id; // get location id when user scan QR code response
-    const signIn = convertDateTime(currentTime, false, true); // convert time formate and get current time
-    const date = convertDateTime(currentTime, true, false); // covert date formate and get current date
-    // permissionHandle()
     try {
+      const res = JSON.parse(e.data);
+      console.log("QR code =>", res);
+      const currentTime = new Date(); // get current date & time
+      const location_id = res.location_id; // get location id when user scan QR code response
+      const signIn = convertDateTime(currentTime, false, true); // convert time formate and get current time
+      const date = convertDateTime(currentTime, true, false); // covert date formate and get current date
+      // permissionHandle()
       if (timesheet_id) {
         requestToFetQRCodeResponseAction({
           location_id: location_id,
@@ -96,7 +141,9 @@ const QRCodeScreen = (props) => {
           longitude: location.longitude,
         });
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   React.useEffect(() => {
@@ -109,25 +156,19 @@ const QRCodeScreen = (props) => {
     };
   }, []);
 
-  useFocusEffect(() => {
-    // Unsubscribe
-    // RNLocation.getLatestLocation({ timeout: 5000 }).then((latestLocation) => {
-    //   try {
-    //     let lat = latestLocation.latitude;
-    //     let lon = latestLocation.longitude;
-    //     console.log("lat && lon", lat, lon);
-    //     setQRLocationAction({
-    //       latitude: lat,
-    //       longitude: lon,
-    //     });
-    //   } catch (error) {
-    //     console.log("error at getlatestLocation", error);
-    //   }
-    // });
-    // unsubscribe();
+  useFocusEffect(
+    React.useCallback(() => {
+      console.log("onFocusChange");
+      startUpdatingLocation();
+      const task = InteractionManager.runAfterInteractions(() => {
+        requestPermission(setPermission, onRequestGranted);
+        // Expensive task
+      });
 
-    requestPermission(setPermission, onRequestGranted);
-  });
+      return () => task.cancel();
+    }, [])
+  );
+
   const moveBack = () => {
     props.navigation.goBack();
   };
@@ -240,108 +281,66 @@ const QRCodeScreen = (props) => {
 
   const onRequestGranted = () => {
     reactiveQRCode();
-    startUpdatingLocation();
   };
+  const appState = React.useRef(AppState.currentState);
 
-  // React.useEffect(() => {
-  //   requestPermission(setPermission, onRequestGranted);
-  // }, []);
-  React.useEffect(() => {
-    RNLocation.checkPermission({
-      ios: "always", // or 'always'
-      android: {
-        detail: "coarse", // or 'fine'
-      },
-    });
-
-    RNLocation.requestPermission({
-      ios: "whenInUse",
-      android: {
-        detail: "fine",
-        rationale: {
-          title: "Location permission",
-          message: "We use your location to demo the library",
-          buttonPositive: "OK",
-          buttonNegative: "Cancel",
-        },
-      },
-    }).then((granted) => {
-      // alert(granted);
-      if (granted) {
-        startUpdatingLocation();
-      } else {
-        alert("Please allow location from settings");
-      }
-    });
-
-    // When Permission Changed
-
-    // React.useEffect(() => {
-    //   // Subscribe
-
-    //   return () => {
-    //     // unsubscribe();
-    //   };
-    //   // // Unsubscribe
-    // }, []);
-    // Subscribe
-    RNLocation.configure({
-      distanceFilter: 50, // Meters
-
-      desiredAccuracy: {
-        ios: "best",
-        android: "balancedPowerAccuracy",
-      },
-      // // Android only
-      // androidProvider: "auto",
-      // // interval: 10000, // Milliseconds
-      // // fastestInterval: 10000, // Milliseconds
-      // // maxWaitTime: 60000, // Milliseconds
-      // // iOS Only
-      activityType: "other",
-      allowsBackgroundLocationUpdates: false,
-      headingFilter: 1, // Degrees
-      headingOrientation: "portrait",
-      pausesLocationUpdatesAutomatically: false,
-      showsBackgroundLocationIndicator: false,
-    });
-    const unsubscribe = RNLocation.subscribeToPermissionUpdates(
-      (currentPermission) => {
-        if (currentPermission === "authorizedWhenInUse") {
-        } else if (currentPermission === "denied") {
-          // alert("Please allow location from settings");
+  useEffect(() => {
+    const subscription = AppState.addEventListener("change", (nextAppState) => {
+      if (
+        appState.current.match(/inactive|background/) &&
+        nextAppState === "active"
+      ) {
+        console.log("App has come to the foreground!");
+        if (Platform.OS === "ios") {
+          requestPermission(setPermission, onRequestGranted);
         }
-        console.log("currentPermission", currentPermission);
-        // startUpdatingLocation();
       }
-    );
+
+      appState.current = nextAppState;
+      console.log("AppState", appState.current);
+    });
+    
+    const unsubscribe =  RNLocation.requestPermission({
+       ios: "whenInUse",
+       android: {
+         detail: "fine",
+         rationale: {
+           title: "Location permission",
+           message: "We use your location to demo the library",
+           buttonPositive: "OK",
+           buttonNegative: "Cancel",
+         },
+       },
+     }).then((granted) => {
+       // alert(granted);
+       if (granted) {
+         startUpdatingLocation();
+       } else {
+         toast.show("Please allow location from settings", {
+           type: alertMsgConstant.TOAST_DANGER,
+         });
+         
+       }
+     });
+
     return () => {
+      subscription.remove();
       unsubscribe();
     };
   }, []);
-  // const unsubscribe = RNLocation.subscribeToPermissionUpdates(
-  //   (currentPermission) => {
-  //     if (currentPermission === "authorizedWhenInUse") {
-  //     } else if (currentPermission === "denied") {
-  //       alert("Please allow location from settings");
-  //     }
-  //     console.log("currentPermission", currentPermission);
-  //     // startUpdatingLocation();
-  //   }
-  // );
-  // unsubscribe();
   const startUpdatingLocation = () => {
-    return RNLocation.subscribeToLocationUpdates((locations) => {
-      let lat = locations[0].latitude;
-      let lon = locations[0].longitude;
-      console.log("locations: ", lat, lon);
-      setQRLocationAction({
-        latitude: lat,
-        longitude: lon,
-      });
+    RNLocation.subscribeToLocationUpdates((locations) => {
+      if (locations) {
+        let lat = locations[0].latitude;
+        let lon = locations[0].longitude;
+        console.log("locations12: ", lat, lon);
+        setQRLocationAction({
+          latitude: lat,
+          longitude: lon,
+        });
+      }
     });
   };
-
   return (
     <>
       <CommonHeader screenName={route?.name} onGoBack={onGoBack} />

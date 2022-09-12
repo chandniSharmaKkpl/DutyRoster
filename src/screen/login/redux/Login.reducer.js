@@ -6,7 +6,7 @@ const initialState = {
   isAuth: false,
   user: {},
   error: {},
-  districts:[]
+  districts: [],
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -17,8 +17,8 @@ export default (state = initialState, { type, payload }) => {
         accessToken: {},
         isRequestingLoader: true,
         isAuth: false,
-        user:{},
-        districts:[],
+        user: {},
+        districts: [],
         error: {},
       };
     }
@@ -28,7 +28,7 @@ export default (state = initialState, { type, payload }) => {
         accessToken: payload.data.token,
         user: payload.data.user,
         districts: payload.data.districts,
-        isRequestingLoader: false,  
+        isRequestingLoader: false,
         isAuth: true,
         error: {},
       };
@@ -42,13 +42,18 @@ export default (state = initialState, { type, payload }) => {
         error: {},
       };
     }
-    case actionConstant.ACTION_USER_LOGOUT : {
-      return initialState
+    case actionConstant.ACTION_SET_USER_PROFILE_HEADER: {
+      return {
+        ...state,
+        user: payload.data,
+      };
+    }
+    case actionConstant.ACTION_USER_LOGOUT: {
+      return initialState;
     }
     default:
       return state;
   }
 };
-
 
 export const selectorToken = (state) => state.LoginReducer.accessToken;

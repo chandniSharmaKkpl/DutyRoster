@@ -97,7 +97,7 @@ const CommonHeader = (props) => {
     },
     imgEmpty: {
       height: 40,
-      width: 40,
+      width: 40, 
       borderRadius: 20,
     },
   });
