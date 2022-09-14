@@ -4,7 +4,7 @@ import React from "react";
 import { Text, View } from "react-native";
 import styles from "../styles";
 
-const Item = ({ item }) => {
+const Item = ({ item, key }) => {
   const _date = item[0];
   const items = item[1];
   const isItemsNotEmpty = items && items.length > 0;
@@ -12,7 +12,7 @@ const Item = ({ item }) => {
   //   console.log("value", items);
 
   return (
-    <View style={styles.timeCardContainer} key={_date}>
+    <View style={styles.timeCardContainer} key={key}>
       <View style={styles.dateContainerTextCenter}>
         <Text style={styles.day_date_style}>
           {EmpTimeCardDateFormate(_date)}

@@ -11,11 +11,9 @@ const config = {
 
 const config1 = {
   header: {
-    "Content-Type": "application/json"
-  }
+    "Content-Type": "application/json",
+  },
 };
-
-
 
 export const login = (params) => client.post(apiConstant.LOGIN, params, config);
 // export const singup = (params) => client.post(apiConstant.SIGNUP, params, config);
@@ -32,12 +30,13 @@ export const timesheetDateRange = (params) => {
   return client.post(apiConstant.TIMESHEET_DATE_RANGE, params, config);
 };
 export const getAvailbility = (params) => {
-  console.log(" params ----",params);
+  console.log(" params ----", params);
   return client.post(apiConstant.GET_AVAILABILITY, params, config1);
 };
-export const saveAvailbility =(params)=> client.post(apiConstant.SAVE_AVAILABILITY, params, config);
+export const saveAvailbility = (params) =>
+  client.post(apiConstant.SAVE_AVAILABILITY, params, config);
 
-export const getAvailbilityTemp =(params)=> {
+export const getAvailbilityTemp = (params) => {
   var requestOptions = {
     method: "POST",
     headers: {
@@ -49,16 +48,17 @@ export const getAvailbilityTemp =(params)=> {
     // redirect: "follow",
   };
 
-  return fetch(apiConstant.BASE_URL + apiConstant.GET_AVAILABILITY, requestOptions)
+  return fetch(
+    apiConstant.BASE_URL + apiConstant.GET_AVAILABILITY,
+    requestOptions
+  )
     .then((response) => response.text())
     .then((result) => {
       console.log(" res", result);
       return JSON.parse(result);
     })
-    .catch((error) => console.log("error", error)); }
-
-
-
+    .catch((error) => console.log("error", error));
+};
 
 export const singup = (params) => {
   var requestOptions = {
@@ -71,7 +71,6 @@ export const singup = (params) => {
   return fetch(apiConstant.BASE_URL + apiConstant.SIGNUP, requestOptions)
     .then((response) => response.text())
     .then((result) => {
-     
       return JSON.parse(result);
     })
     .catch((error) => console.log("error", error));

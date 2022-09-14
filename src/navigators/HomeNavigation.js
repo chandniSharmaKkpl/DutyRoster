@@ -19,7 +19,6 @@ import {
   widthPercentageToDP as wp,
 } from "../responsiveScreen";
 import QRCodeScreen from "@/screen/qrCode";
-import { navigationRef } from "@/Navigation/RootNavigation";
 import EditProfile from "@/screen/editProfile";
 import Availability from "@/screen/availability";
 import ProfileSetting from "@/screen/profileSettings";

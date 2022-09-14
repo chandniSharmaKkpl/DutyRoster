@@ -52,6 +52,11 @@ function getTimeFromDateTime(dateTime) {
 function get24HrFrom12HrFormat(time) {
   return moment(time, ["h:mm A"]).format("HH:mm");
 }
+
+function getAmPmFromDate(date) {
+  return moment(date).format("A");
+}
+
 export function checkObject(arr) {
   // check if arr is array
   const result = Array.isArray(arr);
@@ -83,6 +88,7 @@ export const checkObjectHasData = (data, key) => {
     }
     throw "Not data";
   } catch (error) {
+    console.error('checkObjectHasData',error);
     return null;
   }
 };
@@ -115,6 +121,7 @@ export const getValueFromDeepKey = (o, s) => {
   }
   return o;
 };
+
 export {
   enumerateDaysBetweenDates,
   getCurrentWeek,
@@ -124,4 +131,5 @@ export {
   getTimeFromDateTime,
   get24HrFrom12HrFormat,
   getDateFromTimeStamp,
+  getAmPmFromDate,
 };

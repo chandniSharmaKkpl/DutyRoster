@@ -158,13 +158,13 @@ export default (state = initialState, { type, payload }) => {
       };
     }
     case actionConstant.ACTION_SET_MARKED_DATES: {
-      const newAvailabilitySelectedDate = !isArrayEmpty(
-        state.selected.availabilitySelectedDate
-      )
-        ? state.selected.availabilitySelectedDate.concat(
-            payload.availabilitySelectedDate
-          )
-        : payload.availabilitySelectedDate;
+      // const newAvailabilitySelectedDate = !isArrayEmpty(
+      //   state.selected.availabilitySelectedDate
+      // )
+      //   ? state.selected.availabilitySelectedDate.concat(
+      //       payload.availabilitySelectedDate
+      //     )
+      //   : payload.availabilitySelectedDate;
       return {
         ...state,
         markedDates: payload.markedDates,
@@ -177,7 +177,7 @@ export default (state = initialState, { type, payload }) => {
         selected: {
           ...state.selected,
           isSaved: false,
-          availabilitySelectedDate: newAvailabilitySelectedDate,
+          availabilitySelectedDate: payload.availabilitySelectedDate,
         },
       };
     }
@@ -265,6 +265,12 @@ export default (state = initialState, { type, payload }) => {
       };
     }
 
+    case actionConstant.ACTION_ON_ADD_AVAILABILITY_DATA_SUCCESS: {
+      return {
+        ...state,
+        availabilityData: payload?.availability,
+      };
+    }
     case actionConstant.ACTION_RESET_AVAILABILITY_DATA: {
       return initialState;
     }
@@ -278,3 +284,5 @@ export const selectorForSelectedWeek = (state) =>
   state.AvailabilityReducer.selectedWeek;
 export const selectedAvailabilityData = (state) =>
   state.AvailabilityReducer.selected;
+export const selectordAvailabilityData = (state) =>
+  state.AvailabilityReducer.availabilityData;

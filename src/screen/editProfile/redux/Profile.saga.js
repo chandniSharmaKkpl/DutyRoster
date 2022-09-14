@@ -76,6 +76,7 @@ export function* workersUpdateProfile(action) {
         payload: stringCombined,
       });
     } else {
+
       yield put({
         type: actionConstant.ACTION_UPDATE_PROFILE_SUCCESS,
         payload: viewUpdateProfileResponse,
@@ -92,7 +93,17 @@ export function* workersUpdateProfile(action) {
     });
   }
 }
+export function* workersUpdateProfileSucess(action){
+  try {
+    yield put({
+      type: actionConstant.ACTION_SET_USER_PROFILE_HEADER,
+      payload: action.payload
+    });
+  } catch (error) {
+    
+  }
 
+}
 export function* watchProfile() {
   yield takeLatest(
     actionConstant.ACTION_GET_PROFILE_REQUEST,
@@ -102,5 +113,9 @@ export function* watchProfile() {
   yield takeLatest(
     actionConstant.ACTION_UPDATE_PROFILE_REQUEST,
     workersUpdateProfile
+  );
+  yield takeLatest(
+    actionConstant.ACTION_UPDATE_PROFILE_SUCCESS,
+    workersUpdateProfileSucess
   );
 }

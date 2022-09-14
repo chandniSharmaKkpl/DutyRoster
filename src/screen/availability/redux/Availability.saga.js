@@ -4,10 +4,17 @@ import {
   getAvailabilityApiCall,
   saveAvailabilityApiCall,
 } from "./Availability.api";
-import { selectorToken } from "@/screen/login/redux/Login.reducer";
-import { createAvailibilityParams } from "@/utils/Availablity";
+import {
+  selectedDistricts,
+  selectorToken,
+} from "@/screen/login/redux/Login.reducer";
+import {
+  addAvailibilityDataParams,
+  createAvailibilityParams,
+} from "@/utils/Availablity";
 import {
   selectedAvailabilityData,
+  selectordAvailabilityData,
   selectorForSelectedWeek,
 } from "./Availability.reducer";
 
@@ -80,6 +87,30 @@ export function* workerSaveAvailability(action) {
   }
 }
 
+export function* workerAddAvailabilityData(action) {
+  try {
+    const availabilityData = yield select(selectordAvailabilityData);
+    const selected = yield select(selectedAvailabilityData);
+    const selectedWeek = yield select(selectorForSelectedWeek);
+    const districts = yield select(selectedDistricts);
+
+    const data = addAvailibilityDataParams({
+      selected,
+      districts,
+      availabilityData,
+      ...selectedWeek,
+    });
+    yield put({
+      type: actionConstant.ACTION_ON_ADD_AVAILABILITY_DATA_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    toast.show(error, {
+      type: alertMsgConstant.TOAST_DANGER,
+    });
+  }
+}
+
 export function* watchGetAvailabilityDate() {
   yield takeLatest(
     actionConstant.ACTION_GET_AVAILABILITY_REQUEST,
@@ -91,5 +122,12 @@ export function* watchSaveAvailabilityDate() {
   yield takeLatest(
     actionConstant.ACTION_SAVE_AVAILABILITY_REQUEST,
     workerSaveAvailability
+  );
+}
+
+export function* watchAddAvailabilityData() {
+  yield takeLatest(
+    actionConstant.ACTION_ON_ADD_AVAILABILITY_DATA_REQUEST,
+    workerAddAvailabilityData
   );
 }

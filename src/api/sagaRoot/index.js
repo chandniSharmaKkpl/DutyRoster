@@ -7,7 +7,11 @@ import { watchResetPassword } from "@/screen/resetPassword/redux/Reset_Password.
 import { watchGetQRCodeResponse } from "@/screen/qrCode/redux/QRCode.saga";
 import { watchProfile } from "@/screen/editProfile/redux/Profile.saga";
 import { watchGetRoasterDate } from "@/screen/roster/redux/Roster.saga";
-import { watchGetAvailabilityDate, watchSaveAvailabilityDate } from "@/screen/availability/redux/Availability.saga";
+import {
+  watchGetAvailabilityDate,
+  watchSaveAvailabilityDate,
+  watchAddAvailabilityData,
+} from "@/screen/availability/redux/Availability.saga";
 import { watchGetTimeSheetDate } from "@/screen/timeSheet/redux/TimeSheet.saga";
 
 export default function* sagaRoot() {
@@ -22,7 +26,7 @@ export default function* sagaRoot() {
     fork(watchGetRoasterDate),
     fork(watchGetAvailabilityDate),
     fork(watchSaveAvailabilityDate),
+    fork(watchAddAvailabilityData),
     fork(watchGetTimeSheetDate),
-
   ]);
 }

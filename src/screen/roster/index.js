@@ -181,7 +181,7 @@ const RosterScreen = (props) => {
         )}
       </View>
 
-      {isAlertShow
+      {/* {isAlertShow
         ? Alert.alert(
             alertMsgConstant.PLEASE_CONFIRM,
             alertMsgConstant.ARE_YOU_SURE_TO_LOGOUT,
@@ -203,7 +203,7 @@ const RosterScreen = (props) => {
               },
             ]
           )
-        : null}
+        : null} */}
 
       {rosterReducer.isRequesting ? (
         <Loader loading={rosterReducer.isRequesting} />

@@ -17,14 +17,17 @@ export const convertDateTime = (dateString, isDate, isTime) => {
 
 export const dayDateReturn = (dateString, isYear) => {
   console.log("dayDateReturn ==>", dateString);
-  if (isYear) {
-    let formattedDate = moment(dateString).format("ddd, DD-MM, YYYY");
-    return formattedDate;
-  } else {
-    let formattedDate = moment(dateString).format("ddd, DD-MM");
-    console.log("formattedDate", formattedDate);
-    return formattedDate;
+  if (dateString) {
+    if (isYear) {
+      let formattedDate = moment(dateString).format("ddd, DD-MM, YYYY");
+      return formattedDate;
+    } else {
+      let formattedDate = moment(dateString).format("ddd, DD-MM");
+      console.log("formattedDate", formattedDate);
+      return formattedDate;
+    }
   }
+  return "";
 };
 
 export const birthDateFormat = (dateString, isDDmmYYYY) => {

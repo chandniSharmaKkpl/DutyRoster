@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { View, FlatList } from "react-native";
+import { View, FlatList,Text } from "react-native";
 import { AppText } from "@/components/AppText";
 import { appColor, fontConstant } from "@/constant";
 import {
@@ -10,13 +10,17 @@ import {
 const Shift = (props) => {
   const { availabilityData } = props;
 
-  // console.log("availabilityData", availabilityData);
+  console.log("availabilityData", availabilityData);
   var arrayDates = Object.keys(availabilityData);
   const renderItem = ({ item, index }) => {
     var arrayTimes = [];
 
     if (!Array.isArray(availabilityData[item])) {
       arrayTimes = availabilityData[item].times;
+      // console.log("arrayTimes", arrayTimes);
+      if (!arrayTimes) {
+        return <></>;
+      }
     } else {
       return <></>;
     }

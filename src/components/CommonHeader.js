@@ -21,6 +21,7 @@ import {
 import { AppText } from "./AppText";
 import { navigationRef } from "@/navigators/utils";
 import { connect } from "react-redux";
+import ProgressiveImage from "./ProgressiveImage";
 
 const CommonHeader = (props) => {
   const {
@@ -123,7 +124,8 @@ const CommonHeader = (props) => {
           )}
           {screenName === appConstant.AVAILABILITY ||
           screenName === appConstant.EDIT_PROFILE ||
-          screenName === appConstant.QR_CODE || screenName === appConstant.PROFILE_SETTINGS ? (
+          screenName === appConstant.QR_CODE ||
+          screenName === appConstant.PROFILE_SETTINGS ? (
             <Pressable onPress={onGoBack}>
               <Image source={imageConstant.IMAGE_BACK_ARROW_ICON} />
             </Pressable>
@@ -135,12 +137,9 @@ const CommonHeader = (props) => {
         {screenName === appConstant.ROASTER ||
         screenName === appConstant.TIMESHEETS ? (
           <Pressable style={styles.viewRightProfile} onPress={onEditProfile}>
-            <Image
-              source={
-                profileImage
-                  ? { uri: profileImage }
-                  : imageConstant.IMAGE_USER_PROFILE_ICON
-              }
+            <ProgressiveImage
+              thumbnailSource={imageConstant.IMAGE_AVTAR_ICON}
+              source={{ uri: profileImage }}
               style={!profileImage ? styles.imgEmpty : styles.img}
             />
           </Pressable>

@@ -292,7 +292,7 @@ const QRCodeScreen = (props) => {
       ) {
         console.log("App has come to the foreground!");
         if (Platform.OS === "ios") {
-          requestPermission(setPermission, onRequestGranted);
+          // requestPermission(setPermission, onRequestGranted);
         }
       }
 

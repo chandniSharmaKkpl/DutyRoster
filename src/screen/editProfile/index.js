@@ -45,9 +45,11 @@ import { DrawerContentScrollView } from "@react-navigation/drawer";
 import * as profileAction from "./redux/Profile.action";
 import { connect, useSelector } from "react-redux";
 import Loader from "@/components/Loader";
+import ProgressiveImage from "@/components/ProgressiveImage";
 
 const EditProfile = (props) => {
-  const { requestToUpdateProfileAction, requestToUpdateProfileInHeaderAction } = props;
+  const { requestToUpdateProfileAction, requestToUpdateProfileInHeaderAction } =
+    props;
   const navigation = useNavigation();
   const route = useRoute();
   const { user } = React.useContext(AuthContext);
@@ -157,6 +159,9 @@ const EditProfile = (props) => {
     if (profileResponse.UpdateProfileReducer) {
       requestToUpdateProfileInHeaderAction(profileResponse.UpdateProfileReducer)
       let profileInformation = profileResponse.UpdateProfileReducer.data;
+      if (profileInformation) {
+        // requestToUpdateProfileInHeaderAction(profileResponse.UpdateProfileReducer);
+      }
       setTitle(profileInformation?.title);
       setName(profileInformation?.name);
       setEmail(profileInformation?.email);
@@ -408,11 +413,14 @@ const EditProfile = (props) => {
             <View style={{ height: hp("2.8%") }} />
             <View
               style={{
-                alignSelf: "center",
-                flexDirection: "row",
+                // alignSelf: "center",
+                // flexDirection: "row",
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "center",
               }}
             >
-              <Image
+              {/* <Image
                 source={
                   ImageSource === ""
                     ? imageConstant.IMAGE_AVTAR_ICON
@@ -423,7 +431,13 @@ const EditProfile = (props) => {
                     ? styles.imgEmpty
                     : styles.img
                 }
+              /> */}
+              <ProgressiveImage
+                thumbnailSource={imageConstant.IMAGE_AVTAR_ICON}
+                source={{ uri: ImageSource }}
+                style={styles.img}
               />
+
               <TouchableOpacity
                 onPress={() => openMediaPicker()}
                 style={styles.touch}
@@ -617,10 +631,9 @@ const mapDispatchToProps = (dispatch) => {
 
     requestToUpdateProfileAction: (params) =>
       dispatch(profileAction.requestToUpdateProfile(params)),
-      
-      requestToUpdateProfileInHeaderAction : (params) =>
-      dispatch(profileAction.requestUpdateProfileHeader(params))
 
+    requestToUpdateProfileInHeaderAction: (params) =>
+      dispatch(profileAction.requestUpdateProfileHeader(params)),
   };
 
 

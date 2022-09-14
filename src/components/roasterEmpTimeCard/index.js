@@ -6,10 +6,9 @@ import Item from "./Item";
 import styles from "./styles";
 import RosterBottomCard from "../RosterBottomCard";
 
-
 const EmpTimeCard = (props) => {
   const { data, cardData } = props;
-  const renderItem = ({ item }) => <Item item={item} key={item[0]} />;
+  const renderItem = ({ item, index }) => <Item item={item} key={index} />;
 
   // console.log("DATA", data);
   return (

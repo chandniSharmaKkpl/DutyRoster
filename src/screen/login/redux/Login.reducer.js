@@ -57,3 +57,4 @@ export default (state = initialState, { type, payload }) => {
 };
 
 export const selectorToken = (state) => state.LoginReducer.accessToken;
+export const selectedDistricts = (state) => state.LoginReducer.districts;

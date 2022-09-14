@@ -41,7 +41,7 @@ paddingBottom:'20%'
   },
   touch: {
     position: "absolute",
-    right: 10,
+    right: '34%',
     bottom: 0,
     height: 30,
     width: 30,

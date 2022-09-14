@@ -25,9 +25,8 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
-import { SET_DATA_TYPE } from "@/utils/Availablity";
+import { isInOutTimeValid, SET_DATA_TYPE } from "@/utils/Availablity";
 import moment from "moment";
-import { Modal } from "react-native";
 
 const AvailabilityItem = (props) => {
   const {
@@ -66,7 +65,11 @@ const AvailabilityItem = (props) => {
       data: moment(date).format("hh:mm A"),
       id: id,
     });
-
+    setDataItemofAvailabilityAction({
+      type: SET_DATA_TYPE.outTime,
+      data: null,
+      id: id,
+    });
     hideInTimePicker();
   };
   const hideOutTimePicker = () => {
@@ -75,6 +78,28 @@ const AvailabilityItem = (props) => {
 
   const handleOutTimeConfirm = (date) => {
     if (data.inTime) {
+      if (isInOutTimeValid(data.inTime, date)) {
+        setDataItemofAvailabilityAction({
+          type: SET_DATA_TYPE.outTime,
+          data: moment(date).format("hh:mm A"),
+          id: id,
+        });
+        hideOutTimePicker();
+      } else {
+        if (data.outTime) {
+          setDataItemofAvailabilityAction({
+            type: SET_DATA_TYPE.outTime,
+            data: null,
+            id: id,
+          });
+        }
+        toast.show(alertMsgConstant.MINIMUM_3_HOURS, {
+          type: alertMsgConstant.TOAST_DANGER,
+        });
+        hideOutTimePicker();
+      }
+
+      /*
       if (
         Number(moment(data.inTime, "hh:mm A").format("x")) +
           3 * 60 * 60 * 1000 <=
@@ -92,6 +117,8 @@ const AvailabilityItem = (props) => {
         });
         hideOutTimePicker();
       }
+
+      */
     } else {
       // alert("Please");
       toast.show("Please select IN Time", {

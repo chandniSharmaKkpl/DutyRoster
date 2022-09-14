@@ -44,6 +44,7 @@ import {
   addNewAvailability,
   setDataItemOfAvailability,
   resetAvailabilityData,
+  requestToAddAvailability,
 } from "../availability/redux/Availability.action";
 import { dayDateReturn } from "@/common/timeFormate";
 import Shift from "./Shift";
@@ -73,6 +74,7 @@ const Availability = (props) => {
     setDataItemofAvailabilityAction,
     requestToSaveAvailabilityAction,
     resetAvailabilityDataAction,
+    requestToAddAvailabilityAction,
   } = props;
 
   console.log("startDay --->", startDay);
@@ -365,7 +367,7 @@ const Availability = (props) => {
             <Pressable
               style={styles.btnBlack}
               onPress={() => {
-                requestToSaveAvailabilityAction();
+                requestToAddAvailabilityAction()
               }}
             >
               <AppText style={styles.saveButton} text={"Add"} />
@@ -482,6 +484,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(setDataItemOfAvailability(params)),
 
     resetAvailabilityDataAction: () => dispatch(resetAvailabilityData()),
+
+    requestToAddAvailabilityAction: () => dispatch(requestToAddAvailability()),
   };
 };
 export default connect(

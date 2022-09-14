@@ -81,4 +81,11 @@ export const resetAvailabilityData = () => {
   return {
     type : actionConstant.ACTION_RESET_AVAILABILITY_DATA,
   }
+
+}
+
+export const requestToAddAvailability = () => {
+  return {
+    type : actionConstant.ACTION_ON_ADD_AVAILABILITY_DATA_REQUEST,
+  }
 }
