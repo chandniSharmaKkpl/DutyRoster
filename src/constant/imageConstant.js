@@ -17,6 +17,9 @@ export default {
   IMAGE_GALLERY_ICON: require("../assets/images/EditProfile/gallery.png"),
   IMAGE_TIME_ICON: require("../assets/images/Unavailablity/time1.png"),
   IMAGE_DOWN_ICON: require("../assets/images/Unavailablity/arrow_down.png"),
-  IMAGE_UP_ICON: require("../assets/images/Unavailablity/arrow_up.png")
-
+  IMAGE_UP_ICON: require("../assets/images/Unavailablity/arrow_up.png"),
+  IMAGE_MORE_ICON: require('../assets/images/Unavailablity/dots.png'),
+  IMAGE_EDIT_ICON: require('../assets/images/Unavailablity/edit.png'),
+  IMAGE_TRASH_ICON: require('../assets/images/Unavailablity/trash.png'),
+  IMAGE_CLOSE_ICON: require('../assets/images/Unavailablity/close.png'),
 };

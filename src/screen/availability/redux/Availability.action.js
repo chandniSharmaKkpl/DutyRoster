@@ -76,16 +76,20 @@ export const setDataItemOfAvailability = ({ type, data, id }) => {
     payload: params,
   };
 };
-
+export const updateDataItemOfAvailability = (params) => {
+  return {
+    type: actionConstant.ACTION_UPDATE_DATA_ITEM_AVAILABILITY,
+    payload: params,
+  };
+};
 export const resetAvailabilityData = () => {
   return {
-    type : actionConstant.ACTION_RESET_AVAILABILITY_DATA,
-  }
-
-}
+    type: actionConstant.ACTION_RESET_AVAILABILITY_DATA,
+  };
+};
 
 export const requestToAddAvailability = () => {
   return {
-    type : actionConstant.ACTION_ON_ADD_AVAILABILITY_DATA_REQUEST,
-  }
-}
+    type: actionConstant.ACTION_ON_ADD_AVAILABILITY_DATA_REQUEST,
+  };
+};

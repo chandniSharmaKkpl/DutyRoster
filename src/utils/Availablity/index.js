@@ -13,6 +13,10 @@ export const SET_DATA_TYPE = {
   district_id: "district_id",
   inTime: "inTime",
   outTime: "outTime",
+  inTime: "inTime",
+  start_time: "start_time",
+  end_time: "end_time",
+
 };
 export const createAvailibilityParams = ({ selected, weekStart, weekEnd }) => {
   try {
@@ -213,7 +217,8 @@ export const addAvailibilityDataParams = ({
       throw "Please Select Availability Date";
     }
   } catch (error) {
-    alert(error);
+    console.error(error);
+    // alert(error);
     throw error;
   }
 };

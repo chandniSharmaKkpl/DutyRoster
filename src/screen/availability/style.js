@@ -99,6 +99,7 @@ export default StyleSheet.create({
   availabilityContainer: {
     position: "relative",
     zIndex: 1,
+    width: "100%",
     // backgroundColor: appColor.GRAY,
     // borderColor: appColor.RED,
     // borderWidth: 1,

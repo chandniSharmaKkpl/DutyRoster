@@ -1,16 +1,29 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { View, FlatList,Text } from "react-native";
+import { View, FlatList, Text, Image, Pressable } from "react-native";
 import { AppText } from "@/components/AppText";
-import { appColor, fontConstant } from "@/constant";
+import { appColor, fontConstant, imageConstant } from "@/constant";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import ModelBox from "@/components/PopUpmodel";
 
 const Shift = (props) => {
-  const { availabilityData } = props;
+  const {
+    availabilityData,
+    arrayDistricts,
+    updateDataItemofAvailabilityAction,
+  } = props;
+  const [modalVisible, setModalVisible] = useState(false);
+  const [editModal, setEditModal] = useState({
+    index: null,
+    date: null,
+  });
 
-  console.log("availabilityData", availabilityData);
+  console.clear();
+  console.log("availabilityData", JSON.stringify(availabilityData, null, 4));
+  console.log("editModal", JSON.stringify(editModal, null, 4));
+
   var arrayDates = Object.keys(availabilityData);
   const renderItem = ({ item, index }) => {
     var arrayTimes = [];
@@ -75,6 +88,31 @@ const Shift = (props) => {
               })}
             </View>
           ) : null}
+
+          {/* Button */}
+          {arrayTimes && arrayTimes.length > 0 ? (
+            <View style={styles.viewColumn}>
+              {arrayTimes.map((dataObj, index) => {
+                return (
+                  <Pressable
+                    onPress={() => {
+                      setEditModal({
+                        index: index,
+                        date: item,
+                      });
+                      setModalVisible(true);
+                    }}
+                    style={styles.moreImage}
+                  >
+                    <Image
+                      source={imageConstant.IMAGE_MORE_ICON}
+                      style={{ height: "100%", width: "100%" }}
+                    />
+                  </Pressable>
+                );
+              })}
+            </View>
+          ) : null}
         </View>
       </View>
     );
@@ -87,6 +125,7 @@ const Shift = (props) => {
           <AppText text={"DISTRICTS"} style={styles.txtRed} />
           <AppText text={"IN"} style={styles.txtRed} />
           <AppText text={"OUT"} style={styles.txtRed} />
+          <AppText text={""} style={styles.txtRed} />
         </View>
       </View>
       <View style={styles.singleLine} />
@@ -97,6 +136,18 @@ const Shift = (props) => {
           keyExtractor={(item, index) => index.toString()}
         />
       </View>
+      {modalVisible && (
+        <ModelBox
+          arrayDistricts={arrayDistricts}
+          availabilityData={availabilityData}
+          modalVisible={modalVisible}
+          setModalVisible={setModalVisible}
+          updateDataItemofAvailabilityAction={
+            updateDataItemofAvailabilityAction
+          }
+          editModal={editModal}
+        />
+      )}
     </View>
   );
 };
@@ -105,6 +156,13 @@ export const styles = {
   row: {
     borderColor: "#D2D2D2",
     borderBottomWidth: 1,
+  },
+  moreImage: {
+    height: 16,
+    width: 18,
+    marginVertical: hp("1.2%"),
+    display: "flex",
+    justifyContent: "center",
   },
   singleLine: {
     marginVertical: "1%",

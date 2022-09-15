@@ -52,7 +52,9 @@ function getTimeFromDateTime(dateTime) {
 function get24HrFrom12HrFormat(time) {
   return moment(time, ["h:mm A"]).format("HH:mm");
 }
-
+function get12HrFrom24HrFormat(time) {
+  return moment(time, ["HH:mm"]).format("h:mm A");
+}
 function getAmPmFromDate(date) {
   return moment(date).format("A");
 }
@@ -130,6 +132,7 @@ export {
   getTimeStampfromDate,
   getTimeFromDateTime,
   get24HrFrom12HrFormat,
+  get12HrFrom24HrFormat,
   getDateFromTimeStamp,
   getAmPmFromDate,
 };

@@ -1,5 +1,5 @@
 import { actionConstant, appConstant } from "@/constant";
-import { isArrayEmpty } from "@/utils";
+import { get24HrFrom12HrFormat, isArrayEmpty } from "@/utils";
 import { SET_DATA_TYPE } from "@/utils/Availablity";
 
 const initialState = {
@@ -261,6 +261,34 @@ export default (state = initialState, { type, payload }) => {
             },
             ...state.selected.availabilityData.slice(index + 1),
           ],
+        },
+      };
+    }
+    case actionConstant.ACTION_UPDATE_DATA_ITEM_AVAILABILITY: {
+      // if(payload.)
+      const { index, date } = payload;
+      console.log("reducer", payload);
+
+      return {
+        ...state,
+        availabilityData: {
+          ...state.availabilityData,
+          [date]: {
+            ...state.availabilityData[date],
+            times: [
+              ...state.availabilityData[date].times.slice(0, index),
+              {
+                ...state.availabilityData[date].times[index],
+                start_time: get24HrFrom12HrFormat(payload.start_time),
+                end_time: get24HrFrom12HrFormat(payload.end_time),
+                district: payload.district_id,
+                district_id: payload.district_id,
+                district_name: payload.district_name,
+
+              },
+              ...state.availabilityData[date].times.slice(index + 1),
+            ],
+          },
         },
       };
     }

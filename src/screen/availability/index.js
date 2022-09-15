@@ -45,11 +45,13 @@ import {
   setDataItemOfAvailability,
   resetAvailabilityData,
   requestToAddAvailability,
+  updateDataItemOfAvailability,
 } from "../availability/redux/Availability.action";
 import { dayDateReturn } from "@/common/timeFormate";
 import Shift from "./Shift";
 import AvailabilityItem from "@/screen/availability/AvailabilityItem";
 import Loader from "@/components/Loader";
+import ModelBox from "@/components/PopUpmodel";
 
 const Availability = (props) => {
   const navigation = useNavigation();
@@ -72,6 +74,7 @@ const Availability = (props) => {
     addNewAvailabilityAction,
     removeAvailabilityAction,
     setDataItemofAvailabilityAction,
+    updateDataItemofAvailabilityAction,
     requestToSaveAvailabilityAction,
     resetAvailabilityDataAction,
     requestToAddAvailabilityAction,
@@ -367,13 +370,12 @@ const Availability = (props) => {
             <Pressable
               style={styles.btnBlack}
               onPress={() => {
-                requestToAddAvailabilityAction()
+                requestToAddAvailabilityAction();
               }}
             >
               <AppText style={styles.saveButton} text={"Add"} />
             </Pressable>
           </View>
-
           {/* Shift Availability Detail  */}
 
           <View style={styles.viewTopTitle}>
@@ -382,7 +384,13 @@ const Availability = (props) => {
               style={styles.txtUnavailablity}
             />
             <View>
-              <Shift availabilityData={availabilityData} />
+              <Shift
+                updateDataItemofAvailabilityAction={
+                  updateDataItemofAvailabilityAction
+                }
+                arrayDistricts={arrayDistricts}
+                availabilityData={availabilityData}
+              />
             </View>
           </View>
           {/* Save and Copy button  */}
@@ -482,7 +490,8 @@ const mapDispatchToProps = (dispatch) => {
     removeAvailabilityAction: (params) => dispatch(removeAvailability(params)),
     setDataItemofAvailabilityAction: (params) =>
       dispatch(setDataItemOfAvailability(params)),
-
+    updateDataItemofAvailabilityAction: (params) =>
+      dispatch(updateDataItemOfAvailability(params)),
     resetAvailabilityDataAction: () => dispatch(resetAvailabilityData()),
 
     requestToAddAvailabilityAction: () => dispatch(requestToAddAvailability()),
