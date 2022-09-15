@@ -1,50 +1,22 @@
-import React, { useState, useCallback, useEffect } from "react";
-import {
-  View,
-  BackHandler,
-  Keyboard,
-  Text,
-  FlatList,
-  Dimensions,
-  Image,
-  Pressable,
-} from "react-native";
+import React, { useState } from "react";
+import { View, Text, FlatList, Image, Pressable } from "react-native";
 import styles from "../style";
-import PropTypes from "prop-types";
-import { Images } from "@/constant/svgImgConst";
 import { AppText } from "@/components/AppText";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import {
-  alertMsgConstant,
-  appColor,
-  appConstant,
-  imageConstant,
-} from "@/constant";
+import { alertMsgConstant, appConstant, imageConstant } from "@/constant";
 import { TextInputCustom } from "@/screen/availability/AvailabilityItem/TextInput";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import DropDownPicker from "react-native-dropdown-picker";
 import { ScrollView } from "react-native-gesture-handler";
 // import DropDownPicker from "@/utils/"
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
+import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 
-import { isInOutTimeValid, SET_DATA_TYPE } from "@/utils/Availablity";
+import { isInOutTimeValid } from "@/utils/Availablity";
 import moment from "moment";
 
 const AvailabilityItem = (props) => {
-  const {
-    selectedDistrict,
-    data,
-    arrayDistricts,
-    updateDataItemofAvailabilityAction,
-    editedData,
-    setEditableData,
-  } = props;
+  const { data, arrayDistricts, editedData, setEditableData } = props;
   const districtRef = React.useRef();
   console.log("Edit => AvailabilityItem => data", data);
-  const { date: availibilityDate, index } = data;
+  const { date: availibilityDate } = data;
 
   const { district_id, start_time, end_time } = editedData;
   const [isShowDistrictList, setIsShowDistrictList] = useState(false);
@@ -84,7 +56,6 @@ const AvailabilityItem = (props) => {
         setEditableData({
           ...editedData,
           end_time: moment(date).format("hh:mm A"),
-          
         });
         hideOutTimePicker();
       } else {
@@ -112,13 +83,11 @@ const AvailabilityItem = (props) => {
       <View>
         <Pressable
           onPress={() => {
-            // setSelectedDistrictsAction(item);
             setIsShowDistrictList(false);
             setEditableData({
               ...editedData,
               district_id: item.district_id,
             });
-            // {type, data, id}
           }}
         >
           <Text style={styles.textRow}>{item.district_name}</Text>
@@ -138,8 +107,8 @@ const AvailabilityItem = (props) => {
     >
       <View style={styles.viewTopTitle}>
         {/* Showing plus minus icon besides districts title */}
-        <View style={styles.districts}>
-          <AppText style={styles.txtUnavailablity} text={availibilityDate} />
+        <View style={styles.dateTitleContainer}>
+          <AppText style={styles.txtDateTitle} text={availibilityDate} />
         </View>
         <View style={styles.districts}>
           <AppText

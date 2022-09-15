@@ -13,6 +13,7 @@ const Shift = (props) => {
     availabilityData,
     arrayDistricts,
     updateDataItemofAvailabilityAction,
+    deleteDataItemofAvailabilityAction,
   } = props;
   const [modalVisible, setModalVisible] = useState(false);
   const [editModal, setEditModal] = useState({
@@ -30,7 +31,7 @@ const Shift = (props) => {
 
     if (!Array.isArray(availabilityData[item])) {
       arrayTimes = availabilityData[item].times;
-      // console.log("arrayTimes", arrayTimes);
+      console.log("arrayTimes", arrayTimes);
       if (!arrayTimes) {
         return <></>;
       }
@@ -144,6 +145,9 @@ const Shift = (props) => {
           setModalVisible={setModalVisible}
           updateDataItemofAvailabilityAction={
             updateDataItemofAvailabilityAction
+          }
+          deleteDataItemofAvailabilityAction={
+            deleteDataItemofAvailabilityAction
           }
           editModal={editModal}
         />

@@ -61,10 +61,14 @@ export function* workerSaveAvailability(action) {
   try {
     const selectedData = yield select(selectedAvailabilityData);
     const selectedWeek = yield select(selectorForSelectedWeek);
-
+    const availabilityData = yield select(selectordAvailabilityData);
+    // const params = createAvailibilityParams({
+    //   selected: selectedData,
+    //   ...selectedWeek,
+    // });
     const params = createAvailibilityParams({
-      selected: selectedData,
       ...selectedWeek,
+      availabilityData,
     });
     // alert("workerSaveAvailability params", params);
     const saveAvailabilityRes = yield call(saveAvailabilityApiCall, params);
@@ -76,6 +80,7 @@ export function* workerSaveAvailability(action) {
       type: alertMsgConstant.TOAST_SUCCESS,
     });
   } catch (error) {
+    console.error(error);
     // alert("workerSaveAvailability error");
     toast.show(error, {
       type: alertMsgConstant.TOAST_DANGER,

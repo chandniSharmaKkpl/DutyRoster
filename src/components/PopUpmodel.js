@@ -16,7 +16,6 @@ import {
   View,
   Image,
 } from "react-native";
-import { color } from "react-native-reanimated";
 
 const ModelBox = (props) => {
   const {
@@ -25,20 +24,23 @@ const ModelBox = (props) => {
     availabilityData,
     arrayDistricts,
     updateDataItemofAvailabilityAction,
+    deleteDataItemofAvailabilityAction,
     editModal,
   } = props;
   const { index, date } = editModal;
   if (!index === null || !date || !availabilityData) {
-    return <></>;
+    return <View></View>;
   }
-  const { district_id, start_time, end_time, district_name } =
+
+  try {
     getValueFromDeepKey(availabilityData, `${date}.times.${index}`);
-  // availabilityData[date].times[index];
-  //   console.log(
-  //     "availabilityData[date]",
-  //     availabilityData[date].times[index],
-  //     editModal.date
-  //   );
+  } catch (error) {
+    return <View></View>;
+  }
+  const { district_id, start_time, end_time } = getValueFromDeepKey(
+    availabilityData,
+    `${date}.times.${index}`
+  );
   const [editedData, setEditableData] = React.useState({
     district_id,
     start_time: get12HrFrom24HrFormat(start_time),
@@ -71,7 +73,44 @@ const ModelBox = (props) => {
     }
   };
   const onDelete = () => {
-    alert("delete");
+    try {
+      setModalVisible(!modalVisible);
+      deleteDataItemofAvailabilityAction({
+        index,
+        date,
+      });
+      /*
+      Alert.alert(
+        alertMsgConstant.ALERT,
+        alertMsgConstant.ARE_YOU_SURE_TO_DELETE,
+        [
+          {
+            text: alertMsgConstant.CANCEL,
+            onPress: () => {
+              setModalVisible(!modalVisible);
+            },
+          },
+          {
+            text: alertMsgConstant.OK,
+            onPress: () => {
+              setModalVisible(!modalVisible);
+              deleteDataItemofAvailabilityAction({
+                index,
+                date,
+              });
+            },
+          },
+        ],
+        {
+          //   onDismiss: () => {
+          //     setModalVisible(!modalVisible);
+          //   },
+          cancelable: false,
+        }
+      );*/
+    } catch (error) {
+      console.error(error);
+    }
   };
   return (
     <View style={styles.centeredView}>
@@ -142,7 +181,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 22,
     backgroundColor: "rgba(0,0,0,.5)",
   },
   modalView: {

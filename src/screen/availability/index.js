@@ -46,6 +46,7 @@ import {
   resetAvailabilityData,
   requestToAddAvailability,
   updateDataItemOfAvailability,
+  deleteDataItemOfAvailability,
 } from "../availability/redux/Availability.action";
 import { dayDateReturn } from "@/common/timeFormate";
 import Shift from "./Shift";
@@ -75,6 +76,7 @@ const Availability = (props) => {
     removeAvailabilityAction,
     setDataItemofAvailabilityAction,
     updateDataItemofAvailabilityAction,
+    deleteDataItemofAvailabilityAction,
     requestToSaveAvailabilityAction,
     resetAvailabilityDataAction,
     requestToAddAvailabilityAction,
@@ -102,7 +104,7 @@ const Availability = (props) => {
   useFocusEffect(
     React.useCallback(() => {
       var endDate = "";
-      var startDate = new Date();
+      var startDate = moment().add(1, 'weeks').startOf('isoWeek').toDate();
       endDate = moment(startDate).add(7, "d");
       setSelectedWeek(startDate);
       setSelectedDate(startDate);
@@ -390,6 +392,9 @@ const Availability = (props) => {
                 }
                 arrayDistricts={arrayDistricts}
                 availabilityData={availabilityData}
+                deleteDataItemofAvailabilityAction={
+                  deleteDataItemofAvailabilityAction
+                }
               />
             </View>
           </View>
@@ -492,6 +497,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(setDataItemOfAvailability(params)),
     updateDataItemofAvailabilityAction: (params) =>
       dispatch(updateDataItemOfAvailability(params)),
+    deleteDataItemofAvailabilityAction: (params) =>
+      dispatch(deleteDataItemOfAvailability(params)),
     resetAvailabilityDataAction: () => dispatch(resetAvailabilityData()),
 
     requestToAddAvailabilityAction: () => dispatch(requestToAddAvailability()),

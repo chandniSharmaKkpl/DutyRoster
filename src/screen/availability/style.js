@@ -414,4 +414,16 @@ export default StyleSheet.create({
     fontSize: fontConstant.TEXT_20_SIZE_REGULAR,
     fontWeight: fontConstant.WEIGHT_SEMI_BOLD,
   },
+  // EditModal
+  dateTitleContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  txtDateTitle: {
+    fontFamily: fontConstant.FONT_BOLD,
+    fontSize: fontConstant.TEXT_20_SIZE_REGULAR,
+    color: appColor.BLACK,
+    paddingTop: hp("2%"),
+  },
 });

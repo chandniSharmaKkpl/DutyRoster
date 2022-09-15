@@ -76,12 +76,21 @@ export const setDataItemOfAvailability = ({ type, data, id }) => {
     payload: params,
   };
 };
+
 export const updateDataItemOfAvailability = (params) => {
   return {
     type: actionConstant.ACTION_UPDATE_DATA_ITEM_AVAILABILITY,
     payload: params,
   };
 };
+
+export const deleteDataItemOfAvailability = (params) => {
+  return {
+    type: actionConstant.ACTION_DELETE_DATA_ITEM_AVAILABILITY,
+    payload: params,
+  };
+};
+
 export const resetAvailabilityData = () => {
   return {
     type: actionConstant.ACTION_RESET_AVAILABILITY_DATA,

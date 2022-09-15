@@ -22,7 +22,7 @@ const initialState = {
       { district_id: null, inTime: null, outTime: null, id: 0 },
     ],
     availabilitySelectedDate: [],
-    isSaved: false,
+    isSaved: true,
   },
   /*
   selected: {
@@ -176,7 +176,7 @@ export default (state = initialState, { type, payload }) => {
         },
         selected: {
           ...state.selected,
-          isSaved: false,
+          // isSaved: false,
           availabilitySelectedDate: payload.availabilitySelectedDate,
         },
       };
@@ -265,10 +265,8 @@ export default (state = initialState, { type, payload }) => {
       };
     }
     case actionConstant.ACTION_UPDATE_DATA_ITEM_AVAILABILITY: {
-      // if(payload.)
       const { index, date } = payload;
-      console.log("reducer", payload);
-
+      // console.log("reducer", payload);
       return {
         ...state,
         availabilityData: {
@@ -284,10 +282,32 @@ export default (state = initialState, { type, payload }) => {
                 district: payload.district_id,
                 district_id: payload.district_id,
                 district_name: payload.district_name,
-
               },
               ...state.availabilityData[date].times.slice(index + 1),
             ],
+          },
+        },
+      };
+    }
+
+    case actionConstant.ACTION_DELETE_DATA_ITEM_AVAILABILITY: {
+      const { index, date } = payload;
+      console.log(
+        "state.availabilityData[date].times.splice(index, 1)",
+        index,
+        date
+      );
+      return {
+        ...state,
+        availabilityData: {
+          ...state.availabilityData,
+          [date]: {
+            ...state.availabilityData[date],
+            times: [
+              ...state.availabilityData[date].times.slice(0, index),
+              ...state.availabilityData[date].times.slice(index + 1),
+            ],
+            // times: state.availabilityData[date].times.splice(index, 1),
           },
         },
       };

@@ -16,8 +16,27 @@ export const SET_DATA_TYPE = {
   inTime: "inTime",
   start_time: "start_time",
   end_time: "end_time",
-
 };
+export const createAvailibilityParams = ({
+  availabilityData,
+  weekStart,
+  weekEnd,
+}) => {
+  try {
+    const params = {};
+
+    params.availability = availabilityData;
+    params.week_start = moment(weekStart).format("YYYY-MM-DD");
+    params.week_end = moment(weekEnd).format("YYYY-MM-DD");
+    console.log("createAvailibilityParams", JSON.stringify(params, null, 2));
+    return params;
+  } catch (error) {
+    alert(error);
+    throw error;
+  }
+};
+
+/*
 export const createAvailibilityParams = ({ selected, weekStart, weekEnd }) => {
   try {
     const params = {};
@@ -88,6 +107,8 @@ export const createAvailibilityParams = ({ selected, weekStart, weekEnd }) => {
   }
 };
 
+*/
+
 export const isInOutTimeValid = (inTime, outTime) => {
   if (inTime) {
     const inTimeInMilisecond = Number(moment(inTime, "hh:mm A").format("x"));
@@ -137,7 +158,8 @@ export const addAvailibilityDataParams = ({
   try {
     const params = {};
 
-    const availability = typeof(availabilityData) !== "string" ? availabilityData : {};
+    const availability =
+      typeof availabilityData !== "string" ? availabilityData : {};
 
     // console.log("createAvailibilityParams time", JSON.stringify(time, null, 2));
     if (
@@ -217,7 +239,7 @@ export const addAvailibilityDataParams = ({
       throw "Please Select Availability Date";
     }
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     // alert(error);
     throw error;
   }

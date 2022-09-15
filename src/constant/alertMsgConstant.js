@@ -23,6 +23,8 @@ export default {
   NO: 'No',
   YES: 'Yes',
   ARE_YOU_SURE_TO_LOGOUT:'Are you sure to logout?',
+  ARE_YOU_SURE_TO_DELETE:'Are you sure to delete?',
+
   CONTINUE_BACK: 'Continue Back?',
   LOSS_INFO_ON_BACK:
     'If you go back you will loose any information on this page.',
