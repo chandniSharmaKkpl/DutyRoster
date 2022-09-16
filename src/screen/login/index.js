@@ -12,7 +12,7 @@ import { StackActions } from "@react-navigation/native";
 
 import { imageConstant, alertMsgConstant, appConstant } from "../../constant";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
-import { useNavigation } from "@react-navigation/core";
+import { useNavigation, useFocusEffect } from "@react-navigation/core";
 import { isEmailValid, isValidPassword } from "../../helper/validations";
 import styles from "./style";
 import { CustomButton } from "@/components/CustomButton";
@@ -48,7 +48,7 @@ const Login = (props) => {
   const navigation = useNavigation();
 
   const [DeviceToken, setDeviceToken] = useState();
-  
+
   const [DeviceUuid, setDeviceUuid] = useState();
   const [DeviceName, setDeviceName] = useState();
   const [AppVersion, setAppVersion] = useState();
@@ -65,7 +65,6 @@ const Login = (props) => {
     DeviceInfo.syncUniqueId().then((uniqueId) => {
       setDeviceUuid(uniqueId);
     });
-
 
     let version = DeviceInfo.getVersion();
     setAppVersion(version);
@@ -84,10 +83,6 @@ const Login = (props) => {
     return true;
   };
   useEffect(() => {
-    if (accessToken) {
-      const resetAction = StackActions.replace(appConstant.HOME);
-      navigation.dispatch(resetAction);
-    }
     BackHandler.addEventListener("hardwareBackPress", handleBackButtonClick);
 
     return () => {
@@ -97,6 +92,15 @@ const Login = (props) => {
       );
     };
   }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      if (accessToken) {
+        const resetAction = StackActions.replace(appConstant.HOME);
+        navigation.dispatch(resetAction);
+      }
+      return () => {};
+    }, [])
+  );
 
   function Validate(email, password) {
     let emailErr = "";
@@ -122,7 +126,7 @@ const Login = (props) => {
     }
   }
 
-console.log("accessToken =>", accessToken);
+  console.log("accessToken =>", accessToken);
 
   useEffect(() => {}, [isClickEye]);
 

@@ -67,7 +67,7 @@ export default (state = initialState, { type, payload }) => {
       return {
         ...state,
         isRequesting: true,
-        availabilityData: {},
+        // availabilityData: {},
         error: {},
         // selected: {
         //   ...state.selected,
@@ -81,6 +81,10 @@ export default (state = initialState, { type, payload }) => {
         isRequesting: false,
         availabilityData: payload.data,
         error: {},
+        selected: {
+          ...state.selected,
+          isSaved: !payload.copied,
+        },
       };
     }
     case actionConstant.ACTION_GET_AVAILABILITY_FAILURE: {

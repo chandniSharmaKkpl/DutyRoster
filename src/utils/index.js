@@ -64,10 +64,10 @@ export function checkObject(arr) {
   const result = Array.isArray(arr);
 
   if (result) {
-    console.log(`[${arr}] is an array.`);
+    // console.log(`[${arr}] is an array.`);
     return false;
   } else {
-    console.log(`${arr} is not an array.`);
+    // console.log(`${arr} is not an array.`);
     return true;
   }
 }
@@ -123,7 +123,18 @@ export const getValueFromDeepKey = (o, s) => {
   }
   return o;
 };
-
+export function renameKey(obj, old_key, new_key) {
+  // check if old key = new key
+  if (old_key !== new_key) {
+    Object.defineProperty(
+      obj,
+      new_key, // modify old key
+      // fetch description from object
+      Object.getOwnPropertyDescriptor(obj, old_key)
+    );
+    delete obj[old_key]; // delete old key
+  }
+}
 export {
   enumerateDaysBetweenDates,
   getCurrentWeek,

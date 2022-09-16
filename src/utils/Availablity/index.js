@@ -1,11 +1,14 @@
 import { alertMsgConstant } from "@/constant";
+import _ from "lodash";
 import {
   checkObject,
   checkObjectHasData,
   get24HrFrom12HrFormat,
   getAmPmFromDate,
+  getCurrentWeek,
   getDateFromTimeStamp,
   isArrayEmpty,
+  renameKey,
 } from "@/utils";
 import moment from "moment";
 
@@ -24,14 +27,38 @@ export const createAvailibilityParams = ({
 }) => {
   try {
     const params = {};
+    const availability = _.cloneDeep(availabilityData);
+    // console.log("before availability", JSON.stringify(availability, null, 4));
+    for (const day in availability) {
+      if (Object.hasOwnProperty.call(availability, day)) {
+        if (
+          checkObject(availability[day]) &&
+          checkObjectHasData(availability[day], "times")
+        ) {
+          // availability[day].times.forEach((_el) => {});
+          // console.log("", availability[day].times);
+          if (availability[day].times && availability[day].times.length > 0) {
+            availability[day].times.map((_el) => {
+              _el.district = _el.district_id;
+            });
+            renameKey(availability[day], "times", "time");
+          } else {
+            delete availability[day];
+          }
+        } else {
+          delete availability[day];
+        }
+      }
+    }
+    // console.log("after availability", JSON.stringify(availability, null, 4));
 
-    params.availability = availabilityData;
+    params.availability = availability;
     params.week_start = moment(weekStart).format("YYYY-MM-DD");
     params.week_end = moment(weekEnd).format("YYYY-MM-DD");
-    console.log("createAvailibilityParams", JSON.stringify(params, null, 2));
+    // console.log("createAvailibilityParams", JSON.stringify(params, null, 2));
     return params;
   } catch (error) {
-    alert(error);
+    // alert(error);
     throw error;
   }
 };
@@ -242,5 +269,81 @@ export const addAvailibilityDataParams = ({
     // console.error(error);
     // alert(error);
     throw error;
+  }
+};
+const getPreviousWeek = (_date) => moment(_date).add(-1, "week").toDate();
+
+const modifyData = ({ currentWeek, nextWeek, data }) => {
+  try {
+    const { days: currentWeekDays } = currentWeek;
+    const { days: nextWeekDays } = nextWeek;
+    const nextWeekData = {};
+    currentWeekDays.forEach((_day, index) => {
+      nextWeekData[nextWeekDays[index]] = data[_day];
+    });
+    // console.log(
+    //   "modifyData",
+    //   JSON.stringify({ currentWeek, nextWeek, data, nextWeekData }, null, 4)
+    // );
+    // console.log(JSON.stringify(nextWeekData, null, 4));
+    return nextWeekData;
+  } catch (error) {
+    throw error;
+  }
+};
+const mergeData = ({ existData, newData }) => {
+  try {
+    for (const day in existData) {
+      if (Object.hasOwnProperty.call(existData, day)) {
+        if (checkObject(existData[day])) {
+          if (Object.hasOwnProperty.call(newData[day], "times")) {
+            const _datas = newData[day].times;
+            // console.log(_datas);
+            existData[day] = {
+              ...existData[day],
+              times: [...existData[day]?.times, ..._datas],
+            };
+          }
+        } else {
+          const _datas = newData[day].times;
+          existData[day] = {
+            ...existData[day],
+            times: _datas,
+          };
+        }
+      }
+    }
+  } catch (error) {
+    throw error;
+  }
+  // console.log("merge", JSON.stringify(existData, null, 2));
+};
+export const appendAvailabilityData = ({
+  copiedData,
+  existData,
+  nextWeekDates,
+  haveToMerge = false,
+}) => {
+  try {
+    const currentWeek = getCurrentWeek(
+      getPreviousWeek(nextWeekDates.week_start)
+    );
+    const nextWeek = getCurrentWeek(nextWeekDates.week_start);
+
+    const newData = modifyData({ currentWeek, nextWeek, data: copiedData });
+    if (existData) {
+      if (haveToMerge) {
+        // console.log("existData", JSON.stringify(existData, null, 4));
+        mergeData({
+          existData,
+          newData,
+        });
+        return existData;
+      }
+    }
+    return newData;
+  } catch (error) {
+    console.log("error", error);
+    return null;
   }
 };

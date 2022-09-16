@@ -1,7 +1,9 @@
 import { Config } from "@/config";
 import { appConstant } from "@/constant";
-import { navigateAndSimpleReset } from "@/navigators/utils";
+import localDb from "@/database/localDb";
+import { navigateAndSimpleReset, navigationRef } from "@/navigators/utils";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { StackActions } from "@react-navigation/native";
 import axios from "axios";
 
 // client.js api
@@ -17,14 +19,9 @@ client.interceptors.response.use(
       // console.log("client.interceptors.response", response.data);
       const res = response.data;
       if (res.error.login_fail) {
-        alert('Login Faild')
-        AsyncStorage.removeItem("persist:root")
-          .then(() => {
-            // navigateAndSimpleReset(appConstant.LOGIN, 0);
-          })
-          .catch((error) => {
-            console.log("ERROR AT RESPONSE OF LOGIN FAILD", error);
-          });
+        alert("Login Faild");
+        localDb.clearAll();
+        // navigationRef.dispatch(StackActions.replace(appConstant.LOGIN));
       }
     }
     return response;
@@ -32,8 +29,8 @@ client.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       if (isLocalStorageAvailable()) {
-        AsyncStorage.removeItem("persist:root");
-        navigate(appConstant.LOGIN);
+        localDb.clearAll();
+        // navigationRef.dispatch(StackActions.replace(appConstant.LOGIN));
       }
     }
 

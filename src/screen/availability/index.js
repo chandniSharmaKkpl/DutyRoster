@@ -166,7 +166,7 @@ const Availability = (props) => {
     }
   };
 
-  const setSelectedWeek = React.useCallback((date) => {
+  const setSelectedWeek = React.useCallback((date, copied = false) => {
     const _dateList = {};
     const _dateFlatList = [];
 
@@ -190,6 +190,12 @@ const Availability = (props) => {
       _selectedDates.push(getTimeStampfromDate(item));
     });
 
+    const fromDate = moment(weekStart).format("YYYY-MM-DD");
+    const toDate = moment(weekEnd).format("YYYY-MM-DD");
+    const params = {
+      week_start: fromDate,
+      week_end: toDate,
+    };
     setMarkeDatesAction({
       markedDates: _dateList,
       selectedWeek: _dateFlatList,
@@ -197,13 +203,7 @@ const Availability = (props) => {
       weekEnd: weekEnd,
       availabilitySelectedDate: _selectedDates,
     });
-    const fromDate = moment(weekStart).format("YYYY-MM-DD");
-    const toDate = moment(weekEnd).format("YYYY-MM-DD");
-    const params = {
-      week_start: fromDate,
-      week_end: toDate,
-    };
-    requestToGetAvailabilityAction(params);
+    requestToGetAvailabilityAction({ params, copied });
   }, []);
 
   const onClickDate = (id) => {
@@ -282,14 +282,14 @@ const Availability = (props) => {
               const startNextWeek = moment(endDay)
                 .add(1, "weeks")
                 .startOf("isoWeek");
-              setSelectedWeek(startNextWeek);
+              setSelectedWeek(startNextWeek, true);
             },
           },
         ]
       );
     } else {
       const startNextWeek = moment(endDay).add(1, "weeks").startOf("isoWeek");
-      setSelectedWeek(startNextWeek);
+      setSelectedWeek(startNextWeek, true);
     }
   };
 

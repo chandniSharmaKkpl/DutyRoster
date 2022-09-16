@@ -10,6 +10,7 @@ import {
 } from "@/screen/login/redux/Login.reducer";
 import {
   addAvailibilityDataParams,
+  appendAvailabilityData,
   createAvailibilityParams,
 } from "@/utils/Availablity";
 import {
@@ -20,8 +21,21 @@ import {
 
 export function* workerGetAvailabilityDateResponse(action) {
   try {
-    const response = yield call(getAvailabilityApiCall, action.payload);
-    console.log(JSON.stringify(response, null, 4));
+    const { params, copied } = action.payload;
+
+    const response = yield call(getAvailabilityApiCall, params);
+    let data = {};
+    data = response.data;
+    // console.log(JSON.stringify(response, null, 4));
+    if (copied) {
+      let availabilityData = yield select(selectordAvailabilityData);
+      data = appendAvailabilityData({
+        copiedData: availabilityData,
+        existData: response.data,
+        nextWeekDates: params,
+        haveToMerge: true,
+      });
+    }
     if (!response.success) {
       var stringCombined = "";
       let arrayTemp = Object.keys(response.error);
@@ -35,6 +49,13 @@ export function* workerGetAvailabilityDateResponse(action) {
           stringCombined = stringCombined + stringTemp.toString();
         }
       }
+      if (copied) {
+        yield put({
+          type: actionConstant.ACTION_GET_AVAILABILITY_SUCCESS,
+          payload: { data, copied },
+        });
+        return;
+      }
       toast.show(stringCombined, {
         type: alertMsgConstant.TOAST_DANGER,
       });
@@ -45,7 +66,7 @@ export function* workerGetAvailabilityDateResponse(action) {
     } else {
       yield put({
         type: actionConstant.ACTION_GET_AVAILABILITY_SUCCESS,
-        payload: response,
+        payload: { data, copied },
       });
     }
   } catch (error) {
@@ -59,7 +80,6 @@ export function* workerGetAvailabilityDateResponse(action) {
 
 export function* workerSaveAvailability(action) {
   try {
-    const selectedData = yield select(selectedAvailabilityData);
     const selectedWeek = yield select(selectorForSelectedWeek);
     const availabilityData = yield select(selectordAvailabilityData);
     // const params = createAvailibilityParams({
@@ -70,7 +90,10 @@ export function* workerSaveAvailability(action) {
       ...selectedWeek,
       availabilityData,
     });
-    // alert("workerSaveAvailability params", params);
+    console.log(
+      "workerSaveAvailability params",
+      JSON.stringify(params, null, 8)
+    );
     const saveAvailabilityRes = yield call(saveAvailabilityApiCall, params);
     yield put({
       type: actionConstant.ACTION_SAVE_AVAILABILITY_SUCCESS,
