@@ -58,7 +58,9 @@ function get12HrFrom24HrFormat(time) {
 function getAmPmFromDate(date) {
   return moment(date).format("A");
 }
-
+function changeDateFormat(_date, oldFormat, newFormat) {
+  return moment(_date, oldFormat).format(newFormat);
+}
 export function checkObject(arr) {
   // check if arr is array
   const result = Array.isArray(arr);
@@ -135,6 +137,9 @@ export function renameKey(obj, old_key, new_key) {
     delete obj[old_key]; // delete old key
   }
 }
+export const USER_DATE_FORMAT = "DD/MM/YYYY";
+export const API_DATE_FORMAT = "YYYY-MM-DD";
+
 export {
   enumerateDaysBetweenDates,
   getCurrentWeek,
@@ -146,4 +151,5 @@ export {
   get12HrFrom24HrFormat,
   getDateFromTimeStamp,
   getAmPmFromDate,
+  changeDateFormat,
 };

@@ -1,5 +1,6 @@
 import React from "react";
 import moment from "moment";
+import { USER_DATE_FORMAT } from "@/utils";
 // moment.locale('in');
 
 export const convertDateTime = (dateString, isDate, isTime) => {
@@ -42,7 +43,7 @@ export const birthDateFormat = (dateString, isDDmmYYYY) => {
 };
 
 export const EmpTimeCardDateFormate = (dateString) => {
-  let formattedDate = moment(dateString).format("ddd, DD-MM-YYYY");
+  let formattedDate = moment(dateString).format(`ddd, ${USER_DATE_FORMAT}`);
   return formattedDate;
 };
 

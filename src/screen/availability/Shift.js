@@ -7,6 +7,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import ModelBox from "@/components/PopUpmodel";
+import { API_DATE_FORMAT, changeDateFormat, USER_DATE_FORMAT } from "@/utils";
 
 const Shift = (props) => {
   const {
@@ -50,7 +51,7 @@ const Shift = (props) => {
         <View style={styles.flexContainer}>
           {arrayTimes && arrayTimes.length > 0 ? (
             <AppText
-              text={item}
+              text={changeDateFormat(item, API_DATE_FORMAT, USER_DATE_FORMAT)}
               style={[
                 styles.txtRow,
                 styles.leftText,

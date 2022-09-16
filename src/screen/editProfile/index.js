@@ -46,6 +46,7 @@ import * as profileAction from "./redux/Profile.action";
 import { connect, useSelector } from "react-redux";
 import Loader from "@/components/Loader";
 import ProgressiveImage from "@/components/ProgressiveImage";
+import { USER_DATE_FORMAT } from "@/utils";
 
 const EditProfile = (props) => {
   const { requestToUpdateProfileAction, requestToUpdateProfileInHeaderAction } =
@@ -157,7 +158,9 @@ const EditProfile = (props) => {
 
   React.useEffect(() => {
     if (profileResponse.UpdateProfileReducer) {
-      requestToUpdateProfileInHeaderAction(profileResponse.UpdateProfileReducer)
+      requestToUpdateProfileInHeaderAction(
+        profileResponse.UpdateProfileReducer
+      );
       let profileInformation = profileResponse.UpdateProfileReducer.data;
       if (profileInformation) {
         // requestToUpdateProfileInHeaderAction(profileResponse.UpdateProfileReducer);
@@ -515,7 +518,9 @@ const EditProfile = (props) => {
                 <TextInputCustom
                   viewName={appConstant.PROFILE}
                   label={"Dob"}
-                  value={dob}
+                  value={
+                    dob && moment(dob, "DD-MM-YYYY").format(USER_DATE_FORMAT)
+                  }
                   onChangeText={onChangeDOB}
                   placeholder={"Enter Date of Birth"}
                   eyeIcon={require("../../assets/images/SignupScreen/calendar.png")}
@@ -635,7 +640,5 @@ const mapDispatchToProps = (dispatch) => {
     requestToUpdateProfileInHeaderAction: (params) =>
       dispatch(profileAction.requestUpdateProfileHeader(params)),
   };
-
-
 };
 export default connect(null, mapDispatchToProps)(EditProfile);

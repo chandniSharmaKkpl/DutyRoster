@@ -19,8 +19,8 @@ client.interceptors.response.use(
       // console.log("client.interceptors.response", response.data);
       const res = response.data;
       if (res.error.login_fail) {
-        alert("Login Faild");
-        localDb.clearAll();
+        alert("Please Logout and Login again!");
+        // localDb.clearAll();
         // navigationRef.dispatch(StackActions.replace(appConstant.LOGIN));
       }
     }
@@ -29,7 +29,7 @@ client.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       if (isLocalStorageAvailable()) {
-        localDb.clearAll();
+        // localDb.clearAll();
         // navigationRef.dispatch(StackActions.replace(appConstant.LOGIN));
       }
     }

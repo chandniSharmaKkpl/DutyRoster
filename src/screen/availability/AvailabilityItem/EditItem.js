@@ -11,6 +11,7 @@ import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 
 import { isInOutTimeValid } from "@/utils/Availablity";
 import moment from "moment";
+import { API_DATE_FORMAT, changeDateFormat, USER_DATE_FORMAT } from "@/utils";
 
 const AvailabilityItem = (props) => {
   const { data, arrayDistricts, editedData, setEditableData } = props;
@@ -108,7 +109,14 @@ const AvailabilityItem = (props) => {
       <View style={styles.viewTopTitle}>
         {/* Showing plus minus icon besides districts title */}
         <View style={styles.dateTitleContainer}>
-          <AppText style={styles.txtDateTitle} text={availibilityDate} />
+          <AppText
+            style={styles.txtDateTitle}
+            text={changeDateFormat(
+              availibilityDate,
+              API_DATE_FORMAT,
+              USER_DATE_FORMAT
+            )}
+          />
         </View>
         <View style={styles.districts}>
           <AppText

@@ -26,7 +26,7 @@ import { CommonHeader } from "@/components/CommonHeader";
 import { CustomButton } from "@/components/CustomButton";
 import { AppText } from "@/components/AppText";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { useNavigation } from "@react-navigation/core";
+import { useNavigation, useFocusEffect } from "@react-navigation/core";
 import Modal from "react-native-modal";
 import * as ImagePicker from "react-native-image-picker";
 import IconAnt from "react-native-vector-icons/AntDesign";
@@ -43,6 +43,7 @@ import Loader from "@/components/Loader";
 import DeviceInfo from "react-native-device-info";
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 import { TextInputCustom } from "@/components/TextInput";
+import { USER_DATE_FORMAT } from "@/utils";
 
 const Signup = (props) => {
   const [error, setError] = React.useState({
@@ -98,21 +99,27 @@ const Signup = (props) => {
   const [DeviceUuid, setDeviceUuid] = useState();
 
   let isCalander;
-  DeviceInfo.getDeviceName().then((device_name) => {
-    setDeviceName(device_name);
-  });
 
-  DeviceInfo.getDeviceToken().then((device_token) => {
-    setDeviceToken(device_token);
-  });
+  useFocusEffect(
+    React.useCallback(() => {
+      DeviceInfo.getDeviceName().then((device_name) => {
+        setDeviceName(device_name);
+      });
 
-  let type = DeviceInfo.getDeviceType();
-  console.log(type);
+      DeviceInfo.getDeviceToken().then((device_token) => {
+        setDeviceToken(device_token);
+      });
 
-  DeviceInfo.syncUniqueId().then((uniqueId) => {
-    setDeviceUuid(uniqueId);
-  });
-  console.log("setDeviceUuid", DeviceUuid);
+      let type = DeviceInfo.getDeviceType();
+      console.log(type);
+
+      DeviceInfo.syncUniqueId().then((uniqueId) => {
+        setDeviceUuid(uniqueId);
+      });
+      console.log("setDeviceUuid", DeviceUuid);
+      return () => {};
+    }, [])
+  );
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -471,7 +478,7 @@ const Signup = (props) => {
                 <TextInputCustom
                   viewName={appConstant.SIGNUP}
                   label={"Dob"}
-                  value={dob}
+                  value={dob && moment(dob, "DD-MM-YYYY").format(USER_DATE_FORMAT)}
                   onChangeText={onChangeDOB}
                   placeholder={"Enter Date of Birth"}
                   icon={require("../../assets/images/SignupScreen/calendar.png")}
