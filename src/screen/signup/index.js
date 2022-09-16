@@ -94,9 +94,8 @@ const Signup = (props) => {
   );
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [DeviceName, setDeviceName] = useState(false);
-  const [DeviceToken, setDeviceToken] = useState()
-  const [DeviceUuid, setDeviceUuid] = useState()
-
+  const [DeviceToken, setDeviceToken] = useState();
+  const [DeviceUuid, setDeviceUuid] = useState();
 
   let isCalander;
   DeviceInfo.getDeviceName().then((device_name) => {
@@ -107,15 +106,13 @@ const Signup = (props) => {
     setDeviceToken(device_token);
   });
 
-    let type = DeviceInfo.getDeviceType();
+  let type = DeviceInfo.getDeviceType();
   console.log(type);
 
   DeviceInfo.syncUniqueId().then((uniqueId) => {
     setDeviceUuid(uniqueId);
   });
   console.log("setDeviceUuid", DeviceUuid);
-
-
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -187,9 +184,9 @@ const Signup = (props) => {
 
     console.log(" img source ----", ImageSource);
 
-    if (ImageSource == "") {
-      imgErr = alertMsgConstant.IMAGE_REQUIRED;
-    }
+    // if (ImageSource == "") {
+    //   imgErr = alertMsgConstant.IMAGE_REQUIRED;
+    // }
 
     if (title.trim() === "") {
       titleErr = "Title cannot be empty";
@@ -317,11 +314,13 @@ const Signup = (props) => {
       params.append("phone", phone);
       params.append("address", address);
       params.append("tfn_number", tfn);
-      params.append("image", {
-        name: Math.floor(new Date().getTime() / 1000) + ".png",
-        type: "image/jpeg",
-        uri: ImageSource ? ImageSource : "https://via.placeholder.com/150",
-      });
+      if (ImageSource) {
+        params.append("image", {
+          name: Math.floor(new Date().getTime() / 1000) + ".png",
+          type: "image/jpeg",
+          uri: ImageSource ? ImageSource : "https://via.placeholder.com/150",
+        });
+      }
       password.length > 0 ? params.append("password", password) : null;
       params.append("device_token", 3143); //need to do in dynamic
       params.append("uuid", 24314); //need to do in dynamic
@@ -404,9 +403,9 @@ const Signup = (props) => {
                   />
                 </TouchableOpacity>
               </View>
-              {error.imgErr ? (
+              {/* {error.imgErr ? (
                 <AppText text={error.imgErr} style={styles.txtError} />
-              ) : null}
+              ) : null} */}
             </>
             <View style={styles.viewTxtInput}>
               {/* <View style={{ height: hp("2.8%") }} /> */}
@@ -467,7 +466,6 @@ const Signup = (props) => {
                 style={{
                   width: wp("90%"),
                   position: "relative",
-                  
                 }}
               >
                 <TextInputCustom
