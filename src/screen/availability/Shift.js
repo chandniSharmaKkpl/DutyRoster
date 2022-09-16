@@ -21,9 +21,8 @@ const Shift = (props) => {
     date: null,
   });
 
-  console.clear();
-  console.log("availabilityData", JSON.stringify(availabilityData, null, 4));
-  console.log("editModal", JSON.stringify(editModal, null, 4));
+  // console.log("availabilityData", JSON.stringify(availabilityData, null, 4));
+  // console.log("editModal", JSON.stringify(editModal, null, 4));
 
   var arrayDates = Object.keys(availabilityData);
   const renderItem = ({ item, index }) => {
@@ -31,8 +30,8 @@ const Shift = (props) => {
 
     if (!Array.isArray(availabilityData[item])) {
       arrayTimes = availabilityData[item].times;
-      console.log("arrayTimes", arrayTimes);
-      if (!arrayTimes) {
+      // console.log("arrayTimes", arrayTimes);
+      if (!arrayTimes || arrayTimes.length <= 0) {
         return <></>;
       }
     } else {
@@ -43,26 +42,33 @@ const Shift = (props) => {
       <View
         style={[
           styles.row,
-          { borderBottomWidth: index === arrayDates.length - 1 ? 0 : 1 },
+          {
+            borderBottomWidth: index === arrayDates.length - 1 ? 0 : 1,
+          },
         ]}
       >
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            paddingHorizontal: wp("5%"),
-          }}
-        >
+        <View style={styles.flexContainer}>
           {arrayTimes && arrayTimes.length > 0 ? (
-            <AppText text={item} style={[styles.txtRow, styles.centerText]} />
+            <AppText
+              text={item}
+              style={[
+                styles.txtRow,
+                styles.leftText,
+                styles.centerText,
+                styles.viewDateColumn,
+              ]}
+            />
           ) : null}
 
           {/* Districts  */}
           {arrayTimes && arrayTimes.length > 0 ? (
-            <View style={styles.viewColumn}>
+            <View style={[styles.viewColumn, styles.leftText]}>
               {arrayTimes.map((dataObj) => {
                 return (
-                  <AppText text={dataObj.district_name} style={styles.txtRow} />
+                  <AppText
+                    text={dataObj.district_name || ""}
+                    style={styles.txtRow}
+                  />
                 );
               })}
             </View>
@@ -70,7 +76,7 @@ const Shift = (props) => {
 
           {/* InTime  */}
           {arrayTimes && arrayTimes.length > 0 ? (
-            <View style={styles.viewColumn}>
+            <View style={[styles.viewColumn, styles.viewColumnInOutTime]}>
               {arrayTimes.map((dataObj) => {
                 return (
                   <AppText text={dataObj.start_time} style={styles.txtRow} />
@@ -81,7 +87,7 @@ const Shift = (props) => {
 
           {/* OutTime */}
           {arrayTimes && arrayTimes.length > 0 ? (
-            <View style={styles.viewColumn}>
+            <View style={[styles.viewColumn, styles.viewColumnInOutTime]}>
               {arrayTimes.map((dataObj) => {
                 return (
                   <AppText text={dataObj.end_time} style={styles.txtRow} />
@@ -92,7 +98,7 @@ const Shift = (props) => {
 
           {/* Button */}
           {arrayTimes && arrayTimes.length > 0 ? (
-            <View style={styles.viewColumn}>
+            <View style={[styles.viewColumnButton]}>
               {arrayTimes.map((dataObj, index) => {
                 return (
                   <Pressable
@@ -120,15 +126,23 @@ const Shift = (props) => {
   };
   return (
     <View style={styles.viewOuter}>
-      <View style={{ paddingHorizontal: wp("5%") }}>
-        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <AppText text={"DATE"} style={styles.txtRed} />
-          <AppText text={"DISTRICTS"} style={styles.txtRed} />
-          <AppText text={"IN"} style={styles.txtRed} />
-          <AppText text={"OUT"} style={styles.txtRed} />
-          <AppText text={""} style={styles.txtRed} />
-        </View>
+      <View style={styles.flexContainer}>
+        <AppText text={"DATE"} style={[styles.txtRed, styles.viewDateColumn]} />
+        <AppText
+          text={"DISTRICTS"}
+          style={[styles.txtRed, styles.viewColumn, styles.leftText]}
+        />
+        <AppText
+          text={"IN"}
+          style={[styles.txtRed, styles.viewColumn, styles.viewColumnInOutTime]}
+        />
+        <AppText
+          text={"OUT"}
+          style={[styles.txtRed, styles.viewColumn, styles.viewColumnInOutTime]}
+        />
+        <AppText text={""} style={[styles.txtRed, styles.viewColumnButton]} />
       </View>
+
       <View style={styles.singleLine} />
       <View style={{}}>
         <FlatList
@@ -174,10 +188,36 @@ export const styles = {
     width: "100%",
     height: "0.1%",
   },
+  flexContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    display: "flex",
+    flex: 1,
+    width: "100%",
+    paddingHorizontal: wp("2%"),
+  },
   viewColumn: {
     // padding: "2%",
     //  width: wp('40%'),
+    width: "100%",
+    flex: 4,
     // backgroundColor: appColor.LIGH_ORANGE,
+    alignItems: "center",
+  },
+  viewDateColumn: {
+    minWidth: 80,
+  },
+  viewColumnInOutTime: {
+    flex: 2,
+    textAlign: "center",
+  },
+  viewColumnButton: {
+    // padding: "2%",
+    //  width: wp('40%'),
+    // backgroundColor: appColor.LIGH_ORANGE,
+    alignItems: "center",
+    width: "100%",
+    flex: 1,
   },
   viewOuter: {
     backgroundColor: appColor.WHITE,
@@ -194,7 +234,7 @@ export const styles = {
   },
   txtRed: {
     fontFamily: fontConstant.FONT_SEMI_BOLD,
-    fontSize: fontConstant.TEXT_18_SIZE_REGULAR,
+    fontSize: fontConstant.TEXT_12_SIZE_BOLD,
     color: appColor.RED,
     paddingVertical: hp("1%"),
     // paddingHorizontal:wp("1%")
@@ -206,6 +246,9 @@ export const styles = {
     paddingVertical: hp("1%"),
 
     // paddingHorizontal:wp("1%")
+  },
+  leftText: {
+    alignItems: "flex-start",
   },
   centerText: {
     // backgroundColor: appColor.RED,

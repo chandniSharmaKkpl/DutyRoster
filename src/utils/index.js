@@ -90,7 +90,7 @@ export const checkObjectHasData = (data, key) => {
     }
     throw "Not data";
   } catch (error) {
-    console.error('checkObjectHasData',error);
+    // console.error('checkObjectHasData',error);
     return null;
   }
 };

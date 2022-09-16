@@ -287,6 +287,10 @@ export default (state = initialState, { type, payload }) => {
             ],
           },
         },
+        selected: {
+          ...state.selected,
+          isSaved: false,
+        },
       };
     }
 
@@ -309,6 +313,10 @@ export default (state = initialState, { type, payload }) => {
             ],
             // times: state.availabilityData[date].times.splice(index, 1),
           },
+        },
+        selected: {
+          ...state.selected,
+          isSaved: false,
         },
       };
     }

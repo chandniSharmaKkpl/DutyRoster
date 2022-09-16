@@ -104,7 +104,7 @@ const Availability = (props) => {
   useFocusEffect(
     React.useCallback(() => {
       var endDate = "";
-      var startDate = moment().add(1, 'weeks').startOf('isoWeek').toDate();
+      var startDate = moment().add(1, "weeks").startOf("isoWeek").toDate();
       endDate = moment(startDate).add(7, "d");
       setSelectedWeek(startDate);
       setSelectedDate(startDate);
@@ -410,12 +410,14 @@ const Availability = (props) => {
                 <AppText style={styles.saveButton} text={"Save"} />
               </TouchableOpacity>
             )}
-            <TouchableOpacity
-              style={styles.btnCopy}
-              onPress={onNextWeekCopyData}
-            >
-              <AppText style={styles.saveButton} text={"Copy"} />
-            </TouchableOpacity>
+            {isSelectedAvailabilityDataSaved && (
+              <TouchableOpacity
+                style={styles.btnCopy}
+                onPress={onNextWeekCopyData}
+              >
+                <AppText style={styles.saveButton} text={"Copy"} />
+              </TouchableOpacity>
+            )}
           </View>
 
           {isDatePickerVisible && (

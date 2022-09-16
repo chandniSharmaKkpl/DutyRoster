@@ -74,12 +74,12 @@ const ModelBox = (props) => {
   };
   const onDelete = () => {
     try {
-      setModalVisible(!modalVisible);
-      deleteDataItemofAvailabilityAction({
-        index,
-        date,
-      });
-      /*
+      // setModalVisible(!modalVisible);
+      // deleteDataItemofAvailabilityAction({
+      //   index,
+      //   date,
+      // });
+
       Alert.alert(
         alertMsgConstant.ALERT,
         alertMsgConstant.ARE_YOU_SURE_TO_DELETE,
@@ -87,7 +87,7 @@ const ModelBox = (props) => {
           {
             text: alertMsgConstant.CANCEL,
             onPress: () => {
-              setModalVisible(!modalVisible);
+              // setModalVisible(!modalVisible);
             },
           },
           {
@@ -107,7 +107,7 @@ const ModelBox = (props) => {
           //   },
           cancelable: false,
         }
-      );*/
+      );
     } catch (error) {
       console.error(error);
     }
@@ -115,11 +115,11 @@ const ModelBox = (props) => {
   return (
     <View style={styles.centeredView}>
       <Modal
-        animationType="slide"
+        animationType="fade"
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
+          // Alert.alert("Modal has been closed.");
           setModalVisible(!modalVisible);
         }}
       >

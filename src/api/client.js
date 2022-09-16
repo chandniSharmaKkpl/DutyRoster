@@ -17,8 +17,14 @@ client.interceptors.response.use(
       // console.log("client.interceptors.response", response.data);
       const res = response.data;
       if (res.error.login_fail) {
-        AsyncStorage.removeItem("persist:root");
-        navigateAndSimpleReset(appConstant.LOGIN, 0);
+        alert('Login Faild')
+        AsyncStorage.removeItem("persist:root")
+          .then(() => {
+            // navigateAndSimpleReset(appConstant.LOGIN, 0);
+          })
+          .catch((error) => {
+            console.log("ERROR AT RESPONSE OF LOGIN FAILD", error);
+          });
       }
     }
     return response;
