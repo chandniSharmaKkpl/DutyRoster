@@ -66,10 +66,12 @@ const Shift = (props) => {
             <View style={[styles.viewColumn, styles.leftText]}>
               {arrayTimes.map((dataObj) => {
                 return (
-                  <AppText
-                    text={dataObj.district_name || ""}
-                    style={styles.txtRow}
-                  />
+                  <View style={styles.rowAlignCenter}>
+                    <AppText
+                      text={dataObj.district_name || ""}
+                      style={[styles.txtRow]}
+                    />
+                  </View>
                 );
               })}
             </View>
@@ -80,7 +82,12 @@ const Shift = (props) => {
             <View style={[styles.viewColumn, styles.viewColumnInOutTime]}>
               {arrayTimes.map((dataObj) => {
                 return (
-                  <AppText text={dataObj.start_time} style={styles.txtRow} />
+                  <View style={styles.rowAlignCenter}>
+                    <AppText
+                      text={dataObj.start_time}
+                      style={[styles.txtRow]}
+                    />
+                  </View>
                 );
               })}
             </View>
@@ -91,7 +98,11 @@ const Shift = (props) => {
             <View style={[styles.viewColumn, styles.viewColumnInOutTime]}>
               {arrayTimes.map((dataObj) => {
                 return (
-                  <AppText text={dataObj.end_time} style={styles.txtRow} />
+                  <View
+                    style={styles.rowAlignCenter}
+                  >
+                    <AppText text={dataObj.end_time} style={[styles.txtRow]} />
+                  </View>
                 );
               })}
             </View>
@@ -102,21 +113,23 @@ const Shift = (props) => {
             <View style={[styles.viewColumnButton]}>
               {arrayTimes.map((dataObj, index) => {
                 return (
-                  <Pressable
-                    onPress={() => {
-                      setEditModal({
-                        index: index,
-                        date: item,
-                      });
-                      setModalVisible(true);
-                    }}
-                    style={styles.moreImage}
-                  >
-                    <Image
-                      source={imageConstant.IMAGE_MORE_ICON}
-                      style={{ height: "100%", width: "100%" }}
-                    />
-                  </Pressable>
+                  <View style={styles.moreImageViewContainer}>
+                    <Pressable
+                      onPress={() => {
+                        setEditModal({
+                          index: index,
+                          date: item,
+                        });
+                        setModalVisible(true);
+                      }}
+                      style={styles.moreImage}
+                    >
+                      <Image
+                        source={imageConstant.IMAGE_MORE_ICON}
+                        style={{ height: "100%", width: "100%" }}
+                      />
+                    </Pressable>
+                  </View>
                 );
               })}
             </View>
@@ -176,12 +189,24 @@ export const styles = {
     borderColor: "#D2D2D2",
     borderBottomWidth: 1,
   },
+  moreImageViewContainer: {
+    minHeight: hp('5%'),
+
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
+    alignContent: "center",
+  },
   moreImage: {
     height: 16,
     width: 18,
-    marginVertical: hp("1.2%"),
+    // marginVertical: hp("1.2%"),
     display: "flex",
     justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
+    alignContent: "center",
   },
   singleLine: {
     marginVertical: "1%",
@@ -196,33 +221,33 @@ export const styles = {
     flex: 1,
     width: "100%",
     paddingHorizontal: wp("2%"),
+    // alignItems: "center",
+    alignSelf: "center",
+    alignContent: "center",
   },
   viewColumn: {
-    // padding: "2%",
-    //  width: wp('40%'),
     width: "100%",
     flex: 4,
-    // backgroundColor: appColor.LIGH_ORANGE,
     alignItems: "center",
+    alignSelf: "center",
+    alignContent: "center",
   },
   viewDateColumn: {
-    minWidth: 80,
+    minWidth: 90,
   },
   viewColumnInOutTime: {
-    flex: 2,
+    flex: 1.5,
     textAlign: "center",
   },
   viewColumnButton: {
-    // padding: "2%",
-    //  width: wp('40%'),
-    // backgroundColor: appColor.LIGH_ORANGE,
     alignItems: "center",
+    alignSelf: "center",
+    alignContent: "center",
     width: "100%",
     flex: 1,
   },
   viewOuter: {
     backgroundColor: appColor.WHITE,
-    // borderWidth: 1,
     borderRadius: 10,
     shadowColor: "#0000001A",
     shadowOffset: {
@@ -238,24 +263,30 @@ export const styles = {
     fontSize: fontConstant.TEXT_12_SIZE_BOLD,
     color: appColor.RED,
     paddingVertical: hp("1%"),
-    // paddingHorizontal:wp("1%")
   },
   txtRow: {
     fontFamily: fontConstant.FONT_SEMI_BOLD,
     fontSize: fontConstant.TEXT_11_SIZE_REGULAR,
     color: appColor.GRAY,
-    paddingVertical: hp("1%"),
-
-    // paddingHorizontal:wp("1%")
+    alignItems: "center",
+    // borderWidth: 1,
+    // borderColor: appColor.RED,
   },
   leftText: {
     alignItems: "flex-start",
   },
   centerText: {
-    // backgroundColor: appColor.RED,
     display: "flex",
     alignItems: "center",
     alignSelf: "center",
+    alignContent: "center",
+    alignSelf: "center",
+  },
+  rowAlignCenter: {
+    display: "flex",
+    alignItems: "center",
+    flexDirection:"row",
+    minHeight: hp('5%'),
   },
 };
 export default Shift;

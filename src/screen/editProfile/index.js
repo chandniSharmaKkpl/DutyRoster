@@ -261,7 +261,7 @@ const EditProfile = (props) => {
 
     if (tfn === "") {
       tfnErr = "TFN cannot be empty";
-    } else if (tfn.length < 8) {
+    } else if (tfn.length < 9) {
       tfnErr = alertMsgConstant.TFN_CHAR_LIMIT;
     }
 

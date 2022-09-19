@@ -57,7 +57,7 @@ const Signup = (props) => {
     tfnErr: "",
     passwordErr: "",
     cnfpasswordErr: "",
-    imgErr: "",
+    // imgErr: "",
   });
 
   const navigation = useNavigation();
@@ -187,7 +187,7 @@ const Signup = (props) => {
     let tfnErr = "";
     let passwordErr = "";
     let cnfpasswordErr = "";
-    let imgErr = "";
+    // let imgErr = "";
 
     console.log(" img source ----", ImageSource);
 
@@ -233,7 +233,7 @@ const Signup = (props) => {
 
     if (tfn === "") {
       tfnErr = "TFN cannot be empty";
-    } else if (tfn.length < 8) {
+    } else if (tfn.length < 9) {
       tfnErr = alertMsgConstant.TFN_CHAR_LIMIT;
     }
 
@@ -259,8 +259,8 @@ const Signup = (props) => {
       addressErr === "" &&
       tfnErr === "" &&
       passwordErr === "" &&
-      cnfpasswordErr === "" &&
-      imgErr == ""
+      cnfpasswordErr === ""
+      // imgErr == ""
     ) {
       return "ok";
     } else {
@@ -275,7 +275,7 @@ const Signup = (props) => {
         tfnErr,
         passwordErr,
         cnfpasswordErr,
-        imgErr,
+        // imgErr,
       };
     }
   }
@@ -308,7 +308,7 @@ const Signup = (props) => {
             tfnErr: "",
             passwordErr: "",
             cnfpasswordErr: "",
-            imgErr: "",
+            // imgErr: "",
           }
     );
 

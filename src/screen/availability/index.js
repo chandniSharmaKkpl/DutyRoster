@@ -265,6 +265,30 @@ const Availability = (props) => {
     navigation.navigate(appConstant.ROASTER);
   };
 
+  const nextWeekData = React.useCallback(() => {
+    Alert.alert(
+      alertMsgConstant.WARNING,
+      alertMsgConstant.REPLACE_YOUR_NEXT_WEEK_DATA,
+      [
+        {
+          text: alertMsgConstant.CANCEL,
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+        {
+          text: alertMsgConstant.OK,
+          onPress: () => {
+            const startNextWeek = moment(endDay)
+              .add(1, "weeks")
+              .startOf("isoWeek");
+            setSelectedWeek(startNextWeek, true);
+          },
+        },
+      ]
+    );
+    return () => {};
+  });
+
   const onNextWeekCopyData = () => {
     if (!isSelectedAvailabilityDataSaved) {
       Alert.alert(
@@ -279,17 +303,13 @@ const Availability = (props) => {
           {
             text: alertMsgConstant.OK,
             onPress: () => {
-              const startNextWeek = moment(endDay)
-                .add(1, "weeks")
-                .startOf("isoWeek");
-              setSelectedWeek(startNextWeek, true);
+              nextWeekData();
             },
           },
         ]
       );
     } else {
-      const startNextWeek = moment(endDay).add(1, "weeks").startOf("isoWeek");
-      setSelectedWeek(startNextWeek, true);
+      nextWeekData();
     }
   };
 
