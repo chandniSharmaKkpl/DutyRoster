@@ -61,6 +61,15 @@ function getAmPmFromDate(date) {
 function changeDateFormat(_date, oldFormat, newFormat) {
   return moment(_date, oldFormat).format(newFormat);
 }
+function inBetweenTime(_time, start, end) {
+  console.log({ _time, start, end });
+  return (
+    moment(start, "h:mm A").format("x") <=
+      moment(_time, ["h:mm A"]).format("x") &&
+    moment(_time, "h:mm A").format("x") <= moment(end, "h:mm A").format("x")
+  );
+}
+
 export function checkObject(arr) {
   // check if arr is array
   const result = Array.isArray(arr);
@@ -152,4 +161,5 @@ export {
   getDateFromTimeStamp,
   getAmPmFromDate,
   changeDateFormat,
+  inBetweenTime,
 };

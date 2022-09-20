@@ -64,7 +64,12 @@ export const removeAvailability = (params) => ({
   type: actionConstant.ACTION_REMOVE_AVAILABILITY,
   payload: params,
 });
-
+export const setDataItemOfAvailabilityRequest = (params) => {
+  return {
+    type: actionConstant.ACTION_SET_DATA_ITEM_AVAILABILITY_REQUEST,
+    payload: params,
+  };
+};
 export const setDataItemOfAvailability = ({ type, data, id }) => {
   const params = {
     type,

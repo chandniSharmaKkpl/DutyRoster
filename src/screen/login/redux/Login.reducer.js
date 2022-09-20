@@ -36,10 +36,10 @@ export default (state = initialState, { type, payload }) => {
     case actionConstant.ACTION_GET_ACCESS_TOKEN_FAILURE: {
       return {
         ...state,
-        accessToken: payload,
+        accessToken: null,
         isRequestingLoader: false,
         isAuth: false,
-        error: {},
+        error: payload,
       };
     }
     case actionConstant.ACTION_SET_USER_PROFILE_HEADER: {

@@ -9,6 +9,7 @@ import {
 import ModelBox from "@/components/PopUpmodel";
 import { API_DATE_FORMAT, changeDateFormat, USER_DATE_FORMAT } from "@/utils";
 
+
 const Shift = (props) => {
   const {
     availabilityData,
@@ -289,4 +290,7 @@ export const styles = {
     minHeight: hp('5%'),
   },
 };
+
+
 export default Shift;
+

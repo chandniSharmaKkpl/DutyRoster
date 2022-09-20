@@ -55,6 +55,7 @@ const CommonHeader = (props) => {
       justifyContent: "flex-start",
       flex: 1,
     },
+
     buttonStyle: {
       height: hp("4%"),
       width: wp("20%"),
@@ -101,6 +102,13 @@ const CommonHeader = (props) => {
       width: 40, 
       borderRadius: 20,
     },
+    backArrorwContainer : {
+      height: 32,
+      width: 32,
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
   });
 
   const onEditProfile = () => {
@@ -126,7 +134,7 @@ const CommonHeader = (props) => {
           screenName === appConstant.EDIT_PROFILE ||
           screenName === appConstant.QR_CODE ||
           screenName === appConstant.PROFILE_SETTINGS ? (
-            <Pressable onPress={onGoBack}>
+            <Pressable onPress={onGoBack} style={styles.backArrorwContainer}>
               <Image source={imageConstant.IMAGE_BACK_ARROW_ICON} />
             </Pressable>
           ) : null}

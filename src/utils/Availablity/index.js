@@ -7,6 +7,7 @@ import {
   getAmPmFromDate,
   getCurrentWeek,
   getDateFromTimeStamp,
+  inBetweenTime,
   isArrayEmpty,
   renameKey,
 } from "@/utils";
@@ -318,6 +319,7 @@ const mergeData = ({ existData, newData }) => {
   }
   // console.log("merge", JSON.stringify(existData, null, 2));
 };
+
 export const appendAvailabilityData = ({
   copiedData,
   existData,
@@ -345,5 +347,20 @@ export const appendAvailabilityData = ({
   } catch (error) {
     console.log("error", error);
     return null;
+  }
+};
+
+export const getLastDateOfCurrentWeek = () => {
+  return moment(new Date()).clone().endOf("isoWeek").add(1, "days").toDate();
+};
+
+export const isInOutTimeValidForAvalability = ({ availabilityData, time }) => {
+  if (!isArrayEmpty(availabilityData)) {
+    availabilityData.forEach((data) => {
+      if (data.inTime && data.outTime)
+        if (inBetweenTime(time, data.inTime, data.outTime)) {
+          throw "Time is Not valid";
+        }
+    });
   }
 };

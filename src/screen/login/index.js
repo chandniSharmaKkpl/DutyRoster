@@ -53,22 +53,24 @@ const Login = (props) => {
   const [DeviceName, setDeviceName] = useState();
   const [AppVersion, setAppVersion] = useState();
 
-  useEffect(() => {
-    DeviceInfo.getDeviceToken().then((deviceToken) => {
-      setDeviceToken(deviceToken);
-    });
+  useFocusEffect(
+    React.useCallback(() => {
+      DeviceInfo.getDeviceToken().then((deviceToken) => {
+        setDeviceToken(deviceToken);
+      });
 
-    DeviceInfo.getDeviceName().then((device_name) => {
-      setDeviceName(device_name);
-    });
+      DeviceInfo.getDeviceName().then((device_name) => {
+        setDeviceName(device_name);
+      });
 
-    DeviceInfo.syncUniqueId().then((uniqueId) => {
-      setDeviceUuid(uniqueId);
-    });
+      DeviceInfo.syncUniqueId().then((uniqueId) => {
+        setDeviceUuid(uniqueId);
+      });
 
-    let version = DeviceInfo.getVersion();
-    setAppVersion(version);
-  }, []);
+      let version = DeviceInfo.getVersion();
+      setAppVersion(version);
+    }, [])
+  );
 
   const onChangeEmail = (text) => {
     setEmail(text);
@@ -257,7 +259,7 @@ const Login = (props) => {
           </View>
           <View style={styles.versionContainer}>
             <AppText
-              text={" App Vesrion 2.7"}
+              text={" App Vesrion 2.9"}
               style={{ ...styles.appVersion }}
             />
           </View>

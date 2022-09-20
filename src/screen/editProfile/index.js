@@ -125,6 +125,18 @@ const EditProfile = (props) => {
           employee_id: responsedata.user.id,
           navigation: navigation,
         });
+        setError({
+          titleErr: "",
+          // paymentErr: "",
+          nameErr: "",
+          emailErr: "",
+          phoneErr: "",
+          dobErr: "",
+          addressErr: "",
+          tfnErr: "",
+          passwordErr: "",
+          cnfpasswordErr: "",
+        });
       })();
     }, [])
   );

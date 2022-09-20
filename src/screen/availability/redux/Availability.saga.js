@@ -12,6 +12,8 @@ import {
   addAvailibilityDataParams,
   appendAvailabilityData,
   createAvailibilityParams,
+  isInOutTimeValidForAvalability,
+  SET_DATA_TYPE,
 } from "@/utils/Availablity";
 import {
   selectedAvailabilityData,
@@ -33,7 +35,7 @@ export function* workerGetAvailabilityDateResponse(action) {
         copiedData: availabilityData,
         existData: response.data,
         nextWeekDates: params,
-        haveToMerge: true,
+        haveToMerge: false,
       });
     }
     if (!response.success) {
@@ -139,10 +141,46 @@ export function* workerAddAvailabilityData(action) {
   }
 }
 
+export function* workerSetDataForAvailability(action) {
+  try {
+    const { payload } = action;
+    console.log(payload);
+    const { type, data, id } = payload;
+    if (
+      (type === SET_DATA_TYPE.inTime || type === SET_DATA_TYPE.outTime) &&
+      data
+    ) {
+      const { availabilityData } = yield select(selectedAvailabilityData);
+      isInOutTimeValidForAvalability({
+        availabilityData,
+        time: data,
+      });
+    }
+    yield put({
+      type: actionConstant.ACTION_SET_DATA_ITEM_AVAILABILITY,
+      payload: payload,
+    });
+  } catch (error) {
+    // alert(error);
+    toast.show(error, {
+      type: alertMsgConstant.TOAST_DANGER,
+    });
+
+    console.log("ERROR => workerSetDataForAvailability =>", error);
+  }
+}
+
 export function* watchGetAvailabilityDate() {
   yield takeLatest(
     actionConstant.ACTION_GET_AVAILABILITY_REQUEST,
     workerGetAvailabilityDateResponse
+  );
+}
+
+export function* watchSetDataForAvailability() {
+  yield takeLatest(
+    actionConstant.ACTION_SET_DATA_ITEM_AVAILABILITY_REQUEST,
+    workerSetDataForAvailability
   );
 }
 

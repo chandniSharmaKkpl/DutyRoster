@@ -47,6 +47,7 @@ import {
   requestToAddAvailability,
   updateDataItemOfAvailability,
   deleteDataItemOfAvailability,
+  setDataItemOfAvailabilityRequest,
 } from "../availability/redux/Availability.action";
 import { dayDateReturn } from "@/common/timeFormate";
 import Shift from "./Shift";
@@ -54,6 +55,7 @@ import AvailabilityItem from "@/screen/availability/AvailabilityItem";
 import Loader from "@/components/Loader";
 import ModelBox from "@/components/PopUpmodel";
 import { useEffect } from "react";
+import { getLastDateOfCurrentWeek } from "@/utils/Availablity";
 
 const Availability = (props) => {
   const navigation = useNavigation();
@@ -81,6 +83,7 @@ const Availability = (props) => {
     requestToSaveAvailabilityAction,
     resetAvailabilityDataAction,
     requestToAddAvailabilityAction,
+    setDataItemOfAvailabilityRequestAction
   } = props;
 
   console.log("startDay --->", startDay);
@@ -101,19 +104,6 @@ const Availability = (props) => {
     (text) => setUnavailablityDate(text),
     []
   );
-
-  useEffect(() => {
-    // var now = moment(new Date()); //todays date
-    // var end = moment("2015-12-1"); // another date
-    // var duration = moment.duration(now.diff(end));
-    // var days = duration.asDays();
-
-    const startTime = moment('02-01-2021 01:01:01', 'DD-MM-YYYY hh:mm:ss');
-    const endTime = moment('02-01-2021 5:52:53', 'DD-MM-YYYY hh:mm:ss');
-  
-    const hoursDiff = endTime.diff(startTime, 'hours');
-    console.log('Hours::::::::::::', hoursDiff);
-  }, []);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -396,7 +386,7 @@ const Availability = (props) => {
                   addNewAvailabilityAction={addNewAvailabilityAction}
                   removeAvailabilityAction={removeAvailabilityAction}
                   setDataItemofAvailabilityAction={
-                    setDataItemofAvailabilityAction
+                    setDataItemOfAvailabilityRequestAction
                   }
                 />
               </>
@@ -407,6 +397,7 @@ const Availability = (props) => {
               style={styles.btnBlack}
               onPress={() => {
                 requestToAddAvailabilityAction();
+                
               }}
             >
               <AppText style={styles.saveButton} text={"Add"} />
@@ -477,6 +468,7 @@ const Availability = (props) => {
               markedDates={markedDates}
               onDayPress={getSelectedDayEvents}
               initialDate={startDay}
+              minDate={getLastDateOfCurrentWeek()}
             />
           </View>
         )}
@@ -522,6 +514,9 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(requestToGetAvailability(params)),
     requestToSaveAvailabilityAction: (params) =>
       dispatch(requestToSaveAvailability(params)),
+    
+      setDataItemOfAvailabilityRequestAction: (params) => 
+        dispatch(setDataItemOfAvailabilityRequest(params)),
 
     // setCityAndTimeArray
     setCityAndTimeArrayAction: (params) =>

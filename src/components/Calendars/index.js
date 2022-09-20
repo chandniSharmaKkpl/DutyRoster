@@ -13,6 +13,7 @@ const Calendars = (props) => {
   return (
     <>
       <Calendar
+        {...props}
         style={{
           borderRadius: 8,
         }}

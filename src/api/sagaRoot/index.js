@@ -11,6 +11,7 @@ import {
   watchGetAvailabilityDate,
   watchSaveAvailabilityDate,
   watchAddAvailabilityData,
+  watchSetDataForAvailability
 } from "@/screen/availability/redux/Availability.saga";
 import { watchGetTimeSheetDate } from "@/screen/timeSheet/redux/TimeSheet.saga";
 
@@ -27,6 +28,7 @@ export default function* sagaRoot() {
     fork(watchGetAvailabilityDate),
     fork(watchSaveAvailabilityDate),
     fork(watchAddAvailabilityData),
+    fork(watchSetDataForAvailability),
     fork(watchGetTimeSheetDate),
   ]);
 }

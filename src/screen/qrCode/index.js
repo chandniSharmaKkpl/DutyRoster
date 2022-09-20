@@ -36,6 +36,7 @@ import {
 } from "./redux/QRCode.action";
 import RNLocation from "react-native-location";
 import { checkMultiplePermision, requestPermission } from "@/libs/Permission";
+import Geolocation from "react-native-geolocation-service";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
@@ -62,6 +63,8 @@ const QRCodeScreen = (props) => {
 
   const onSuccess = async (e) => {
     let locations;
+    let lat = null;
+    let lon = null;
     if (!permission) {
       let newRequestpermission = await RNLocation.requestPermission({
         ios: "whenInUse",
@@ -83,13 +86,18 @@ const QRCodeScreen = (props) => {
       }
       locations = await RNLocation.getLatestLocation({ timeout: 100 });
       try {
-        let lat = locations.latitude;
-        let lon = locations.longitude;
-        // console.log("Geolocation.lat && Geolocation.lon", lat, lon);
-        setQRLocationAction({
-          latitude: lat,
-          longitude: lon,
-        });
+        if (locations) {
+          lat = locations.latitude;
+          lon = locations.longitude;
+          // console.log("Geolocation.lat && Geolocation.lon", lat, lon);
+          setQRLocationAction({
+            latitude: lat,
+            longitude: lon,
+          });
+        } else {
+          console.log("Lat & Lon not valid!");
+          return;
+        }
       } catch (error) {
         console.log("error at getlatestLocation", error);
       }
@@ -98,10 +106,9 @@ const QRCodeScreen = (props) => {
 
       locations = await RNLocation.getLatestLocation({ timeout: 100 });
       console.log(locations);
-
       try {
-        let lat = locations.latitude;
-        let lon = locations.longitude;
+        lat = locations.latitude;
+        lon = locations.longitude;
         console.log("Geolocation.lat && Geolocation.lon", lat, lon);
         setQRLocationAction({
           latitude: lat,
@@ -114,7 +121,31 @@ const QRCodeScreen = (props) => {
     Linking.openURL(e.data).catch((err) =>
       console.log("An error occured", err)
     );
+    if (!lat || !lon) {
+      Geolocation.getCurrentPosition(
+        (position) => {
+          console.log("Geolocation.getCurrentPosition", position);
+          const { coords } = position;
+          const { latitude, longitude } = coords;
+          lat = latitude;
+          lon = longitude;
 
+          setQRLocationAction({
+            latitude: lat,
+            longitude: lon,
+          });
+        },
+        (error) => {
+          // See error code charts below.
+          console.log(
+            "Geolocation.getCurrentPosition",
+            error.code,
+            error.message
+          );
+        },
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+      );
+    }
     try {
       const res = JSON.parse(e.data);
       console.log("QR code =>", res);
@@ -128,8 +159,8 @@ const QRCodeScreen = (props) => {
           location_id: location_id,
           signout: signIn,
           date: date,
-          latitude: isLatitude,
-          longitude: isLongitude,
+          latitude: lat ? lat : location.latitude,
+          longitude: lon ? lon : location.longitude,
           timesheet_id: timesheet_id,
         });
       } else {
@@ -137,8 +168,8 @@ const QRCodeScreen = (props) => {
           location_id: location_id,
           signin: signIn,
           date: date,
-          latitude: location.latitude,
-          longitude: location.longitude,
+          latitude: lat ? lat : location.latitude,
+          longitude: lon ? lon : location.longitude,
         });
       }
     } catch (error) {
@@ -299,33 +330,32 @@ const QRCodeScreen = (props) => {
       appState.current = nextAppState;
       console.log("AppState", appState.current);
     });
-    
-    const unsubscribe =  RNLocation.requestPermission({
-       ios: "whenInUse",
-       android: {
-         detail: "fine",
-         rationale: {
-           title: "Location permission",
-           message: "We use your location to demo the library",
-           buttonPositive: "OK",
-           buttonNegative: "Cancel",
-         },
-       },
-     }).then((granted) => {
-       // alert(granted);
-       if (granted) {
-         startUpdatingLocation();
-       } else {
-         toast.show("Please allow location from settings", {
-           type: alertMsgConstant.TOAST_DANGER,
-         });
-         
-       }
-     });
+
+    const unsubscribe = RNLocation.requestPermission({
+      ios: "whenInUse",
+      android: {
+        detail: "fine",
+        rationale: {
+          title: "Location permission",
+          message: "We use your location to demo the library",
+          buttonPositive: "OK",
+          buttonNegative: "Cancel",
+        },
+      },
+    }).then((granted) => {
+      // alert(granted);
+      if (granted) {
+        startUpdatingLocation();
+      } else {
+        toast.show("Please allow location from settings", {
+          type: alertMsgConstant.TOAST_DANGER,
+        });
+      }
+    });
 
     return () => {
       subscription.remove();
-      unsubscribe();
+      // unsubscribe();
     };
   }, []);
   const startUpdatingLocation = () => {
