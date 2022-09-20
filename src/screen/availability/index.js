@@ -53,6 +53,7 @@ import Shift from "./Shift";
 import AvailabilityItem from "@/screen/availability/AvailabilityItem";
 import Loader from "@/components/Loader";
 import ModelBox from "@/components/PopUpmodel";
+import { useEffect } from "react";
 
 const Availability = (props) => {
   const navigation = useNavigation();
@@ -100,6 +101,19 @@ const Availability = (props) => {
     (text) => setUnavailablityDate(text),
     []
   );
+
+  useEffect(() => {
+    // var now = moment(new Date()); //todays date
+    // var end = moment("2015-12-1"); // another date
+    // var duration = moment.duration(now.diff(end));
+    // var days = duration.asDays();
+
+    const startTime = moment('02-01-2021 01:01:01', 'DD-MM-YYYY hh:mm:ss');
+    const endTime = moment('02-01-2021 5:52:53', 'DD-MM-YYYY hh:mm:ss');
+  
+    const hoursDiff = endTime.diff(startTime, 'hours');
+    console.log('Hours::::::::::::', hoursDiff);
+  }, []);
 
   useFocusEffect(
     React.useCallback(() => {

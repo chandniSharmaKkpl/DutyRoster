@@ -12,6 +12,8 @@
         android:name=".MainApplication"
         android:allowBackup="false"
         android:label="@string/app_name"
+        android:icon="@mipmap/app_icon_dodee"
+        android:roundIcon="@mipmap/app_icon_dodee_round"
         android:theme="@style/AppTheme">
         <activity
             android:name=".SplashActivity"
