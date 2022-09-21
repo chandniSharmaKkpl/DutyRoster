@@ -38,10 +38,10 @@ const Login = (props) => {
   });
   // console.log('state.LoginReducer',props.LoginReducer);
   const [email, setEmail] = useState(
-    process.env.NODE_ENV !== "production" ? "testemail@yopmail.com" : ""
+    process.env.NODE_ENV !== "production" ? "mayurtest@yopmail.com" : ""
   );
   const [password, setPassword] = useState(
-    process.env.NODE_ENV !== "production" ? "Letmein12@" : ""
+    process.env.NODE_ENV !== "production" ? "Mayur12@" : ""
   );
   const [isClickEye, setIsClickEye] = useState(false);
   const loginResponse = useSelector((state) => state.LoginReducer);
@@ -259,7 +259,7 @@ const Login = (props) => {
           </View>
           <View style={styles.versionContainer}>
             <AppText
-              text={" App Vesrion 2.9"}
+              text={" App Vesrion 2.10"}
               style={{ ...styles.appVersion }}
             />
           </View>

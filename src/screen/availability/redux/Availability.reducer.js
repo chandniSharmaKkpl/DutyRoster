@@ -138,29 +138,6 @@ export default (state = initialState, { type, payload }) => {
       };
     }
 
-    case actionConstant.ACTION_GET_ROASTER_DATE_REQUEST: {
-      return {
-        ...state,
-        isRequesting: true,
-        error: {},
-      };
-    }
-    case actionConstant.ACTION_GET_ROASTER_DATE_SUCCESS: {
-      return {
-        ...state,
-        isRequesting: false,
-        data: payload.data,
-        error: {},
-      };
-    }
-    case actionConstant.ACTION_GET_ROASTER_DATE_FAILURE: {
-      return {
-        ...state,
-        isRequesting: false,
-        data: payload,
-        error: {},
-      };
-    }
     case actionConstant.ACTION_SET_MARKED_DATES: {
       // const newAvailabilitySelectedDate = !isArrayEmpty(
       //   state.selected.availabilitySelectedDate

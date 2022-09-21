@@ -39,6 +39,8 @@ export default (state = initialState, { type, payload }) => {
         ...state,
         isRequesting: false,
         data: {},
+        cardData: null,
+
         error: payload,
       };
     }

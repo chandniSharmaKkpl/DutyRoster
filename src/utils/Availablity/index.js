@@ -351,8 +351,9 @@ export const appendAvailabilityData = ({
 };
 
 export const getLastDateOfCurrentWeek = () => {
-  return moment(new Date()).clone().endOf("isoWeek").add(1, "days").toDate();
+  return moment(new Date()).clone().startOf("isoWeek").toDate();
 };
+
 
 export const isInOutTimeValidForAvalability = ({ availabilityData, time }) => {
   if (!isArrayEmpty(availabilityData)) {

@@ -8,23 +8,26 @@ export function* workerGetRoasterDateResponse(action) {
       RoasterDateRangeCall,
       action.payload
     );
-    // console.log('roasterDateRangeResponse',JSON.stringify(roasterDateRangeResponse, null,4));
+    console.log(
+      "roasterDateRangeResponse",
+      JSON.stringify(roasterDateRangeResponse, null, 4)
+    );
     yield put({
       type: actionConstant.ACTION_GET_ROASTER_DATE_SUCCESS,
       payload: roasterDateRangeResponse?.data,
     });
   } catch (error) {
-    console.log("SAGA error",error.status);
+    console.log("SAGA error", error.status);
     yield put({
       type: actionConstant.ACTION_GET_ROASTER_DATE_FAILURE,
       payload: error,
     });
   }
 }
- 
+
 export function* watchGetRoasterDate() {
-    yield takeLatest(
-        actionConstant.ACTION_GET_ROASTER_DATE_REQUEST,
-        workerGetRoasterDateResponse
-    )
+  yield takeLatest(
+    actionConstant.ACTION_GET_ROASTER_DATE_REQUEST,
+    workerGetRoasterDateResponse
+  );
 }

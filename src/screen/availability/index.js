@@ -468,7 +468,7 @@ const Availability = (props) => {
               markedDates={markedDates}
               onDayPress={getSelectedDayEvents}
               initialDate={startDay}
-              minDate={getLastDateOfCurrentWeek()}
+              // minDate={getLastDateOfCurrentWeek()}
             />
           </View>
         )}
