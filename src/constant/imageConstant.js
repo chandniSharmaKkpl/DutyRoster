@@ -22,4 +22,5 @@ export default {
   IMAGE_EDIT_ICON: require('../assets/images/Unavailablity/edit.png'),
   IMAGE_TRASH_ICON: require('../assets/images/Unavailablity/trash.png'),
   IMAGE_CLOSE_ICON: require('../assets/images/Unavailablity/close.png'),
+  IMAGE_SPLASH_SCREEN: require('../assets/images/SplashScreen/splashscreen.png')
 };

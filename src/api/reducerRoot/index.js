@@ -16,6 +16,7 @@ import ProfileReducer from "@/screen/editProfile/redux/Profile.reducer";
 import RosterReducer from "@/screen/roster/redux/Roster.reducer";
 import AvailabilityReducer from "@/screen/availability/redux/Availability.reducer";
 import TimeSheetReducer from "@/screen/timeSheet/redux/TimeSheet.reducer";
+import SplashScreenReducer from "@/screen/splashScreen/redux/SplashScreen.reducer";
 
 const encryptor = encryptTransform({
   secretKey: "dodee_app",
@@ -38,7 +39,8 @@ const ReducerRoot = combineReducers({
   ProfileReducer,
   RosterReducer,
   AvailabilityReducer,
-  TimeSheetReducer
+  TimeSheetReducer,
+  SplashScreenReducer
 });
 
 export default persistReducer(persistConfig, ReducerRoot);

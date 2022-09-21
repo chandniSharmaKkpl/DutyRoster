@@ -26,6 +26,7 @@ import EditProfile from "@/screen/editProfile";
 import Availability from "@/screen/availability";
 import ProfileSetting from "@/screen/profileSettings";
 import Calendars from "@/components/Calendars";
+import SplashScreen from "@/screen/splashScreen";
 
 export const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -46,8 +47,12 @@ const ApplicationNavigator = (props) => {
         <StatusBar backgroundColor={appColor.RED} />
         <Stack.Navigator
           screenOptions={{ headerShown: false }}
-          initialRouteName={appConstant.LOGIN}
+          initialRouteName={appConstant.SPLASH_SCREEN}
         >
+          <Stack.Screen
+            name={appConstant.SPLASH_SCREEN}
+            component={SplashScreen}
+          />
           <Stack.Screen name={appConstant.HOME} component={HomeNavigation} />
           <Stack.Screen name={appConstant.LOGIN} component={Login} />
           <Stack.Screen name={appConstant.SIGNUP} component={Signup} />
@@ -59,10 +64,8 @@ const ApplicationNavigator = (props) => {
             name={appConstant.RESER_PWD}
             component={ResetPassword}
           />
-         
 
           <Stack.Screen name={appConstant.CALENDAR} component={Calendars} />
-         
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaView>

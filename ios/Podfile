@@ -29,6 +29,8 @@ target 'MyApp' do
 
 
 
+  pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
+
   target 'MyAppTests' do
     inherit! :complete
     # Pods for testing

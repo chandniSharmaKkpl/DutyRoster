@@ -4,6 +4,7 @@ import { actionConstant, appConstant , alertMsgConstant } from "@/constant";
 import localDb from "@/database/localDb";
 import { takeLatest, take, call, put, select, all } from "redux-saga/effects";
 import { SignupCall } from "./Signup.api";
+
 export function* workerSingup(action) {
   try {
     const signupResponse = yield call(SignupCall, action.payload);

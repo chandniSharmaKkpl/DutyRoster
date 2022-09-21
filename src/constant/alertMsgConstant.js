@@ -46,11 +46,13 @@ export default {
   AVAILABILITY_ALERT_MSG:
     "If you will not save your current selection data then you will lose these changes",
   PLEASE_SELECT_IN_TIME: "Please select IN Time",
+  PLEASE_LOGIN_AGAIN: 'Please Logout and Login again!',
   MINIMUM_3_HOURS: "Please enter minimum 3 hours",
   CAMERA_PERMISSION_ALERT:
     "You need to give permission for accessing camera otherwise you can't scan it.",
   LOCATION_PERMISSION_ALERT:
     "You need to give permission for accessing location otherwise you can't scan it.",
+    YOU_CAN_NOT_ADD_AVAILABILITY : "You can't add availability for your current week and past weeks",
   //** Toast types **/
   TOAST_SUCCESS: "success",
   TOAST_NORMAL: "normal",

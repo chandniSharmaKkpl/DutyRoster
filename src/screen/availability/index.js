@@ -23,6 +23,7 @@ import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 import { Images } from "@/constant/svgImgConst";
 import Calendars from "@/components/Calendars";
 import {
+  dateCheckForCurrentWeek,
   enumerateDaysBetweenDates,
   getCurrentWeek,
   getDatefromFullDate,
@@ -83,10 +84,8 @@ const Availability = (props) => {
     requestToSaveAvailabilityAction,
     resetAvailabilityDataAction,
     requestToAddAvailabilityAction,
-    setDataItemOfAvailabilityRequestAction
+    setDataItemOfAvailabilityRequestAction,
   } = props;
-
-  console.log("startDay --->", startDay);
 
   const [isCalendarShow, setIsCalendarShow] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
@@ -324,6 +323,13 @@ const Availability = (props) => {
       </>
     );
   }
+
+  const onloadeddata = () => {
+    if (dateCheckForCurrentWeek(new Date(), startDay)) {
+      requestToAddAvailabilityAction();
+    }
+  };
+
   return (
     <>
       <CommonHeader screenName={route?.name} onGoBack={onGoBack} />
@@ -396,8 +402,10 @@ const Availability = (props) => {
             <Pressable
               style={styles.btnBlack}
               onPress={() => {
-                requestToAddAvailabilityAction();
-                
+                // onloadeddata();
+                if (dateCheckForCurrentWeek(new Date(), startDay)) {
+                  requestToAddAvailabilityAction();
+                }
               }}
             >
               <AppText style={styles.saveButton} text={"Add"} />
@@ -429,7 +437,9 @@ const Availability = (props) => {
               <TouchableOpacity
                 style={styles.btnSave}
                 onPress={() => {
-                  requestToSaveAvailabilityAction();
+                  if (dateCheckForCurrentWeek(new Date(), startDay)) {
+                    requestToSaveAvailabilityAction();
+                  }
                 }}
               >
                 <AppText style={styles.saveButton} text={"Save"} />
@@ -438,7 +448,11 @@ const Availability = (props) => {
             {isSelectedAvailabilityDataSaved && (
               <TouchableOpacity
                 style={styles.btnCopy}
-                onPress={onNextWeekCopyData}
+                onPress={() => {
+                  if (dateCheckForCurrentWeek(new Date(), startDay)) {
+                    onNextWeekCopyData()
+                  }
+                }}
               >
                 <AppText style={styles.saveButton} text={"Copy"} />
               </TouchableOpacity>
@@ -514,9 +528,9 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(requestToGetAvailability(params)),
     requestToSaveAvailabilityAction: (params) =>
       dispatch(requestToSaveAvailability(params)),
-    
-      setDataItemOfAvailabilityRequestAction: (params) => 
-        dispatch(setDataItemOfAvailabilityRequest(params)),
+
+    setDataItemOfAvailabilityRequestAction: (params) =>
+      dispatch(setDataItemOfAvailabilityRequest(params)),
 
     // setCityAndTimeArray
     setCityAndTimeArrayAction: (params) =>

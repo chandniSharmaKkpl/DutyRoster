@@ -10,6 +10,6 @@ export const requestToGetRoasterDateRange = (params) => ({
 })
 
 export const setMarkeDates = (params) => ({
-    type : actionConstant.ACTION_SET_MARKED_DATES,
+    type : actionConstant.ACTION_SET_MARKED_DATES_ROASTER,
     payload : params
 })

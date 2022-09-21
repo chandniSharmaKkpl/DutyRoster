@@ -15,6 +15,7 @@ const config1 = {
   },
 };
 
+export const init = (params) => client.post(apiConstant.INIT, params, config)
 export const login = (params) => client.post(apiConstant.LOGIN, params, config);
 // export const singup = (params) => client.post(apiConstant.SIGNUP, params, config);
 export const forgotPassword = (params) =>

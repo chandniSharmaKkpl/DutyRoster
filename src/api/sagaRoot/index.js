@@ -14,6 +14,7 @@ import {
   watchSetDataForAvailability
 } from "@/screen/availability/redux/Availability.saga";
 import { watchGetTimeSheetDate } from "@/screen/timeSheet/redux/TimeSheet.saga";
+import { watchInit } from "@/screen/splashScreen/redux/SplashScreen.saga";
 
 export default function* sagaRoot() {
   yield all([
@@ -30,5 +31,6 @@ export default function* sagaRoot() {
     fork(watchAddAvailabilityData),
     fork(watchSetDataForAvailability),
     fork(watchGetTimeSheetDate),
+    fork(watchInit),
   ]);
 }

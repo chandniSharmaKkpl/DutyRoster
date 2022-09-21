@@ -1,5 +1,6 @@
 import moment from "moment";
 import _ from "lodash";
+import { alertMsgConstant } from "@/constant";
 const enumerateDaysBetweenDates = function (_startDate, _endDate) {
   var startDate = moment(_startDate);
   var endDate = moment(_endDate);
@@ -16,11 +17,8 @@ const enumerateDaysBetweenDates = function (_startDate, _endDate) {
 
 function getCurrentWeek(date) {
   var currentDate = moment(date);
-  console.log("date", date);
   var weekStart = currentDate.clone().startOf("isoWeek").toDate();
-  console.log("weekStart", weekStart);
   var weekEnd = currentDate.clone().endOf("isoWeek").toDate();
-  console.log("weekEnd", weekEnd);
   var days = [];
   // days.push(moment(weekStart).format("YYYY-MM-DD"));
 
@@ -33,6 +31,21 @@ function getCurrentWeek(date) {
     weekEnd: weekEnd,
   };
 }
+
+function dateCheckForCurrentWeek(date, startDay) {
+  var currentDate = moment(date);
+  var weekEnd = currentDate.clone().endOf("isoWeek").toDate();
+
+  if (weekEnd <= startDay) {
+    return true;
+  } else {
+    toast.show(alertMsgConstant.YOU_CAN_NOT_ADD_AVAILABILITY, {
+      type: alertMsgConstant.TOAST_DANGER,
+    });
+    return false;
+  }
+}
+
 function getDayfromDate(date) {
   return moment(date).format("ddd");
 }
@@ -62,7 +75,6 @@ function changeDateFormat(_date, oldFormat, newFormat) {
   return moment(_date, oldFormat).format(newFormat);
 }
 function inBetweenTime(_time, start, end) {
-  console.log({ _time, start, end });
   return (
     moment(start, "h:mm A").format("x") <=
       moment(_time, ["h:mm A"]).format("x") &&
@@ -162,4 +174,5 @@ export {
   getAmPmFromDate,
   changeDateFormat,
   inBetweenTime,
+  dateCheckForCurrentWeek,
 };

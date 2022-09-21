@@ -1,10 +1,11 @@
 import { Config } from "@/config";
-import { appConstant } from "@/constant";
+import { alertMsgConstant, appConstant } from "@/constant";
 import localDb from "@/database/localDb";
-import { navigateAndSimpleReset, navigationRef } from "@/navigators/utils";
+import { navigate, navigateAndSimpleReset, navigationRef } from "@/navigators/utils";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StackActions } from "@react-navigation/native";
 import axios from "axios";
+import { Alert } from "react-native";
 
 // client.js api
 const baseURL = Config.API_URL;
@@ -20,6 +21,25 @@ client.interceptors.response.use(
       const res = response.data;
       if (res.error.login_fail) {
         alert("Please Logout and Login again!");
+        // Alert.alert(
+        //   alertMsgConstant.ALERT,
+        //   alertMsgConstant.PLEASE_LOGIN_AGAIN,
+        //   [
+        //     {
+        //       text: alertMsgConstant.CANCEL,
+        //       onPress: () => console.log("Cancel Pressed"),
+        //       style: "cancel",
+        //     },
+        //     {
+        //       text: alertMsgConstant.OK,
+        //       onPress: () => {
+        //         localDb.clearAll();
+        //         navigate(appConstant.LOGIN,'')
+        //         // navigationRef.dispatch(StackActions.replace(appConstant.LOGIN));
+        //       },
+        //     },
+        //   ]
+        // );
         // localDb.clearAll();
         // navigationRef.dispatch(StackActions.replace(appConstant.LOGIN));
       }
@@ -28,10 +48,10 @@ client.interceptors.response.use(
   },
   (error) => {
     if (error.response?.status === 401) {
-      if (isLocalStorageAvailable()) {
-        // localDb.clearAll();
-        // navigationRef.dispatch(StackActions.replace(appConstant.LOGIN));
-      }
+      // if (isLocalStorageAvailable()) {
+      // localDb.clearAll();
+      // navigationRef.dispatch(StackActions.replace(appConstant.LOGIN));
+      // }/
     }
 
     error.message = error.response

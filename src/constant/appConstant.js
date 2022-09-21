@@ -14,6 +14,7 @@ export default {
   PROFILE_SETTINGS: "Profile Settings",
   AVAILABILITY: "Availability",
   CALENDAR: "Calendar",
+  SPLASH_SCREEN: 'splashSceen',
 
 
   // Input Title name
