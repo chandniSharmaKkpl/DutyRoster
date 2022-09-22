@@ -46,14 +46,11 @@ import * as profileAction from "./redux/Profile.action";
 import { connect, useSelector } from "react-redux";
 import Loader from "@/components/Loader";
 import ProgressiveImage from "@/components/ProgressiveImage";
-import { convertDateFormate, USER_DATE_FORMAT } from "@/utils";
+import { USER_DATE_FORMAT } from "@/utils";
 
 const EditProfile = (props) => {
-  const {
-    requestToUpdateProfileAction,
-    requestToUpdateProfileInHeaderAction,
-    settings,
-  } = props;
+  const { requestToUpdateProfileAction, requestToUpdateProfileInHeaderAction } =
+    props;
   const navigation = useNavigation();
   const route = useRoute();
   const { user } = React.useContext(AuthContext);
@@ -77,7 +74,6 @@ const EditProfile = (props) => {
       "profileResponse.UpdateProfileReducer =>",
       JSON.stringify(profileResponse, null, 4)
     );
-    console.log("Setting =====>", settings);
   }, [profileResponse]);
 
   const [profilePath, setProfiilePath] = useState(null);
@@ -159,8 +155,6 @@ const EditProfile = (props) => {
     if (profileResponse?.ViewProfileReducer) {
       let profileInformation = profileResponse.ViewProfileReducer.data;
 
-      console.log("dob view profile ==================",JSON.stringify( profileInformation,null,4));
-
       setTitle(profileInformation?.title);
       setName(profileInformation?.name);
       setEmail(profileInformation?.email);
@@ -168,7 +162,7 @@ const EditProfile = (props) => {
       setTFN(profileInformation?.tfn_number);
       setAddress(profileInformation?.address);
       setDob(profileInformation?.dob);
-     
+      console.log("dob", profileInformation?.dob);
       setPayment(profileInformation?.payment_type);
       setImageSource(profileInformation?.image);
     }
@@ -213,10 +207,7 @@ const EditProfile = (props) => {
   };
 
   const handleConfirm = (date) => {
-    console.log("handleConfirm ->", date);
-    // setDob(convertDateFormate(date, settings));
     setDob(moment(date).format("DD-MM-YYYY"));
-
     // setDob(date)
     hideDatePicker();
   };
@@ -386,12 +377,12 @@ const EditProfile = (props) => {
       const data = {
         title: title,
         name: name,
-        // dob: moment(dob, "DD-MM-YYYY").format("YYYY-MM-DD"),
-        dob: dob,
+        dob: moment(dob, "DD-MM-YYYY").format("YYYY-MM-DD"),
         email,
         phone,
         address,
         tfn_number: tfn,
+
         employee_id: employee_id,
       };
       if (profilePath) {
@@ -539,10 +530,9 @@ const EditProfile = (props) => {
                 <TextInputCustom
                   viewName={appConstant.PROFILE}
                   label={"Dob"}
-                  value={dob}
-                  // value={
-                  //   dob && moment(dob, "DD-MM-YYYY").format(USER_DATE_FORMAT)
-                  // }
+                  value={
+                    dob && moment(dob, "DD-MM-YYYY").format(USER_DATE_FORMAT)
+                  }
                   onChangeText={onChangeDOB}
                   placeholder={"Enter Date of Birth"}
                   eyeIcon={require("../../assets/images/SignupScreen/calendar.png")}
@@ -651,10 +641,6 @@ const EditProfile = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  settings: state.LoginReducer.settings,
-});
-
 const mapDispatchToProps = (dispatch) => {
   return {
     requestToGetProfile: (params) =>
@@ -667,4 +653,4 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(profileAction.requestUpdateProfileHeader(params)),
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(EditProfile);
+export default connect(null, mapDispatchToProps)(EditProfile);

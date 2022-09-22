@@ -8,7 +8,6 @@ export const requestToViewProfile = (params) => {
 };
 
 export const requestToUpdateProfile = (params) => {
-  console.log("requestToUpdateProfile", params);
   return {
     type: actionConstant.ACTION_UPDATE_PROFILE_REQUEST,
     payload: params,
