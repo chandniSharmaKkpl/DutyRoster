@@ -20,28 +20,9 @@ client.interceptors.response.use(
       // console.log("client.interceptors.response", response.data);
       const res = response.data;
       if (res.error.login_fail) {
-        alert("Please Logout and Login again!");
-        // Alert.alert(
-        //   alertMsgConstant.ALERT,
-        //   alertMsgConstant.PLEASE_LOGIN_AGAIN,
-        //   [
-        //     {
-        //       text: alertMsgConstant.CANCEL,
-        //       onPress: () => console.log("Cancel Pressed"),
-        //       style: "cancel",
-        //     },
-        //     {
-        //       text: alertMsgConstant.OK,
-        //       onPress: () => {
-        //         localDb.clearAll();
-        //         navigate(appConstant.LOGIN,'')
-        //         // navigationRef.dispatch(StackActions.replace(appConstant.LOGIN));
-        //       },
-        //     },
-        //   ]
-        // );
-        // localDb.clearAll();
-        // navigationRef.dispatch(StackActions.replace(appConstant.LOGIN));
+       
+        localDb.clearAll();
+        navigationRef.dispatch(StackActions.replace(appConstant.LOGIN));
       }
     }
     return response;

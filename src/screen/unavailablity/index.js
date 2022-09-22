@@ -55,7 +55,7 @@ const Unavailablity = (props) => {
 
   const handleConfirm = (date) => {
     // console.warn("A date has been picked: ", date);
-    setUnavailablityDate(moment(date).format("YYYY-MM-DD"));
+    setUnavailablityDate(moment(date).format("DD/MM/YYYY"));
     hideDatePicker();
   };
 

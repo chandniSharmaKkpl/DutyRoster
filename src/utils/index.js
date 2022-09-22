@@ -1,6 +1,7 @@
 import moment from "moment";
 import _ from "lodash";
 import { alertMsgConstant } from "@/constant";
+import { element } from "prop-types";
 const enumerateDaysBetweenDates = function (_startDate, _endDate) {
   var startDate = moment(_startDate);
   var endDate = moment(_endDate);
@@ -8,7 +9,7 @@ const enumerateDaysBetweenDates = function (_startDate, _endDate) {
     dates = [];
 
   while (now.isSameOrBefore(endDate)) {
-    dates.push(now.format("YYYY-MM-DD"));
+    dates.push(now.format("DD/MM/YYYY"));
     now.add(1, "days");
   }
   return dates;
@@ -20,10 +21,10 @@ function getCurrentWeek(date) {
   var weekStart = currentDate.clone().startOf("isoWeek").toDate();
   var weekEnd = currentDate.clone().endOf("isoWeek").toDate();
   var days = [];
-  // days.push(moment(weekStart).format("YYYY-MM-DD"));
+  // days.push(moment(weekStart).format("DD/MM/YYYY"));
 
   for (let i = 0; i <= 6; i++) {
-    days.push(moment(weekStart).add(i, "d").format("YYYY-MM-DD"));
+    days.push(moment(weekStart).add(i, "d").format("DD/MM/YYYY"));
   }
   return {
     days,
@@ -47,16 +48,16 @@ function dateCheckForCurrentWeek(date, startDay) {
 }
 
 function getDayfromDate(date) {
-  return moment(date).format("ddd");
+  return moment(date,'DD/MM/YYYY').format("ddd");
 }
 function getDatefromFullDate(date) {
-  return moment(date).format("DD");
+  return moment(date,'DD/MM/YYYY').format("DD");
 }
 function getTimeStampfromDate(date) {
-  return moment(date).format("X");
+  return moment(date, 'DD/MM/YYYY').format("X");
 }
 function getDateFromTimeStamp(timestamp) {
-  return moment.unix(timestamp).format("YYYY-MM-DD");
+  return moment.unix(timestamp).format("DD/MM/YYYY");
 }
 function getTimeFromDateTime(dateTime) {
   return moment(dateTime).format("hh:mm");
@@ -158,8 +159,22 @@ export function renameKey(obj, old_key, new_key) {
     delete obj[old_key]; // delete old key
   }
 }
+
+export const convertDateFormate = (dateString, dateValueObj) => {
+  if (!dateValueObj) return null;
+  if (dateString) {
+    if (dateValueObj.key == "Format.Date") {
+      let formattedDate = moment(dateString).format(dateValueObj.value);
+      console.log('::::::::::: convertDateFormate ::::::::::', formattedDate);
+      return formattedDate;
+    }
+  }else{
+    return '';
+  }
+};
+
 export const USER_DATE_FORMAT = "DD/MM/YYYY";
-export const API_DATE_FORMAT = "YYYY-MM-DD";
+export const API_DATE_FORMAT = "DD/MM/YYYY";
 
 export {
   enumerateDaysBetweenDates,

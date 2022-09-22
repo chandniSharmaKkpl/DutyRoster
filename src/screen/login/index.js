@@ -94,15 +94,15 @@ const Login = (props) => {
       );
     };
   }, []);
-  useFocusEffect(
-    React.useCallback(() => {
-      if (accessToken) {
-        const resetAction = StackActions.replace(appConstant.HOME);
-        navigation.dispatch(resetAction);
-      }
-      return () => {};
-    }, [])
-  );
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     if (accessToken) {
+  //       const resetAction = StackActions.replace(appConstant.HOME);
+  //       navigation.dispatch(resetAction);
+  //     }
+  //     return () => {};
+  //   }, [])
+  // );
 
   function Validate(email, password) {
     let emailErr = "";

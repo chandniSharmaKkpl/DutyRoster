@@ -86,7 +86,7 @@ const Availability = (props) => {
     requestToAddAvailabilityAction,
     setDataItemOfAvailabilityRequestAction,
   } = props;
-
+console.log("selectedWeek", selectedWeek,arraySelectedDate );
   const [isCalendarShow, setIsCalendarShow] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
   const [isAlertShow, setIsAlertShow] = useState(false);
@@ -157,7 +157,7 @@ const Availability = (props) => {
 
   const handleConfirm = (date) => {
     // console.warn("A date has been picked: ", date);
-    setUnavailablityDate(moment(date).format("YYYY-MM-DD"));
+    setUnavailablityDate(moment(date).format("DD/MM/YYYY"));
     hideDatePicker();
   };
 
@@ -176,6 +176,7 @@ const Availability = (props) => {
     const { days: _dateRange, weekStart, weekEnd } = getCurrentWeek(date);
     const _selectedDates = [];
     _dateRange.map((item, index) => {
+      console.log("itemitemitemitemitemitem", item);
       _dateList[item] = {
         startingDay: index === 0 ? true : false,
         endingDay: index === _dateRange.length - 1 ? true : false,
@@ -193,8 +194,8 @@ const Availability = (props) => {
       _selectedDates.push(getTimeStampfromDate(item));
     });
 
-    const fromDate = moment(weekStart).format("YYYY-MM-DD");
-    const toDate = moment(weekEnd).format("YYYY-MM-DD");
+    const fromDate = moment(weekStart).format("DD/MM/YYYY");
+    const toDate = moment(weekEnd).format("DD/MM/YYYY");
     const params = {
       week_start: fromDate,
       week_end: toDate,

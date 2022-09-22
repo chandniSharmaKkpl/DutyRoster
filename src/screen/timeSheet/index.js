@@ -111,8 +111,8 @@ const TimeSheetScreen = (props) => {
       weekStart: weekStart,
       weekEnd: weekEnd,
     });
-    const fromDate = moment(weekStart).format("YYYY-MM-DD");
-    const toDate = moment(weekEnd).format("YYYY-MM-DD");
+    const fromDate = moment(weekStart).format("DD/MM/YYYY");
+    const toDate = moment(weekEnd).format("DD/MM/YYYY");
     const params = {
       from: fromDate,
       to: toDate,

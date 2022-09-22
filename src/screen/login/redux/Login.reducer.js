@@ -4,6 +4,7 @@ const initialState = {
   isRequestingLoader: false,
   accessToken: null,
   isAuth: false,
+  settings: null,
   user: {},
   error: {},
   districts: [],
@@ -15,6 +16,7 @@ export default (state = initialState, { type, payload }) => {
       return {
         ...state,
         accessToken: {},
+        settings: {},
         isRequestingLoader: true,
         isAuth: false,
         user: {},
@@ -28,6 +30,7 @@ export default (state = initialState, { type, payload }) => {
         accessToken: payload.data.token,
         user: payload.data.user,
         districts: payload.data.districts,
+        settings: payload.data.settings,
         isRequestingLoader: false,
         isAuth: true,
         error: {},
@@ -37,6 +40,7 @@ export default (state = initialState, { type, payload }) => {
       return {
         ...state,
         accessToken: null,
+        settings: null,
         isRequestingLoader: false,
         isAuth: false,
         error: payload,

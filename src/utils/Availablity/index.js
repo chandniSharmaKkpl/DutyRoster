@@ -54,8 +54,8 @@ export const createAvailibilityParams = ({
     // console.log("after availability", JSON.stringify(availability, null, 4));
 
     params.availability = availability;
-    params.week_start = moment(weekStart).format("YYYY-MM-DD");
-    params.week_end = moment(weekEnd).format("YYYY-MM-DD");
+    params.week_start = moment(weekStart).format("DD/MM/YYYY");
+    params.week_end = moment(weekEnd).format("DD/MM/YYYY");
     // console.log("createAvailibilityParams", JSON.stringify(params, null, 2));
     return params;
   } catch (error) {
@@ -118,8 +118,8 @@ export const createAvailibilityParams = ({ selected, weekStart, weekEnd }) => {
         // });
         throw "Not Data selected";
       }
-      params.week_start = moment(weekStart).format("YYYY-MM-DD");
-      params.week_end = moment(weekEnd).format("YYYY-MM-DD");
+      params.week_start = moment(weekStart).format("DD/MM/YYYY");
+      params.week_end = moment(weekEnd).format("DD/MM/YYYY");
       console.log("createAvailibilityParams", JSON.stringify(params, null, 2));
       return params;
     } else {
@@ -255,8 +255,8 @@ export const addAvailibilityDataParams = ({
         // });
         throw "Not Data selected";
       }
-      params.week_start = moment(weekStart).format("YYYY-MM-DD");
-      params.week_end = moment(weekEnd).format("YYYY-MM-DD");
+      params.week_start = moment(weekStart).format("DD/MM/YYYY");
+      params.week_end = moment(weekEnd).format("DD/MM/YYYY");
       console.log("createAvailibilityParams", JSON.stringify(params, null, 2));
       return params;
     } else {

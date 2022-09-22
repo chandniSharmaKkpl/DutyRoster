@@ -66,7 +66,7 @@ const RosterScreen = (props) => {
   // markedDates obj function
 
   console.log("cardData ===>", JSON.stringify(rosterReducer, null, 4));
-
+console.log("startDay :::: endDay :::::", startDay,endDay);
   React.useLayoutEffect(() => {
     if (!accessToken || !isAuth) {
       const resetAction = StackActions.replace(appConstant.LOGIN);
@@ -82,7 +82,7 @@ const RosterScreen = (props) => {
       // console.log("startDate", startDate);
       setSelectedWeek(startDate);
       setSelectedDate(startDate);
-      setIsCalendarShow(false)
+      setIsCalendarShow(false);
     }, [])
   );
 
@@ -115,14 +115,15 @@ const RosterScreen = (props) => {
         day: getDayfromDate(item),
       });
     });
+    console.log("weekStart ===>", weekStart);
     setMarkeDatesAction({
       markedDates: _dateList,
       selectedWeek: _dateFlatList,
       weekStart: weekStart,
       weekEnd: weekEnd,
     });
-    const fromDate = moment(weekStart).format("YYYY-MM-DD");
-    const toDate = moment(weekEnd).format("YYYY-MM-DD");
+    const fromDate = moment(weekStart).format("DD/MM/YYYY");
+    const toDate = moment(weekEnd).format("DD/MM/YYYY");
     const params = {
       from: fromDate,
       to: toDate,
@@ -161,9 +162,6 @@ const RosterScreen = (props) => {
         <View style={styles.empTimeCardDetails}>
           <EmpTimeCard data={data} cardData={cardData} />
         </View>
-        {/* <View style={styles.bottomCardDetails}>
-          <RosterBottomCard data={data} />
-        </View> */}
         {isCalendarShow && (
           <View
             style={
@@ -180,30 +178,6 @@ const RosterScreen = (props) => {
           </View>
         )}
       </View>
-
-      {/* {isAlertShow
-        ? Alert.alert(
-            alertMsgConstant.PLEASE_CONFIRM,
-            alertMsgConstant.ARE_YOU_SURE_TO_LOGOUT,
-            [
-              {
-                text: alertMsgConstant.NO,
-                onPress: () => {
-                  countBack = 0;
-                  setIsAlertShow(false);
-                },
-                style: "cancel",
-              },
-              {
-                text: alertMsgConstant.YES,
-                onPress: () => {
-                  BackHandler.exitApp();
-                  setIsAlertShow(false);
-                },
-              },
-            ]
-          )
-        : null} */}
 
       {rosterReducer.isRequesting ? (
         <Loader loading={rosterReducer.isRequesting} />

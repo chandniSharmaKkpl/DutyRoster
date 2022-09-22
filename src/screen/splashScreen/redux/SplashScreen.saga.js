@@ -8,7 +8,7 @@ export function* workerInit(action) {
   console.log("workerInit ==>", action);
   try {
     const initResponse = yield call(initCall, action.payload);
-
+    console.log("initResponse ======", initResponse);
     if (!initResponse.success) {
       var stringCombined = "";
       let arrayTemp = Object.keys(initResponse.error);
@@ -29,6 +29,8 @@ export function* workerInit(action) {
         type: actionConstant.ACTION_CHECK_USER_LOGIN_FAILURE,
         payload: stringCombined,
       });
+      const resetAction = StackActions.replace(appConstant.LOGIN);
+      navigationRef.dispatch(resetAction);
     } else {
       yield put({
         type: actionConstant.ACTION_CHECK_USER_LOGIN_SUCCESS,
@@ -42,10 +44,13 @@ export function* workerInit(action) {
       navigationRef.dispatch(resetAction);
     }
   } catch (error) {
+    console.log("=> ", error);
     yield put({
       type: actionConstant.ACTION_CHECK_USER_LOGIN_FAILURE,
       payload: error,
     });
+    const resetAction = StackActions.replace(appConstant.LOGIN);
+    navigationRef.dispatch(resetAction);
   }
 }
 
