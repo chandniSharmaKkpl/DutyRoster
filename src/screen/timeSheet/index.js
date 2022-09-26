@@ -35,6 +35,7 @@ import {
 import { dayDateReturn } from "@/common/timeFormate";
 import { useSelector } from "react-redux";
 import Loader from "@/components/Loader";
+import TimeSheetEmpTimeCard from "@/components/timeSheetEmpCard";
 
 const TimeSheetScreen = (props) => {
   const navigation = useNavigation();
@@ -150,7 +151,7 @@ const TimeSheetScreen = (props) => {
           </View>
         </View>
         <View style={styles.empTimeCardDetails}>
-          <EmpTimeCard data={data} cardData={cardData} />
+          <TimeSheetEmpTimeCard data={data} cardData={cardData} />
         </View>
         {isCalendarShow && (
           <View

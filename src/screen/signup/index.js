@@ -3,15 +3,12 @@ import {
   View,
   Text,
   Image,
-  FlatList,
   BackHandler,
   TouchableOpacity,
-  PermissionsAndroid,
   Keyboard,
 } from "react-native";
 import stylesCommon from "../../common/commonStyle";
 import {
-  appColor,
   appConstant,
   imageConstant,
   alertMsgConstant,
@@ -22,14 +19,11 @@ import {
 } from "react-native-responsive-screen";
 import UploadImage from "@/components/uploadImage";
 import styles from "./style";
-import { CommonHeader } from "@/components/CommonHeader";
 import { CustomButton } from "@/components/CustomButton";
 import { AppText } from "@/components/AppText";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useNavigation, useFocusEffect } from "@react-navigation/core";
 import Modal from "react-native-modal";
-import * as ImagePicker from "react-native-image-picker";
-import IconAnt from "react-native-vector-icons/AntDesign";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import moment from "moment";
 import {
@@ -233,7 +227,7 @@ const Signup = (props) => {
 
     if (tfn === "") {
       tfnErr = "TFN cannot be empty";
-    } else if (tfn.length < 9) {
+    } else if (tfn.length < 9 || tfn.length > 9) {
       tfnErr = alertMsgConstant.TFN_CHAR_LIMIT;
     }
 

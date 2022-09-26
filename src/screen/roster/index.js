@@ -25,6 +25,9 @@ import EmpTimeCard from "@/components/roasterEmpTimeCard";
 import Calendars from "@/components/Calendars";
 import moment from "moment";
 import {
+  API_DATE_FORMAT,
+  CALENDER_DATE_FORMAT,
+  changeDateFormat,
   enumerateDaysBetweenDates,
   getCurrentWeek,
   getDatefromFullDate,
@@ -98,7 +101,7 @@ console.log("startDay :::: endDay :::::", startDay,endDay);
     const { days: _dateRange, weekStart, weekEnd } = getCurrentWeek(date);
 
     _dateRange.map((item, index) => {
-      _dateList[item] = {
+      _dateList[changeDateFormat(item, API_DATE_FORMAT, CALENDER_DATE_FORMAT)] = {
         startingDay: index === 0 ? true : false,
         endingDay: index === _dateRange.length - 1 ? true : false,
         color: !(index === 0 || index === _dateRange.length - 1)
@@ -122,8 +125,8 @@ console.log("startDay :::: endDay :::::", startDay,endDay);
       weekStart: weekStart,
       weekEnd: weekEnd,
     });
-    const fromDate = moment(weekStart).format("DD/MM/YYYY");
-    const toDate = moment(weekEnd).format("DD/MM/YYYY");
+    const fromDate = moment(weekStart).format(API_DATE_FORMAT);
+    const toDate = moment(weekEnd).format(API_DATE_FORMAT);
     const params = {
       from: fromDate,
       to: toDate,

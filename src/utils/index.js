@@ -48,13 +48,13 @@ function dateCheckForCurrentWeek(date, startDay) {
 }
 
 function getDayfromDate(date) {
-  return moment(date,'DD/MM/YYYY').format("ddd");
+  return moment(date, "DD/MM/YYYY").format("ddd");
 }
 function getDatefromFullDate(date) {
-  return moment(date,'DD/MM/YYYY').format("DD");
+  return moment(date, "DD/MM/YYYY").format("DD");
 }
 function getTimeStampfromDate(date) {
-  return moment(date, 'DD/MM/YYYY').format("X");
+  return moment(date, "DD/MM/YYYY").format("X");
 }
 function getDateFromTimeStamp(timestamp) {
   return moment.unix(timestamp).format("DD/MM/YYYY");
@@ -165,16 +165,16 @@ export const convertDateFormate = (dateString, dateValueObj) => {
   if (dateString) {
     if (dateValueObj.key == "Format.Date") {
       let formattedDate = moment(dateString).format(dateValueObj.value);
-      console.log('::::::::::: convertDateFormate ::::::::::', formattedDate);
       return formattedDate;
     }
-  }else{
-    return '';
+  } else {
+    return "";
   }
 };
 
 export const USER_DATE_FORMAT = "DD/MM/YYYY";
 export const API_DATE_FORMAT = "DD/MM/YYYY";
+export const CALENDER_DATE_FORMAT = "YYYY-MM-DD";
 
 export {
   enumerateDaysBetweenDates,

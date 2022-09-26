@@ -1,6 +1,7 @@
 import { alertMsgConstant } from "@/constant";
 import _ from "lodash";
 import {
+  API_DATE_FORMAT,
   checkObject,
   checkObjectHasData,
   get24HrFrom12HrFormat,
@@ -42,7 +43,7 @@ export const createAvailibilityParams = ({
             availability[day].times.map((_el) => {
               _el.district = _el.district_id;
             });
-            renameKey(availability[day], "times", "time");
+            // renameKey(availability[day], "times", "time");
           } else {
             delete availability[day];
           }
@@ -54,8 +55,8 @@ export const createAvailibilityParams = ({
     // console.log("after availability", JSON.stringify(availability, null, 4));
 
     params.availability = availability;
-    params.week_start = moment(weekStart).format("DD/MM/YYYY");
-    params.week_end = moment(weekEnd).format("DD/MM/YYYY");
+    params.week_start = moment(weekStart).format(API_DATE_FORMAT);
+    params.week_end = moment(weekEnd).format(API_DATE_FORMAT);
     // console.log("createAvailibilityParams", JSON.stringify(params, null, 2));
     return params;
   } catch (error) {
@@ -175,7 +176,40 @@ export const isInOutTimeValid = (inTime, outTime) => {
   }
   return false;
 };
-
+const uniqueIterator = (item) => item.start_time || item.end_time;
+export const replaceAvalabiltyItems = (_prevData, newData) => {
+  // console.log("newData", JSON.stringify(newData, null, 4));
+  // console.log("prevData", JSON.stringify(prevData, null, 4));
+  let prevData =_.uniqBy(_.cloneDeep(_prevData), uniqueIterator);
+  const avalabilityTimes = _.uniqBy(_.cloneDeep(_prevData), uniqueIterator);
+  try {
+    if (newData && prevData) {
+      newData.map((_newItem, _newItemIndex) => {
+        // console.log("_newFItemIndex", _newItemIndex);
+        let flag = false;
+        prevData.map((_prevItem, _prevItemIndex) => {
+          // console.log("_prevItemIndex", _prevItemIndex);
+          if (
+            _prevItem.start_time === _newItem.start_time ||
+            _prevItem.end_time === _newItem.end_time
+          ) {
+            avalabilityTimes[_prevItemIndex] = _newItem;
+            flag = true;
+          }
+        });
+        if (!flag) {
+          avalabilityTimes.push({ ..._newItem });
+        }
+      });
+      return avalabilityTimes;
+    }
+  } catch (error) {
+    alert(error);
+    return null;
+  }
+  // const data = prevData.map((item) => item === newData);
+  // console.log("sameData", data);
+};
 export const addAvailibilityDataParams = ({
   selected,
   weekStart,
@@ -189,7 +223,7 @@ export const addAvailibilityDataParams = ({
     const availability =
       typeof availabilityData !== "string" ? availabilityData : {};
 
-    // console.log("createAvailibilityParams time", JSON.stringify(time, null, 2));
+    // console.log("createAvailibilityParams time", JSON.stringify(availability, null, 2));
     if (
       selected.availabilitySelectedDate &&
       selected.availabilitySelectedDate.length > 0
@@ -223,10 +257,6 @@ export const addAvailibilityDataParams = ({
             end_time: get24HrFrom12HrFormat(_el.outTime),
           };
         });
-        console.log(
-          "selected.availabilitySelectedDate",
-          selected.availabilitySelectedDate
-        );
 
         selected.availabilitySelectedDate.forEach((element) => {
           let dateKey = getDateFromTimeStamp(element);
@@ -235,13 +265,27 @@ export const addAvailibilityDataParams = ({
             checkObjectHasData(availabilityData, dateKey) &&
             checkObject(availabilityData[dateKey])
           ) {
-            // console.log(
-            //   "availabilityData[dateKey].times",
-            //   availabilityData[dateKey]
-            // );
-            availability[dateKey] = {
-              times: [...availabilityData[dateKey].times, ...time],
-            };
+            console.log(
+              "checkObjectHasData",
+              checkObjectHasData(availabilityData[dateKey], "times")
+            );
+            if (checkObjectHasData(availabilityData[dateKey], "times")) {
+              const _newDatas = replaceAvalabiltyItems(
+                availabilityData[dateKey].times,
+                time
+              );
+
+              availability[dateKey] = {
+                times: _newDatas,
+              };
+              // availability[dateKey] = {
+              //   times: [...availabilityData[dateKey].times, ...time],
+              // };
+            } else {
+              availability[dateKey] = {
+                times: time,
+              };
+            }
           } else {
             availability[dateKey] = {
               times: time,
@@ -255,9 +299,11 @@ export const addAvailibilityDataParams = ({
         // });
         throw "Not Data selected";
       }
+
       params.week_start = moment(weekStart).format("DD/MM/YYYY");
       params.week_end = moment(weekEnd).format("DD/MM/YYYY");
-      console.log("createAvailibilityParams", JSON.stringify(params, null, 2));
+      // console.log("createAvailibilityParams", JSON.stringify(params, null, 2));
+
       return params;
     } else {
       //   toast.show("Please Select Availability Date", {
@@ -272,7 +318,8 @@ export const addAvailibilityDataParams = ({
     throw error;
   }
 };
-const getPreviousWeek = (_date) => moment(_date).add(-1, "week").toDate();
+const getPreviousWeek = (_date) =>
+  moment(_date, API_DATE_FORMAT).add(-1, "week").toDate();
 
 const modifyData = ({ currentWeek, nextWeek, data }) => {
   try {
@@ -282,10 +329,10 @@ const modifyData = ({ currentWeek, nextWeek, data }) => {
     currentWeekDays.forEach((_day, index) => {
       nextWeekData[nextWeekDays[index]] = data[_day];
     });
-    // console.log(
-    //   "modifyData",
-    //   JSON.stringify({ currentWeek, nextWeek, data, nextWeekData }, null, 4)
-    // );
+    console.log(
+      "modifyData",
+      JSON.stringify({ currentWeek, nextWeek, data, nextWeekData }, null, 4)
+    );
     // console.log(JSON.stringify(nextWeekData, null, 4));
     return nextWeekData;
   } catch (error) {
@@ -327,10 +374,13 @@ export const appendAvailabilityData = ({
   haveToMerge = false,
 }) => {
   try {
+    // console.log('nextWeekDates.week_start',nextWeekDates.week_start);
     const currentWeek = getCurrentWeek(
       getPreviousWeek(nextWeekDates.week_start)
     );
-    const nextWeek = getCurrentWeek(nextWeekDates.week_start);
+    const nextWeek = getCurrentWeek(
+      moment(nextWeekDates.week_start, API_DATE_FORMAT).toDate()
+    );
 
     const newData = modifyData({ currentWeek, nextWeek, data: copiedData });
     if (existData) {
@@ -353,7 +403,6 @@ export const appendAvailabilityData = ({
 export const getLastDateOfCurrentWeek = () => {
   return moment(new Date()).clone().startOf("isoWeek").toDate();
 };
-
 
 export const isInOutTimeValidForAvalability = ({ availabilityData, time }) => {
   if (!isArrayEmpty(availabilityData)) {

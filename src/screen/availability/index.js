@@ -23,12 +23,16 @@ import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 import { Images } from "@/constant/svgImgConst";
 import Calendars from "@/components/Calendars";
 import {
+  API_DATE_FORMAT,
+  CALENDER_DATE_FORMAT,
+  changeDateFormat,
   dateCheckForCurrentWeek,
   enumerateDaysBetweenDates,
   getCurrentWeek,
   getDatefromFullDate,
   getDayfromDate,
   getTimeStampfromDate,
+  sameDateReplaceNewData,
 } from "@/utils";
 import { connect } from "react-redux";
 import {
@@ -86,17 +90,13 @@ const Availability = (props) => {
     requestToAddAvailabilityAction,
     setDataItemOfAvailabilityRequestAction,
   } = props;
-console.log("selectedWeek", selectedWeek,arraySelectedDate );
+  console.log("selectedWeek", selectedWeek, arraySelectedDate);
   const [isCalendarShow, setIsCalendarShow] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
   const [isAlertShow, setIsAlertShow] = useState(false);
 
   const [unavailablityDate, setUnavailablityDate] = useState("");
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  const [inTime, setInTime] = useState(null);
-  const [outTime, setOutTime] = useState(null);
-  const [isTimeInPickerVisible, setTimeInPickerVisibility] = useState(false);
-  const [isTimeOutPickerVisible, setTimeOutPickerVisibility] = useState(false);
   const [timeData, setTimeData] = useState([]);
 
   const onChangeUnavailablityDate = useCallback(
@@ -157,7 +157,7 @@ console.log("selectedWeek", selectedWeek,arraySelectedDate );
 
   const handleConfirm = (date) => {
     // console.warn("A date has been picked: ", date);
-    setUnavailablityDate(moment(date).format("DD/MM/YYYY"));
+    setUnavailablityDate(moment(date).format(API_DATE_FORMAT));
     hideDatePicker();
   };
 
@@ -176,16 +176,17 @@ console.log("selectedWeek", selectedWeek,arraySelectedDate );
     const { days: _dateRange, weekStart, weekEnd } = getCurrentWeek(date);
     const _selectedDates = [];
     _dateRange.map((item, index) => {
-      console.log("itemitemitemitemitemitem", item);
-      _dateList[item] = {
-        startingDay: index === 0 ? true : false,
-        endingDay: index === _dateRange.length - 1 ? true : false,
-        selected: false,
-        color: !(index === 0 || index === _dateRange.length - 1)
-          ? appColor.RED
-          : appColor.RED,
-        textColor: appColor.WHITE,
-      };
+      _dateList[changeDateFormat(item, API_DATE_FORMAT, CALENDER_DATE_FORMAT)] =
+        {
+          startingDay: index === 0 ? true : false,
+          endingDay: index === _dateRange.length - 1 ? true : false,
+          selected: false,
+          color: !(index === 0 || index === _dateRange.length - 1)
+            ? appColor.RED
+            : appColor.RED,
+          textColor: appColor.WHITE,
+        };
+
       _dateFlatList.push({
         id: getTimeStampfromDate(item),
         date: getDatefromFullDate(item),
@@ -194,12 +195,13 @@ console.log("selectedWeek", selectedWeek,arraySelectedDate );
       _selectedDates.push(getTimeStampfromDate(item));
     });
 
-    const fromDate = moment(weekStart).format("DD/MM/YYYY");
-    const toDate = moment(weekEnd).format("DD/MM/YYYY");
+    const fromDate = moment(weekStart).format(API_DATE_FORMAT);
+    const toDate = moment(weekEnd).format(API_DATE_FORMAT);
     const params = {
       week_start: fromDate,
       week_end: toDate,
     };
+
     setMarkeDatesAction({
       markedDates: _dateList,
       selectedWeek: _dateFlatList,
@@ -325,11 +327,6 @@ console.log("selectedWeek", selectedWeek,arraySelectedDate );
     );
   }
 
-  const onloadeddata = () => {
-    if (dateCheckForCurrentWeek(new Date(), startDay)) {
-      requestToAddAvailabilityAction();
-    }
-  };
 
   return (
     <>
@@ -419,7 +416,7 @@ console.log("selectedWeek", selectedWeek,arraySelectedDate );
               text={"Shift Availability Detail"}
               style={styles.txtUnavailablity}
             />
-            <View>
+            <View> 
               <Shift
                 updateDataItemofAvailabilityAction={
                   updateDataItemofAvailabilityAction
@@ -429,6 +426,7 @@ console.log("selectedWeek", selectedWeek,arraySelectedDate );
                 deleteDataItemofAvailabilityAction={
                   deleteDataItemofAvailabilityAction
                 }
+                startDay={startDay}
               />
             </View>
           </View>
@@ -451,7 +449,7 @@ console.log("selectedWeek", selectedWeek,arraySelectedDate );
                 style={styles.btnCopy}
                 onPress={() => {
                   if (dateCheckForCurrentWeek(new Date(), startDay)) {
-                    onNextWeekCopyData()
+                    onNextWeekCopyData();
                   }
                 }}
               >

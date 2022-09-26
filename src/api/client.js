@@ -1,7 +1,11 @@
 import { Config } from "@/config";
 import { alertMsgConstant, appConstant } from "@/constant";
 import localDb from "@/database/localDb";
-import { navigate, navigateAndSimpleReset, navigationRef } from "@/navigators/utils";
+import {
+  navigate,
+  navigateAndSimpleReset,
+  navigationRef,
+} from "@/navigators/utils";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StackActions } from "@react-navigation/native";
 import axios from "axios";
@@ -20,7 +24,8 @@ client.interceptors.response.use(
       // console.log("client.interceptors.response", response.data);
       const res = response.data;
       if (res.error.login_fail) {
-       
+        // console.log('res.header',res.header);
+
         localDb.clearAll();
         navigationRef.dispatch(StackActions.replace(appConstant.LOGIN));
       }

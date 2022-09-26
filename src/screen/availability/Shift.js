@@ -7,8 +7,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import ModelBox from "@/components/PopUpmodel";
-import { API_DATE_FORMAT, changeDateFormat, USER_DATE_FORMAT } from "@/utils";
-
+import { API_DATE_FORMAT, changeDateFormat, dateCheckForCurrentWeek, USER_DATE_FORMAT } from "@/utils";
 
 const Shift = (props) => {
   const {
@@ -16,6 +15,7 @@ const Shift = (props) => {
     arrayDistricts,
     updateDataItemofAvailabilityAction,
     deleteDataItemofAvailabilityAction,
+    startDay,
   } = props;
   const [modalVisible, setModalVisible] = useState(false);
   const [editModal, setEditModal] = useState({
@@ -28,11 +28,11 @@ const Shift = (props) => {
 
   var arrayDates = Object.keys(availabilityData);
   const renderItem = ({ item, index }) => {
+    // console.log("arrayTimes", item);
     var arrayTimes = [];
 
     if (!Array.isArray(availabilityData[item])) {
       arrayTimes = availabilityData[item].times;
-      // console.log("arrayTimes", arrayTimes);
       if (!arrayTimes || arrayTimes.length <= 0) {
         return <></>;
       }
@@ -99,9 +99,7 @@ const Shift = (props) => {
             <View style={[styles.viewColumn, styles.viewColumnInOutTime]}>
               {arrayTimes.map((dataObj) => {
                 return (
-                  <View
-                    style={styles.rowAlignCenter}
-                  >
+                  <View style={styles.rowAlignCenter}>
                     <AppText text={dataObj.end_time} style={[styles.txtRow]} />
                   </View>
                 );
@@ -110,6 +108,7 @@ const Shift = (props) => {
           ) : null}
 
           {/* Button */}
+
           {arrayTimes && arrayTimes.length > 0 ? (
             <View style={[styles.viewColumnButton]}>
               {arrayTimes.map((dataObj, index) => {
@@ -117,11 +116,13 @@ const Shift = (props) => {
                   <View style={styles.moreImageViewContainer}>
                     <Pressable
                       onPress={() => {
-                        setEditModal({
-                          index: index,
-                          date: item,
-                        });
-                        setModalVisible(true);
+                        if (dateCheckForCurrentWeek(new Date(), startDay)) {
+                          setEditModal({
+                            index: index,
+                            date: item,
+                          });
+                          setModalVisible(true);
+                        }
                       }}
                       style={styles.moreImage}
                     >
@@ -191,7 +192,7 @@ export const styles = {
     borderBottomWidth: 1,
   },
   moreImageViewContainer: {
-    minHeight: hp('5%'),
+    minHeight: hp("5%"),
 
     display: "flex",
     justifyContent: "center",
@@ -213,7 +214,7 @@ export const styles = {
     marginVertical: "1%",
     backgroundColor: appColor.GRAY,
     width: "100%",
-    height: "0.1%",
+    height: 1,
   },
   flexContainer: {
     flexDirection: "row",
@@ -286,11 +287,9 @@ export const styles = {
   rowAlignCenter: {
     display: "flex",
     alignItems: "center",
-    flexDirection:"row",
-    minHeight: hp('5%'),
+    flexDirection: "row",
+    minHeight: hp("5%"),
   },
 };
 
-
 export default Shift;
-

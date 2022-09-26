@@ -1,6 +1,6 @@
 import { getTimeFromDateTime } from "../index";
 
-export const cardConfig = [
+export const timeSheetCardConfig = [
   {
     title: "Location",
     key: "location",
@@ -51,7 +51,7 @@ export const cardConfig = [
   },
 ];
 
-export const bottomCardConfig = [
+export const timeSheetBottomCardConfig = [
   {
     mainTitle: null,
     key: "totalshift",
@@ -106,9 +106,7 @@ export const bottomCardConfig = [
       {
         key: "book_total_hours",
         title: "BOOK TOTAL",
-        value: (value) => {
-          return `${parseFloat(value).toFixed(2)}`;
-        },
+        value: null,
         label: {
           key: "book_total_dollar",
           value: (value) => {
@@ -132,15 +130,13 @@ export const bottomCardConfig = [
       {
         key: "book_total_hours",
         title: "Cash TOTAL",
-        value: (value) => {
-          return `${parseFloat(value).toFixed(2)}`;
-        },
+        value: null,
         label: null,
       },
     ],
   },
   {
-    mainTitle: "Cash Extra",
+    mainTitle: "Cash $2 Extra",
     key: "cash.cash_extra",
     data: [
       // FRI,SAT
@@ -148,15 +144,13 @@ export const bottomCardConfig = [
         key: "cash_fri_sat_rate",
         title: "Rate / HR",
         value: (value) => {
-          return `$${parseFloat(value).toFixed()}`;
+          return `$${parseFloat(value).toFixed(2)}`;
         },
       },
       {
         key: "cash_fri_sat_hour",
-        title: "FRI,SAT",
-        value: (value) => {
-          return `${parseFloat(value).toFixed(2)}`;
-        },
+        title: "$2 FRI,SAT",
+        value: null,
         label: {
           key: "cash_fri_sat_dollar",
           value: (value) => {
@@ -167,17 +161,15 @@ export const bottomCardConfig = [
       // Sunday
       {
         key: "cash_sun_rate",
-        title: "Rate / HR",
+        title: "/HR",
         value: (value) => {
-          return `$${parseFloat(value).toFixed()}`;
+          return `$${parseFloat(value).toFixed(2)}`;
         },
       },
       {
         key: "cash_sun_hour",
-        title: "Sunday",
-        value: (value) => {
-          return `${parseFloat(value).toFixed(2)}`;
-        },
+        title: "$4 SUN",
+        value: null,
         label: {
           key: "cash_sun_dollar",
           value: (value) => {
@@ -185,46 +177,69 @@ export const bottomCardConfig = [
           },
         },
       },
-      // OverTime
+    ],
+  },
+  {
+    mainTitle: "Adjustment",
+    key: "adjustment",
+    data: [
       {
-        key: "cash_overtime_rate",
-        title: "Rate / HR",
+        key: "total_hrs",
+        title: "TOTAL HRS ($)",
         value: (value) => {
-          return `$${parseFloat(value).toFixed()}`;
+          return `$${parseFloat(value).toFixed(2)}`;
         },
       },
       {
-        key: "cash_overtime_hour",
-        title: "OverTime",
+        key: "plus_minus",
+        title: "+ /-($)",
         value: (value) => {
-          return `${parseFloat(value).toFixed(2)}`;
-        },
-        label: {
-          key: "cash_overtime_dollar",
-          value: (value) => {
-            return `$${parseFloat(value).toFixed(2)}`;
-          },
-        },
-      },
-      // Holiday
-      {
-        key: "cash_holiday_rate",
-        title: "Rate / HR",
-        value: (value) => {
-          return `$${parseFloat(value).toFixed()}`;
+          return `$${parseFloat(value).toFixed(2)}`;
         },
       },
       {
-        key: "cash_holiday_hour",
-        title: "Holiday",
+        key: "grand_total",
+        title: "GRAND TOTAL ($)",
         value: (value) => {
-          return `${parseFloat(value).toFixed(2)}`;
+          return `$${parseFloat(value).toFixed(2)}`;
         },
-        label: {
-          key: "cash_holiday_dollar",
-          value: (value) => {
-            return `$${parseFloat(value).toFixed(2)}`;
-          },
+      },
+      {
+        key: "note",
+        title: "NOTE",
+        value: null,
+      },
+      {
+        key: "remark",
+        title: "REMARK",
+        value: null,
+      },
+    ],
+  },
+  {
+    mainTitle: null,
+    key: "adjustment",
+    data: [
+      // FRI,SAT
+      {
+        key: "payg",
+        title: "PAYG",
+        value: (value) => {
+          return `$${parseFloat(value).toFixed(2)}`;
+        },
+      },
+      {
+        key: "bank_transfer",
+        title: "BANK TRANSFER",
+        value: (value) => {
+          return `$${parseFloat(value).toFixed(2)}`;
+        },
+      },
+      {
+        key: "cash_Amount",
+        title: "CASH AMOUNT",
+        value: (value) => {
+          return `$${parseFloat(value).toFixed(2)}`;
         },
       },
     ],

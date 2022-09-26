@@ -8,8 +8,6 @@ import {
   Platform,
 } from "react-native";
 import stylesCommon from "../../common/commonStyle";
-import { StackActions } from "@react-navigation/native";
-
 import { imageConstant, alertMsgConstant, appConstant } from "../../constant";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import { useNavigation, useFocusEffect } from "@react-navigation/core";
@@ -259,7 +257,7 @@ const Login = (props) => {
           </View>
           <View style={styles.versionContainer}>
             <AppText
-              text={" App Vesrion 2.10"}
+              text={" App Vesrion 2.13"}
               style={{ ...styles.appVersion }}
             />
           </View>

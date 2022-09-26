@@ -44,7 +44,19 @@ export default (state = initialState, { type, payload }) => {
         error: payload,
       };
     }
-    case actionConstant.ACTION_SET_MARKED_DATES: {
+    // case actionConstant.ACTION_SET_MARKED_DATES: {
+    //   return {
+    //     ...state,
+    //     markedDates: payload.markedDates,
+    //     selectedWeek: {
+    //       ...state.selectedWeek,
+    //       data: payload.selectedWeek,
+    //       weekStart: payload.weekStart,
+    //       weekEnd: payload.weekEnd,
+    //     },
+    //   };
+    // }
+    case actionConstant.ACTION_SET_MARKED_DATES_ROASTER: {
       return {
         ...state,
         markedDates: payload.markedDates,
@@ -56,7 +68,6 @@ export default (state = initialState, { type, payload }) => {
         },
       };
     }
-
     default:
       return state;
   }
