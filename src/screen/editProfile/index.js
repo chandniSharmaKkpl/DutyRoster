@@ -69,13 +69,6 @@ const EditProfile = (props) => {
 
   const profileResponse = useSelector((state) => state.ProfileReducer);
 
-  useEffect(() => {
-    console.log(
-      "profileResponse.UpdateProfileReducer =>",
-      JSON.stringify(profileResponse, null, 4)
-    );
-  }, [profileResponse]);
-
   const [profilePath, setProfiilePath] = useState(null);
   const [ImageSource, setImageSource] = useState("");
   const [title, setTitle] = useState("");
@@ -162,7 +155,6 @@ const EditProfile = (props) => {
       setTFN(profileInformation?.tfn_number);
       setAddress(profileInformation?.address);
       setDob(profileInformation?.dob);
-      console.log("dob", profileInformation?.dob);
       setPayment(profileInformation?.payment_type);
       setImageSource(profileInformation?.image);
     }
@@ -184,7 +176,8 @@ const EditProfile = (props) => {
       setTFN(profileInformation?.tfn_number);
       setAddress(profileInformation?.address);
       setDob(profileInformation?.dob);
-      console.log("dob 123", profileInformation?.dob);
+      console.log("image  123", profileInformation?.image);
+
       if (profileInformation.hasOwnProperty("image")) {
         setImageSource(profileInformation?.image);
       }
@@ -447,6 +440,7 @@ const EditProfile = (props) => {
                     : styles.img
                 }
               /> */}
+              {/* <Image source={imageConstant.IMAGE_EDIT_PROFILE_ICON} style={styles.img}/> */}
               <ProgressiveImage
                 thumbnailSource={imageConstant.IMAGE_AVTAR_ICON}
                 source={{ uri: ImageSource }}

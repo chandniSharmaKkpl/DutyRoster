@@ -1,3 +1,4 @@
+import { imageConstant } from "@/constant";
 import React from "react";
 import { View, StyleSheet, Image, Animated } from "react-native";
 

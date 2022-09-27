@@ -5,8 +5,11 @@ import localDb from "@/database/localDb";
 import { StackActions, CommonActions } from "@react-navigation/native";
 
 export function* workerGetAccessToken(action) {
+  
   try {
+    console.log('action.payload',action.payload);
     const loginResponse = yield call(loginCall, action.payload);
+    console.log("loginResponse ==>", loginResponse);
     if (!loginResponse.success) {
       var stringCombined = "";
       let arrayTemp = Object.keys(loginResponse.error);

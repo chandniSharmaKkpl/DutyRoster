@@ -37,6 +37,7 @@ import {
 import RNLocation from "react-native-location";
 import { checkMultiplePermision, requestPermission } from "@/libs/Permission";
 import Geolocation from "react-native-geolocation-service";
+import { useIsFocused } from "@react-navigation/native";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
@@ -47,7 +48,9 @@ const QRCodeScreen = (props) => {
     setQRLocationAction,
     location,
     timesheet_id,
+    signin,
   } = props;
+  const isFocused = useIsFocused();
   const scannerRef = React.useRef();
   const svgRef = React.useRef();
   const textSVGRef = React.useRef();
@@ -154,23 +157,26 @@ const QRCodeScreen = (props) => {
       const signIn = convertDateTime(currentTime, false, true); // convert time formate and get current time
       const date = convertDateTime(currentTime, true, false); // covert date formate and get current date
       // permissionHandle()
-      if (timesheet_id) {
-        requestToFetQRCodeResponseAction({
-          location_id: location_id,
-          signout: signIn,
-          date: date,
-          latitude: lat ? lat : location.latitude,
-          longitude: lon ? lon : location.longitude,
-          timesheet_id: timesheet_id,
-        });
-      } else {
-        requestToFetQRCodeResponseAction({
-          location_id: location_id,
-          signin: signIn,
-          date: date,
-          latitude: lat ? lat : location.latitude,
-          longitude: lon ? lon : location.longitude,
-        });
+      if (location.latitude && location.longitude) {
+        if (timesheet_id && signin) {
+          requestToFetQRCodeResponseAction({
+            location_id: location_id,
+            signout: signIn,
+            signin: signin,
+            date: date,
+            latitude: lat ? lat : location.latitude,
+            longitude: lon ? lon : location.longitude,
+            timesheet_id: timesheet_id,
+          });
+        } else {
+          requestToFetQRCodeResponseAction({
+            location_id: location_id,
+            signin: signIn,
+            date: date,
+            latitude: lat ? lat : location.latitude,
+            longitude: lon ? lon : location.longitude,
+          });
+        }
       }
     } catch (error) {
       console.error(error);
@@ -196,7 +202,11 @@ const QRCodeScreen = (props) => {
         // Expensive task
       });
 
-      return () => task.cancel();
+      return () => {
+        console.log("useFocusEffect return onDestrory");
+        scannerRef.current = null;
+        task.cancel();
+      };
     }, [])
   );
 
@@ -322,8 +332,12 @@ const QRCodeScreen = (props) => {
         nextAppState === "active"
       ) {
         console.log("App has come to the foreground!");
+        setQRLocationAction({
+          latitude: null,
+          longitude: null,
+        });
         if (Platform.OS === "ios") {
-          // requestPermission(setPermission, onRequestGranted);
+          requestPermission(setPermission, onRequestGranted);
         }
       }
 
@@ -345,15 +359,21 @@ const QRCodeScreen = (props) => {
     }).then((granted) => {
       // alert(granted);
       if (granted) {
+        console.log("startUpdatingLocation");
         startUpdatingLocation();
+        // setQRLocationAction({
+        //   latitude: null,
+        //   longitude: null,
+        // });
       } else {
-        toast.show("Please allow location from settings", {
-          type: alertMsgConstant.TOAST_DANGER,
-        });
+        // toast.show("Please allow location from settings", {
+        //   type: alertMsgConstant.TOAST_DANGER,
+        // });
       }
     });
 
     return () => {
+      console.log("useEffect return onDestrory");
       subscription.remove();
       // unsubscribe();
     };
@@ -375,13 +395,12 @@ const QRCodeScreen = (props) => {
     <>
       <CommonHeader screenName={route?.name} onGoBack={onGoBack} />
       <View style={[styles.container]}>
-        {permission && (
+        {isFocused && permission && (
           <QRCodeScanner
-            // ref={scannerRef}
-
-            ref={(node) => {
-              scannerRef.current = node;
-            }}
+            ref={scannerRef}
+            // ref={(node) => {
+            //   scannerRef.current = node;
+            // }}
             checkAndroid6Permissions={true}
             onRead={onSuccess}
             cameraStyle={{ height: SCREEN_HEIGHT, width: SCREEN_WIDTH }}
@@ -430,7 +449,8 @@ const QRCodeScreen = (props) => {
 const mapStateToProps = (state) => ({
   accessToken: state.LoginReducer.accessToken,
   location: state.QRCode_ResponseReducer.location,
-  timesheet_id: state.QRCode_ResponseReducer.data?.timesheet_id,
+  timesheet_id: state.QRCode_ResponseReducer?.timesheet_id,
+  signin: state.QRCode_ResponseReducer?.signin,
 });
 
 const mapDispatchToProps = (dispatch) => {

@@ -42,7 +42,7 @@ const Item = ({ item, key }) => {
             return (
               <>
                 <View style={styles.contentTextContainer}>
-                  {cardConfig.map((_el) => {
+                  {timeSheetCardConfig.map((_el) => {
                     return (
                       <Text
                         style={[

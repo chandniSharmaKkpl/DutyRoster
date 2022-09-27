@@ -4,8 +4,11 @@ import * as API from "@/api/auth";
 export const loginCall = async (params) => {
   try {
     const res = await API.login(params);
-    return res.data;
+    console.log(res);
+    return res?.data;
   } catch (error) {
+    console.log(JSON.stringify(error, null, 4));
+
     throw error;
   }
 };

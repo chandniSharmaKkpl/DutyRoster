@@ -27,7 +27,6 @@ const hasError = (_err) => {
     Object.values(_err).filter((err) => err.toString().length > 0).length > 0
   );
 };
-
 const Login = (props) => {
   const { accessToken } = props;
   const [error, setError] = React.useState({
@@ -36,10 +35,10 @@ const Login = (props) => {
   });
   // console.log('state.LoginReducer',props.LoginReducer);
   const [email, setEmail] = useState(
-    process.env.NODE_ENV !== "production" ? "testemail@yopmail.com" : ""
+    process.env.NODE_ENV !== "production" ? "emp_myur@yopmail.com" : ""
   );
   const [password, setPassword] = useState(
-    process.env.NODE_ENV !== "production" ? "Letmein12@" : ""
+    process.env.NODE_ENV !== "production" ? "HelloWorld1!" : ""
   );
   const [isClickEye, setIsClickEye] = useState(false);
   const loginResponse = useSelector((state) => state.LoginReducer);

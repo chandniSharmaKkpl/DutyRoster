@@ -4,11 +4,13 @@ const initialState = {
   isRequesting: false,
   data: {},
   error: {},
-  timesheet_id:null,
+  timesheet_id: null,
   location: {
     latitude: null,
     longitude: null,
   },
+  signin: null,
+  signup: null,
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -22,11 +24,14 @@ export default (state = initialState, { type, payload }) => {
       };
     }
     case actionConstant.ACTION_GET_QR_CODE_SUCCESS: {
+      const hasSign = payload.data?.timesheet_id ? true : false;
       return {
         ...state,
         isRequesting: false,
         data: payload.data,
         timesheet_id: payload.data.timesheet_id,
+        signin: hasSign ? payload.data.signin : state.signin,
+        // signup: !hasSign ? payload.data.signup : state.signup,
         error: {},
       };
     }

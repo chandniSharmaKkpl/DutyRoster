@@ -15,7 +15,6 @@ export const requestToUpdateProfile = (params) => {
 };
 
 export const requestUpdateProfileHeader = (params) => {
-  console.log("requestUpdateProfileHeader",params);
   return {
     type: actionConstant.ACTION_SET_USER_PROFILE_HEADER,
     payload: params,
