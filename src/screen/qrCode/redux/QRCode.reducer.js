@@ -14,6 +14,7 @@ const initialState = {
 };
 
 export default (state = initialState, { type, payload }) => {
+  console.log("payload:::::::payload::::: ==>",JSON.stringify(payload,null,4));
   switch (type) {
     case actionConstant.ACTION_GET_QR_CODE_REQUEST: {
       return {
@@ -30,7 +31,7 @@ export default (state = initialState, { type, payload }) => {
         isRequesting: false,
         data: payload.data,
         timesheet_id: payload.data.timesheet_id,
-        signin: hasSign ? payload.data.signin : state.signin,
+        signin: hasSign ? payload.signin : state.signin,
         // signup: !hasSign ? payload.data.signup : state.signup,
         error: {},
       };

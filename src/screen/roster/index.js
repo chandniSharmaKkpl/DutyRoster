@@ -68,7 +68,7 @@ const RosterScreen = (props) => {
 
   // markedDates obj function
 
-  console.log("cardData ===>", JSON.stringify(rosterReducer, null, 4));
+  // console.log("cardData ===>", JSON.stringify(rosterReducer, null, 4));
 console.log("startDay :::: endDay :::::", startDay,endDay);
   React.useLayoutEffect(() => {
     if (!accessToken || !isAuth) {

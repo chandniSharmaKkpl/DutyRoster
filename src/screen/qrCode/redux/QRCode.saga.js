@@ -1,5 +1,7 @@
 import { actionConstant, alertMsgConstant, appConstant } from "@/constant";
+import localDb from "@/database/localDb";
 import { navigate, navigationRef } from "@/navigators/utils";
+import { userLogoutAction } from "@/screen/login/redux/Login.action";
 import { StackActions } from "@react-navigation/native";
 import { takeLatest, take, call, put, select, all } from "redux-saga/effects";
 import { QRCodeCall } from "./QRCode.api";
@@ -7,7 +9,10 @@ import { QRCodeCall } from "./QRCode.api";
 export function* workerGetQRCodeResponse(action) {
   try {
     const qrCodeResponse = yield call(QRCodeCall, action.payload);
-    console.log("qrCodeParams", JSON.stringify(qrCodeResponse, null, 4));
+    // console.log(
+    //   " ::::::: qrCodeParams ::::::",
+    //   JSON.stringify(qrCodeResponse, null, 4)
+    // );
     if (!qrCodeResponse.success) {
       var stringCombined = "";
       let arrayTemp = Object.keys(qrCodeResponse.error);
@@ -32,11 +37,12 @@ export function* workerGetQRCodeResponse(action) {
         type: actionConstant.ACTION_GET_QR_CODE_SUCCESS,
         payload: { ...qrCodeResponse, signin: action.payload.signin },
       });
-      // alert(qrCodeResponse.message);
+      // console.log("action.payload.signout", action.payload.signout);
       if (action.payload.signout) {
-        // alert(response.data.message);
+        localDb.clearAll();
         navigationRef.dispatch(StackActions.replace(appConstant.LOGIN));
       } else if (action.payload.signin) {
+        // alert('success')
         navigate(appConstant.ROASTER);
       }
       toast.show(qrCodeResponse.message, {

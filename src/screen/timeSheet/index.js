@@ -60,7 +60,7 @@ const TimeSheetScreen = (props) => {
   const [isAlertShow, setIsAlertShow] = useState(false);
 
 
-  console.log("cardData ===>", JSON.stringify(data, null, 4));
+  // console.log("cardData ===>", JSON.stringify(data, null, 4));
 
   React.useLayoutEffect(() => {
     if (!accessToken || !isAuth) {

@@ -8,14 +8,12 @@ import {
   InteractionManager,
   AppState,
 } from "react-native";
-import stylesCommon from "../../common/commonStyle";
 import styles from "./style";
 import {
   useNavigation,
   useRoute,
   useFocusEffect,
 } from "@react-navigation/core";
-import { CustomButton } from "@/components/CustomButton";
 import { CommonHeader } from "@/components";
 import * as Animatable from "react-native-animatable";
 import QRCodeScanner from "react-native-qrcode-scanner";
@@ -28,7 +26,6 @@ import Svg, {
   Text as SvgText,
 } from "react-native-svg";
 import { connect } from "react-redux";
-import moment from "moment";
 import { convertDateTime } from "@/common/timeFormate";
 import {
   requestToGetQRCodeResponse,
@@ -64,6 +61,11 @@ const QRCodeScreen = (props) => {
     return true;
   };
 
+  useEffect(() => {
+    console.log("timesheet_id --->", timesheet_id);
+    console.log("signin --->", signin);
+  }, [timesheet_id, signin]);
+
   const onSuccess = async (e) => {
     let locations;
     let lat = null;
@@ -92,7 +94,6 @@ const QRCodeScreen = (props) => {
         if (locations) {
           lat = locations.latitude;
           lon = locations.longitude;
-          // console.log("Geolocation.lat && Geolocation.lon", lat, lon);
           setQRLocationAction({
             latitude: lat,
             longitude: lon,
@@ -157,6 +158,7 @@ const QRCodeScreen = (props) => {
       const signIn = convertDateTime(currentTime, false, true); // convert time formate and get current time
       const date = convertDateTime(currentTime, true, false); // covert date formate and get current date
       // permissionHandle()
+
       if (location.latitude && location.longitude) {
         if (timesheet_id && signin) {
           requestToFetQRCodeResponseAction({

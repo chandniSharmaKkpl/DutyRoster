@@ -8,10 +8,10 @@ export function* workerGetRoasterDateResponse(action) {
       RoasterDateRangeCall,
       action.payload
     );
-    console.log(
-      "roasterDateRangeResponse",
-      JSON.stringify(roasterDateRangeResponse, null, 4)
-    );
+    // console.log(
+    //   "roasterDateRangeResponse",
+    //   JSON.stringify(roasterDateRangeResponse, null, 4)
+    // );
     yield put({
       type: actionConstant.ACTION_GET_ROASTER_DATE_SUCCESS,
       payload: roasterDateRangeResponse?.data,

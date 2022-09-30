@@ -25,7 +25,7 @@ client.interceptors.response.use(
       const res = response.data;
       if (res.error.login_fail) {
         // console.log('res.header',res.header);
-
+        console.error("login_fail");
         localDb.clearAll();
         navigationRef.dispatch(StackActions.replace(appConstant.LOGIN));
       }

@@ -115,6 +115,10 @@ const CommonHeader = (props) => {
     navigationRef.navigate(appConstant.PROFILE_SETTINGS);
   };
 
+  React.useEffect(() => {
+console.log("profileImage:::::::::::profileImage ===>", profileImage);
+  },[profileImage])
+
   const onUnavailablity = () => {
     navigationRef.navigate(appConstant.AVAILABILITY);
   };
