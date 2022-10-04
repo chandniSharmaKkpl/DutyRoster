@@ -261,6 +261,7 @@ export const styles = {
     paddingBottom: "3%",
   },
   txtRed: {
+    fontWeight: fontConstant.WEIGHT_BOLD,
     fontFamily: fontConstant.FONT_SEMI_BOLD,
     fontSize: fontConstant.TEXT_12_SIZE_BOLD,
     color: appColor.RED,

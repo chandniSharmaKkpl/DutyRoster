@@ -21,7 +21,7 @@ export default StyleSheet.create({
   },
   mainTitle: {
     fontSize: fontConstant.TEXT_20_SIZE_BOLD,
-    fontWeight: fontConstant.WEIGHT_SEMI_BOLD,
+    fontWeight: fontConstant.WEIGHT_BOLD,
     color: appColor.RED,
     marginBottom: "1.5%",
   },

@@ -90,6 +90,7 @@ const QRCodeScreen = (props) => {
         return;
       }
       locations = await RNLocation.getLatestLocation({ timeout: 100 });
+      console.log("locations:::::::", locations);
       try {
         if (locations) {
           lat = locations.latitude;
@@ -103,6 +104,8 @@ const QRCodeScreen = (props) => {
           return;
         }
       } catch (error) {
+      console.log("locations:::::::", locations);
+
         console.log("error at getlatestLocation", error);
       }
     } else {

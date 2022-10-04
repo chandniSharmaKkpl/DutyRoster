@@ -33,7 +33,7 @@ const isValidTitle = (string) => {
 };
 
 const isValidPassword = (password) => {
-  var format = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,30}$/;
+  var format = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{6,30}$/;
   if (password.match(format)) {
     return true;
   } else {

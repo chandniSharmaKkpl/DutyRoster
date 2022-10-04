@@ -260,10 +260,12 @@ export default StyleSheet.create({
     color: appColor.BLACK,
   },
   dateTextStyle: {
+    fontWeight: fontConstant.WEIGHT_BOLD,
     fontSize: fontConstant.TEXT_H2_5_SIZE_BOLD,
     color: appColor.WHITE,
   },
   unSelectBoxDateTextStyle: {
+    fontWeight: fontConstant.WEIGHT_BOLD,
     fontSize: fontConstant.TEXT_H2_5_SIZE_BOLD,
     color: appColor.BLACK,
   },

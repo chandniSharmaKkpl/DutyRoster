@@ -47,6 +47,8 @@ import { connect, useSelector } from "react-redux";
 import Loader from "@/components/Loader";
 import ProgressiveImage from "@/components/ProgressiveImage";
 import { USER_DATE_FORMAT } from "@/utils";
+import { CheckConnectivity, unsubscribe } from "@/utils/CheckConnectivity";
+import NetInfo from "@react-native-community/netinfo";
 
 const EditProfile = (props) => {
   const { requestToUpdateProfileAction, requestToUpdateProfileInHeaderAction } =
@@ -106,41 +108,43 @@ const EditProfile = (props) => {
     moveBack();
     return true;
   };
+  const fetchUserDetails = React.useCallback(async () => {
+    let responsedata = await localDb.getUser().then((response) => {
+      return response;
+    });
+    setEmployee_id(responsedata.user.id);
+    await props.requestToGetProfile({
+      employee_id: responsedata.user.id,
+      navigation: navigation,
+    });
+    setError({
+      titleErr: "",
+      // paymentErr: "",
+      nameErr: "",
+      emailErr: "",
+      phoneErr: "",
+      dobErr: "",
+      addressErr: "",
+      tfnErr: "",
+      passwordErr: "",
+      cnfpasswordErr: "",
+    });
+  }, []);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      (async () => {
-        let responsedata = await localDb.getUser().then((response) => {
-          return response;
-        });
-        setEmployee_id(responsedata.user.id);
-        await props.requestToGetProfile({
-          employee_id: responsedata.user.id,
-          navigation: navigation,
-        });
-        setError({
-          titleErr: "",
-          // paymentErr: "",
-          nameErr: "",
-          emailErr: "",
-          phoneErr: "",
-          dobErr: "",
-          addressErr: "",
-          tfnErr: "",
-          passwordErr: "",
-          cnfpasswordErr: "",
-        });
-      })();
-    }, [])
-  );
   useEffect(() => {
     BackHandler.addEventListener("hardwareBackPress", handleBackButtonClick);
-
+    const removeNetInfoSubscription = NetInfo.addEventListener((state) => {
+      const offline = !(state.isConnected && state.isInternetReachable);
+      if (!offline) {
+        fetchUserDetails();
+      }
+    });
     return () => {
       BackHandler.removeEventListener(
         "hardwareBackPress",
         handleBackButtonClick
       );
+      removeNetInfoSubscription();
     };
   }, []);
 
@@ -388,6 +392,7 @@ const EditProfile = (props) => {
       if (password) {
         data["password"] = password;
       }
+
       requestToUpdateProfileAction(data);
     }
   };
@@ -608,7 +613,11 @@ const EditProfile = (props) => {
               <View style={styles.btnContainer}>
                 <CustomButton
                   title="Save"
-                  onPress={onSubmit}
+                  onPress={() => {
+                    if (props.isNetworkConnected) {
+                      onSubmit();
+                    }
+                  }}
                   styleBtn={styles.savaBtn}
                   styleTxt={styles.btnSaveText}
                 />
@@ -635,6 +644,10 @@ const EditProfile = (props) => {
   );
 };
 
+const mapStateToProps = (state) => ({
+  isNetworkConnected: state.GlobalReducer.isNetworkConnected,
+});
+
 const mapDispatchToProps = (dispatch) => {
   return {
     requestToGetProfile: (params) =>
@@ -647,4 +660,4 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(profileAction.requestUpdateProfileHeader(params)),
   };
 };
-export default connect(null, mapDispatchToProps)(EditProfile);
+export default connect(mapStateToProps, mapDispatchToProps)(EditProfile);

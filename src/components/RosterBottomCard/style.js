@@ -16,8 +16,8 @@ export default StyleSheet.create({
   },
   cardConatinerDetails: {
     paddingVertical: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: appColor.BORDER_GRAY_DARK,
+    // borderBottomWidth: 1,
+    // borderBottomColor: appColor.BORDER_GRAY_DARK,
   },
   mainTitle: {
     fontSize: fontConstant.TEXT_20_SIZE_BOLD,

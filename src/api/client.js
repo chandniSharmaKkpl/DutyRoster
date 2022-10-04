@@ -34,10 +34,10 @@ client.interceptors.response.use(
   },
   (error) => {
     if (error.response?.status === 401) {
-      // if (isLocalStorageAvailable()) {
-      // localDb.clearAll();
-      // navigationRef.dispatch(StackActions.replace(appConstant.LOGIN));
-      // }/
+      localDb.clearAll();
+      navigationRef.dispatch(StackActions.replace(appConstant.LOGIN));
+    } else if (error.toJSON().message === "Network Error") {
+      alert("no internet connection");
     }
 
     error.message = error.response

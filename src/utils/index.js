@@ -60,7 +60,10 @@ function getDateFromTimeStamp(timestamp) {
   return moment.unix(timestamp).format("DD/MM/YYYY");
 }
 function getTimeFromDateTime(dateTime) {
-  return moment(dateTime).format("hh:mm");
+  return moment(dateTime).format("hh:mm A");
+}
+function getTimeFromDateTimeUTC(dateTime) {
+  return moment.utc(dateTime).format("hh:mm A");
 }
 
 function get24HrFrom12HrFormat(time) {
@@ -190,4 +193,5 @@ export {
   changeDateFormat,
   inBetweenTime,
   dateCheckForCurrentWeek,
+  getTimeFromDateTimeUTC,
 };

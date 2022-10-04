@@ -1,7 +1,7 @@
 export default {
   WARNING: "Warning",
   ALERT: "Alert",
-  NO_INTERNET: "Data fetching will take time in low internet connection!",
+  NO_INTERNET: "Please turn on your internet connection!",
   EMAIL_NOT_EMPTY: "Email cannot be empty",
   PASSWORD_NOT_EMPTY: "Password cannot be empty",
   PASSWORD_NOT_EQUAL: "The password confirmation and password must match.",
@@ -19,7 +19,7 @@ export default {
   PLEASE_CONFIRM: "Please Confirm?",
   MINIMUM_10_DIGIT: "Phone number must be at least 10 digit",
   MAXIMUM_12_DIGIT: "Phone number may not be greater than 12 digit",
-  PHONE_NUMBER_NOT_VALID: "phone number not vallid",
+  PHONE_NUMBER_NOT_VALID: "Phone number not vallid",
   NO: "No",
   YES: "Yes",
   ARE_YOU_SURE_TO_LOGOUT: "Are you sure to logout?",
@@ -53,17 +53,17 @@ export default {
   LOCATION_PERMISSION_ALERT:
     "You need to give permission for accessing location otherwise you can't scan it.",
     YOU_CAN_NOT_ADD_AVAILABILITY : "You can't add availability for your current week and past weeks",
+    MSG_STRONG_PWD:
+      "Password must be 6 characters long and should contain at least 1 Uppercase and 1 Numeric",
+    MSG_PHONE_NOT_EMPTY: "Phone cannot be empty",
+    TFN_CHAR_LIMIT: "TFN field must be 9 digits",
+    REPLACE_YOUR_NEXT_WEEK_DATA: "If you copy your current week data then it will replace your next week data if you have added",
   //** Toast types **/
   TOAST_SUCCESS: "success",
   TOAST_NORMAL: "normal",
   TOAST_WARNING: "warning",
   TOAST_DANGER: "danger",
   TOAST_CUSTOM: "custom",
-  MSG_STRONG_PWD:
-    "Password must be 8 characters long and should contain at least 1 Uppercase and 1 Numeric",
-  MSG_PHONE_NOT_EMPTY: "Phone cannot be empty",
-  TFN_CHAR_LIMIT: "TFN number should be 9 digit",
-  REPLACE_YOUR_NEXT_WEEK_DATA: "If you copy your current week data then it will replace your next week data if you have added",
   //** Bio metric authentication error messages  */
   //ios
   MSG_AUTHENTICATION_FAILED:

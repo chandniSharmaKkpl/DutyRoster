@@ -45,7 +45,7 @@ export default StyleSheet.create({
     textAlign: "left",
     color: appColor.RED,
     textTransform: "uppercase",
-    fontWeight: fontConstant.WEIGHT_SEMI_BOLD,
+    fontWeight: fontConstant.WEIGHT_BOLD,
     paddingVertical: 10,
     borderColor: "#FFF",
     borderWidth: 1,
@@ -62,7 +62,7 @@ export default StyleSheet.create({
   },
   contentText: {
     textAlign: "left",
-    fontWeight: fontConstant.WEIGHT_REGULAR,
+    fontWeight: fontConstant.WEIGHT_SEMI_BOLD,
     paddingVertical: 5,
     color: appColor.BLACK,
   },
@@ -80,7 +80,7 @@ export default StyleSheet.create({
   },
   emptyDataText: {
     fontSize: fontConstant.TEXT_15_SIZE_BOLD,
-    fontWeight: fontConstant.WEIGHT_SEMI_BOLD,
+    fontWeight: fontConstant.WEIGHT_BOLD,
     color: "#242424B3",
   },
 });

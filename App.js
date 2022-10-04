@@ -9,16 +9,18 @@ import Toast, { ToastProvider } from "react-native-toast-notifications";
 
 addAuthTokenInterceptor(StoreRoot); // set accessToken all api
 
-console. disableYellowBox = true
-const App = () => (
-  <ToastProvider>
-    <Provider store={StoreRoot}>
-      <PersistGate loading={<Text></Text>} persistor={persistor}>
-        <ApplicationNavigator />
-      </PersistGate>
-    </Provider>
-    <Toast ref={ref => (global.toast = ref)} />
-  </ToastProvider>
-);
+console.disableYellowBox = true;
+const App = () => {
+  return (
+    <ToastProvider>
+      <Provider store={StoreRoot}>
+        <PersistGate loading={<Text></Text>} persistor={persistor}>
+          <ApplicationNavigator />
+        </PersistGate>
+      </Provider>
+      <Toast ref={(ref) => (global.toast = ref)} />
+    </ToastProvider>
+  );
+};
 
 export default App;

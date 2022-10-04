@@ -189,6 +189,8 @@ export const replaceAvalabiltyItems = (_prevData, newData) => {
         let flag = false;
         prevData.map((_prevItem, _prevItemIndex) => {
           // console.log("_prevItemIndex", _prevItemIndex);
+          console.log("_prevItem.start_time =====>", _prevItem.start_time < _newItem.start_time);
+          console.log("_prevItem.end_time =====>", _prevItem.end_time > _newItem.end_time);
           if (
             _prevItem.start_time === _newItem.start_time ||
             _prevItem.end_time === _newItem.end_time

@@ -314,6 +314,8 @@ PODS:
     - React-Core
   - react-native-location (2.5.0):
     - React
+  - react-native-netinfo (9.3.2):
+    - React-Core
   - react-native-safe-area-context (3.4.1):
     - React-Core
   - react-native-splash-screen (3.3.0):
@@ -498,6 +500,7 @@ DEPENDENCIES:
   - react-native-geolocation-service (from `../node_modules/react-native-geolocation-service`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-location (from `../node_modules/react-native-location`)
+  - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
   - react-native-webview (from `../node_modules/react-native-webview`)
@@ -600,6 +603,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-image-picker"
   react-native-location:
     :path: "../node_modules/react-native-location"
+  react-native-netinfo:
+    :path: "../node_modules/@react-native-community/netinfo"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-splash-screen:
@@ -697,6 +702,7 @@ SPEC CHECKSUMS:
   react-native-geolocation-service: f32ef48fa665bd710207a3ac39bc127cac9cb993
   react-native-image-picker: 4bc9ed38c8be255b515d8c88babbaf74973f91a8
   react-native-location: 5a40ec1cc6abf2f6d94df979f98ec76c3a415681
+  react-native-netinfo: 687904c63baa828543bb6e94c265977e0ac70f14
   react-native-safe-area-context: 9e40fb181dac02619414ba1294d6c2a807056ab9
   react-native-splash-screen: 4312f786b13a81b5169ef346d76d33bc0c6dc457
   react-native-webview: d33e2db8925d090871ffeb232dfa50cb3a727581

@@ -12,6 +12,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import NetInfo from "@react-native-community/netinfo";
 
 import { navigationRef } from "./utils";
 import { appColor, appConstant } from "../constant";
@@ -27,6 +28,8 @@ import Availability from "@/screen/availability";
 import ProfileSetting from "@/screen/profileSettings";
 import Calendars from "@/components/Calendars";
 import SplashScreen from "@/screen/splashScreen";
+import { useDispatch } from "react-redux";
+import { setNetworkConnection } from "@/api/reducerRoot/global.reducer";
 
 export const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -39,6 +42,17 @@ const MyTheme = {
 };
 // @refresh reset
 const ApplicationNavigator = (props) => {
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    const removeNetInfoSubscription = NetInfo.addEventListener((state) => {
+      const offline = !(state.isConnected && state.isInternetReachable);
+      dispatch(setNetworkConnection(!offline));
+    });
+
+    return () => {
+      removeNetInfoSubscription();
+    };
+  }, []);
   // const { Layout, darkMode, NavigationTheme } = useTheme()
   // const { colors } = NavigationTheme
   return (

@@ -26,7 +26,7 @@ const Item = ({ item, key }) => {
                   styles.titleText,
                   {
                     minWidth: _el.maxWidth,
-                    textAlign: _el.textAlign ?? "left",
+                    textAlign: _el.titleAlignment ?? "left",
                   },
                 ]}
               >
@@ -39,6 +39,7 @@ const Item = ({ item, key }) => {
       {isItemsNotEmpty ? (
         <View style={styles.contentContainer}>
           {items.map((_item) => {
+            console.log("isItemsNotEmpty ==>", _item);
             return (
               <>
                 <View style={styles.contentTextContainer}>

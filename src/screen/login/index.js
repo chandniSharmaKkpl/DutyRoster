@@ -36,9 +36,13 @@ const Login = (props) => {
   // console.log('state.LoginReducer',props.LoginReducer);
   const [email, setEmail] = useState(
     process.env.NODE_ENV !== "production" ? "windodee@yopmail.com" : ""
+    // process.env.NODE_ENV !== "production" ? "emp_myur@yopmail.com" : ""
+    // process.env.NODE_ENV !== "production" ? "2exceltest1@yopmail.com" : ""
   );
   const [password, setPassword] = useState(
     process.env.NODE_ENV !== "production" ? "Test@1234" : ""
+    // process.env.NODE_ENV !== "production" ? "HelloWorld1!" : ""
+    // process.env.NODE_ENV !== "production" ? "Test@123" : ""
   );
   const [isClickEye, setIsClickEye] = useState(false);
   const loginResponse = useSelector((state) => state.LoginReducer);

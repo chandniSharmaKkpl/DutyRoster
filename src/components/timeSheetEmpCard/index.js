@@ -8,9 +8,10 @@ import TimeSheetBottomCard from "../TimeSheetBottomCard";
 
 const TimeSheetEmpTimeCard = (props) => {
   const { data, cardData } = props;
+
   const renderItem = ({ item, index }) => <Item item={item} key={index} />;
 
-  // console.log("DATA", data);
+  console.log("DATA ===>", data);
   return (
     <View>
       <FlatList

@@ -1,4 +1,4 @@
-import { getTimeFromDateTime } from "../index";
+import { getTimeFromDateTime, getTimeFromDateTimeUTC } from "../index";
 
 export const timeSheetCardConfig = [
   {
@@ -14,6 +14,8 @@ export const timeSheetCardConfig = [
     flag: false,
     maxWidth: "15%",
     flex: 1,
+    titleAlignment: "left",
+    textAlign: "center",
   },
   {
     title: "OUT",
@@ -21,6 +23,8 @@ export const timeSheetCardConfig = [
     flag: false,
     maxWidth: "15%",
     flex: 1,
+    titleAlignment: "left",
+    textAlign: "center",
   },
   {
     title: "LHR",
@@ -250,7 +254,8 @@ export const extractData = (item, { key, type }) => {
   if (key === "location") {
     return item[key];
   } else if (key === "signin" || key === "signout") {
-    return getTimeFromDateTime(item[key]);
+    console.log("getTimeFromDateTime=>", item[key]);
+    return getTimeFromDateTimeUTC(item[key]);
   } else if (key == "shift") {
     if (type === item[key]) {
       return item.hours;
