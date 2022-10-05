@@ -2,6 +2,7 @@ import { alertMsgConstant } from "@/constant";
 import _ from "lodash";
 import {
   API_DATE_FORMAT,
+  changeDateFormat,
   checkObject,
   checkObjectHasData,
   get24HrFrom12HrFormat,
@@ -13,6 +14,7 @@ import {
   renameKey,
 } from "@/utils";
 import moment from "moment";
+import { Alert } from "react-native";
 
 export const SET_DATA_TYPE = {
   district_id: "district_id",
@@ -142,22 +144,11 @@ export const isInOutTimeValid = (inTime, outTime) => {
   if (inTime) {
     const inTimeInMilisecond = Number(moment(inTime, "hh:mm A").format("x"));
     const outTimeInMilisecond = Number(moment(outTime).format("x"));
-    // console.log("inTime ", inTimeInMilisecond);
-    // console.log("outTime", outTimeInMilisecond);
-    // console.log(
-    //   `in => ${getAmPmFromDate(inTimeInMilisecond)}, out => ${getAmPmFromDate(
-    //     outTimeInMilisecond
-    //   )}`
-    // );
 
     if (
       getAmPmFromDate(inTimeInMilisecond) === "PM" &&
       getAmPmFromDate(outTimeInMilisecond) === "AM"
     ) {
-      // console.log("in => PM, out => AM");
-      // console.log("new inTime", inTimeInMilisecond + 3 * 60 * 60 * 1000);
-      // console.log("new outTime", outTimeInMilisecond + 24 * 60 * 60 * 1000);
-
       if (
         inTimeInMilisecond + 3 * 60 * 60 * 1000 <= //addThree Hour in IN time
         outTimeInMilisecond + 24 * 60 * 60 * 1000 // add One day in Out Time
@@ -176,41 +167,112 @@ export const isInOutTimeValid = (inTime, outTime) => {
   }
   return false;
 };
-const uniqueIterator = (item) => item.start_time || item.end_time;
-export const replaceAvalabiltyItems = (_prevData, newData) => {
+
+//  Add button avalability functionality
+const uniqueIterator = (item) => item.start_time || item.end_time; // Same item data remove and get unique item
+
+const parseTimeInTimestamp = (_startTime, _endTime) => {
+  let startTime = Number(changeDateFormat(_startTime, "HH:mm", "x"));
+  let endTime = Number(changeDateFormat(_endTime, "HH:mm", "x"));
+  if (startTime >= endTime) {
+    // console.log("", moment(endTime).add(1, "day"));
+    endTime = Number(moment(endTime).add(1, "day").format("x"));
+  }
+  return { startTime, endTime };
+};
+
+export const replaceAvalabiltyItems = (_prevData, newData, dateKey) => {
   // console.log("newData", JSON.stringify(newData, null, 4));
   // console.log("prevData", JSON.stringify(prevData, null, 4));
-  let prevData =_.uniqBy(_.cloneDeep(_prevData), uniqueIterator);
+  let prevData = _.uniqBy(_.cloneDeep(_prevData), uniqueIterator);
   const avalabilityTimes = _.uniqBy(_.cloneDeep(_prevData), uniqueIterator);
   try {
     if (newData && prevData) {
+      const alertData = [];
       newData.map((_newItem, _newItemIndex) => {
         // console.log("_newFItemIndex", _newItemIndex);
         let flag = false;
+
+        const { startTime: _newStartTime, endTime: _newEndTime } =
+          parseTimeInTimestamp(_newItem.start_time, _newItem.end_time);
+        // const _newEndTime = _newItem.end_time;
+
         prevData.map((_prevItem, _prevItemIndex) => {
           // console.log("_prevItemIndex", _prevItemIndex);
-          console.log("_prevItem.start_time =====>", _prevItem.start_time < _newItem.start_time);
-          console.log("_prevItem.end_time =====>", _prevItem.end_time > _newItem.end_time);
+          // console.log("_prevEndTime =====>", _prevEndTime > _newEndTime);
+
+          // const _prevStartTime = _prevItem.start_time;
+          // const _prevEndTime = _prevItem.end_time;
+
+          const { startTime: _prevStartTime, endTime: _prevEndTime } =
+            parseTimeInTimestamp(_prevItem.start_time, _prevItem.end_time);
+
           if (
-            _prevItem.start_time === _newItem.start_time ||
-            _prevItem.end_time === _newItem.end_time
+            (_newStartTime > _prevStartTime && _newStartTime < _prevEndTime) ||
+            (_newEndTime > _prevStartTime && _newEndTime < _prevEndTime)
           ) {
-            avalabilityTimes[_prevItemIndex] = _newItem;
+            console.group("Test date format version 1");
+
+            // console.log(
+            //   " check date formate ===> ",
+            //   (_newStartTime > _prevStartTime &&
+            //     _newStartTime < _prevEndTime) ||
+            //     (_newEndTime > _prevStartTime && _newEndTime < _prevEndTime)
+            // );
+            // console.groupEnd();
             flag = true;
+            alertData.push(
+              `${_newItem.start_time} - ${_newItem.end_time} is already occupied on ${dateKey}`
+            );
+          } else if (
+            (_newStartTime < _prevStartTime && _newEndTime > _prevStartTime) ||
+            (_newStartTime < _prevEndTime && _newEndTime > _prevEndTime)
+          ) {
+            // console.group("Test date format version 2");
+            // console.log(
+            //   JSON.stringify(
+            //     {
+            //       addedStartTime: _newStartTime,
+            //       addedEndTime: _newEndTime,
+            //       existStartTime: _prevStartTime,
+            //       existEndTime: _prevEndTime,
+            //     },
+            //     null,
+            //     4
+            //   )
+            // );
+            // console.log(
+              // "check date formate 2 ===> ",
+              // (_newStartTime < _prevStartTime &&
+                // _newEndTime > _prevStartTime) ||
+                // (_newStartTime < _prevEndTime && _newEndTime > _prevEndTime)
+            // );
+            // console.groupEnd();
+            alertData.push(
+              `${_newItem.start_time} - ${_newItem.end_time} is already occupied on ${dateKey}`
+            );
+            flag = true;
+          } else if (
+            _prevStartTime === _newStartTime ||
+            _prevEndTime === _newEndTime
+          ) {
+            // avalabilityTimes[_prevItemIndex] = _newItem;
+            flag = true;
+            alertData.push(
+              `${_newItem.start_time} - ${_newItem.end_time}  is already occupied on ${dateKey}`
+            );
           }
         });
         if (!flag) {
           avalabilityTimes.push({ ..._newItem });
         }
       });
-      return avalabilityTimes;
+      return { times: avalabilityTimes, alerts: alertData };
     }
   } catch (error) {
     alert(error);
     return null;
   }
-  // const data = prevData.map((item) => item === newData);
-  // console.log("sameData", data);
 };
 export const addAvailibilityDataParams = ({
   selected,
@@ -260,6 +322,7 @@ export const addAvailibilityDataParams = ({
           };
         });
 
+        let alertData = [];
         selected.availabilitySelectedDate.forEach((element) => {
           let dateKey = getDateFromTimeStamp(element);
 
@@ -267,15 +330,20 @@ export const addAvailibilityDataParams = ({
             checkObjectHasData(availabilityData, dateKey) &&
             checkObject(availabilityData[dateKey])
           ) {
-            console.log(
-              "checkObjectHasData",
-              checkObjectHasData(availabilityData[dateKey], "times")
-            );
+            // console.log(
+            //   "checkObjectHasData",
+            //   checkObjectHasData(availabilityData[dateKey], "times")
+            // );
             if (checkObjectHasData(availabilityData[dateKey], "times")) {
-              const _newDatas = replaceAvalabiltyItems(
+              const { times: _newDatas, alerts } = replaceAvalabiltyItems(
                 availabilityData[dateKey].times,
-                time
+                time,
+                dateKey
               );
+              if (alerts && alerts.length > 0) {
+                console.error(JSON.stringify(alerts, null, 4));
+                alertData = alertData.concat(alerts);
+              }
 
               availability[dateKey] = {
                 times: _newDatas,
@@ -294,6 +362,17 @@ export const addAvailibilityDataParams = ({
             };
           }
         });
+        if (alertData && alertData.length > 0);
+        Alert.alert("Time Alert", alertData.join("\n"), [
+          { text: "OK", onPress: () => console.log("OK Pressed") },
+        ]);
+        // if (alertData) {
+        //   alertData.map((alert) => {
+        //     toast.show(alert, {
+        //       type: alertMsgConstant.TOAST_DANGER,
+        //     });
+        //   });
+        // }
         params.availability = availability;
       } else {
         // toast.show("Not Data selected", {
@@ -331,10 +410,10 @@ const modifyData = ({ currentWeek, nextWeek, data }) => {
     currentWeekDays.forEach((_day, index) => {
       nextWeekData[nextWeekDays[index]] = data[_day];
     });
-    console.log(
-      "modifyData",
-      JSON.stringify({ currentWeek, nextWeek, data, nextWeekData }, null, 4)
-    );
+    // console.log(
+    //   "modifyData",
+    //   JSON.stringify({ currentWeek, nextWeek, data, nextWeekData }, null, 4)
+    // );
     // console.log(JSON.stringify(nextWeekData, null, 4));
     return nextWeekData;
   } catch (error) {

@@ -116,7 +116,7 @@ const Shift = (props) => {
                   <View style={styles.moreImageViewContainer}>
                     <Pressable
                       onPress={() => {
-                        if (dateCheckForCurrentWeek(new Date(), startDay)) {
+                        if (dateCheckForCurrentWeek(new Date(), startDay, "edit")) {
                           setEditModal({
                             index: index,
                             date: item,

@@ -14,7 +14,7 @@ const initialState = {
 };
 
 export default (state = initialState, { type, payload }) => {
-  console.log("payload:::::::payload::::: ==>",JSON.stringify(payload,null,4));
+  // console.log("payload:::::::payload::::: ==>",JSON.stringify(payload,null,4));
   switch (type) {
     case actionConstant.ACTION_GET_QR_CODE_REQUEST: {
       return {

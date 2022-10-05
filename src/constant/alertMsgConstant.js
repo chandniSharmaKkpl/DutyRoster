@@ -53,6 +53,9 @@ export default {
   LOCATION_PERMISSION_ALERT:
     "You need to give permission for accessing location otherwise you can't scan it.",
     YOU_CAN_NOT_ADD_AVAILABILITY : "You can't add availability for your current week and past weeks",
+    YOU_CAN_NOT_EDIT_AVAILABILITY : "You can't edit availability for your current week and past weeks",
+    YOU_CAN_NOT_COPY_AVAILABILITY : "You can't copy availability for your current week and past weeks",
+    YOU_CAN_NOT_SAVE_AVAILABILITY : "You can't save availability for your current week and past weeks",
     MSG_STRONG_PWD:
       "Password must be 6 characters long and should contain at least 1 Uppercase and 1 Numeric",
     MSG_PHONE_NOT_EMPTY: "Phone cannot be empty",

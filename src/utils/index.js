@@ -33,16 +33,35 @@ function getCurrentWeek(date) {
   };
 }
 
-function dateCheckForCurrentWeek(date, startDay) {
+function dateCheckForCurrentWeek(date, startDay, flag) {
+  console.log("flag", flag);
   var currentDate = moment(date);
   var weekEnd = currentDate.clone().endOf("isoWeek").toDate();
 
   if (weekEnd <= startDay) {
     return true;
   } else {
-    toast.show(alertMsgConstant.YOU_CAN_NOT_ADD_AVAILABILITY, {
-      type: alertMsgConstant.TOAST_DANGER,
-    });
+    if (flag == "add") {
+      toast.show(alertMsgConstant.YOU_CAN_NOT_ADD_AVAILABILITY, {
+        type: alertMsgConstant.TOAST_DANGER,
+      });
+    } else if (flag == "edit") {
+      toast.show(alertMsgConstant.YOU_CAN_NOT_EDIT_AVAILABILITY, {
+        type: alertMsgConstant.TOAST_DANGER,
+      });
+    } else if (flag == "copy") {
+      toast.show(alertMsgConstant.YOU_CAN_NOT_COPY_AVAILABILITY, {
+        type: alertMsgConstant.TOAST_DANGER,
+      });
+    } else if (flag == "save") {
+      toast.show(alertMsgConstant.YOU_CAN_NOT_SAVE_AVAILABILITY, {
+        type: alertMsgConstant.TOAST_DANGER,
+      });
+    }else {
+      toast.show(alertMsgConstant.YOU_CAN_NOT_ADD_AVAILABILITY, {
+        type: alertMsgConstant.TOAST_DANGER,
+      });
+    }
     return false;
   }
 }

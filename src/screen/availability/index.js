@@ -401,7 +401,7 @@ const Availability = (props) => {
               style={styles.btnBlack}
               onPress={() => {
                 // onloadeddata();
-                if (dateCheckForCurrentWeek(new Date(), startDay)) {
+                if (dateCheckForCurrentWeek(new Date(), startDay, "add")) {
                   requestToAddAvailabilityAction();
                 }
               }}
@@ -436,7 +436,7 @@ const Availability = (props) => {
               <TouchableOpacity
                 style={styles.btnSave}
                 onPress={() => {
-                  if (dateCheckForCurrentWeek(new Date(), startDay)) {
+                  if (dateCheckForCurrentWeek(new Date(), startDay, "save")) {
                     requestToSaveAvailabilityAction();
                   }
                 }}
@@ -448,7 +448,7 @@ const Availability = (props) => {
               <TouchableOpacity
                 style={styles.btnCopy}
                 onPress={() => {
-                  if (dateCheckForCurrentWeek(new Date(), startDay)) {
+                  if (dateCheckForCurrentWeek(new Date(), startDay, "copy")) {
                     onNextWeekCopyData();
                   }
                 }}
