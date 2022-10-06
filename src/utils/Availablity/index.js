@@ -242,10 +242,10 @@ export const replaceAvalabiltyItems = (_prevData, newData, dateKey) => {
             //   )
             // );
             // console.log(
-              // "check date formate 2 ===> ",
-              // (_newStartTime < _prevStartTime &&
-                // _newEndTime > _prevStartTime) ||
-                // (_newStartTime < _prevEndTime && _newEndTime > _prevEndTime)
+            // "check date formate 2 ===> ",
+            // (_newStartTime < _prevStartTime &&
+            // _newEndTime > _prevStartTime) ||
+            // (_newStartTime < _prevEndTime && _newEndTime > _prevEndTime)
             // );
             // console.groupEnd();
             alertData.push(
@@ -362,17 +362,11 @@ export const addAvailibilityDataParams = ({
             };
           }
         });
-        if (alertData && alertData.length > 0);
-        Alert.alert("Time Alert", alertData.join("\n"), [
-          { text: "OK", onPress: () => console.log("OK Pressed") },
-        ]);
-        // if (alertData) {
-        //   alertData.map((alert) => {
-        //     toast.show(alert, {
-        //       type: alertMsgConstant.TOAST_DANGER,
-        //     });
-        //   });
-        // }
+        if (alertData && alertData.length > 0) {
+          Alert.alert("Time Alert", alertData.join("\n"), [
+            { text: "OK", onPress: () => console.log("OK Pressed") },
+          ]);
+        }
         params.availability = availability;
       } else {
         // toast.show("Not Data selected", {
@@ -383,7 +377,6 @@ export const addAvailibilityDataParams = ({
 
       params.week_start = moment(weekStart).format("DD/MM/YYYY");
       params.week_end = moment(weekEnd).format("DD/MM/YYYY");
-      // console.log("createAvailibilityParams", JSON.stringify(params, null, 2));
 
       return params;
     } else {
@@ -485,13 +478,18 @@ export const getLastDateOfCurrentWeek = () => {
   return moment(new Date()).clone().startOf("isoWeek").toDate();
 };
 
-export const isInOutTimeValidForAvalability = ({ availabilityData, time }) => {
+export const isInOutTimeValidForAvalability = ({
+  availabilityData,
+  time,
+  id,
+}) => {
   if (!isArrayEmpty(availabilityData)) {
     availabilityData.forEach((data) => {
-      if (data.inTime && data.outTime)
-        if (inBetweenTime(time, data.inTime, data.outTime)) {
-          throw "Time is Not valid";
-        }
+      if (data.id !== id)
+        if (data.inTime && data.outTime)
+          if (inBetweenTime(time, data.inTime, data.outTime)) {
+            throw "Time is Not valid";
+          }
     });
   }
 };

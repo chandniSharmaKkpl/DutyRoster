@@ -1,5 +1,10 @@
 import { EmpTimeCardDateFormate } from "@/common/timeFormate";
-import { timeSheetCardConfig, extractData } from "@/utils/TimeSheet";
+import { appColor, fontConstant } from "@/constant";
+import {
+  timeSheetCardConfig,
+  extractData,
+  inOutTimeFormate,
+} from "@/utils/TimeSheet";
 import React from "react";
 import { Text, View } from "react-native";
 import styles from "../styles";
@@ -45,7 +50,7 @@ const Item = ({ item, key }) => {
                 <View style={styles.contentTextContainer}>
                   {timeSheetCardConfig.map((_el) => {
                     return (
-                      <Text
+                      <View
                         style={[
                           styles.contentText,
                           {
@@ -55,8 +60,34 @@ const Item = ({ item, key }) => {
                           },
                         ]}
                       >
-                        {extractData(_item, _el)}
-                      </Text>
+                        <Text
+                          style={[
+                            styles.contentText,
+                            {
+                              minWidth: _el.maxWidth,
+                              flex: _el.flex,
+                              textAlign: _el.textAlign ?? "left",
+                            },
+                          ]}
+                        >
+                          {extractData(_item, _el)}
+                        </Text>
+                        {_el.flag && (
+                          <Text
+                            style={[
+                              {
+                                color: appColor.BLACK,
+                                fontWeight: fontConstant.WEIGHT_SEMI_BOLD,
+                                fontSize: 12,
+                                marginTop: -8,
+                                textAlign: "center",
+                              },
+                            ]}
+                          >
+                            {inOutTimeFormate(_item, _el)}
+                          </Text>
+                        )}
+                      </View>
                     );
                   })}
                 </View>

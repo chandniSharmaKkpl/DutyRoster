@@ -260,7 +260,7 @@ const Login = (props) => {
           </View>
           <View style={styles.versionContainer}>
             <AppText
-              text={" App Vesrion 2.16"}
+              text={" App Vesrion 2.18"}
               style={{ ...styles.appVersion }}
             />
           </View>

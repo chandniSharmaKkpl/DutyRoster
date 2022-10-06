@@ -1,4 +1,8 @@
-import { getTimeFromDateTime, getTimeFromDateTimeUTC } from "../index";
+import {
+  getAmPmFromDate,
+  getTimeFromDateTime,
+  getTimeFromDateTimeUTC,
+} from "../index";
 
 export const timeSheetCardConfig = [
   {
@@ -11,7 +15,7 @@ export const timeSheetCardConfig = [
   {
     title: "IN",
     key: "signin",
-    flag: false,
+    flag: true,
     maxWidth: "15%",
     flex: 1,
     titleAlignment: "left",
@@ -20,7 +24,7 @@ export const timeSheetCardConfig = [
   {
     title: "OUT",
     key: "signout",
-    flag: false,
+    flag: true,
     maxWidth: "15%",
     flex: 1,
     titleAlignment: "left",
@@ -261,6 +265,14 @@ export const extractData = (item, { key, type }) => {
       return item.hours;
     }
     return "-";
+  }
+  return "text";
+};
+
+export const inOutTimeFormate = (item, { key, type }) => {
+  if (key === "signin" || key === "signout") {
+    console.log("getTimeFromDateTime=>", item[key]);
+    return getAmPmFromDate(item[key]);
   }
   return "text";
 };

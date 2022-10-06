@@ -1,4 +1,4 @@
-import { getTimeFromDateTime } from "../index";
+import { getAmPmFromDate, getTimeFromDateTime } from "../index";
 
 export const cardConfig = [
   {
@@ -11,7 +11,7 @@ export const cardConfig = [
   {
     title: "IN",
     key: "signin",
-    flag: false,
+    flag: true,
     maxWidth: "15%",
     flex: 1,
     textAlign: "center",
@@ -20,7 +20,7 @@ export const cardConfig = [
   {
     title: "OUT",
     key: "signout",
-    flag: false,
+    flag: true,
     maxWidth: "15%",
     flex: 1,
     textAlign: "center",
@@ -29,7 +29,7 @@ export const cardConfig = [
   {
     title: "LHR",
     key: "shift",
-    flag: true,
+    flag: false,
     type: "LHR",
     maxWidth: "15%",
     flex: 1,
@@ -39,7 +39,7 @@ export const cardConfig = [
     title: "DHR",
     key: "shift",
     type: "DHR",
-    flag: true,
+    flag: false,
     maxWidth: "15%",
     flex: 1,
     textAlign: "center",
@@ -48,7 +48,7 @@ export const cardConfig = [
     title: "SHR",
     key: "shift",
     type: "SHR",
-    flag: true,
+    flag: false,
     maxWidth: "15%",
     flex: 1,
     textAlign: "center",
@@ -247,6 +247,14 @@ export const extractData = (item, { key, type }) => {
       return item.hours;
     }
     return "-";
+  }
+  return "text";
+};
+
+export const inOutTimeFormate = (item, { key, type }) => {
+  if (key === "signin" || key === "signout") {
+    console.log("getTimeFromDateTime=>", item[key]);
+    return getAmPmFromDate(item[key]);
   }
   return "text";
 };

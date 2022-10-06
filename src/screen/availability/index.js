@@ -327,7 +327,6 @@ const Availability = (props) => {
     );
   }
 
-
   return (
     <>
       <CommonHeader screenName={route?.name} onGoBack={onGoBack} />
@@ -392,6 +391,7 @@ const Availability = (props) => {
                   setDataItemofAvailabilityAction={
                     setDataItemOfAvailabilityRequestAction
                   }
+                  startDay={startDay}
                 />
               </>
             );
@@ -416,7 +416,7 @@ const Availability = (props) => {
               text={"Shift Availability Detail"}
               style={styles.txtUnavailablity}
             />
-            <View> 
+            <View>
               <Shift
                 updateDataItemofAvailabilityAction={
                   updateDataItemofAvailabilityAction

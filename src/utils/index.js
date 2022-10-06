@@ -57,7 +57,7 @@ function dateCheckForCurrentWeek(date, startDay, flag) {
       toast.show(alertMsgConstant.YOU_CAN_NOT_SAVE_AVAILABILITY, {
         type: alertMsgConstant.TOAST_DANGER,
       });
-    }else {
+    } else {
       toast.show(alertMsgConstant.YOU_CAN_NOT_ADD_AVAILABILITY, {
         type: alertMsgConstant.TOAST_DANGER,
       });
@@ -79,7 +79,7 @@ function getDateFromTimeStamp(timestamp) {
   return moment.unix(timestamp).format("DD/MM/YYYY");
 }
 function getTimeFromDateTime(dateTime) {
-  return moment(dateTime).format("hh:mm A");
+  return moment(dateTime).format("hh:mm");
 }
 function getTimeFromDateTimeUTC(dateTime) {
   return moment.utc(dateTime).format("hh:mm A");

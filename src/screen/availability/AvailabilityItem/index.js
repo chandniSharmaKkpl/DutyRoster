@@ -27,13 +27,14 @@ import {
 
 import { isInOutTimeValid, SET_DATA_TYPE } from "@/utils/Availablity";
 import moment from "moment";
+import { dateCheckForCurrentWeek } from "@/utils";
 
 const AvailabilityItem = (props) => {
   const {
     selectedDistrict,
     data,
     arrayDistricts,
-
+    startDay,
     addNewAvailabilityAction,
     removeAvailabilityAction,
     setDataItemofAvailabilityAction,
@@ -171,7 +172,9 @@ const AvailabilityItem = (props) => {
             <Pressable
               style={styles.plusView}
               onPress={() => {
-                addNewAvailabilityAction();
+                if (dateCheckForCurrentWeek(new Date(), startDay, "add")) {
+                  addNewAvailabilityAction();
+                }
               }}
             >
               <Images.IMAGE_PLUS style={styles.plusImage} />

@@ -154,6 +154,7 @@ export function* workerSetDataForAvailability(action) {
       isInOutTimeValidForAvalability({
         availabilityData,
         time: data,
+        id,
       });
     }
     yield put({
