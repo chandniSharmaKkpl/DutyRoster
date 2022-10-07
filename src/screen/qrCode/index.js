@@ -104,7 +104,7 @@ const QRCodeScreen = (props) => {
           return;
         }
       } catch (error) {
-      console.log("locations:::::::", locations);
+        console.log("locations:::::::", locations);
 
         console.log("error at getlatestLocation", error);
       }
