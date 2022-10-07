@@ -31,7 +31,7 @@ const Item = ({ item, key }) => {
                   styles.titleText,
                   {
                     minWidth: _el.maxWidth,
-                    textAlign: _el.titleAlignment ?? "left",
+                    textAlign: _el.textAlign ?? "left",
                   },
                 ]}
               >

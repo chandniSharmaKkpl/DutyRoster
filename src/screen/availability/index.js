@@ -208,6 +208,8 @@ const Availability = (props) => {
       weekStart: weekStart,
       weekEnd: weekEnd,
       availabilitySelectedDate: _selectedDates,
+      copied,
+      // previousSelected: !!copied && arraySelectedDate,
     });
     requestToGetAvailabilityAction({ params, copied });
   }, []);

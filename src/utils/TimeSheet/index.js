@@ -1,5 +1,6 @@
 import {
   getAmPmFromDate,
+  getAmPmFromUTCDate,
   getTimeFromDateTime,
   getTimeFromDateTimeUTC,
 } from "../index";
@@ -18,8 +19,8 @@ export const timeSheetCardConfig = [
     flag: true,
     maxWidth: "15%",
     flex: 1,
-    titleAlignment: "left",
     textAlign: "center",
+    titleAlignment: "left",
   },
   {
     title: "OUT",
@@ -27,35 +28,35 @@ export const timeSheetCardConfig = [
     flag: true,
     maxWidth: "15%",
     flex: 1,
-    titleAlignment: "left",
     textAlign: "center",
+    titleAlignment: "center",
   },
   {
     title: "LHR",
     key: "shift",
-    flag: true,
+    flag: false,
     type: "LHR",
     maxWidth: "15%",
     flex: 1,
-    textAlign: "left",
+    textAlign: "center",
   },
   {
     title: "DHR",
     key: "shift",
     type: "DHR",
-    flag: true,
+    flag: false,
     maxWidth: "15%",
     flex: 1,
-    textAlign: "left",
+    textAlign: "center",
   },
   {
     title: "SHR",
     key: "shift",
     type: "SHR",
-    flag: true,
+    flag: false,
     maxWidth: "15%",
     flex: 1,
-    textAlign: "left",
+    textAlign: "center",
   },
 ];
 
@@ -272,7 +273,7 @@ export const extractData = (item, { key, type }) => {
 export const inOutTimeFormate = (item, { key, type }) => {
   if (key === "signin" || key === "signout") {
     console.log("getTimeFromDateTime=>", item[key]);
-    return getAmPmFromDate(item[key]);
+    return getAmPmFromUTCDate(item[key]);
   }
-  return "text";
+  return "";
 };

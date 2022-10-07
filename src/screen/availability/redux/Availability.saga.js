@@ -13,11 +13,13 @@ import {
   appendAvailabilityData,
   createAvailibilityParams,
   isInOutTimeValidForAvalability,
+  selectedDateAvailability,
   SET_DATA_TYPE,
 } from "@/utils/Availablity";
 import {
   selectedAvailabilityData,
   selectordAvailabilityData,
+  selectordPreviousAvailabilityDates,
   selectorForSelectedWeek,
 } from "./Availability.reducer";
 
@@ -31,11 +33,16 @@ export function* workerGetAvailabilityDateResponse(action) {
     // console.log(JSON.stringify(response, null, 4));
     if (copied) {
       let availabilityData = yield select(selectordAvailabilityData);
+      let selectedDatesData = yield select(selectordPreviousAvailabilityDates);
+      let preiousDateAvailabilityData = selectedDateAvailability(
+        availabilityData,
+        selectedDatesData
+      );
       data = appendAvailabilityData({
-        copiedData: availabilityData,
+        copiedData: preiousDateAvailabilityData,
         existData: response.data,
         nextWeekDates: params,
-        haveToMerge: false,
+        haveToMerge: true,
       });
     }
     if (!response.success) {

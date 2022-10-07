@@ -82,7 +82,7 @@ function getTimeFromDateTime(dateTime) {
   return moment(dateTime).format("hh:mm");
 }
 function getTimeFromDateTimeUTC(dateTime) {
-  return moment.utc(dateTime).format("hh:mm A");
+  return moment.utc(dateTime).format("hh:mm");
 }
 
 function get24HrFrom12HrFormat(time) {
@@ -93,6 +93,9 @@ function get12HrFrom24HrFormat(time) {
 }
 function getAmPmFromDate(date) {
   return moment(date).format("A");
+}
+function getAmPmFromUTCDate(date) {
+  return moment.utc(date).format("A");
 }
 function changeDateFormat(_date, oldFormat, newFormat) {
   return moment(_date, oldFormat).format(newFormat);
@@ -213,4 +216,5 @@ export {
   inBetweenTime,
   dateCheckForCurrentWeek,
   getTimeFromDateTimeUTC,
+  getAmPmFromUTCDate,
 };

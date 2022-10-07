@@ -401,7 +401,8 @@ const modifyData = ({ currentWeek, nextWeek, data }) => {
     const { days: nextWeekDays } = nextWeek;
     const nextWeekData = {};
     currentWeekDays.forEach((_day, index) => {
-      nextWeekData[nextWeekDays[index]] = data[_day];
+      if (checkObjectHasData(data, _day))
+        nextWeekData[nextWeekDays[index]] = data[_day];
     });
     // console.log(
     //   "modifyData",
@@ -416,14 +417,16 @@ const modifyData = ({ currentWeek, nextWeek, data }) => {
 const mergeData = ({ existData, newData }) => {
   try {
     for (const day in existData) {
-      if (Object.hasOwnProperty.call(existData, day)) {
+      if (checkObjectHasData(existData, day)) {
         if (checkObject(existData[day])) {
-          if (Object.hasOwnProperty.call(newData[day], "times")) {
+          if (checkObjectHasData(newData[day], "times")) {
             const _datas = newData[day].times;
             // console.log(_datas);
             existData[day] = {
               ...existData[day],
-              times: [...existData[day]?.times, ..._datas],
+              times: [..._datas],
+
+              // times: [...existData[day]?.times, ..._datas],
             };
           }
         } else {
@@ -491,5 +494,47 @@ export const isInOutTimeValidForAvalability = ({
             throw "Time is Not valid";
           }
     });
+  }
+};
+
+// getSelectedAvailability
+
+export const selectedDateAvailability = (availabilityData, selectedDates) => {
+  console.log(
+    "availabilityData :::::====>",
+    JSON.stringify(availabilityData, null, 4)
+  );
+  // console.log(
+  //   "selectedDate :::::====>",
+  //   JSON.stringify(selectedDates, null, 4)
+  // );
+  try {
+    if (selectedDates) {
+      if (availabilityData) {
+        const _previousAvailabilityData = {};
+        selectedDates.map((_selectedDate) => {
+          const _data = availabilityData[getDateFromTimeStamp(_selectedDate)];
+          if (checkObject(_data)) {
+            _previousAvailabilityData[getDateFromTimeStamp(_selectedDate)] =
+              _data;
+          }
+          // console.log(
+          //   JSON.stringify(
+          //     availabilityData[getDateFromTimeStamp(_selectedDate)],
+          //     null,
+          //     2
+          //   )
+          // );
+        });
+        console.log(
+          "previousAvailabilityData :::::====>",
+          JSON.stringify(_previousAvailabilityData, null, 4)
+        );
+        return _previousAvailabilityData;
+      }
+    }
+    return {};
+  } catch (error) {
+    return {};
   }
 };

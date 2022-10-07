@@ -21,10 +21,12 @@ const initialState = {
     availabilityData: [
       { district_id: null, inTime: null, outTime: null, id: 0 },
       // { district_id: 2, inTime: '07:30 PM', outTime: "11:45 PM", id: 0 },
-
     ],
     availabilitySelectedDate: [],
     isSaved: true,
+  },
+  previousSelected: {
+    availabilitySelectedDate: [],
   },
   /*
   selected: {
@@ -120,9 +122,9 @@ export default (state = initialState, { type, payload }) => {
         selected: {
           ...state.selected,
 
-          // availabilityData: [
-          //   { district_id: null, inTime: null, outTime: null, id: 0 },
-          // ],
+          availabilityData: [
+            { district_id: null, inTime: null, outTime: null, id: 0 },
+          ],
           isSaved: true,
         },
       };
@@ -157,6 +159,11 @@ export default (state = initialState, { type, payload }) => {
           weekStart: payload.weekStart,
           weekEnd: payload.weekEnd,
         },
+        previousSelected: {
+          availabilitySelectedDate: payload.copied
+            ? state.selected.availabilitySelectedDate
+            : [],
+        },
         selected: {
           ...state.selected,
           // isSaved: false,
@@ -170,7 +177,7 @@ export default (state = initialState, { type, payload }) => {
         ...state,
         selected: {
           ...state.selected,
-          isSaved: false,
+          // isSaved: false,
           availabilitySelectedDate: [
             ...state.selected.availabilitySelectedDate,
             payload,
@@ -184,7 +191,7 @@ export default (state = initialState, { type, payload }) => {
         ...state,
         selected: {
           ...state.selected,
-          isSaved: false,
+          // isSaved: false,
           availabilitySelectedDate:
             state.selected.availabilitySelectedDate.filter(
               (_el) => _el !== payload
@@ -325,3 +332,6 @@ export const selectedAvailabilityData = (state) =>
   state.AvailabilityReducer.selected;
 export const selectordAvailabilityData = (state) =>
   state.AvailabilityReducer.availabilityData;
+
+export const selectordPreviousAvailabilityDates = (state) =>
+  state.AvailabilityReducer.previousSelected.availabilitySelectedDate;

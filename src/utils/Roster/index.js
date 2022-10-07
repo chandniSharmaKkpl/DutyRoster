@@ -256,5 +256,5 @@ export const inOutTimeFormate = (item, { key, type }) => {
     console.log("getTimeFromDateTime=>", item[key]);
     return getAmPmFromDate(item[key]);
   }
-  return "text";
+  return "";
 };
