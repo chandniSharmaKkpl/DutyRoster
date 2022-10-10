@@ -182,8 +182,8 @@ const parseTimeInTimestamp = (_startTime, _endTime) => {
 };
 
 export const replaceAvalabiltyItems = (_prevData, newData, dateKey) => {
-  // console.log("newData", JSON.stringify(newData, null, 4));
-  // console.log("prevData", JSON.stringify(prevData, null, 4));
+  console.log("newData", JSON.stringify(newData, null, 4));
+  console.log("prevData", JSON.stringify(prevData, null, 4));
   let prevData = _.uniqBy(_.cloneDeep(_prevData), uniqueIterator);
   const avalabilityTimes = _.uniqBy(_.cloneDeep(_prevData), uniqueIterator);
   try {
@@ -195,71 +195,53 @@ export const replaceAvalabiltyItems = (_prevData, newData, dateKey) => {
 
         const { startTime: _newStartTime, endTime: _newEndTime } =
           parseTimeInTimestamp(_newItem.start_time, _newItem.end_time);
-        // const _newEndTime = _newItem.end_time;
 
         prevData.map((_prevItem, _prevItemIndex) => {
-          // console.log("_prevItemIndex", _prevItemIndex);
-          // console.log("_prevEndTime =====>", _prevEndTime > _newEndTime);
-
-          // const _prevStartTime = _prevItem.start_time;
-          // const _prevEndTime = _prevItem.end_time;
-
           const { startTime: _prevStartTime, endTime: _prevEndTime } =
             parseTimeInTimestamp(_prevItem.start_time, _prevItem.end_time);
 
+          console.log(
+            "Same time ===>",
+            _newItem.district_id,
+            _prevItem.district_id
+          );
+          console.log(
+            "Same time ===> 123456",
+            (_prevStartTime === _newStartTime ||
+              _prevEndTime === _newEndTime) &&
+              _newItem.district_id !== _prevItem.district_id
+          );
+
           if (
-            (_newStartTime > _prevStartTime && _newStartTime < _prevEndTime) ||
-            (_newEndTime > _prevStartTime && _newEndTime < _prevEndTime)
+            ((_newStartTime > _prevStartTime && _newStartTime < _prevEndTime) ||
+              (_newEndTime > _prevStartTime && _newEndTime < _prevEndTime)) &&
+            _newItem.district_id != _prevItem.district_id
           ) {
             console.group("Test date format version 1");
 
-            // console.log(
-            //   " check date formate ===> ",
-            //   (_newStartTime > _prevStartTime &&
-            //     _newStartTime < _prevEndTime) ||
-            //     (_newEndTime > _prevStartTime && _newEndTime < _prevEndTime)
-            // );
-            // console.groupEnd();
             flag = true;
             alertData.push(
-              `${_newItem.start_time} - ${_newItem.end_time} is already occupied on ${dateKey}`
+              `${_newItem.start_time} - ${_newItem.end_time} 1 is already occupied on ${dateKey}`
             );
           } else if (
-            (_newStartTime < _prevStartTime && _newEndTime > _prevStartTime) ||
-            (_newStartTime < _prevEndTime && _newEndTime > _prevEndTime)
+            ((_newStartTime < _prevStartTime && _newEndTime > _prevStartTime) ||
+              (_newStartTime < _prevEndTime && _newEndTime > _prevEndTime)) &&
+            _newItem.district_id != _prevItem.district_id
           ) {
-            // console.group("Test date format version 2");
-            // console.log(
-            //   JSON.stringify(
-            //     {
-            //       addedStartTime: _newStartTime,
-            //       addedEndTime: _newEndTime,
-            //       existStartTime: _prevStartTime,
-            //       existEndTime: _prevEndTime,
-            //     },
-            //     null,
-            //     4
-            //   )
-            // );
-            // console.log(
-            // "check date formate 2 ===> ",
-            // (_newStartTime < _prevStartTime &&
-            // _newEndTime > _prevStartTime) ||
-            // (_newStartTime < _prevEndTime && _newEndTime > _prevEndTime)
-            // );
-            // console.groupEnd();
             alertData.push(
-              `${_newItem.start_time} - ${_newItem.end_time} is already occupied on ${dateKey}`
+              `${_newItem.start_time} - ${_newItem.end_time} 2 is already occupied on ${dateKey}`
             );
             flag = true;
           } else if (
-            _prevStartTime === _newStartTime ||
-            _prevEndTime === _newEndTime
+            (_prevStartTime === _newStartTime ||
+              _prevEndTime === _newEndTime) &&
+            _newItem.district_id != _prevItem.district_id
           ) {
             // avalabilityTimes[_prevItemIndex] = _newItem;
             flag = true;
+
             alertData.push(
-              `${_newItem.start_time} - ${_newItem.end_time}  is already occupied on ${dateKey}`
+              `${_newItem.start_time} - ${_newItem.end_time} 3 is already occupied on ${dateKey}`
             );
           }
         });
