@@ -55,11 +55,36 @@ const setUser = async (data) => {
     });
 };
 
+const setProfileImage = async (image) => {
+  console.log(" setProfileImage--------->", image);
+
+  await AsyncStorage.setItem(appConstant.PROFILE_IMAGE, JSON.stringify(image))
+    .then(() => {
+      return true;
+    })
+    .catch(() => {
+      return false;
+    });
+};
+
+const getProfileImage = async () => {
+  const temp = await AsyncStorage.getItem(appConstant.PROFILE_IMAGE);
+
+  let image;
+  if (temp) {
+    image = JSON.parse(temp);
+    return image;
+  } else {
+  }
+  return image;
+};
+
 export default {
   getAccessToken,
   setAccessToken,
-
   getUser,
   setUser,
   clearAll,
+  setProfileImage,
+  getProfileImage,
 };

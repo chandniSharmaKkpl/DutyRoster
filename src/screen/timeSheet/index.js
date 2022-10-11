@@ -17,10 +17,12 @@ import { useRoute, useNavigation } from "@react-navigation/core";
 import { alertMsgConstant, appColor, appConstant } from "@/constant";
 import { CommonHeader } from "@/components";
 import { Images } from "@/constant/svgImgConst";
-import EmpTimeCard from "@/components/roasterEmpTimeCard";
 import Calendars from "@/components/Calendars";
 import moment from "moment";
 import {
+  API_DATE_FORMAT,
+  CALENDER_DATE_FORMAT,
+  changeDateFormat,
   enumerateDaysBetweenDates,
   getCurrentWeek,
   getDatefromFullDate,
@@ -36,6 +38,7 @@ import { dayDateReturn } from "@/common/timeFormate";
 import { useSelector } from "react-redux";
 import Loader from "@/components/Loader";
 import TimeSheetEmpTimeCard from "@/components/timeSheetEmpCard";
+import localDb from "@/database/localDb";
 
 const TimeSheetScreen = (props) => {
   const navigation = useNavigation();
@@ -58,7 +61,7 @@ const TimeSheetScreen = (props) => {
   const [isCalendarShow, setIsCalendarShow] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
   const [isAlertShow, setIsAlertShow] = useState(false);
-
+  const [profileImage, setProfileImage] = useState("");
   // console.log("cardData ===>", JSON.stringify(data, null, 4));
 
   React.useLayoutEffect(() => {
@@ -74,6 +77,11 @@ const TimeSheetScreen = (props) => {
     // console.log("startDate", startDate);
     setSelectedWeek(startDate);
     setSelectedDate(startDate);
+    setIsCalendarShow(false);
+    localDb.getProfileImage().then((response) => {
+      console.log(response, "storedProfileImage");
+      setProfileImage(response);
+    });
   }, []);
 
   const getSelectedDayEvents = (date) => {
@@ -88,17 +96,18 @@ const TimeSheetScreen = (props) => {
     const { days: _dateRange, weekStart, weekEnd } = getCurrentWeek(date);
 
     _dateRange.map((item, index) => {
-      _dateList[item] = {
-        startingDay: index === 0 ? true : false,
-        endingDay: index === _dateRange.length - 1 ? true : false,
-        color: !(index === 0 || index === _dateRange.length - 1)
-          ? appColor.RED
-          : appColor.RED,
-        textColor: appColor.WHITE,
-        selected: index === _dateRange.length - 1 ? true : false,
-        // selectedColor: 'blue'
-        disabled: true,
-      };
+      _dateList[changeDateFormat(item, API_DATE_FORMAT, CALENDER_DATE_FORMAT)] =
+        {
+          startingDay: index === 0 ? true : false,
+          endingDay: index === _dateRange.length - 1 ? true : false,
+          color: !(index === 0 || index === _dateRange.length - 1)
+            ? appColor.RED
+            : appColor.RED,
+          textColor: appColor.WHITE,
+          selected: index === _dateRange.length - 1 ? true : false,
+          // selectedColor: 'blue'
+          disabled: true,
+        };
       _dateFlatList.push({
         id: getTimeStampfromDate(item),
         date: getDatefromFullDate(item),
@@ -111,8 +120,8 @@ const TimeSheetScreen = (props) => {
       weekStart: weekStart,
       weekEnd: weekEnd,
     });
-    const fromDate = moment(weekStart).format("DD/MM/YYYY");
-    const toDate = moment(weekEnd).format("DD/MM/YYYY");
+    const fromDate = moment(weekStart).format(API_DATE_FORMAT);
+    const toDate = moment(weekEnd).format(API_DATE_FORMAT);
     const params = {
       from: fromDate,
       to: toDate,
@@ -125,7 +134,7 @@ const TimeSheetScreen = (props) => {
   };
   return (
     <>
-      <CommonHeader screenName={route?.name} />
+      <CommonHeader screenName={route?.name} storedImage={profileImage} />
       <View style={[styles.container]}>
         <View style={styles.topContain}>
           <View style={styles.weekDateTextContainer}>
@@ -162,12 +171,13 @@ const TimeSheetScreen = (props) => {
             <Calendars
               markedDates={markedDates}
               onDayPress={getSelectedDayEvents}
+              initialDate={startDay}
             />
           </View>
         )}
       </View>
 
-      {isAlertShow
+      {/* {isAlertShow
         ? Alert.alert(
             alertMsgConstant.PLEASE_CONFIRM,
             alertMsgConstant.ARE_YOU_SURE_TO_LOGOUT,
@@ -189,7 +199,7 @@ const TimeSheetScreen = (props) => {
               },
             ]
           )
-        : null}
+        : null} */}
       {timeSheetReducer.isRequesting ? (
         <Loader loading={timeSheetReducer.isRequesting} />
       ) : null}

@@ -34,6 +34,7 @@ import DeviceInfo from "react-native-device-info";
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 import { TextInputCustom } from "@/components/TextInput";
 import { USER_DATE_FORMAT } from "@/utils";
+import localDb from "@/database/localDb";
 
 const Signup = (props) => {
   const [error, setError] = React.useState({
@@ -323,6 +324,7 @@ const Signup = (props) => {
       params.append("uuid", 24314); //need to do in dynamic
       params.append("device_type", 2132); //need to do in dynamic
       params.append("device_name", DeviceName); //need to do in dynamic
+      localDb.setProfileImage(ImageSource);
       props.requestToRegister({ params, navigation: navigation });
       // let infor = await props.requestToRegister({
       //   title,
@@ -372,7 +374,7 @@ const Signup = (props) => {
             </View>
             <View style={{ height: hp("8%") }} />
             <View style={styles.loginTextContainer}>
-              <Text style={stylesCommon.titleText}>Signup</Text>
+              <Text style={stylesCommon.titleText}>Sign Up</Text>
             </View>
             <View style={{ height: hp("2.8%") }} />
             <>

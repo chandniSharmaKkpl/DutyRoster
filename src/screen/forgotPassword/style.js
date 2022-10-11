@@ -17,13 +17,13 @@ export default StyleSheet.create({
   },
   scrollViewStyle: {
     flex: 1,
-    backgroundColor : appColor.WHITE
+    backgroundColor: appColor.WHITE,
   },
   viewTxtInput: {
     alignItems: "center",
     paddingTop: hp("2%"),
   },
-  emailIconStyle : {
+  emailIconStyle: {
     margin: 10,
     marginRight: 16,
     height: 13,
@@ -46,9 +46,11 @@ export default StyleSheet.create({
   baseText: {
     textAlign: "center",
     paddingTop: 30,
-    color: appColor.BLACK
+    color: appColor.BLACK,
   },
   innerText: {
     color: appColor.RED,
+    fontFamily: fontConstant.FONT_BOLD,
+    fontSize: fontConstant.TEXT_15_SIZE_BOLD,
   },
 });

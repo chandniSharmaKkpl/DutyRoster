@@ -34,6 +34,7 @@ const CommonHeader = (props) => {
     screenName,
     onGoBack,
     profileImage,
+    storedImage,
   } = props;
 
   const styles = StyleSheet.create({
@@ -151,7 +152,7 @@ const CommonHeader = (props) => {
           <Pressable style={styles.viewRightProfile} onPress={onEditProfile}>
             <ProgressiveImage
               thumbnailSource={imageConstant.IMAGE_AVTAR_ICON}
-              source={{ uri: profileImage }}
+              source={{ uri: storedImage }}
               style={!profileImage ? styles.imgEmpty : styles.img}
             />
           </Pressable>

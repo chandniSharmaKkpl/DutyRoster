@@ -65,14 +65,14 @@ export default StyleSheet.create({
   },
   txtSignup: {
     color: appColor.BLACK,
-    fontFamily: fontConstant.FONT_REGULAR,
+    fontFamily: fontConstant.FONT_BOLD,
     fontSize: fontConstant.TEXT_H2_SIZE_REGULAR,
   },
   versionContainer: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: Platform.OS === 'android' ?  hp('8%') : hp('5%')
+    marginTop: Platform.OS === "android" ? hp("8%") : hp("5%"),
   },
   appVersion: {
     // textAlign: 'center',

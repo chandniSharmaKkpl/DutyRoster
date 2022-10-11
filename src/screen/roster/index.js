@@ -43,6 +43,7 @@ import { dayDateReturn } from "@/common/timeFormate";
 import { useSelector } from "react-redux";
 import RosterBottomCard from "@/components/RosterBottomCard";
 import Loader from "@/components/Loader";
+import localDb from "@/database/localDb";
 
 const RosterScreen = (props) => {
   const navigation = useNavigation();
@@ -65,6 +66,7 @@ const RosterScreen = (props) => {
   const [isCalendarShow, setIsCalendarShow] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
   const [isAlertShow, setIsAlertShow] = useState(false);
+  const [profileImage, setProfileImage] = useState("");
 
   // markedDates obj function
 
@@ -86,6 +88,10 @@ const RosterScreen = (props) => {
       setSelectedWeek(startDate);
       setSelectedDate(startDate);
       setIsCalendarShow(false);
+      localDb.getProfileImage().then((response) => {
+        console.log(response, "storedProfileImage");
+        setProfileImage(response);
+      });
     }, [])
   );
 
@@ -140,7 +146,7 @@ const RosterScreen = (props) => {
   };
   return (
     <>
-      <CommonHeader screenName={route?.name} />
+      <CommonHeader screenName={route?.name} storedImage={profileImage} />
       <View style={[styles.container]}>
         <View style={styles.topContain}>
           <View style={styles.weekDateTextContainer}>

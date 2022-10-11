@@ -5,7 +5,6 @@ import {
 } from "react-native-responsive-screen";
 import { appColor, fontConstant } from "../../constant";
 
-
 export default StyleSheet.create({
   imageContainer: {
     alignItems: "center",
@@ -18,14 +17,14 @@ export default StyleSheet.create({
   scrollViewStyle: {
     flex: 1,
     // paddingTop: 20,
-    backgroundColor : appColor.WHITE
+    backgroundColor: appColor.WHITE,
   },
   loginText: {
     color: appColor.RED,
     fontSize: fontConstant.TEXT_H2_SIZE_BOLD,
     fontFamily: fontConstant.FONT_BOLD,
   },
-  pinCodeIconStyle : {
+  pinCodeIconStyle: {
     margin: 10,
     marginRight: 16,
     height: 18,
@@ -59,9 +58,11 @@ export default StyleSheet.create({
   baseText: {
     textAlign: "center",
     paddingTop: 30,
-    color: appColor.BLACK
+    color: appColor.BLACK,
   },
   innerText: {
     color: appColor.RED,
+    fontFamily: fontConstant.FONT_BOLD,
+    fontSize: fontConstant.TEXT_15_SIZE_BOLD,
   },
 });

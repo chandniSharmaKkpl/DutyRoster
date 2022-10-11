@@ -161,6 +161,7 @@ const EditProfile = (props) => {
       setDob(profileInformation?.dob);
       setPayment(profileInformation?.payment_type);
       setImageSource(profileInformation?.image);
+      localDb.setProfileImage(profileInformation?.image);
     }
   }, [profileResponse]);
 
@@ -182,6 +183,7 @@ const EditProfile = (props) => {
       setDob(profileInformation?.dob);
       if (profileInformation.hasOwnProperty("image")) {
         setImageSource(profileInformation?.image);
+        localDb.setProfileImage(profileInformation?.image);
       }
     }
   }, [profileResponse.UpdateProfileReducer]);
@@ -327,7 +329,8 @@ const EditProfile = (props) => {
   }
 
   const moveBack = () => {
-    props.navigation.goBack();
+    // props.navigation.goBack();
+    navigation.goBack();
   };
 
   const onGoBack = () => {
@@ -390,7 +393,7 @@ const EditProfile = (props) => {
       if (password) {
         data["password"] = password;
       }
-
+      localDb.setProfileImage(ImageSource);
       requestToUpdateProfileAction(data);
     }
   };
@@ -577,7 +580,7 @@ const EditProfile = (props) => {
                   label={"Password"}
                   value={password}
                   onChangeText={onChangePassword}
-                  // placeholder={"Password"}
+                  placeholder={"Password"}
                   error={error.passwordErr}
                   inputViewStyle={styles.inputViewStyle}
                   rightIcon={
@@ -596,7 +599,7 @@ const EditProfile = (props) => {
                   label={"Confirm Password"}
                   value={cnfPassword}
                   onChangeText={onChangeConfirmPassword}
-                  // placeholder={"Confirm Password"}
+                  placeholder={"Confirm Password"}
                   error={error.cnfpasswordErr}
                   inputViewStyle={styles.inputViewStyle}
                   rightIcon={

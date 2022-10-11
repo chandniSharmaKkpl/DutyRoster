@@ -14,24 +14,24 @@ export default {
   PROFILE_SETTINGS: "Profile Settings",
   AVAILABILITY: "Availability",
   CALENDAR: "Calendar",
-  SPLASH_SCREEN: 'splashSceen',
-
+  SPLASH_SCREEN: "splashSceen",
 
   // Input Title name
 
   UNAVAILABLE_DATE: "Unavailable Date",
   LOCATION: "Location",
   SHIFT: "Shift",
-  AVAILABLE_DATE : 'Available Date',
-  DISTRICTS : 'Districts',
-  TIME : 'Time',
+  AVAILABLE_DATE: "Available Date",
+  DISTRICTS: "Districts",
+  TIME: "Time",
 
   // Placeholder text
 
   CHOOSE_DATE: "Choose Available Date",
-  IN_TIME : 'In Time',
-  OUT_TIME: 'Out Time',
+  IN_TIME: "In Time",
+  OUT_TIME: "Out Time",
 
   ACCESS_TOKEN: "access_token",
   USER: "user",
+  PROFILE_IMAGE: "profile_image",
 };
