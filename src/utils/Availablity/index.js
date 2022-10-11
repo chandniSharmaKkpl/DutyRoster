@@ -170,7 +170,7 @@ export const isInOutTimeValid = (inTime, outTime) => {
 
 //  Add button avalability functionality
 const uniqueIterator = (item) => item.start_time || item.end_time; // Same item data remove and get unique item
-
+let availabilityAlreadyAdded = false;
 const parseTimeInTimestamp = (_startTime, _endTime) => {
   let startTime = Number(changeDateFormat(_startTime, "HH:mm", "x"));
   let endTime = Number(changeDateFormat(_endTime, "HH:mm", "x"));
@@ -243,6 +243,7 @@ export const replaceAvalabiltyItems = (_prevData, newData, dateKey) => {
               );
             }
           }
+          availabilityAlreadyAdded = flag;
         });
 
         if (!flag) {
@@ -266,6 +267,7 @@ export const addAvailibilityDataParams = ({
   weekEnd,
   districts,
   availabilityData,
+  flagValue,
 }) => {
   try {
     const params = {};
@@ -321,11 +323,16 @@ export const addAvailibilityDataParams = ({
             //   checkObjectHasData(availabilityData[dateKey], "times")
             // );
             if (checkObjectHasData(availabilityData[dateKey], "times")) {
-              const { times: _newDatas, alerts } = replaceAvalabiltyItems(
+              const {
+                times: _newDatas,
+                alerts,
+                availabilityAlreadyAdded,
+              } = replaceAvalabiltyItems(
                 availabilityData[dateKey].times,
                 time,
                 dateKey
               );
+              flagValue = availabilityAlreadyAdded;
               if (alerts && alerts.length > 0) {
                 console.error(JSON.stringify(alerts, null, 4));
                 alertData = alertData.concat(alerts);
@@ -354,6 +361,7 @@ export const addAvailibilityDataParams = ({
           ]);
         }
         params.availability = availability;
+        params.flagValue = flagValue;
       } else {
         // toast.show("Not Data selected", {
         //   type: alertMsgConstant.TOAST_DANGER,

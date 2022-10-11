@@ -130,13 +130,23 @@ export function* workerAddAvailabilityData(action) {
     const selected = yield select(selectedAvailabilityData);
     const selectedWeek = yield select(selectorForSelectedWeek);
     const districts = yield select(selectedDistricts);
+    let flagValue = false; // new line set flagvalue = false;
 
     const data = addAvailibilityDataParams({
       selected,
       districts,
       availabilityData,
       ...selectedWeek,
+      flagValue
     });
+
+    console.log(data , 'testingData')
+    if (data.flagValue === true) {
+      delete data["flagValue"]; // deleted flagValue key 
+      toast.show("Availability already added", {
+        type: alertMsgConstant.TOAST_DANGER,
+      });
+    }
     yield put({
       type: actionConstant.ACTION_ON_ADD_AVAILABILITY_DATA_SUCCESS,
       payload: data,
