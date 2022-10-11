@@ -62,8 +62,8 @@ const QRCodeScreen = (props) => {
   };
 
   useEffect(() => {
-    console.log("timesheet_id --->", timesheet_id);
-    console.log("signin --->", signin);
+    // console.log("timesheet_id --->", timesheet_id);
+    // console.log("signin --->", signin);
   }, [timesheet_id, signin]);
 
   const onSuccess = async (e) => {
@@ -90,7 +90,7 @@ const QRCodeScreen = (props) => {
         return;
       }
       locations = await RNLocation.getLatestLocation({ timeout: 100 });
-      console.log("locations:::::::", locations);
+      // console.log("locations:::::::", locations);
       try {
         if (locations) {
           lat = locations.latitude;
@@ -104,7 +104,7 @@ const QRCodeScreen = (props) => {
           return;
         }
       } catch (error) {
-        console.log("locations:::::::", locations);
+        // console.log("locations:::::::", locations);
 
         console.log("error at getlatestLocation", error);
       }
@@ -116,7 +116,7 @@ const QRCodeScreen = (props) => {
       try {
         lat = locations.latitude;
         lon = locations.longitude;
-        console.log("Geolocation.lat && Geolocation.lon", lat, lon);
+        // console.log("Geolocation.lat && Geolocation.lon", lat, lon);
         setQRLocationAction({
           latitude: lat,
           longitude: lon,
@@ -131,7 +131,7 @@ const QRCodeScreen = (props) => {
     if (!lat || !lon) {
       Geolocation.getCurrentPosition(
         (position) => {
-          console.log("Geolocation.getCurrentPosition", position);
+          // console.log("Geolocation.getCurrentPosition", position);
           const { coords } = position;
           const { latitude, longitude } = coords;
           lat = latitude;
@@ -155,7 +155,7 @@ const QRCodeScreen = (props) => {
     }
     try {
       const res = JSON.parse(e.data);
-      console.log("QR code =>", res);
+      // console.log("QR code =>", res);
       const currentTime = new Date(); // get current date & time
       const location_id = res.location_id; // get location id when user scan QR code response
       const signIn = convertDateTime(currentTime, false, true); // convert time formate and get current time
@@ -200,7 +200,7 @@ const QRCodeScreen = (props) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      console.log("onFocusChange");
+      // console.log("onFocusChange");
       startUpdatingLocation();
       const task = InteractionManager.runAfterInteractions(() => {
         requestPermission(setPermission, onRequestGranted);
@@ -208,7 +208,7 @@ const QRCodeScreen = (props) => {
       });
 
       return () => {
-        console.log("useFocusEffect return onDestrory");
+        // console.log("useFocusEffect return onDestrory");
         scannerRef.current = null;
         task.cancel();
       };
@@ -318,7 +318,7 @@ const QRCodeScreen = (props) => {
   };
 
   const reactiveQRCode = React.useCallback(() => {
-    console.log("reactiveQRCode");
+    // console.log("reactiveQRCode");
     if (scannerRef.current) {
       // console.log("reactiveQRCode", scannerRef.current);
       // scannerRef.current.reactivate();
@@ -364,7 +364,7 @@ const QRCodeScreen = (props) => {
     }).then((granted) => {
       // alert(granted);
       if (granted) {
-        console.log("startUpdatingLocation");
+        // console.log("startUpdatingLocation");
         startUpdatingLocation();
         // setQRLocationAction({
         //   latitude: null,
@@ -378,7 +378,7 @@ const QRCodeScreen = (props) => {
     });
 
     return () => {
-      console.log("useEffect return onDestrory");
+      // console.log("useEffect return onDestrory");
       subscription.remove();
       // unsubscribe();
     };
@@ -388,7 +388,7 @@ const QRCodeScreen = (props) => {
       if (locations) {
         let lat = locations[0].latitude;
         let lon = locations[0].longitude;
-        console.log("locations12: ", lat, lon);
+        // console.log("locations12: ", lat, lon);
         setQRLocationAction({
           latitude: lat,
           longitude: lon,

@@ -5,10 +5,9 @@ import { takeLatest, take, call, put, select, all } from "redux-saga/effects";
 import { initCall } from "./SplashScreen.api";
 
 export function* workerInit(action) {
-  console.log("workerInit ==>", action);
   try {
     const initResponse = yield call(initCall, action.payload);
-    console.log("initResponse ======", initResponse);
+    // console.log("initResponse ======", initResponse);
     if (!initResponse.success) {
       var stringCombined = "";
       let arrayTemp = Object.keys(initResponse.error);

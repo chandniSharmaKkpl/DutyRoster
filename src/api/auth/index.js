@@ -15,7 +15,7 @@ const config1 = {
   },
 };
 
-export const init = (params) => client.post(apiConstant.INIT, params, config)
+export const init = (params) => client.post(apiConstant.INIT, params, config);
 export const login = (params) => client.post(apiConstant.LOGIN, params, config);
 // export const singup = (params) => client.post(apiConstant.SIGNUP, params, config);
 export const forgotPassword = (params) =>
@@ -31,7 +31,7 @@ export const timesheetDateRange = (params) => {
   return client.post(apiConstant.TIMESHEET_DATE_RANGE, params, config);
 };
 export const getAvailbility = (params) => {
-  console.log(" params ----", params);
+  // console.log(" params ----", params);
   return client.post(apiConstant.GET_AVAILABILITY, params, config1);
 };
 export const saveAvailbility = (params) =>
@@ -55,7 +55,7 @@ export const getAvailbilityTemp = (params) => {
   )
     .then((response) => response.text())
     .then((result) => {
-      console.log(" res", result);
+      // console.log(" res", result);
       return JSON.parse(result);
     })
     .catch((error) => console.log("error", error));

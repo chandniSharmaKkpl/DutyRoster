@@ -180,8 +180,6 @@ const EditProfile = (props) => {
       setTFN(profileInformation?.tfn_number);
       setAddress(profileInformation?.address);
       setDob(profileInformation?.dob);
-      console.log("image  123", profileInformation?.image);
-
       if (profileInformation.hasOwnProperty("image")) {
         setImageSource(profileInformation?.image);
       }

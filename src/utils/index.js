@@ -34,7 +34,7 @@ function getCurrentWeek(date) {
 }
 
 function dateCheckForCurrentWeek(date, startDay, flag) {
-  console.log("flag", flag);
+  // console.log("flag", flag);
   var currentDate = moment(date);
   var weekEnd = currentDate.clone().endOf("isoWeek").toDate();
 

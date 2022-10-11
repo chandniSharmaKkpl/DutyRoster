@@ -90,7 +90,7 @@ const Availability = (props) => {
     requestToAddAvailabilityAction,
     setDataItemOfAvailabilityRequestAction,
   } = props;
-  console.log("selectedWeek", selectedWeek, arraySelectedDate);
+  // console.log("selectedWeek", selectedWeek, arraySelectedDate);
   const [isCalendarShow, setIsCalendarShow] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
   const [isAlertShow, setIsAlertShow] = useState(false);

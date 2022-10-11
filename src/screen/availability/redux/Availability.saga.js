@@ -99,10 +99,6 @@ export function* workerSaveAvailability(action) {
       ...selectedWeek,
       availabilityData,
     });
-    console.log(
-      "workerSaveAvailability params",
-      JSON.stringify(params, null, 8)
-    );
     const saveAvailabilityRes = yield call(saveAvailabilityApiCall, params);
     yield put({
       type: actionConstant.ACTION_SAVE_AVAILABILITY_SUCCESS,
@@ -137,12 +133,11 @@ export function* workerAddAvailabilityData(action) {
       districts,
       availabilityData,
       ...selectedWeek,
-      flagValue
+      flagValue,
     });
 
-    console.log(data , 'testingData')
     if (data.flagValue === true) {
-      delete data["flagValue"]; // deleted flagValue key 
+      delete data["flagValue"]; // deleted flagValue key
       toast.show("Availability already added", {
         type: alertMsgConstant.TOAST_DANGER,
       });
@@ -161,7 +156,6 @@ export function* workerAddAvailabilityData(action) {
 export function* workerSetDataForAvailability(action) {
   try {
     const { payload } = action;
-    console.log(payload);
     const { type, data, id } = payload;
     if (
       (type === SET_DATA_TYPE.inTime || type === SET_DATA_TYPE.outTime) &&

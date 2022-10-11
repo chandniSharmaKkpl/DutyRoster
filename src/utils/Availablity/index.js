@@ -182,8 +182,8 @@ const parseTimeInTimestamp = (_startTime, _endTime) => {
 };
 
 export const replaceAvalabiltyItems = (_prevData, newData, dateKey) => {
-  console.log("newData", JSON.stringify(newData, null, 4));
-  console.log("prevData", JSON.stringify(_prevData, null, 4));
+  // console.log("newData", JSON.stringify(newData, null, 4));
+  // console.log("prevData", JSON.stringify(_prevData, null, 4));
   // let prevData = _.uniqBy(_.cloneDeep(_prevData), uniqueIterator);
   // const avalabilityTimes = _.uniqBy(_.cloneDeep(_prevData), uniqueIterator);
   let prevData = _.cloneDeep(_prevData);
@@ -203,15 +203,15 @@ export const replaceAvalabiltyItems = (_prevData, newData, dateKey) => {
           const { startTime: _prevStartTime, endTime: _prevEndTime } =
             parseTimeInTimestamp(_prevItem.start_time, _prevItem.end_time);
 
-          console.log(
-            "Same time ===>",
-            _newItem.district_id,
-            _prevItem.district_id
-          );
-          console.log(
-            "Same time ===> 123456",
-            _newItem.district_id !== _prevItem.district_id
-          );
+          // console.log(
+          //   "Same time ===>",
+          //   _newItem.district_id,
+          //   _prevItem.district_id
+          // );
+          // console.log(
+          //   "Same time ===> 123456",
+          //   _newItem.district_id !== _prevItem.district_id
+          // );
 
           if (_newItem.district_id === _prevItem.district_id) {
             if (
@@ -250,10 +250,10 @@ export const replaceAvalabiltyItems = (_prevData, newData, dateKey) => {
           avalabilityTimes.push({ ..._newItem });
         }
       });
-      console.log(
-        "avalabilityTimes",
-        JSON.stringify(avalabilityTimes, null, 4)
-      );
+      // console.log(
+      //   "avalabilityTimes",
+      //   JSON.stringify(avalabilityTimes, null, 4)
+      // );
       return { times: avalabilityTimes, alerts: alertData };
     }
   } catch (error) {
@@ -494,10 +494,10 @@ export const isInOutTimeValidForAvalability = ({
 // getSelectedAvailability
 
 export const selectedDateAvailability = (availabilityData, selectedDates) => {
-  console.log(
-    "availabilityData :::::====>",
-    JSON.stringify(availabilityData, null, 4)
-  );
+  // console.log(
+  //   "availabilityData :::::====>",
+  //   JSON.stringify(availabilityData, null, 4)
+  // );
   // console.log(
   //   "selectedDate :::::====>",
   //   JSON.stringify(selectedDates, null, 4)

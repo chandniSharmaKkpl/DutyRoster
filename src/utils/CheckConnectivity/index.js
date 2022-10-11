@@ -8,7 +8,7 @@ export const CheckConnectivity = () => {
   if (Platform.OS === "android") {
     NetInfo.fetch().then((state) => {
       if (state.isConnected) {
-        console.log("state.isConnected ==>", state.isConnected);
+        // console.log("state.isConnected ==>", state.isConnected);
         return true;
       } else {
         toast.show(alertMsgConstant.NO_INTERNET, {

@@ -11,7 +11,7 @@ const TimeSheetEmpTimeCard = (props) => {
 
   const renderItem = ({ item, index }) => <Item item={item} key={index} />;
 
-  console.log("DATA ===>", data);
+  // console.log("DATA ===>", data);
   return (
     <View>
       <FlatList

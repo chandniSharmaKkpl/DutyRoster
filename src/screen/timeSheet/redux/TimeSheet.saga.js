@@ -8,23 +8,23 @@ export function* workerGetTimeSheetDateResponse(action) {
       TimeSheetDateRangeCall,
       action.payload
     );
-    console.log('timeSheetDateRangeResponse',JSON.stringify(timeSheetDateRangeResponse, null,4));
+    // console.log('timeSheetDateRangeResponse',JSON.stringify(timeSheetDateRangeResponse, null,4));
     yield put({
       type: actionConstant.ACTION_GET_TIMESHEET_DATE_SUCCESS,
       payload: timeSheetDateRangeResponse?.data,
     });
   } catch (error) {
-    console.log("SAGA error",error.status);
+    console.log("SAGA error", error.status);
     yield put({
       type: actionConstant.ACTION_GET_TIMESHEET_DATE_FAILURE,
       payload: error,
     });
   }
 }
- 
+
 export function* watchGetTimeSheetDate() {
-    yield takeLatest(
-        actionConstant.ACTION_GET_TIMESHEET_DATE_REQUEST,
-        workerGetTimeSheetDateResponse
-    )
+  yield takeLatest(
+    actionConstant.ACTION_GET_TIMESHEET_DATE_REQUEST,
+    workerGetTimeSheetDateResponse
+  );
 }

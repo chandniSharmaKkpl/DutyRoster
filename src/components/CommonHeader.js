@@ -99,15 +99,15 @@ const CommonHeader = (props) => {
     },
     imgEmpty: {
       height: 40,
-      width: 40, 
+      width: 40,
       borderRadius: 20,
     },
-    backArrorwContainer : {
+    backArrorwContainer: {
       height: 32,
       width: 32,
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
     },
   });
 
@@ -116,8 +116,8 @@ const CommonHeader = (props) => {
   };
 
   React.useEffect(() => {
-console.log("profileImage:::::::::::profileImage ===>", profileImage);
-  },[profileImage])
+    // console.log("profileImage:::::::::::profileImage ===>", profileImage);
+  }, [profileImage]);
 
   const onUnavailablity = () => {
     navigationRef.navigate(appConstant.AVAILABILITY);

@@ -44,7 +44,7 @@ const Item = ({ item, key }) => {
       {isItemsNotEmpty ? (
         <View style={styles.contentContainer}>
           {items.map((_item) => {
-            console.log("isItemsNotEmpty ==>", _item);
+            // console.log("isItemsNotEmpty ==>", _item);
             return (
               <>
                 <View style={styles.contentTextContainer}>

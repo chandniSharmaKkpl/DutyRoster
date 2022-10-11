@@ -259,7 +259,7 @@ export const extractData = (item, { key, type }) => {
   if (key === "location") {
     return item[key];
   } else if (key === "signin" || key === "signout") {
-    console.log("getTimeFromDateTime=>", item[key]);
+    // console.log("getTimeFromDateTime=>", item[key]);
     return getTimeFromDateTimeUTC(item[key]);
   } else if (key == "shift") {
     if (type === item[key]) {
@@ -272,7 +272,7 @@ export const extractData = (item, { key, type }) => {
 
 export const inOutTimeFormate = (item, { key, type }) => {
   if (key === "signin" || key === "signout") {
-    console.log("getTimeFromDateTime=>", item[key]);
+    // console.log("getTimeFromDateTime=>", item[key]);
     return getAmPmFromUTCDate(item[key]);
   }
   return "";

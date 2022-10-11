@@ -31,7 +31,7 @@ const permissionAlertAndroid = (permission) => {
   }
 };
 const permissionAlertIOS = (permission) => {
-  console.log("permission", permission);
+  // console.log("permission", permission);
   if (permission === PERMISSIONS.IOS.CAMERA) {
     PermissionAlertModel(alertMsgConstant.CAMERA_PERMISSION_ALERT);
   } else if (permission === PERMISSIONS.IOS.LOCATION_ALWAYS) {
@@ -51,7 +51,7 @@ export const requestPermission = async (setPermission, callback) => {
       const granted = await PermissionsAndroid.requestMultiple(
         PERMISSIONS_ANDROID
       );
-      console.log("Permissions granted", granted);
+      // console.log("Permissions granted", granted);
       if (
         checkMultiplePermissions({
           permissions: PERMISSIONS_ANDROID,
@@ -59,12 +59,12 @@ export const requestPermission = async (setPermission, callback) => {
         })
       ) {
         setPermission(true);
-        console.log("You can use all the permission in android");
+        // console.log("You can use all the permission in android");
         callback();
       } else {
         setPermission(false);
         // alert("Please Allow Permission");
-        console.log("Access denied permission denied in android");
+        // console.log("Access denied permission denied in android");
       }
     } else {
       checkMultiple(PERMISSIONS_IOS_LOCATION).then((statuses) => {
@@ -74,7 +74,7 @@ export const requestPermission = async (setPermission, callback) => {
         // );
         if (Object.values(statuses).some((_el) => _el === RESULTS.GRANTED)) {
           setPermission(true);
-          console.log("You can use all the permission in ios");
+          // console.log("You can use all the permission in ios");
           callback();
         } else {
           PermissionAlertModel(alertMsgConstant.LOCATION_PERMISSION_ALERT);
@@ -127,7 +127,7 @@ export function checkMultiplePermissions({ permissions, statuses }) {
       isPermissionGranted = true;
     } else {
       permissionAlertAndroid(permissions[index]);
-      console.log("permissions[index]", permissions[index]);
+      // console.log("permissions[index]", permissions[index]);
       isPermissionGranted = false;
       break;
     }
@@ -138,7 +138,7 @@ export function checkMultiplePermissions({ permissions, statuses }) {
 export function checkMultiplePermissionsIOS({ permissions, statuses }) {
   let isPermissionGranted = false;
   for (var index in permissions) {
-    console.log([permissions[index]], statuses[permissions[index]]);
+    // console.log([permissions[index]], statuses[permissions[index]]);
     if (statuses[permissions[index]] === RESULTS.GRANTED) {
       isPermissionGranted = true;
     } else {

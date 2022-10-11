@@ -8,11 +8,7 @@ import {
   Keyboard,
 } from "react-native";
 import stylesCommon from "../../common/commonStyle";
-import {
-  appConstant,
-  imageConstant,
-  alertMsgConstant,
-} from "../../constant";
+import { appConstant, imageConstant, alertMsgConstant } from "../../constant";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -105,12 +101,12 @@ const Signup = (props) => {
       });
 
       let type = DeviceInfo.getDeviceType();
-      console.log(type);
+      // console.log(type);
 
       DeviceInfo.syncUniqueId().then((uniqueId) => {
         setDeviceUuid(uniqueId);
       });
-      console.log("setDeviceUuid", DeviceUuid);
+      // console.log("setDeviceUuid", DeviceUuid);
       return () => {};
     }, [])
   );
@@ -183,7 +179,7 @@ const Signup = (props) => {
     let cnfpasswordErr = "";
     // let imgErr = "";
 
-    console.log(" img source ----", ImageSource);
+    // console.log(" img source ----", ImageSource);
 
     // if (ImageSource == "") {
     //   imgErr = alertMsgConstant.IMAGE_REQUIRED;
@@ -472,7 +468,9 @@ const Signup = (props) => {
                 <TextInputCustom
                   viewName={appConstant.SIGNUP}
                   label={"Dob"}
-                  value={dob && moment(dob, "DD-MM-YYYY").format(USER_DATE_FORMAT)}
+                  value={
+                    dob && moment(dob, "DD-MM-YYYY").format(USER_DATE_FORMAT)
+                  }
                   onChangeText={onChangeDOB}
                   placeholder={"Enter Date of Birth"}
                   icon={require("../../assets/images/SignupScreen/calendar.png")}

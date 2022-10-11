@@ -287,11 +287,6 @@ export default (state = initialState, { type, payload }) => {
 
     case actionConstant.ACTION_DELETE_DATA_ITEM_AVAILABILITY: {
       const { index, date } = payload;
-      console.log(
-        "state.availabilityData[date].times.splice(index, 1)",
-        index,
-        date
-      );
       return {
         ...state,
         availabilityData: {

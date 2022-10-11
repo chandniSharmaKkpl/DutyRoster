@@ -1,5 +1,5 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {appConstant} from '../constant';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { appConstant } from "../constant";
 const clearAll = async () => {
   try {
     await AsyncStorage.clear();
@@ -7,7 +7,7 @@ const clearAll = async () => {
     // clear error
   }
 
-  console.log('Done.');
+  // console.log("Done.");
 };
 const getAccessToken = async () => {
   const temp = await AsyncStorage.getItem(appConstant.ACCESS_TOKEN);
@@ -21,7 +21,7 @@ const getAccessToken = async () => {
   return token;
 };
 
-const setAccessToken = async data => {
+const setAccessToken = async (data) => {
   await AsyncStorage.setItem(appConstant.ACCESS_TOKEN, data)
     .then(() => {
       return true;
@@ -30,7 +30,6 @@ const setAccessToken = async data => {
       return false;
     });
 };
-
 
 const getUser = async () => {
   const temp = await AsyncStorage.getItem(appConstant.USER);
@@ -44,8 +43,8 @@ const getUser = async () => {
   return user;
 };
 
-const setUser = async data => {
-  console.log(" response login--------->", data);
+const setUser = async (data) => {
+  // console.log(" response login--------->", data);
 
   await AsyncStorage.setItem(appConstant.USER, JSON.stringify(data))
     .then(() => {
@@ -59,9 +58,8 @@ const setUser = async data => {
 export default {
   getAccessToken,
   setAccessToken,
-  
+
   getUser,
   setUser,
-  clearAll
-  
+  clearAll,
 };

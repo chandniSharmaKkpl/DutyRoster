@@ -69,7 +69,7 @@ const RosterScreen = (props) => {
   // markedDates obj function
 
   // console.log("cardData ===>", JSON.stringify(rosterReducer, null, 4));
-console.log("startDay :::: endDay :::::", startDay,endDay);
+  // console.log("startDay :::: endDay :::::", startDay,endDay);
   React.useLayoutEffect(() => {
     if (!accessToken || !isAuth) {
       const resetAction = StackActions.replace(appConstant.LOGIN);
@@ -101,17 +101,18 @@ console.log("startDay :::: endDay :::::", startDay,endDay);
     const { days: _dateRange, weekStart, weekEnd } = getCurrentWeek(date);
 
     _dateRange.map((item, index) => {
-      _dateList[changeDateFormat(item, API_DATE_FORMAT, CALENDER_DATE_FORMAT)] = {
-        startingDay: index === 0 ? true : false,
-        endingDay: index === _dateRange.length - 1 ? true : false,
-        color: !(index === 0 || index === _dateRange.length - 1)
-          ? appColor.RED
-          : appColor.RED,
-        textColor: appColor.WHITE,
-        selected: index === _dateRange.length - 1 ? true : false,
-        // selectedColor: 'blue'
-        disabled: true,
-      };
+      _dateList[changeDateFormat(item, API_DATE_FORMAT, CALENDER_DATE_FORMAT)] =
+        {
+          startingDay: index === 0 ? true : false,
+          endingDay: index === _dateRange.length - 1 ? true : false,
+          color: !(index === 0 || index === _dateRange.length - 1)
+            ? appColor.RED
+            : appColor.RED,
+          textColor: appColor.WHITE,
+          selected: index === _dateRange.length - 1 ? true : false,
+          // selectedColor: 'blue'
+          disabled: true,
+        };
       _dateFlatList.push({
         id: getTimeStampfromDate(item),
         date: getDatefromFullDate(item),
