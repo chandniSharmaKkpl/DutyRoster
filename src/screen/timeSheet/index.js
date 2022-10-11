@@ -52,13 +52,12 @@ const TimeSheetScreen = (props) => {
     accessToken,
     isAuth,
     cardData,
-    timeSheetReducer
+    timeSheetReducer,
   } = props;
-  const [selectedItem, setSelectedItem] = useState(3); 
+  const [selectedItem, setSelectedItem] = useState(3);
   const [isCalendarShow, setIsCalendarShow] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
   const [isAlertShow, setIsAlertShow] = useState(false);
-
 
   // console.log("cardData ===>", JSON.stringify(data, null, 4));
 
@@ -121,7 +120,6 @@ const TimeSheetScreen = (props) => {
     requestToGetTimeSheetDateRangeAction(params);
   }, []);
 
- 
   const onClickCalendar = () => {
     setIsCalendarShow(!isCalendarShow);
   };
@@ -131,7 +129,7 @@ const TimeSheetScreen = (props) => {
       <View style={[styles.container]}>
         <View style={styles.topContain}>
           <View style={styles.weekDateTextContainer}>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
               <AppText
                 style={styles.weekDateTextStyle}
                 text={dayDateReturn(startDay, false)}
@@ -192,7 +190,7 @@ const TimeSheetScreen = (props) => {
             ]
           )
         : null}
-        {timeSheetReducer.isRequesting ? (
+      {timeSheetReducer.isRequesting ? (
         <Loader loading={timeSheetReducer.isRequesting} />
       ) : null}
     </>

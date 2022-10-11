@@ -183,14 +183,17 @@ const parseTimeInTimestamp = (_startTime, _endTime) => {
 
 export const replaceAvalabiltyItems = (_prevData, newData, dateKey) => {
   console.log("newData", JSON.stringify(newData, null, 4));
-  console.log("prevData", JSON.stringify(prevData, null, 4));
-  let prevData = _.uniqBy(_.cloneDeep(_prevData), uniqueIterator);
-  const avalabilityTimes = _.uniqBy(_.cloneDeep(_prevData), uniqueIterator);
+  console.log("prevData", JSON.stringify(_prevData, null, 4));
+  // let prevData = _.uniqBy(_.cloneDeep(_prevData), uniqueIterator);
+  // const avalabilityTimes = _.uniqBy(_.cloneDeep(_prevData), uniqueIterator);
+  let prevData = _.cloneDeep(_prevData);
+
+  const avalabilityTimes = _.cloneDeep(_prevData);
+
   try {
     if (newData && prevData) {
       const alertData = [];
       newData.map((_newItem, _newItemIndex) => {
-        // console.log("_newFItemIndex", _newItemIndex);
         let flag = false;
 
         const { startTime: _newStartTime, endTime: _newEndTime } =
@@ -207,48 +210,49 @@ export const replaceAvalabiltyItems = (_prevData, newData, dateKey) => {
           );
           console.log(
             "Same time ===> 123456",
-            (_prevStartTime === _newStartTime ||
-              _prevEndTime === _newEndTime) &&
-              _newItem.district_id !== _prevItem.district_id
+            _newItem.district_id !== _prevItem.district_id
           );
 
-          if (
-            ((_newStartTime > _prevStartTime && _newStartTime < _prevEndTime) ||
-              (_newEndTime > _prevStartTime && _newEndTime < _prevEndTime)) &&
-            _newItem.district_id != _prevItem.district_id
-          ) {
-            console.group("Test date format version 1");
-
-            flag = true;
-            alertData.push(
-              `${_newItem.start_time} - ${_newItem.end_time} 1 is already occupied on ${dateKey}`
-            );
-          } else if (
-            ((_newStartTime < _prevStartTime && _newEndTime > _prevStartTime) ||
-              (_newStartTime < _prevEndTime && _newEndTime > _prevEndTime)) &&
-            _newItem.district_id != _prevItem.district_id
-          ) {
-            alertData.push(
-              `${_newItem.start_time} - ${_newItem.end_time} 2 is already occupied on ${dateKey}`
-            );
-            flag = true;
-          } else if (
-            (_prevStartTime === _newStartTime ||
-              _prevEndTime === _newEndTime) &&
-            _newItem.district_id != _prevItem.district_id
-          ) {
-            // avalabilityTimes[_prevItemIndex] = _newItem;
-            flag = true;
-
-            alertData.push(
-              `${_newItem.start_time} - ${_newItem.end_time} 3 is already occupied on ${dateKey}`
-            );
+          if (_newItem.district_id === _prevItem.district_id) {
+            if (
+              (_newStartTime > _prevStartTime &&
+                _newStartTime < _prevEndTime) ||
+              (_newEndTime > _prevStartTime && _newEndTime < _prevEndTime)
+            ) {
+              flag = true;
+              alertData.push(
+                `${_newItem.start_time} - ${_newItem.end_time} 1 is already occupied on ${dateKey}`
+              );
+            } else if (
+              (_newStartTime < _prevStartTime &&
+                _newEndTime > _prevStartTime) ||
+              (_newStartTime < _prevEndTime && _newEndTime > _prevEndTime)
+            ) {
+              alertData.push(
+                `${_newItem.start_time} - ${_newItem.end_time} 2 is already occupied on ${dateKey}`
+              );
+              flag = true;
+            } else if (
+              _prevStartTime === _newStartTime ||
+              _prevEndTime === _newEndTime
+            ) {
+              // avalabilityTimes[_prevItemIndex] = _newItem;
+              flag = true;
+              alertData.push(
+                `${_newItem.start_time} - ${_newItem.end_time} 3 is already occupied on ${dateKey}`
+              );
+            }
           }
         });
+
         if (!flag) {
           avalabilityTimes.push({ ..._newItem });
         }
       });
+      console.log(
+        "avalabilityTimes",
+        JSON.stringify(avalabilityTimes, null, 4)
+      );
       return { times: avalabilityTimes, alerts: alertData };
     }
   } catch (error) {

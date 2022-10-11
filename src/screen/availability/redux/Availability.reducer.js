@@ -20,7 +20,8 @@ const initialState = {
   selected: {
     availabilityData: [
       { district_id: null, inTime: null, outTime: null, id: 0 },
-      // { district_id: 2, inTime: '07:30 PM', outTime: "11:45 PM", id: 0 },
+      // { district_id: 2, inTime: "07:30 PM", outTime: "11:45 PM", id: 0 },
+      // { district_id: 1, inTime: "07:30 PM", outTime: "11:45 PM", id: 1 },
     ],
     availabilitySelectedDate: [],
     isSaved: true,
