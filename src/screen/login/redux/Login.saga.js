@@ -21,6 +21,7 @@ export function* workerGetAccessToken(action) {
           stringCombined = stringCombined + stringTemp.toString();
         }
       }
+      console.log("stringCombined =>", stringCombined);
       toast.show(stringCombined, {
         type: alertMsgConstant.TOAST_DANGER,
       });

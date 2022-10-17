@@ -251,7 +251,10 @@ const Login = (props) => {
           </View>
 
           <View style={{ ...styles.viewSignUp, flexDirection: "row" }}>
-            <AppText text={"Don't have an Account?"} style={styles.txtSignup} />
+            <AppText
+              text={"Don't have an Account?"}
+              style={styles.txtSignupNormal}
+            />
             <TouchableOpacity onPress={goToSignup}>
               <AppText
                 text={" Signup"}
@@ -261,7 +264,7 @@ const Login = (props) => {
           </View>
           <View style={styles.versionContainer}>
             <AppText
-              text={" App Vesrion 2.21"}
+              text={" App Vesrion 2.22"}
               style={{ ...styles.appVersion }}
             />
           </View>

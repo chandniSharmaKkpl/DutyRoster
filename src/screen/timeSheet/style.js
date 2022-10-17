@@ -113,8 +113,8 @@ export default StyleSheet.create({
     position: "absolute",
     left: wp("32%"),
     top: hp("7.5%"),
-    height: 'auto',
-    width: wp('66%'),
+    height: "auto",
+    width: wp("66%"),
     borderWidth: 1,
     borderColor: "#D2D2D2",
     borderRadius: 8,
@@ -131,8 +131,8 @@ export default StyleSheet.create({
     position: "absolute",
     left: wp("35%"),
     top: hp("8%"),
-    height: 'auto',
-    width: wp('60%'),
+    height: "auto",
+    width: wp("60%"),
     borderWidth: 1,
     borderColor: "#D2D2D2",
     borderRadius: 8,
@@ -144,5 +144,5 @@ export default StyleSheet.create({
     shadowOpacity: 22,
     shadowRadius: 4.65,
     elevation: 5,
-  }
+  },
 });

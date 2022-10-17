@@ -44,6 +44,13 @@ export default StyleSheet.create({
     alignSelf: "center",
     paddingTop: hp("1.3%"),
   },
+
+  txtSignupNormal: {
+    color: appColor.BLACK,
+    fontFamily: fontConstant.FONT_REGULAR,
+    fontSize: fontConstant.TEXT_H2_SIZE_REGULAR,
+  },
+
   viewTxtInput: {
     alignItems: "center",
     paddingTop: hp("2%"),

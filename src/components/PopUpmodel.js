@@ -137,10 +137,10 @@ const ModelBox = (props) => {
             <View style={styles.row}>
               <Pressable onPress={() => onEdit()} style={styles.iconContainer}>
                 <Image
-                  source={imageConstant.IMAGE_EDIT_ICON}
+                  source={imageConstant.IMAGE_SAVE_ICON}
                   style={{ height: 20, width: 20, marginRight: 10 }}
                 />
-                <Text style={styles.modalText}>Edit</Text>
+                <Text style={styles.modalText}>Save</Text>
               </Pressable>
               <Pressable
                 onPress={() => onDelete()}
@@ -186,7 +186,9 @@ const styles = StyleSheet.create({
   modalView: {
     width: "95%",
     marginHorizontal: 40,
-    backgroundColor: "#FAF9F6",
+    // backgroundColor: "#FAF9F6",
+    backgroundColor: appColor.GRAY_DARK,
+
     borderRadius: 10,
     paddingHorizontal: 30,
     alignItems: "center",

@@ -18,9 +18,10 @@ export default {
   IMAGE_TIME_ICON: require("../assets/images/Unavailablity/time1.png"),
   IMAGE_DOWN_ICON: require("../assets/images/Unavailablity/arrow_down.png"),
   IMAGE_UP_ICON: require("../assets/images/Unavailablity/arrow_up.png"),
-  IMAGE_MORE_ICON: require('../assets/images/Unavailablity/dots.png'),
-  IMAGE_EDIT_ICON: require('../assets/images/Unavailablity/edit.png'),
-  IMAGE_TRASH_ICON: require('../assets/images/Unavailablity/trash.png'),
-  IMAGE_CLOSE_ICON: require('../assets/images/Unavailablity/close.png'),
-  IMAGE_SPLASH_SCREEN: require('../assets/images/SplashScreen/splashscreen.png')
+  IMAGE_MORE_ICON: require("../assets/images/Unavailablity/dots.png"),
+  IMAGE_EDIT_ICON: require("../assets/images/Unavailablity/edit.png"),
+  IMAGE_SAVE_ICON: require("../assets/images/Unavailablity/save.png"),
+  IMAGE_TRASH_ICON: require("../assets/images/Unavailablity/trash.png"),
+  IMAGE_CLOSE_ICON: require("../assets/images/Unavailablity/close.png"),
+  IMAGE_SPLASH_SCREEN: require("../assets/images/SplashScreen/splashscreen.png"),
 };
